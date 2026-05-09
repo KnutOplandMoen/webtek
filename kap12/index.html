@@ -30,14 +30,14 @@
       <div class="eyebrow">Kapittel 12 · Forelesning 13 · Del 4</div>
       <h1>Canvas — <em>tegn i nettleseren</em></h1>
       <p class="lede">
-        Et HTML-element der du tegner pixler med JavaScript. Spill,
-        diagrammer, bildebehandling — alt som ikke kan uttrykkes som
-        DOM-elementer.
+        <code>&lt;canvas&gt;</code> ble introdusert med HTML5 og brukes til
+        å tegne 2D- og 3D-grafikk. Selve elementet er bare en tegneflate —
+        all tegning skjer fra JavaScript via en <em>context</em>.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.15</span>
-        <span class="pill">Slides: kommer</span>
         <span class="pill">Forelesning 13</span>
+        <span class="pill">Del 4</span>
       </div>
     </div>
   </header>
@@ -47,7 +47,7 @@
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor canvas?</a></li>
         <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
-        <li><span class="toc-num">03</span><a href="#reisen">Tegn et rektangel</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Fra tom canvas til animasjon</a></li>
         <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
         <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
         <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
@@ -60,105 +60,560 @@
     </div>
   </nav>
 
+  <!-- 01 -->
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>canvas</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>DOM er bra for tekst og knapper, men ikke for å tegne. Canvas gir deg en pixel-buffer du kan fylle med JavaScript — perfekt for visualiseringer, spill og dynamiske bilder.</p>
-      <p><strong>Kilde:</strong> pensum 1.15.</p>
+    <p>
+      <code>&lt;canvas&gt;</code>-elementet kom med HTML5 og støttes av alle
+      større nettlesere. Det brukes til å tegne 2D- og 3D-grafikk. Elementet
+      krever en åpningstag og en lukketag.
+    </p>
+    <p>
+      I sin enkleste form skriver du bare <code>&lt;canvas id="canvas"&gt;&lt;/canvas&gt;</code>
+      inni <code>&lt;body&gt;</code>. Det gir deg en flate du kan fylle med
+      grafikk via JavaScript. <code>id</code>-attributtet brukes til å referere
+      elementet fra JavaScript og CSS, akkurat som med andre HTML-elementer.
+    </p>
+    <div class="callout-blue">
+      <div class="label">Standardstørrelse</div>
+      <p>
+        Hvis du ikke setter <code>width</code> eller <code>height</code>, bruker
+        canvas standardverdiene <strong>300 px bred og 150 px høy</strong>.
+        Du setter størrelsen enten inline (på elementet) eller med CSS. Merk:
+        gjør du canvas mindre enn innholdet du tegner, blir innhold utenfor
+        elementet ikke vist.
+      </p>
     </div>
+    <p>
+      Bakgrunnsfargen kan settes med CSS-egenskapen <code>background-color</code>,
+      som for andre HTML-elementer. Andre CSS-egenskaper på selve elementet
+      (f.eks. <code>border</code> og <code>shadow</code>) påvirker bare elementet,
+      ikke figurene som tegnes inni det.
+    </p>
+    <p><strong>Kilde:</strong> pensum 1.15 (HTML5 Canvas).</p>
   </div></section>
 
+  <!-- 02 -->
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
-    <h2>En <em>tegneflate</em> i HTML</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>SVG-figur som viser canvas-koordinatsystemet: (0,0) øverst til venstre, x øker mot høyre, y øker nedover. Forklar at canvas er bitmap (rasteret «brennes inn»), ulikt SVG som er vektor.</p>
+    <h2>Et <em>koordinatsystem</em> du tegner i</h2>
+    <p>
+      Når du bestemmer hvor du skal begynne å tegne en figur, må du huske at
+      koordinatene <strong>(0, 0) er øverst til venstre</strong>. X-aksen går
+      fra venstre mot høyre, og y-aksen fra toppen og nedover.
+    </p>
+
+    <div class="svg-fig">
+      <svg viewBox="0 0 360 220" role="img" aria-label="Canvas-koordinatsystem med (0,0) øverst til venstre">
+        <rect x="20" y="20" width="320" height="180" class="ent-fill" stroke="#888" stroke-width="1.5"/>
+        <line x1="20" y1="20" x2="340" y2="20" class="edge-strong"/>
+        <line x1="20" y1="20" x2="20" y2="200" class="edge-strong"/>
+        <polygon points="340,20 332,16 332,24" fill="#9C4221"/>
+        <polygon points="20,200 16,192 24,192" fill="#9C4221"/>
+        <text x="345" y="24" class="label-text">x →</text>
+        <text x="14" y="214" class="label-text">y ↓</text>
+        <circle cx="20" cy="20" r="4" class="accent"/>
+        <text x="28" y="36" class="label-text">(0, 0)</text>
+        <rect x="80" y="70" width="100" height="60" fill="rgba(156,66,33,0.4)" stroke="#9C4221" stroke-width="1.5"/>
+        <text x="92" y="155" class="label-text">fillRect(80, 70, 100, 60)</text>
+      </svg>
     </div>
+
+    <div class="callout">
+      <div class="label">Rekkefølgen er viktig</div>
+      <p>
+        Når du tegner på en canvas, betyr rekkefølgen alt: senere tegninger
+        legger seg <strong>oppå</strong> tidligere. To rektangler som overlapper
+        — det andre dekker det første der de møtes.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Bare ett primitiv</div>
+      <p>
+        <code>&lt;canvas&gt;</code> har egentlig bare <strong>én primitiv form:
+        rektangel</strong>. Alle andre former (linjer, trekanter, sirkler …)
+        må bygges som <em>paths</em> — en liste av punkter forbundet med linjer.
+      </p>
+    </div>
+
+    <p><strong>Kilde:</strong> pensum 1.15 (Drawing on a 2D canvas, Lines and triangles).</p>
   </div></section>
 
+  <!-- 03 -->
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
     <h2>Fra <em>tom canvas</em> til animasjon</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: <code>&lt;canvas&gt;</code>-element → getContext('2d') → fillRect → strokeRect → arc → bilde → enkel animasjon med requestAnimationFrame.</p>
-    </div>
+    <p class="section-intro">
+      Slik bygger du opp en canvas-tegning steg for steg, slik den introduseres
+      i pensum 1.15.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <strong>Plasser canvas i HTML.</strong>
+        <code>&lt;canvas id="canvas"&gt;&lt;/canvas&gt;</code> inni
+        <code>&lt;body&gt;</code>. Sett gjerne <code>width</code> og
+        <code>height</code> — ellers blir det 300×150.
+      </li>
+      <li>
+        <strong>Hent referansen og tegne-konteksten.</strong>
+        <pre><code>const canvas  = document.getElementById('canvas');
+const context = canvas.getContext('2d');</code></pre>
+        <code>getContext('2d')</code> returnerer <em>drawing context-en</em> —
+        objektet med alle tegnefunksjoner.
+      </li>
+      <li>
+        <strong>Tegn et fylt rektangel.</strong>
+        <pre><code>context.fillStyle = 'red';
+context.fillRect(10, 20, 100, 150);</code></pre>
+        Et rødt rektangel som starter på (10, 20), 100 px bredt og 150 px høyt.
+      </li>
+      <li>
+        <strong>Bygg en path for andre former.</strong>
+        <code>beginPath()</code> → <code>moveTo()</code> → <code>lineTo()</code>
+        / <code>arc()</code> → eventuelt <code>closePath()</code> →
+        <code>stroke()</code> eller <code>fill()</code>.
+      </li>
+      <li>
+        <strong>Skriv tekst.</strong>
+        <code>context.fillText('Hello Canvas!', 10, 10)</code> for fylt tekst,
+        <code>context.strokeText(...)</code> for kontur. Stiles med
+        <code>font</code>, <code>textAlign</code>, <code>textBaseline</code>,
+        <code>direction</code>.
+      </li>
+      <li>
+        <strong>Plasser et bilde.</strong>
+        Lag en <code>new Image()</code>, sett <code>img.src</code>, og bruk
+        <code>img.onload = …</code> til å tegne med
+        <code>drawImage(img, x, y)</code> når bildet er ferdig lastet.
+      </li>
+      <li>
+        <strong>Animer.</strong>
+        Tøm canvas med <code>clearRect</code>, lagre med <code>save()</code>,
+        tegn ny frame, <code>restore()</code>, og be om neste frame med
+        <code>window.requestAnimationFrame(draw)</code>.
+      </li>
+    </ol>
   </div></section>
 
+  <!-- 04 -->
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De viktigste <em>delene</em></h2>
+    <p class="section-intro">Pensum 1.15 dekker syv tema. Hvert kort viser hva som inngår.</p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · CTX</div><div class="sp-title">Context</div><div class="sp-desc">getContext('2d') — alle tegnefunksjoner ligger her.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SHP</div><div class="sp-title">Former</div><div class="sp-desc">fillRect, strokeRect, arc, beginPath, moveTo, lineTo.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · STY</div><div class="sp-title">Stiler</div><div class="sp-desc">fillStyle, strokeStyle, lineWidth, font.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">drawImage med Image-objekt.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ANI</div><div class="sp-title">Animasjon</div><div class="sp-desc">requestAnimationFrame, clearRect, oppdater og tegn igjen.</div></div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">A · CTX</div>
+        <div class="sp-title">Context</div>
+        <div class="sp-desc">
+          <code>getContext('2d')</code>. Andre typer: <code>'webgl'</code>,
+          <code>'webgl2'</code>, <code>'bitmaprenderer'</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">B · REC</div>
+        <div class="sp-title">Rektangler</div>
+        <div class="sp-desc">
+          <code>fillRect</code>, <code>strokeRect</code>, <code>clearRect</code>
+          — alle med signaturen (x, y, width, height).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">C · PTH</div>
+        <div class="sp-title">Paths (linjer, sirkler)</div>
+        <div class="sp-desc">
+          <code>beginPath</code>, <code>moveTo</code>, <code>lineTo</code>,
+          <code>arc</code>, <code>arcTo</code>, <code>rect</code>,
+          <code>closePath</code>, <code>stroke</code>, <code>fill</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">D · TXT</div>
+        <div class="sp-title">Tekst</div>
+        <div class="sp-desc">
+          <code>fillText</code>, <code>strokeText</code>. Stiles med
+          <code>font</code>, <code>textAlign</code>, <code>textBaseline</code>,
+          <code>direction</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">E · STY</div>
+        <div class="sp-title">Stiler</div>
+        <div class="sp-desc">
+          <code>fillStyle</code>, <code>strokeStyle</code>,
+          <code>lineWidth</code>, <code>lineCap</code>, <code>lineJoin</code>,
+          <code>lineDashOffset</code>, <code>setLineDash()</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">F · IMG</div>
+        <div class="sp-title">Bilder</div>
+        <div class="sp-desc">
+          <code>new Image()</code> + <code>img.src</code> + <code>img.onload</code>
+          + <code>drawImage(img, x, y)</code>. Skaler med 5 args, beskjær med 9.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">G · ANI</div>
+        <div class="sp-title">Animasjon</div>
+        <div class="sp-desc">
+          <code>clearRect</code> → <code>save</code> → tegn → <code>restore</code>.
+          Kjør med <code>requestAnimationFrame</code>, <code>setInterval</code>
+          eller <code>setTimeout</code>.
+        </div>
+      </div>
     </div>
   </div></section>
 
+  <!-- 05 -->
   <section id="nokkelbegreper"><div class="container">
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">2D context</div><div class="fc-val">Objektet med tegnefunksjoner.</div></div>
-      <div class="fact-card"><div class="fc-key">Koordinatsystem</div><div class="fc-val">(0,0) er øverst til venstre.</div></div>
-      <div class="fact-card"><div class="fc-key">Path</div><div class="fc-val">beginPath → moveTo/lineTo/arc → closePath/stroke/fill.</div></div>
-      <div class="fact-card"><div class="fc-key">fillStyle vs strokeStyle</div><div class="fc-val">Fyll vs ramme.</div></div>
-      <div class="fact-card"><div class="fc-key">clearRect</div><div class="fc-val">Slett rektangulært område.</div></div>
-      <div class="fact-card"><div class="fc-key">requestAnimationFrame</div><div class="fc-val">Synkron med skjermens refresh.</div></div>
+      <div class="fact-card">
+        <div class="fc-key">&lt;canvas&gt;</div>
+        <div class="fc-val">HTML5-element for 2D/3D-grafikk. Default 300×150 px.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">getContext()</div>
+        <div class="fc-val">Returnerer drawing context. Argumentet er en streng: <code>'2d'</code>, <code>'webgl'</code>, <code>'webgl2'</code> eller <code>'bitmaprenderer'</code>. Ugyldig argument gir <code>null</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">alpha</div>
+        <div class="fc-val">Eneste context-attributt for 2d. <code>{alpha: false}</code> gir opaque bakgrunn og kan øke ytelsen.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Koordinatsystem</div>
+        <div class="fc-val">(0, 0) øverst til venstre. X mot høyre, y nedover.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">fillRect / strokeRect / clearRect</div>
+        <div class="fc-val">Fyll, kontur og blank et rektangel. Alle tar (x, y, width, height).</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Path</div>
+        <div class="fc-val">Liste av sub-paths. Bygges med <code>beginPath</code> → tegnemetoder → <code>closePath</code> → <code>stroke</code>/<code>fill</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">arc()</div>
+        <div class="fc-val"><code>arc(x, y, radius, startAngle, endAngle, anticlockwise)</code>. Vinkler i radianer.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">fillStyle / strokeStyle</div>
+        <div class="fc-val">Fyll- og konturfarge. Tar nøkkelord, hex, rgb eller rgba.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">lineCap</div>
+        <div class="fc-val">Endene på linjer: <code>butt</code>, <code>round</code> eller <code>square</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">lineJoin</div>
+        <div class="fc-val">Hjørnene der linjer møtes: <code>round</code>, <code>bevel</code> eller <code>miter</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">drawImage()</div>
+        <div class="fc-val">3 args: plasser. 5 args: skaler. 9 args: beskjær.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">requestAnimationFrame()</div>
+        <div class="fc-val">Ber nettleseren kalle en funksjon før neste repaint — driver animasjoner.</div>
+      </div>
     </div>
   </div></section>
 
+  <!-- 06 -->
   <section id="oppsummering"><div class="container">
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 12</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">opprette canvas og hente context</span>
-      <span class="recap-pill">tegne grunnformer</span>
-      <span class="recap-pill">forklare path-objekter</span>
-      <span class="recap-pill">enkel animasjon</span>
-      <span class="recap-pill">forskjell canvas vs SVG</span>
+      <span class="recap-pill">opprette canvas og hente 2d-context</span>
+      <span class="recap-pill">tegne fillRect / strokeRect / clearRect</span>
+      <span class="recap-pill">bygge paths med beginPath / lineTo / arc</span>
+      <span class="recap-pill">tegne sirkler med arc()</span>
+      <span class="recap-pill">skrive tekst med fillText / strokeText</span>
+      <span class="recap-pill">style med fillStyle, strokeStyle, lineWidth</span>
+      <span class="recap-pill">tegne bilder via new Image() og onload</span>
+      <span class="recap-pill">animere med clearRect + requestAnimationFrame</span>
     </div>
   </div></section>
 
+  <!-- 07 -->
   <section id="notatmapping"><div class="container">
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.15 (Canvas).</li>
-      <li><strong>Slides:</strong> kommer — sjekk BlackBoard.</li>
-      <li><strong>Eksterne:</strong> MDN — Canvas API tutorial.</li>
+      <li><strong>Lærebok:</strong> pensum 1.15 (HTML5 Canvas) — fra «Drawing a rectangle» til «Animate on a 2D canvas».</li>
+      <li><strong>Kilde nevnt i pensum:</strong> Mozilla Developer Network — Canvas-tutorial og <em>basic animation</em>-tutorial.</li>
+      <li><strong>Også nevnt:</strong> w3school — full liste over context-funksjoner og -properties.</li>
     </ul>
   </div></section>
 
+  <!-- 08 -->
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Glemme å sette width/height som attributter (CSS strekker pixler); tegne uten beginPath; ikke vite at fillRect tegner uten path; bruke setInterval i stedet for requestAnimationFrame.</p>
+
+    <div class="callout-warn">
+      <div class="label">Felle 1 · Glemmer at canvas bare har rektangel som primitiv</div>
+      <p>
+        Pensum sier det rett ut: «<code>&lt;canvas&gt;</code> only support one
+        primitive shape: rectangles.» Alle andre former må lages som paths.
+        Ingen <code>drawCircle()</code> finnes — du må bruke <code>arc()</code>.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 2 · Ugyldig context-argument gir null</div>
+      <p>
+        Argumentet til <code>getContext()</code> må være én av strengene
+        <code>'2d'</code>, <code>'webgl'</code>, <code>'webgl2'</code> eller
+        <code>'bitmaprenderer'</code>. Skriv du noe annet, får du
+        <code>null</code> i retur.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 3 · Tegner bilde før det er lastet</div>
+      <p>
+        Bilder lastes asynkront fra serveren, så koden kan kjøre før
+        <code>img.src</code> faktisk er på plass. Bruk <code>img.onload</code>
+        og kall <code>drawImage</code> derfra:
+      </p>
+      <pre><code>img.onload = function() {
+  context.drawImage(img, 10, 10);
+}
+img.src = 'path/to/image.png';</code></pre>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 4 · Glemmer rekkefølgen ved overlapp</div>
+      <p>
+        Senere tegninger ligger oppå tidligere. Tegner du blå etter rød på samme
+        sted, ser du blått — selv om du «egentlig mente» rødt. Tegn bakgrunn
+        først, detaljer sist.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 5 · Glemmer å tømme før nytt frame i animasjon</div>
+      <p>
+        En tegnet figur blir liggende. Skal du animere, må du
+        <code>clearRect()</code> området først — ellers ser du sporene av alle
+        tidligere frames.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 6 · Prøver å animere fra en for-loop</div>
+      <p>
+        Pensum: «it is not possible to do an animation from within a for loop.»
+        Resultater dukker først opp på canvas når scriptet er ferdig — bruk
+        <code>setInterval</code>, <code>setTimeout</code> eller
+        <code>requestAnimationFrame</code> i stedet.
+      </p>
     </div>
   </div></section>
 
+  <!-- 09 -->
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Tegn et <em>søylediagram</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Gitt et array med fem tall, tegn et søylediagram på et 400×200-canvas.»</p>
+    <h2>Tegn en <em>trekant og et tall</em></h2>
+
+    <div class="callout">
+      <div class="label">Oppgave</div>
+      <p>
+        Gitt en canvas med <code>id="canvas"</code>. Skriv JavaScript som:
+        (1) tegner en rød fylt trekant med hjørner i (75, 50), (100, 70) og
+        (100, 25), og (2) tegner teksten «Hello Canvas!» med 48 px serif rett
+        under trekanten.
+      </p>
+    </div>
+
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">Løsning · JS</div>
+        <pre class="pane-body"><code>const canvas  = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+
+// Trekant
+context.beginPath();
+context.moveTo(75, 50);
+context.lineTo(100, 70);
+context.lineTo(100, 25);
+context.fillStyle = 'red';
+context.fill();
+
+// Tekst
+context.font = '48px serif';
+context.fillText('Hello Canvas!', 10, 130);</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">Hva sensor ser etter</div>
+        <ul style="margin:0; padding:14px 14px 14px 30px;">
+          <li>henter <code>getContext('2d')</code></li>
+          <li>kaller <code>beginPath()</code> før første <code>moveTo</code></li>
+          <li>setter <code>fillStyle</code> før <code>fill()</code></li>
+          <li>bruker <code>font</code> før <code>fillText</code></li>
+          <li>(0, 0) er øverst til venstre — koordinatene stemmer</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout-good">
+      <div class="label">Variant · sirkel</div>
+      <p>
+        «Tegn en hel sirkel sentrert i (100, 100) med radius 40 og rød kontur.»
+      </p>
+      <pre><code>context.beginPath();
+context.arc(100, 100, 40, 0, 2 * Math.PI, true);
+context.strokeStyle = 'red';
+context.stroke();</code></pre>
     </div>
   </div></section>
 
+  <!-- 10 -->
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>«Hva tegner denne koden?»-spørsmål er ofte gode her.</p></div>
+    <p class="section-intro">12 spørsmål som dekker hele kap 12. Klikk «Se svar» for å avsløre.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">1 · Lett</div>
+      <div class="q-text">Hva er standard bredde og høyde på en <code>&lt;canvas&gt;</code> uten <code>width</code>/<code>height</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">300 px bredt og 150 px høyt.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">2 · Lett</div>
+      <div class="q-text">Hvor på canvas ligger koordinatene (0, 0)?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Øverst til venstre. X øker mot høyre, y øker nedover.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">3 · Lett · MCQ</div>
+      <div class="q-text">Hvilken av disse er ikke et gyldig argument til <code>getContext()</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><code>'2d'</code></li>
+        <li class="mcq-opt"><code>'webgl'</code></li>
+        <li class="mcq-opt" data-correct="1"><code>'svg'</code></li>
+        <li class="mcq-opt"><code>'bitmaprenderer'</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensum: bare <code>2d</code>, <code>webgl</code>, <code>webgl2</code> og <code>bitmaprenderer</code> er gyldige. Ugyldig argument gir <code>null</code>.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">4 · Lett</div>
+      <div class="q-text">Hvilken funksjon brukes til å tegne et fylt rektangel?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>context.fillRect(x, y, width, height)</code>. Bruk <code>strokeRect</code> for kontur og <code>clearRect</code> for å blanke et område.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">5 · Middels</div>
+      <div class="q-text">Hvilken primitiv form er den eneste canvas støtter direkte?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Rektangel. Alle andre former (linjer, trekanter, sirkler) må bygges som paths.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">6 · Middels</div>
+      <div class="q-text">Hva tegner denne koden?
+<pre><code>context.beginPath();
+context.moveTo(75, 50);
+context.lineTo(100, 70);
+context.lineTo(100, 25);
+context.fill();</code></pre></div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">En fylt trekant med hjørner i (75, 50), (100, 70) og (100, 25). <code>fill()</code> lukker pathen automatisk og fyller den med gjeldende <code>fillStyle</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">7 · Middels</div>
+      <div class="q-text">Hva er parameterne til <code>arc()</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>arc(x, y, radius, startAngle, endAngle, anticlockwise)</code>. Vinklene oppgis i radianer; full sirkel er <code>0</code> til <code>2 * Math.PI</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">8 · Middels · MCQ</div>
+      <div class="q-text">Hvilken egenskap setter konturfargen til en figur?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><code>fillStyle</code></li>
+        <li class="mcq-opt" data-correct="1"><code>strokeStyle</code></li>
+        <li class="mcq-opt"><code>borderStyle</code></li>
+        <li class="mcq-opt"><code>lineColor</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>strokeStyle</code> for kontur, <code>fillStyle</code> for fyll. Begge tar nøkkelord, hex, rgb eller rgba.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">9 · Middels</div>
+      <div class="q-text">Hvorfor må vi bruke <code>img.onload</code> før <code>drawImage</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Bilder lastes asynkront fra serveren, så koden kan kjøre før bildet er ferdig nedlastet. <code>onload</code> sikrer at <code>drawImage</code> kalles først når bildet er tilgjengelig.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">10 · Middels</div>
+      <div class="q-text">Hva er forskjellen på <code>fillText</code> og <code>strokeText</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>fillText(text, x, y)</code> tegner fylt tekst, <code>strokeText(text, x, y)</code> tegner bare konturen av bokstavene.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Vanskelig</div>
+      <div class="q-text">Hvilke fire steg følger en typisk animasjons-frame i canvas?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          (1) Tøm canvas med <code>clearRect()</code>;
+          (2) lagre tilstanden med <code>save()</code>;
+          (3) tegn nye figurer;
+          (4) gjenopprett tilstanden med <code>restore()</code>.
+          Kall så <code>requestAnimationFrame(draw)</code> for neste frame.
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Vanskelig</div>
+      <div class="q-text">Pensum sier «it is not possible to do an animation from within a for loop». Hvorfor?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Fordi tegnefunksjoner først blir synlige på canvas når scriptet er ferdig kjørt. En for-loop fullføres på et øyeblikk, så bare det siste resultatet vises. Animasjon må fordeles over tid med <code>setInterval</code>, <code>setTimeout</code> eller <code>requestAnimationFrame</code>.</div>
+      </div>
+    </div>
   </div></section>
 
+  <!-- 11 -->
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <h2>Flashcards — <em>hele pensum 1.15 i kortform</em></h2>
+    <p class="section-intro">
+      30 kort. Klikk for å snu, <kbd>←</kbd>/<kbd>→</kbd> for å bla,
+      <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+    </p>
+
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -167,11 +622,312 @@
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
       </div>
+
+      <!-- 1 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · intro</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken HTML-versjon introduserte <code>&lt;canvas&gt;</code>?</p></div>
+          <div class="flashcard__back"><p>HTML5. Det støttes av alle større nettlesere.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · intro</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er standard bredde og høyde på <code>&lt;canvas&gt;</code> uten <code>width</code>/<code>height</code>?</p></div>
+          <div class="flashcard__back"><p>300 px bred og 150 px høy.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · context</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilken av disse er ikke et gyldig argument til <code>getContext()</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> <code>'2d'</code></li>
+              <li><span class="opt-label">B</span> <code>'webgl'</code></li>
+              <li><span class="opt-label">C</span> <code>'svg'</code></li>
+              <li><span class="opt-label">D</span> <code>'bitmaprenderer'</code></li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p>De fire gyldige strengene er <code>'2d'</code>, <code>'webgl'</code>, <code>'webgl2'</code> og <code>'bitmaprenderer'</code>. Ugyldig argument gir <code>null</code>.</p>
+            <p class="fc-correct">Riktig: C</p>
+            <p class="fc-ref">Pensum 1.15</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · context</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er det eneste context-attributtet for 2d-context, og hva gjør det?</p></div>
+          <div class="flashcard__back"><p><code>alpha</code>. Settes <code>{alpha: false}</code>, vet nettleseren at bakgrunnen alltid er ugjennomsiktig — det kan øke ytelsen.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · koordinater</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor på canvas ligger (0, 0)?</p></div>
+          <div class="flashcard__back"><p>Øverst til venstre. X går mot høyre, y nedover.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Canvas · rekkefølge</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">To rektangler tegnes — først rødt, så blått, og de overlapper. Hvilken farge ser man der de møtes?</p></div>
+          <div class="flashcard__back"><p>Blå. Senere tegninger legges <em>oppå</em> tidligere.</p><p class="fc-ref">Pensum 1.15 (Drawing on a 2D canvas)</p></div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Rektangler</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>context.fillRect(10, 20, 100, 150)</code>?</p></div>
+          <div class="flashcard__back"><p>Tegner et fylt rektangel som starter på (10, 20), 100 px bredt og 150 px høyt — i gjeldende <code>fillStyle</code>.</p><p class="fc-ref">Pensum 1.15 (Drawing a rectangle)</p></div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Rektangler</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>strokeRect(x, y, w, h)</code>?</p></div>
+          <div class="flashcard__back"><p>Tegner konturen (omrisset) av et rektangel.</p><p class="fc-ref">Pensum 1.15 (Rectangles)</p></div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Rektangler</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>clearRect(x, y, w, h)</code>?</p></div>
+          <div class="flashcard__back"><p>Tømmer rektangelet — gjør det fullt transparent.</p><p class="fc-ref">Pensum 1.15 (Rectangles)</p></div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Primitiver</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken er den <em>eneste</em> primitive formen <code>&lt;canvas&gt;</code> støtter direkte?</p></div>
+          <div class="flashcard__back"><p>Rektangel. Alle andre former må bygges som paths.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Paths</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de fire stegene for å tegne en form med path?</p></div>
+          <div class="flashcard__back"><p>(1) Lag pathen med <code>beginPath()</code>; (2) bruk tegnefunksjoner; (3) lukk pathen med <code>closePath()</code>; (4) <code>stroke()</code> eller <code>fill()</code> for å rendre.</p><p class="fc-ref">Pensum 1.15 (Lines and triangles)</p></div>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Paths</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>moveTo(x, y)</code>?</p></div>
+          <div class="flashcard__back"><p>Flytter startpunktet for en ny sub-path til (x, y) — uten å tegne en linje. Som å løfte pennen og sette den ned et nytt sted.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Paths</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>lineTo(x, y)</code>?</p></div>
+          <div class="flashcard__back"><p>Trekker en rett linje fra siste punkt i sub-pathen til (x, y).</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Paths</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>stroke()</code> og <code>fill()</code> på en path?</p></div>
+          <div class="flashcard__back"><p><code>stroke()</code> tegner omrisset av formen; <code>fill()</code> fyller innsiden med farge.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 15 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Sirkler</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er parameter-rekkefølgen til <code>arc()</code>?</p></div>
+          <div class="flashcard__back"><p><code>arc(x, y, radius, startAngle, endAngle, anticlockwise)</code>. Sentrum (x, y), radius, vinkler i radianer, og en boolean for retning.</p><p class="fc-ref">Pensum 1.15 (Circles)</p></div>
+        </div>
+      </div>
+
+      <!-- 16 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Sirkler</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke vinkler gir en hel sirkel med <code>arc()</code>?</p></div>
+          <div class="flashcard__back"><p><code>0</code> til <code>2 * Math.PI</code>. Da spiller det ingen rolle om <code>anticlockwise</code> er true eller false.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 17 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Tekst</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke to funksjoner brukes til å tegne tekst på canvas?</p></div>
+          <div class="flashcard__back"><p><code>fillText(text, x, y)</code> for fylt tekst og <code>strokeText(text, x, y)</code> for kontur.</p><p class="fc-ref">Pensum 1.15 (Text)</p></div>
+        </div>
+      </div>
+
+      <!-- 18 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Tekst</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire properties styrer tekstens utseende?</p></div>
+          <div class="flashcard__back"><p><code>font</code>, <code>textAlign</code>, <code>textBaseline</code>, <code>direction</code>.</p><p class="fc-ref">Pensum 1.15 (Text)</p></div>
+        </div>
+      </div>
+
+      <!-- 19 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Tekst</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er gyldige verdier for <code>textBaseline</code>?</p></div>
+          <div class="flashcard__back"><p><code>top</code>, <code>hanging</code>, <code>middle</code>, <code>alphabetic</code> (default), <code>ideographic</code>, <code>bottom</code>.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 20 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Stiler</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva styrer <code>fillStyle</code> og <code>strokeStyle</code>?</p></div>
+          <div class="flashcard__back"><p><code>fillStyle</code> setter fyllfarge, <code>strokeStyle</code> setter konturfarge. Begge tar nøkkelord, hex, rgb eller rgba.</p><p class="fc-ref">Pensum 1.15 (Styling the canvas)</p></div>
+        </div>
+      </div>
+
+      <!-- 21 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Stiler · linjer</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilke verdier kan <code>lineCap</code> ha?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> <code>butt</code>, <code>round</code>, <code>square</code></li>
+              <li><span class="opt-label">B</span> <code>round</code>, <code>bevel</code>, <code>miter</code></li>
+              <li><span class="opt-label">C</span> <code>start</code>, <code>end</code>, <code>center</code></li>
+              <li><span class="opt-label">D</span> <code>top</code>, <code>middle</code>, <code>bottom</code></li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><code>lineCap</code> styrer endene på linjer. Alternativ B er <code>lineJoin</code>.</p>
+            <p class="fc-correct">Riktig: A</p>
+            <p class="fc-ref">Pensum 1.15</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 22 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Stiler · linjer</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre verdier kan <code>lineJoin</code> ha?</p></div>
+          <div class="flashcard__back"><p><code>round</code>, <code>bevel</code> eller <code>miter</code> — styrer hjørnene der linjer møtes.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 23 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Stiler · linjer</span><span class="flashcard__diff" data-diff="vanskelig">vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva blir mønsteret hvis du kaller <code>setLineDash([5, 15, 25])</code>?</p></div>
+          <div class="flashcard__back"><p>Oddetall i arrayet kopieres og settes sammen, så det blir <code>[5, 15, 25, 5, 15, 25]</code> — annenhver linje og gap.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 24 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="lett">lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke to steg trengs for å tegne et bilde på canvas?</p></div>
+          <div class="flashcard__back"><p>(1) Få en referanse til bildet — typisk via <code>new Image()</code> + <code>img.src</code>; (2) tegn det på canvas med <code>drawImage()</code>.</p><p class="fc-ref">Pensum 1.15 (Placing images in your canvas)</p></div>
+        </div>
+      </div>
+
+      <!-- 25 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvorfor må <code>drawImage</code> typisk legges i <code>img.onload</code>?</p></div>
+          <div class="flashcard__back"><p>Bildet lastes asynkront fra serveren. Uten <code>onload</code> kan koden kjøre før bildet er ferdig, og <code>drawImage</code> får ingenting å tegne.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 26 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="vanskelig">vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor mange parametre tar <code>drawImage</code> hvis du både vil <em>beskjære</em> og <em>plassere</em>?</p></div>
+          <div class="flashcard__back"><p>9: <code>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</code>. De fire første er kildeområdet, de fire siste er destinasjonsrektangelet på canvas.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 27 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Animasjon</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire steg gjentar du for hver animasjons-frame?</p></div>
+          <div class="flashcard__back"><p>(1) <code>clearRect()</code> for å tømme; (2) <code>save()</code> for å lagre tilstanden; (3) tegn nye figurer; (4) <code>restore()</code> for å gjenopprette.</p><p class="fc-ref">Pensum 1.15 (Animate on a 2D canvas)</p></div>
+        </div>
+      </div>
+
+      <!-- 28 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Animasjon</span><span class="flashcard__diff" data-diff="middels">middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>window.requestAnimationFrame(callback)</code>?</p></div>
+          <div class="flashcard__back"><p>Forteller nettleseren at du vil kjøre en animasjon, og ber den kalle <code>callback</code> for å oppdatere før neste repaint.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 29 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Animasjon</span><span class="flashcard__diff" data-diff="vanskelig">vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Pensum sier: «it is not possible to do an animation from within a for loop». Hvorfor ikke?</p></div>
+          <div class="flashcard__back"><p>Tegnefunksjoner blir først synlige på canvas når scriptet er ferdig. En for-loop kjører unna alt med én gang, så bare det siste resultatet vises. Animasjon krever at tegningen fordeles over tid — bruk <code>setInterval</code>, <code>setTimeout</code> eller <code>requestAnimationFrame</code>.</p><p class="fc-ref">Pensum 1.15</p></div>
+        </div>
+      </div>
+
+      <!-- 30 -->
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Transform</span><span class="flashcard__diff" data-diff="vanskelig">vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>context.translate(x, y)</code>?</p></div>
+          <div class="flashcard__back"><p>Flytter canvas’ <code>(0, 0)</code>-koordinat til (x, y). Etterfølgende tegnefunksjoner bruker det nye origo.</p><p class="fc-ref">Pensum 1.15 (Animate on a 2D canvas)</p></div>
+        </div>
+      </div>
+
     </div>
   </div></section>
+
 </main>
 
-<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
 
 <script src="../quiz.js"></script>
 <script src="../flashcards.js"></script>

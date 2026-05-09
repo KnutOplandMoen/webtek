@@ -30,12 +30,13 @@
       <div class="eyebrow">Kapittel 6 · Forelesning 12 · Del 2</div>
       <h1>Responsivt <em>webdesign</em></h1>
       <p class="lede">
-        Én HTML, én CSS-fil, men siden ser ut som den er bygd for både
-        mobil og bredskjerm. Media queries gjør jobben.
+        Én CSS-fil, mange skjermer. Med <code>@media</code> introduserer du
+        breakpoints og deler stilene som er felles mellom mobil og desktop —
+        DRY-prinsippet i praksis.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.10</span>
-        <span class="pill">Slides: kommer</span>
+        <span class="pill">1.10.1 — 1.10.3</span>
         <span class="pill">Forelesning 12</span>
       </div>
     </div>
@@ -45,8 +46,8 @@
     <div class="container">
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor responsivt?</a></li>
-        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
-        <li><span class="toc-num">03</span><a href="#reisen">Mobile first</a></li>
+        <li><span class="toc-num">02</span><a href="#anatomi">Anatomi av en media query</a></li>
+        <li><span class="toc-num">03</span><a href="#evaluering">Evaluering og kaskade</a></li>
         <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
         <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
         <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
@@ -62,48 +63,169 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>responsivt</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Brukerne har skjermstørrelser fra 320 px til 4 000 px. Responsivt design er ikke valgfritt — det er forventet. Vis kontrast: en desktop-only side på mobil, og hva som går galt.</p>
-      <p><strong>Kilde:</strong> pensum 1.10.</p>
+    <p>
+      I dag kjører nettsider på alt fra laptop og nettbrett til mobil og
+      phablet. En desktop-layout på en mobilskjerm gir typisk for liten eller
+      for stor font — brukeropplevelsen lider. Tidligere ble dette løst ved
+      å publisere flere stylesheets eller flere versjoner av siden for små
+      skjermer, men det bryter med <em>don&apos;t repeat yourself</em>:
+      identisk styling havnet i flere filer som måtte vedlikeholdes parallelt.
+    </p>
+    <p>
+      CSS3 introduserte <strong>media queries</strong>. Med dem kan vi sette
+      <strong>breakpoints</strong> i én og samme CSS-fil og dele kode som er
+      felles mellom mobil og desktop, mens regler som er spesifikke for et
+      gitt skjermområde står inne i en <code>@media</code>-blokk.
+    </p>
+    <div class="callout">
+      <div class="label">Kilde</div>
+      <p>Pensum 1.10 (Responsive web design).</p>
     </div>
   </div></section>
 
-  <section id="hierarki"><div class="container">
+  <section id="anatomi"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
-    <h2>Viewport, breakpoints og <em>fluide enheter</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Forklar viewport-meta-taggen, hva en breakpoint faktisk er (en CSS-betingelse), og hvorfor %, vw, vh, em, rem ofte er bedre enn px.</p>
-    </div>
+    <h2>Anatomien til en <em>media query</em></h2>
+    <p>
+      En media query starter med <code>@media</code>, etterfulgt av et
+      uttrykk som evalueres til <em>true</em> eller <em>false</em>. Inne i
+      blokken legger du vanlige CSS-regler. Reglene anvendes kun når
+      uttrykket er sant for nettleseren akkurat nå.
+    </p>
+<pre><code>p {
+  font-size: 22px;
+}
+
+@media (max-width: 600px) {
+  p {
+    font-size: 14px;
+  }
+}</code></pre>
+    <p>
+      I eksempelet over er standardstørrelsen 22 px, men når
+      nettleservinduet er <strong>600 px eller smalere</strong> overstyres
+      verdien til 14 px. <code>max-width: 600px</code> er en
+      <em>media feature</em> — én av flere uttrykk som kan stå i en spørring.
+    </p>
+    <ol class="steps">
+      <li><strong>Start</strong> med nøkkelordet <code>@media</code>.</li>
+      <li><strong>Legg til</strong> null eller flere uttrykk (media types og/eller media features). Alle må evaluere til true for at blokken skal anvendes.</li>
+      <li><strong>Skriv</strong> CSS-regler inne i blokkens krøllparenteser. Disse følger normal kaskade når de er aktive.</li>
+    </ol>
   </div></section>
 
-  <section id="reisen"><div class="container">
+  <section id="evaluering"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Mobile <em>first</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: skriv default-stil for mobil → bruk <code>@media (min-width: 768px)</code> for tablet → <code>@media (min-width: 1024px)</code> for desktop. Hvorfor mobile first vinner over desktop first.</p>
+    <h2>Evaluering, <em>kaskade og kobling</em></h2>
+    <p>Pensum understreker fire egenskaper ved hvordan media queries oppfører seg:</p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">true / false</div><div class="fc-val">Hele uttrykket må resolvere til true før blokken anvendes.</div></div>
+      <div class="fact-card"><div class="fc-key">Null eller flere uttrykk</div><div class="fc-val">En spørring kan ha flere features kombinert med <code>and</code> — alle må være sanne.</div></div>
+      <div class="fact-card"><div class="fc-key">Normal kaskade</div><div class="fc-val">Når en blokk er aktiv, deltar reglene i den vanlige spesifisitets- og rekkefølge-kaskaden.</div></div>
+      <div class="fact-card"><div class="fc-key">Case insensitive</div><div class="fc-val">Store og små bokstaver i selve spørringen behandles likt.</div></div>
+      <div class="fact-card"><div class="fc-key">Ukjent media type</div><div class="fc-val">Spørringer med ukjent media type evalueres alltid til <strong>false</strong>.</div></div>
     </div>
+    <p>
+      Du kan også koble en media type direkte på et stylesheet via
+      <code>media</code>-attributtet på <code>&lt;link&gt;</code>:
+    </p>
+<pre><code>&lt;link rel="stylesheet" media="screen" href="/css/master.css"&gt;</code></pre>
+    <p>
+      Det samme settet av media types som brukes i <code>@media</code>-blokker
+      gjelder her.
+    </p>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De tre <em>delene</em></h2>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · TYP</div><div class="sp-title">Media types</div><div class="sp-desc">screen, print, all. Pensum 1.10.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · FTR</div><div class="sp-title">Media features</div><div class="sp-desc">width, min-width, max-width, orientation, aspect-ratio. Pensum 1.10.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · LOG</div><div class="sp-title">Logiske operatorer</div><div class="sp-desc">and, or, not, only. Pensum 1.10.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · TYP</div><div class="sp-title">Media types</div><div class="sp-desc"><code>all</code>, <code>screen</code>, <code>print</code>. Bestemmer hvilken type enhet stilen gjelder for. Pensum 1.10.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · FTR</div><div class="sp-title">Media features</div><div class="sp-desc"><code>width</code>, <code>height</code>, <code>resolution</code>, <code>orientation</code>. De tre første tar <code>min-</code>/<code>max-</code>-prefiks. Pensum 1.10.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · LOG</div><div class="sp-title">Logiske operatorer</div><div class="sp-desc"><code>and</code>, <code>not</code>, <code>only</code>. Kombinerer og endrer betydningen av en spørring. Pensum 1.10.3.</div></div>
     </div>
+
+    <h3>A · Media types <span style="color:var(--ink-faded);font-weight:400;">(1.10.1)</span></h3>
+    <p>Tre media types er pensum:</p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">all</div><div class="fc-val">Passer for alle enheter — anvendes både på skjerm og print.</div></div>
+      <div class="fact-card"><div class="fc-key">screen</div><div class="fc-val">For dataskjermer (laptop, mobil, nettbrett).</div></div>
+      <div class="fact-card"><div class="fc-key">print</div><div class="fc-val">For utskrifter og dokumenter vist i print preview.</div></div>
+    </div>
+    <p>
+      De fleste sider vises på skjerm, så det er ikke alltid nødvendig å
+      eksplisitt skrive <code>screen</code>. Men når noen stiler vil ødelegge
+      utskrift (f.eks. en navbar du ikke vil ha med på papir) er det greit å
+      avgrense med media type:
+    </p>
+<pre><code>@media print {
+  #nav-area { display: none; }
+}</code></pre>
+
+    <h3>B · Media features <span style="color:var(--ink-faded);font-weight:400;">(1.10.2)</span></h3>
+    <p>
+      <code>width</code>, <code>height</code> og <code>resolution</code> kan
+      ha <code>min-</code> og <code>max-</code> som prefiks for å uttrykke
+      henholdsvis nedre og øvre grense. <code>orientation</code> tar verdiene
+      <code>portrait</code> eller <code>landscape</code>.
+    </p>
+<pre><code>/* Eksakt bredde */
+@media (width: 300px) { /* … */ }
+
+/* Bredde minst */
+@media (min-width: 600px) { /* … */ }
+
+/* Bredde høyst */
+@media (max-width: 1200px) { /* … */ }
+
+/* Høyde, samme prinsipp */
+@media (min-height: 600px) { /* … */ }
+
+/* Print, høy oppløsning */
+@media print and (min-resolution: 300dpi) { /* … */ }
+
+/* Orientering */
+@media (orientation: portrait) { /* … */ }</code></pre>
+    <p>
+      <strong>Verdier</strong> for bredde og høyde må alltid skrives som tall
+      pluss en lengdeenhet (<code>px</code>, <code>em</code>).
+    </p>
+
+    <h3>C · Logiske operatorer <span style="color:var(--ink-faded);font-weight:400;">(1.10.3)</span></h3>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">and</div><div class="fc-val">Kombinerer flere features. Hver del må være true.</div></div>
+      <div class="fact-card"><div class="fc-key">not</div><div class="fc-val">Negerer hele spørringen — kan <em>ikke</em> negere én enkelt feature.</div></div>
+      <div class="fact-card"><div class="fc-key">only</div><div class="fc-val">Hindrer at eldre nettlesere uten støtte for media features anvender stilen.</div></div>
+    </div>
+<pre><code>/* and: begge må være sanne */
+@media (max-width: 600px) and (orientation: landscape) { /* … */ }
+
+/* not: gjelder hele spørringen og evalueres SIST */
+@media not all and (monochrome) { /* … */ }
+/* tolkes som: */
+@media not (all and (monochrome)) { /* … */ }
+/* IKKE som: */
+@media (not all) and (monochrome) { /* … */ }
+
+/* only: skjuler stilen for eldre nettlesere */
+@media only screen { /* … */ }</code></pre>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">Media query</div><div class="fc-val"><code>@media (min-width: …)</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">Breakpoint</div><div class="fc-val">Skjermbredden der layouten endrer seg.</div></div>
-      <div class="fact-card"><div class="fc-key">Viewport</div><div class="fc-val">Synlig del av nettleser-vinduet.</div></div>
-      <div class="fact-card"><div class="fc-key">vw / vh</div><div class="fc-val">% av viewport.</div></div>
-      <div class="fact-card"><div class="fc-key">em / rem</div><div class="fc-val">Relativ til hhv. nærmeste forelder / root.</div></div>
-      <div class="fact-card"><div class="fc-key">Mobile first</div><div class="fc-val">Skriv stil for små skjermer som default.</div></div>
+      <div class="fact-card"><div class="fc-key">Media query</div><div class="fc-val">Spørring som starter med <code>@media</code> og inneholder uttrykk som evalueres til true/false.</div></div>
+      <div class="fact-card"><div class="fc-key">Breakpoint</div><div class="fc-val">Punktet i designet der stilen endrer seg, definert av et media-feature-uttrykk.</div></div>
+      <div class="fact-card"><div class="fc-key">DRY</div><div class="fc-val"><em>Don&apos;t repeat yourself</em>. Motivasjonen for å bruke media queries fremfor egne stilark per enhet.</div></div>
+      <div class="fact-card"><div class="fc-key">Media type</div><div class="fc-val">Hva slags enhet stilen gjelder for: <code>all</code>, <code>screen</code>, <code>print</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Media feature</div><div class="fc-val">Egenskap ved enheten/viewporten — <code>width</code>, <code>height</code>, <code>resolution</code>, <code>orientation</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">min-/max-prefiks</div><div class="fc-val">Brukes på <code>width</code>, <code>height</code> og <code>resolution</code> for å uttrykke grenser.</div></div>
+      <div class="fact-card"><div class="fc-key">portrait / landscape</div><div class="fc-val">De to verdiene <code>orientation</code> kan anta.</div></div>
+      <div class="fact-card"><div class="fc-key">and</div><div class="fc-val">Logisk operator som kombinerer media features. Alle må evaluere til true.</div></div>
+      <div class="fact-card"><div class="fc-key">not</div><div class="fc-val">Negerer hele spørringen og evalueres til slutt.</div></div>
+      <div class="fact-card"><div class="fc-key">only</div><div class="fc-val">Skjuler stilen for nettlesere uten media-feature-støtte.</div></div>
+      <div class="fact-card"><div class="fc-key">media-attributt</div><div class="fc-val">Attributt på <code>&lt;link&gt;</code>-tag som tar samme media types som <code>@media</code>.</div></div>
     </div>
   </div></section>
 
@@ -111,11 +233,14 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 6</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">skrive media queries</span>
-      <span class="recap-pill">bruke logiske operatorer</span>
-      <span class="recap-pill">velge breakpoints</span>
-      <span class="recap-pill">forskjell på media types</span>
-      <span class="recap-pill">vw, vh, em, rem</span>
+      <span class="recap-pill">forklare DRY-motivasjonen for media queries</span>
+      <span class="recap-pill">skrive en <code>@media</code>-blokk</span>
+      <span class="recap-pill">de tre media types: all, screen, print</span>
+      <span class="recap-pill">bruke width/height/resolution med min-/max-</span>
+      <span class="recap-pill">bruke orientation: portrait/landscape</span>
+      <span class="recap-pill">kombinere med and, not, only</span>
+      <span class="recap-pill">forklare hvor not-operatoren plasseres</span>
+      <span class="recap-pill">koble media type via &lt;link media=…&gt;</span>
     </div>
   </div></section>
 
@@ -123,39 +248,161 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.10 (Responsive web design).</li>
-      <li><strong>Slides:</strong> ikke ferdige slides ennå — sjekk BlackBoard etter F12.</li>
-      <li><strong>Eksterne:</strong> MDN — Using media queries.</li>
+      <li><strong>Lærebok:</strong> pensum 1.10 (Responsive web design), inkludert 1.10.1 Media types, 1.10.2 Media features, 1.10.3 Logical operators.</li>
+      <li><strong>Anbefalt videre lesing (fra pensum):</strong> Smashing Magazine om responsivt design og <em>responsivedesign.is</em>.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Glemme viewport-meta-tag (siden zoomes ut og blir uleselig på mobil); skrive desktop first og overrider på mobil; bruke px overalt.</p>
+    <div class="callout-warn">
+      <div class="label">Pensum 1.10</div>
+      <ul>
+        <li><strong>Glemme enhet på width/height.</strong> Pensum krever et tall <em>pluss</em> en lengdeenhet (<code>px</code>, <code>em</code>). <code>@media (min-width: 600)</code> er ugyldig.</li>
+        <li><strong>Tro at <code>not</code> kan negere én feature.</strong> <code>not</code> gjelder hele spørringen — den evalueres til slutt.</li>
+        <li><strong>Tro at en spørring må ha en media type.</strong> Den kan ha null eller flere uttrykk; <code>@media (min-width: 600px)</code> alene er gyldig.</li>
+        <li><strong>Bruke <code>screen</code> der det egentlig skal være <code>print</code>.</strong> Hvis stilen kun skal gjelde for utskrift, må media type være <code>print</code>.</li>
+        <li><strong>Skrive ukjente media types.</strong> Pensum sier eksplisitt at en query med ukjent media type alltid evalueres til false — stilen vil aldri anvendes.</li>
+      </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Skriv en <em>responsiv layout</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Lag CSS som viser tre kort i rad på desktop, to på tablet, ett på mobil.»</p>
+    <h2>Skriv en <em>media query</em></h2>
+    <div class="callout">
+      <div class="label">Oppgave</div>
+      <p>
+        En <code>p</code> har <code>font-size: 22px</code> som standard. Skriv
+        en CSS-regel som setter font-størrelsen til <code>14px</code> når
+        nettleservinduet er <strong>600 px eller smalere</strong>.
+      </p>
+    </div>
+    <div class="callout-good">
+      <div class="label">Løsning</div>
+<pre><code>@media (max-width: 600px) {
+  p {
+    font-size: 14px;
+  }
+}</code></pre>
+      <p>Hentet rett fra pensum 1.10. Vær obs på at enheten <code>px</code> er obligatorisk i media-feature-verdier.</p>
+    </div>
+    <div class="callout">
+      <div class="label">Variant</div>
+      <p>
+        «Skriv en spørring som kun anvendes på skjermer i landscape som er
+        høyst 600 px brede.» — kombiner <code>and</code> med en feature og
+        en orientation:
+      </p>
+<pre><code>@media screen and (max-width: 600px) and (orientation: landscape) {
+  /* … */
+}</code></pre>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Tegn-din-egen-media-query-MCQ er bra her.</p></div>
+    <p class="section-intro">Spørsmål direkte fra pensum 1.10.</p>
+
+    <div class="quiz mcq">
+      <div class="q-label">1 · Lett</div>
+      <div class="q-text">Hvilket nøkkelord starter en media query?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">@query</li>
+        <li class="mcq-opt" data-correct="1">@media</li>
+        <li class="mcq-opt" data-correct="0">@responsive</li>
+        <li class="mcq-opt" data-correct="0">@screen</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10: «You write a media query as such, in your CSS document» — alltid med <code>@media</code>.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">2 · Lett</div>
+      <div class="q-text">Hvilke tre media types skal du kunne fra pensum?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">screen, mobile, desktop</li>
+        <li class="mcq-opt" data-correct="0">tv, screen, print</li>
+        <li class="mcq-opt" data-correct="1">all, screen, print</li>
+        <li class="mcq-opt" data-correct="0">device, screen, paper</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10.1 lister eksplisitt <code>all</code>, <code>screen</code> og <code>print</code>.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">3 · Middels</div>
+      <div class="q-text">Hvilke media features kan ha både <code>min-</code> og <code>max-</code> som prefiks?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">orientation og width</li>
+        <li class="mcq-opt" data-correct="1">width, height og resolution</li>
+        <li class="mcq-opt" data-correct="0">kun width og height</li>
+        <li class="mcq-opt" data-correct="0">alle media features</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10.2: «With the features below height, width and resolution can be used with the min- and max- prefixes.»</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">4 · Middels</div>
+      <div class="q-text">Hva evalueres <code>@media not all and (monochrome)</code> til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><code>not (all and (monochrome))</code> — not gjelder hele spørringen</li>
+        <li class="mcq-opt" data-correct="0"><code>(not all) and (monochrome)</code> — not gjelder kun «all»</li>
+        <li class="mcq-opt" data-correct="0">syntaksfeil — not kan ikke kombineres med and</li>
+        <li class="mcq-opt" data-correct="0">alltid true</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10.3: «the not is evaluated last in the following query». Hele spørringen blir negert som en helhet.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">5 · Middels</div>
+      <div class="q-text">Hva er hovedmotivasjonen for media queries i følge pensum?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Bedre SEO på mobile søk</li>
+        <li class="mcq-opt" data-correct="1">DRY — unngå å duplisere stiler i flere stylesheets</li>
+        <li class="mcq-opt" data-correct="0">Raskere lasting på mobil</li>
+        <li class="mcq-opt" data-correct="0">Krav i WCAG-standarden</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10: tidligere ble dette løst med separate stilark, noe som «obviously defy the DRY principle».</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">6 · Vanskelig</div>
+      <div class="q-text">Hva er <code>only</code>-nøkkelordet til for?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Bare anvende stilen én gang</li>
+        <li class="mcq-opt" data-correct="0">Begrense til én bestemt enhet</li>
+        <li class="mcq-opt" data-correct="1">Hindre eldre nettlesere uten støtte for media features fra å anvende stilen</li>
+        <li class="mcq-opt" data-correct="0">Sørge for at kun den ene blokken kjører selv om flere matcher</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.10.3: «The only keyword prevents older browsers that do not support media queries with media features from applying the given styles.»</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">7 · Reveal</div>
+      <div class="q-text">Hva skjer hvis en media query refererer til en ukjent media type?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Spørringen evalueres alltid til <strong>false</strong>, og stilen anvendes derfor aldri. Pensum 1.10: «Media queries involving unknown media types are always false.»</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">8 · Reveal</div>
+      <div class="q-text">Skriv en media query som anvender en stil bare når viewport er minst 600 px bred OG i landscape.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><pre><code>@media (min-width: 600px) and (orientation: landscape) {
+  /* … */
+}</code></pre>Begge features må evaluere til true (jf. <code>and</code>-operatoren, pensum 1.10.3).</div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
     <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <p class="section-intro">30 kort som dekker pensum 1.10 — bruk <kbd>←</kbd> <kbd>→</kbd> for å bla, klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.</p>
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -163,6 +410,256 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Motivasjon</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilket prinsipp motiverer media queries fremfor flere separate stilark?</p></div>
+          <div class="flashcard__back"><p>DRY — <em>don&apos;t repeat yourself</em>. Felles stiler skal stå ett sted; bare det som virkelig avhenger av enheten legges i en <code>@media</code>-blokk.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Syntaks</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva starter alle media queries med?</p></div>
+          <div class="flashcard__back"><p><code>@media</code>, etterfulgt av et uttrykk som evalueres til true eller false.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Evaluering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor mange uttrykk kan en media query ha, og hvilken regel gjelder for å anvende blokken?</p></div>
+          <div class="flashcard__back"><p>Null eller flere uttrykk. Alle uttrykkene må evaluere til true før blokken anvendes.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Kaskade</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan oppfører reglene seg når en media query er aktiv?</p></div>
+          <div class="flashcard__back"><p>De følger normal CSS-kaskade — vanlig spesifisitet og kilde-rekkefølge avgjør hvilken regel som vinner.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Detalj</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Er media queries case sensitive?</p></div>
+          <div class="flashcard__back"><p>Nei, de er case insensitive.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Detalj</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva skjer hvis en media query har en ukjent media type?</p></div>
+          <div class="flashcard__back"><p>Spørringen evalueres alltid til <strong>false</strong>, og stilen anvendes aldri.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10 · Eksempel</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr denne blokken?<br><code>@media (max-width: 600px) { p { font-size: 14px; } }</code></p></div>
+          <div class="flashcard__back"><p>Når nettleservinduet er 600 px eller smalere, settes <code>p</code>-fontstørrelsen til 14 px.</p><div class="fc-ref">Pensum 1.10</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · Media types</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre media types skal du kunne?</p></div>
+          <div class="flashcard__back"><p><code>all</code>, <code>screen</code> og <code>print</code>.</p><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · all</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr media type <code>all</code>?</p></div>
+          <div class="flashcard__back"><p>Suitable for all devices — stilen anvendes både på skjerm og print.</p><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · screen</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>screen</code> ment for?</p></div>
+          <div class="flashcard__back"><p>Dataskjermer — laptop, mobil og nettbrett.</p><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · print</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>print</code> ment for?</p></div>
+          <div class="flashcard__back"><p>Paged material — utskrifter og dokumenter vist i print preview-modus.</p><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · &lt;link&gt;</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor ellers enn i <code>@media</code>-blokker brukes media types?</p></div>
+          <div class="flashcard__back"><p>I <code>media</code>-attributtet på en <code>&lt;link rel="stylesheet"&gt;</code>-tag, f.eks. <code>&lt;link rel="stylesheet" media="screen" href="…"&gt;</code>.</p><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.1 · Praksis</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan skjuler du navbaren ved utskrift?</p></div>
+          <div class="flashcard__back"><pre><code>@media print {
+  #nav-area { display: none; }
+}</code></pre><div class="fc-ref">Pensum 1.10.1</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · Features</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire media features lister pensum?</p></div>
+          <div class="flashcard__back"><p><code>width</code>, <code>height</code>, <code>resolution</code> og <code>orientation</code>.</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · Prefiks</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke media features kan ha <code>min-</code>/<code>max-</code>-prefiks?</p></div>
+          <div class="flashcard__back"><p><code>width</code>, <code>height</code> og <code>resolution</code>.</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · width</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva refererer media-feature <code>width</code> til?</p></div>
+          <div class="flashcard__back"><p>Bredden på viewporten (nettleservinduet).</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · height</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva refererer media-feature <code>height</code> til?</p></div>
+          <div class="flashcard__back"><p>Høyden på viewporten (nettleservinduet).</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · Enheter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan må verdier til <code>width</code>/<code>height</code> skrives?</p></div>
+          <div class="flashcard__back"><p>Et tall pluss en lengdeenhet — <code>px</code> eller <code>em</code>. Bare tall uten enhet er ugyldig.</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · resolution</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva refererer <code>resolution</code> til, og når brukes det typisk?</p></div>
+          <div class="flashcard__back"><p>Pikseldensiteten på utgangsenheten. Brukes ofte sammen med <code>print</code>, f.eks. <code>@media print and (min-resolution: 300dpi)</code>.</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · orientation</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke verdier kan <code>orientation</code> anta?</p></div>
+          <div class="flashcard__back"><p><code>portrait</code> og <code>landscape</code>.</p><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · Eksempel</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Skriv en query som matcher viewporter på minst 600 px.</p></div>
+          <div class="flashcard__back"><pre><code>@media (min-width: 600px) {
+  /* … */
+}</code></pre><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.2 · Eksempel</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Skriv en query som matcher når viewporten er høyst 800 px høy.</p></div>
+          <div class="flashcard__back"><pre><code>@media (max-height: 800px) {
+  /* … */
+}</code></pre><div class="fc-ref">Pensum 1.10.2</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · and</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>and</code>-operatoren?</p></div>
+          <div class="flashcard__back"><p>Kombinerer flere media features i én spørring. Hver av dem må evaluere til true før blokken anvendes.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · and</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Skriv en spørring for: høyst 600 px bred OG i landscape.</p></div>
+          <div class="flashcard__back"><pre><code>@media (max-width: 600px) and (orientation: landscape) {
+  /* … */
+}</code></pre><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · not</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>not</code>-operatoren?</p></div>
+          <div class="flashcard__back"><p>Negerer hele media-spørringen og returnerer true når spørringen ellers ville vært false.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · not</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Kan <code>not</code> negere en enkelt feature?</p></div>
+          <div class="flashcard__back"><p>Nei. <code>not</code> kan kun negere en hel media query — ikke én individuell feature.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · not</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan tolkes <code>@media not all and (monochrome)</code>?</p></div>
+          <div class="flashcard__back"><p>Som <code>@media not (all and (monochrome))</code> — <code>not</code> evalueres SIST og gjelder hele spørringen, ikke bare <code>all</code>.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · not</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan oppfører <code>not</code> seg i en komma-separert liste av media queries?</p></div>
+          <div class="flashcard__back"><p>Den negerer kun den ene spørringen den er satt på — ikke alle spørringene i lista.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · only</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er hensikten med <code>only</code>-nøkkelordet?</p></div>
+          <div class="flashcard__back"><p>Hindre eldre nettlesere som ikke støtter media queries med media features fra å anvende stilen.</p><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.10.3 · only</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Skriv en spørring som bare anvendes på moderne nettlesere som støtter media features for skjerm.</p></div>
+          <div class="flashcard__back"><pre><code>@media only screen {
+  /* … */
+}</code></pre><div class="fc-ref">Pensum 1.10.3</div></div>
+        </div>
       </div>
     </div>
   </div></section>

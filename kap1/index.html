@@ -30,9 +30,10 @@
       <div class="eyebrow">Kapittel 1 · Forelesning 1–2 · Del 1</div>
       <h1>Web og <em>Internett</em></h1>
       <p class="lede">
-        Hva skjer egentlig mellom det øyeblikket du skriver inn en URL og
-        siden vises? Klient/tjener, HTTP, DNS og TCP/IP — fundamentet alle
-        andre kapitler bygger på.
+        Hva skjer egentlig mellom det øyeblikket du skriver inn et domene og
+        siden vises? Klient og tjener, HTTP, TCP/IP, DNS — og DOM-treet som
+        nettleseren bygger til slutt. Dette er fundamentet alt resten av faget
+        bygger på.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.1 — 1.3</span>
@@ -46,8 +47,8 @@
     <div class="container">
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor web-arkitektur?</a></li>
-        <li><span class="toc-num">02</span><a href="#hierarki">Helhetsbildet</a></li>
-        <li><span class="toc-num">03</span><a href="#reisen">Reise gjennom kapittelet</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Klient, tjener, og laget mellom</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Reisen fra URL til side</a></li>
         <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
         <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
         <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
@@ -64,15 +65,27 @@
     <div class="container">
       <div class="section-badge">01 · Helhetsbilde</div>
       <h2>Hvorfor <em>web-arkitektur</em>?</h2>
-      <div class="callout">
-        <div class="label">Skal skrives</div>
+      <p>
+        Når du besøker en nettside, gjør du det gjennom nettleseren. Men
+        nettleseren snakker ikke direkte med siden — den snakker med en
+        <em>tjener</em> et helt annet sted i verden, og bruker en avtalt
+        protokoll for å hente filene som siden består av. Dette samspillet
+        kalles <strong>klient-tjener-arkitekturen</strong>.
+      </p>
+      <p>
+        Resten av pensum bygger på dette bildet. HTML-filen er bare én av
+        flere ressurser nettleseren henter; CSS-fila og JavaScript-fila kommer
+        ofte i egne forespørsler. Hvis du ikke har klient/tjener-modellen i
+        bakhodet, gir det lite mening at <code>style.css</code> hentes
+        separat fra <code>index.html</code>.
+      </p>
+      <div class="callout-blue">
+        <div class="label">Hovedpoeng</div>
         <p>
-          Motiver hvorfor en student må kunne web-arkitektur før hun begynner
-          med HTML. Hovedpoeng: alt annet i pensum kjører på toppen av denne
-          arkitekturen — uten å forstå klient/tjener gir det lite mening at en
-          stilfil hentes separat fra HTML-en.
+          En klient ber om noe. En tjener svarer. Mellom dem ligger
+          Internett — et nettverk av nettverk — som transportgods mellom
+          dem. Resten er detaljer på dette temaet.
         </p>
-        <p><strong>Kilde:</strong> pensum 1.1 (Introduction), 1.1.1 (Web architecture); slides <code>presentasjoner/intro.md</code> linje 36–110.</p>
       </div>
     </div>
   </section>
@@ -81,14 +94,100 @@
     <div class="container">
       <div class="section-badge">02 · Mental modell</div>
       <h2>Klient, <em>tjener</em>, og laget mellom</h2>
-      <div class="callout">
-        <div class="label">Skal skrives</div>
-        <p>
-          En SVG-figur som viser klient (nettleseren) til venstre, tjener til
-          høyre, og pakkene som flytter seg over Internett. Forklare LAN vs
-          WAN, og hva «skyen» faktisk er.
-        </p>
-        <p><strong>Kilde:</strong> pensum 1.1.1 (Server, Client, Cloud, Network).</p>
+
+      <p>
+        Pensum 1.1.1 deler verden i fire begreper: <strong>tjener</strong>,
+        <strong>klient</strong>, <strong>sky</strong> og
+        <strong>nettverk</strong>. Tre av dem er roller; det fjerde er
+        infrastrukturen rollene snakker over.
+      </p>
+
+      <div class="svg-fig" aria-label="Klient-tjener-modell med Internett mellom seg">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- Klient -->
+          <rect class="ent-fill ent-stroke" x="20" y="60" width="140" height="100" rx="6"/>
+          <text class="label-text" x="90" y="50" text-anchor="middle">Klient</text>
+          <text class="label-text" x="90" y="115" text-anchor="middle">Nettleser</text>
+          <text class="label-text" x="90" y="135" text-anchor="middle">(Firefox, Chrome, Safari)</text>
+
+          <!-- Internett (sky) -->
+          <ellipse class="ent-fill" cx="300" cy="110" rx="100" ry="55" stroke="#6b6257" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text class="label-text" x="300" y="105" text-anchor="middle">Internett</text>
+          <text class="label-text" x="300" y="125" text-anchor="middle">(rutere, pakker, TCP/IP)</text>
+
+          <!-- Tjener -->
+          <rect class="ent-fill ent-stroke" x="440" y="60" width="140" height="100" rx="6"/>
+          <text class="label-text" x="510" y="50" text-anchor="middle">Tjener</text>
+          <text class="label-text" x="510" y="115" text-anchor="middle">Webside + database</text>
+          <text class="label-text" x="510" y="135" text-anchor="middle">på lokalt filsystem</text>
+
+          <!-- Forespørsel -->
+          <line class="edge-strong" x1="160" y1="90" x2="200" y2="100" marker-end="url(#arrow1)"/>
+          <text class="label-text accent" x="180" y="80" text-anchor="middle">HTTP-forespørsel →</text>
+
+          <!-- Svar -->
+          <line class="edge" x1="400" y1="125" x2="440" y2="135"/>
+          <text class="label-text" x="420" y="160" text-anchor="middle">← HTML-fil tilbake</text>
+
+          <defs>
+            <marker id="arrow1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 z" fill="#1f4e79"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <h3>Tjener</h3>
+      <p>
+        Programvare som kjører på en datamaskin og svarer på forespørsler fra
+        klienten. Selve nettsiden og eventuell database ligger på tjenerens
+        lokale filsystem. Tjeneren henter filen og sender den tilbake til
+        klienten.
+      </p>
+
+      <h3>Klient</h3>
+      <p>
+        Brukeren når Internett gjennom programvare som kalles
+        <em>nettlesere</em> — Firefox, Chrome, Safari og lignende. Disse
+        finner og viser informasjon fra weben. Merk: nettleseren er ikke den
+        eneste måten du kan koble deg til Internett på, men i dette faget er
+        det nettleseren som er klienten.
+      </p>
+
+      <h3>HTTP — språket mellom dem</h3>
+      <p>
+        Klient og tjener må snakke et avtalt språk. Det språket er en
+        <strong>protokoll</strong>. På weben heter denne protokollen
+        <em>HyperText Transfer Protocol</em> (HTTP). Brukeren ber om en side
+        gjennom nettleseren, som videreformidler ønsket til tjeneren.
+        Nettleseren venter, mottar typisk en HTML-fil, og <em>renderer</em>
+        siden basert på filen den fikk.
+      </p>
+
+      <h3>Sky og nettverk</h3>
+      <p>
+        Skyen er bare et nettverk av tjenere som deler ressurser. Et
+        <strong>nettverk</strong> er datamaskiner — både tjenere og klienter
+        — koblet sammen. Hver maskin er en <em>node</em>; forbindelsene er
+        <em>edger</em> mellom nodene.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-cell">
+          <div class="label">LAN</div>
+          <p>
+            <em>Local Area Network</em>. Maskiner som er nær hverandre — i
+            samme bygg eller avdeling. Kontornettet ditt på campus er et LAN.
+          </p>
+        </div>
+        <div class="compare-cell">
+          <div class="label">WAN</div>
+          <p>
+            <em>Wide Area Network</em>. Dekker større områder: flere bygg,
+            byer, eller mer. <strong>Internett er det største WAN-et i
+            verden.</strong>
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -97,44 +196,112 @@
     <div class="container">
       <div class="section-badge">03 · Rekkefølgen</div>
       <h2>Reisen fra <em>URL til side</em></h2>
-      <div class="callout">
-        <div class="label">Skal skrives</div>
-        <p>
-          Stegvis: bruker skriver inn URL → DNS-oppslag → TCP-handshake →
-          HTTP-request → server svarer → nettleser parser → DOM bygges →
-          CSS/JS hentes → side render-es. Bruk en <code>.steps</code>-liste.
-          Lenker til <a href="../reisen/">Reisen</a> for fullversjonen.
-        </p>
-        <p><strong>Kilde:</strong> pensum 1.1.1 og 1.3 (DOM); slides <code>intro.md</code>.</p>
-      </div>
+      <p>
+        Pensum 1.1.2 og 1.3 lar oss sette stegene sammen. Når du skriver
+        <code>ntnu.no</code> i adressefeltet, skjer dette i grove trekk:
+      </p>
+
+      <ol class="steps">
+        <li>
+          <strong>Du skriver inn domenet.</strong>
+          Adressefeltet inneholder et menneskelesbart navn som
+          <code>ntnu.no</code>, ikke en IP-adresse.
+        </li>
+        <li>
+          <strong>Datamaskinen kontakter en DNS-server.</strong>
+          Datamaskiner trenger IP-adresser for å snakke sammen — symbolske
+          navn er bare «øyenbalsam» for mennesker.
+        </li>
+        <li>
+          <strong>DNS-serveren returnerer IP-adressen.</strong>
+          DNS er som en telefonkatalog som mapper <code>ntnu.no</code> til en
+          IP-adresse.
+        </li>
+        <li>
+          <strong>Datamaskinen kontakter tjeneren med IP-adressen.</strong>
+          Forespørselen din brytes opp i <em>pakker</em> som sendes ut på
+          nettverket.
+        </li>
+        <li>
+          <strong>Pakkene rutes gjennom flere nettverk.</strong>
+          Nettverket ditt er koblet til en <em>backbone</em> (tier 1).
+          Underveis bestemmer rutere hvilken vei pakkene skal — dynamisk,
+          basert på trafikken akkurat da.
+        </li>
+        <li>
+          <strong>Pakkene settes sammen igjen hos tjeneren.</strong>
+          Tjeneren leser HTTP-forespørselen, finner riktig fil, og sender
+          den tilbake — typisk en HTML-fil.
+        </li>
+        <li>
+          <strong>Nettleseren rendrer siden.</strong>
+          Når filen kommer fram, tegner nettleseren den opp basert på
+          markupen.
+        </li>
+        <li>
+          <strong>Nettleseren bygger DOM-treet.</strong>
+          HTML-dokumentet representeres internt som et tre av noder og
+          objekter. Det er DOM. (Mer i kapittel 10.)
+        </li>
+      </ol>
+
+      <p>
+        En lengre, interaktiv versjon av denne reisen finner du på
+        <a href="../reisen/">Reisen</a>-siden.
+      </p>
     </div>
   </section>
 
   <section id="deler">
     <div class="container">
       <div class="section-badge">04 · Hovedtemaer</div>
-      <h2>De fire <em>byggesteinene</em></h2>
-      <p class="section-intro">Kapittel 1 har fire deler. Hver kan utdypes som egen underside hvis det blir for mye.</p>
+      <h2>De fem <em>byggesteinene</em></h2>
+      <p class="section-intro">
+        Kapittel 1 dekker pensum 1.1, 1.1.1, 1.1.2, 1.2 og 1.3. Hver av disse
+        kortene er ett tema du må kunne for eksamen.
+      </p>
       <div class="subpage-card-grid">
         <div class="subpage-card" style="cursor:default;">
           <div class="sp-icon">A · WEB</div>
           <div class="sp-title">Web-arkitektur</div>
-          <div class="sp-desc">Klient, tjener, sky, nettverk.<br><strong>Kilde:</strong> pensum 1.1.1.</div>
+          <div class="sp-desc">
+            Klient, tjener, sky, nettverk. LAN vs WAN.
+            <br><strong>Kilde:</strong> pensum 1.1.1.
+          </div>
         </div>
         <div class="subpage-card" style="cursor:default;">
           <div class="sp-icon">B · NET</div>
-          <div class="sp-title">Internett og protokoller</div>
-          <div class="sp-desc">TCP/IP-lagene, HTTP, ruting, ARPANET-historien.<br><strong>Kilde:</strong> pensum 1.1.2.</div>
+          <div class="sp-title">Internett og TCP/IP</div>
+          <div class="sp-desc">
+            ARPANET-historien, fire TCP/IP-lag, ruting med pakker.
+            <br><strong>Kilde:</strong> pensum 1.1.2.
+          </div>
         </div>
         <div class="subpage-card" style="cursor:default;">
           <div class="sp-icon">C · DNS</div>
           <div class="sp-title">Domener og DNS</div>
-          <div class="sp-desc">Top-level domains, DNS-oppslag, IP vs navn.<br><strong>Kilde:</strong> pensum 1.1.2 (Domains and DNS).</div>
+          <div class="sp-desc">
+            Toppdomener (.no, .com, .edu, …), DNS-oppslag, IP-adresser.
+            <br><strong>Kilde:</strong> pensum 1.1.2.
+          </div>
         </div>
         <div class="subpage-card" style="cursor:default;">
-          <div class="sp-icon">D · DOM</div>
+          <div class="sp-icon">D · DEV</div>
+          <div class="sp-title">Verktøy for webutvikling</div>
+          <div class="sp-desc">
+            Tekstredigerere, nettleserforskjeller, W3C, validatorer,
+            developer tools.
+            <br><strong>Kilde:</strong> pensum 1.2.
+          </div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">E · DOM</div>
           <div class="sp-title">DOM som tre</div>
-          <div class="sp-desc">Hva DOM er på det konseptuelle nivået — manipulasjonen kommer i kap 10.<br><strong>Kilde:</strong> pensum 1.3.</div>
+          <div class="sp-desc">
+            Dokumentet som tre av noder. Konseptuelt nivå —
+            manipulasjonen kommer i kapittel 10.
+            <br><strong>Kilde:</strong> pensum 1.3.
+          </div>
         </div>
       </div>
     </div>
@@ -145,14 +312,66 @@
       <div class="section-badge">05 · Begreper</div>
       <h2>Nøkkel<em>begreper</em></h2>
       <div class="fact-grid">
-        <div class="fact-card"><div class="fc-key">Klient</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
-        <div class="fact-card"><div class="fc-key">Tjener</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
-        <div class="fact-card"><div class="fc-key">HTTP</div><div class="fc-val">Definisjon her — pensum 1.1.1 + 1.1.2.</div></div>
-        <div class="fact-card"><div class="fc-key">TCP/IP</div><div class="fc-val">De fire lagene — pensum 1.1.2.</div></div>
-        <div class="fact-card"><div class="fc-key">DNS</div><div class="fc-val">Definisjon her — pensum 1.1.2.</div></div>
-        <div class="fact-card"><div class="fc-key">URL</div><div class="fc-val">Definisjon her.</div></div>
-        <div class="fact-card"><div class="fc-key">LAN / WAN</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
-        <div class="fact-card"><div class="fc-key">DOM</div><div class="fc-val">Definisjon her — pensum 1.3.</div></div>
+        <div class="fact-card">
+          <div class="fc-key">Klient</div>
+          <div class="fc-val">Programvare (typisk nettleser) som ber om ressurser fra en tjener — pensum 1.1.1.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Tjener</div>
+          <div class="fc-val">Programvare som kjører på en datamaskin og svarer på klientens forespørsler. Filene ligger på det lokale filsystemet — pensum 1.1.1.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">HTTP</div>
+          <div class="fc-val">HyperText Transfer Protocol. Det avtalte språket klient og tjener bruker — pensum 1.1.1, applikasjonslag i 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Sky</div>
+          <div class="fc-val">Et nettverk av tjenere som deler ressurser — pensum 1.1.1.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Nettverk</div>
+          <div class="fc-val">Maskiner koblet sammen. Hver maskin er en node, forbindelser er edger — pensum 1.1.1.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">LAN / WAN</div>
+          <div class="fc-val">Local / Wide Area Network. Internett er det største WAN — pensum 1.1.1.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">TCP/IP</div>
+          <div class="fc-val">Felles protokoll for hele Internett. Fire lag: applikasjon, transport, nettverk, fysisk — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">IP-adresse</div>
+          <div class="fc-val">Numerisk adresse som unikt identifiserer en maskin på Internett — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Domenenavn</div>
+          <div class="fc-val">Menneskelesbart navn (ntnu.no) som identifiserer institusjon. Toppdomener: .no, .com, .edu, .org … — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">DNS</div>
+          <div class="fc-val">Domain Name Server. «Telefonkatalog» som mapper domenenavn til IP-adresse — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Pakker / ruting</div>
+          <div class="fc-val">Forespørsler brytes opp i pakker som rutes dynamisk gjennom flere nettverk via rutere — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">WWW</div>
+          <div class="fc-val">World Wide Web. Tim Berners-Lee m.fl., CERN, 1989. Hypertekst-system over Internett — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Hypertekst / hyperlenke</div>
+          <div class="fc-val">Måte å organisere informasjon der leseren styrer rekkefølgen. Lenken er elementet som lar deg hoppe — pensum 1.1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">W3C</div>
+          <div class="fc-val">World Wide Web Consortium. Internasjonal standardiseringsorganisasjon for weben — pensum 1.2.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">DOM</div>
+          <div class="fc-val">Document Object Model. Strukturert representasjon av HTML/XML som et tre av noder. Kobler siden til skript — pensum 1.3.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -163,10 +382,14 @@
       <h2>Hva du skal kunne <em>etter kap 1</em></h2>
       <div class="recap-grid">
         <span class="recap-pill">forklare klient/tjener</span>
-        <span class="recap-pill">tegne TCP/IP-lagene</span>
-        <span class="recap-pill">forklare DNS-oppslag</span>
-        <span class="recap-pill">tolke en URL</span>
-        <span class="recap-pill">peke ut DOM-treet i et HTML-dokument</span>
+        <span class="recap-pill">skille Internett fra Web</span>
+        <span class="recap-pill">nevne TCP/IP-lagene</span>
+        <span class="recap-pill">forklare et DNS-oppslag</span>
+        <span class="recap-pill">tegne reisen fra URL til side</span>
+        <span class="recap-pill">nevne tre toppdomener</span>
+        <span class="recap-pill">forklare hva W3C standardiserer</span>
+        <span class="recap-pill">forklare hva hypertekst er</span>
+        <span class="recap-pill">peke på DOM-treet i et HTML-dokument</span>
       </div>
     </div>
   </section>
@@ -176,9 +399,9 @@
       <div class="section-badge">07 · Notatmapping</div>
       <h2>Hvor <em>finner du det</em></h2>
       <ul>
-        <li><strong>Lærebok:</strong> pensum 1.1, 1.1.1, 1.1.2, 1.2, 1.3 — fra «Introduction» til og med «Document Object Model».</li>
-        <li><strong>Slides:</strong> <code>presentasjoner/intro.md</code> (kursintro + arkitektur), <code>presentasjoner/basics.md</code>.</li>
-        <li><strong>Eksterne ressurser:</strong> MDN — DOM intro; Wikipedia — TCP/IP og DNS for dypere lesing.</li>
+        <li><strong>Lærebok:</strong> pensum 1.1 (Introduction), 1.1.1 (Web architecture), 1.1.2 (The Internet), 1.2 (Developing for the web), 1.3 (Document Object Model).</li>
+        <li><strong>Slides:</strong> <code>presentasjoner/intro.md</code> (kursintro + arkitektur), <code>presentasjoner/basics.md</code> (TCP/IP, DNS, WWW, HTML-intro).</li>
+        <li><strong>Forelesning:</strong> 1–2 (oppstart og web-arkitektur).</li>
       </ul>
     </div>
   </section>
@@ -187,14 +410,43 @@
     <div class="container">
       <div class="section-badge">08 · Vanlige feller</div>
       <h2>Vanlige <em>feller</em></h2>
+
       <div class="callout-warn">
-        <div class="label">Skal skrives</div>
+        <div class="label">Felle 1 · «Internett = Web»</div>
         <p>
-          Liste minst tre konkrete misforståelser, for eksempel:
-          (1) «Internett = web» — det er ikke samme;
-          (2) blanding av HTTP og HTML;
-          (3) tro at DNS-server lagrer hele Internett.
-          Hver felle skal forklares med hva som faktisk gjelder.
+          Mange blander Internett (nettverket) med applikasjonene som kjører
+          oppå det. Pensum lister fem populære: e-post, telnet, FTP, IRC og
+          World Wide Web. Web er én av flere — ikke synonym med Internett.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Felle 2 · «DNS lagrer hele Internett»</div>
+        <p>
+          DNS er en oppslagstjeneste som mapper domenenavn til IP-adresser.
+          Den lagrer ikke selve nettsidene, og den er ikke selve Internett —
+          den er bare adresseboka. Datamaskinen din spør DNS, får tilbake en
+          IP, og <em>kontakter deretter</em> tjeneren med den IP-en.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Felle 3 · «Pakker følger en fast rute»</div>
+        <p>
+          Internett er tegnet som en lattice/graf — ikke et hierarki — nettopp
+          for at ruter skal kunne velges dynamisk når en sti er treg eller
+          nede. Det finnes ingen fast «hovedvei» mellom to punkter; pakker i
+          samme forespørsel kan til og med ta forskjellige veier.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Felle 4 · «Alle nettlesere oppfører seg likt»</div>
+        <p>
+          Selv om W3C anbefaler en standard, må nettleserutviklerne
+          implementere den. Det tar tid, og forskjellige versjoner av samme
+          nettleser kan tolke samme CSS ulikt. Det er nettopp derfor det
+          finnes validatorer.
         </p>
       </div>
     </div>
@@ -204,13 +456,59 @@
     <div class="container">
       <div class="section-badge">09 · Eksamensscenario</div>
       <h2>Én oppgave, <em>steg for steg</em></h2>
-      <div class="callout">
-        <div class="label">Skal skrives</div>
+
+      <div class="callout-blue">
+        <div class="label">Oppgavetekst</div>
         <p>
-          Plukk en typisk oppgave fra <code>tidligere_eksamener/</code> som
-          dekker kapittelet (for eksempel «Forklar hva som skjer når en
-          bruker skriver <code>www.ntnu.no</code> i adressefeltet»). Vis
-          hvordan du strukturerer svaret og hvilke begreper som må nevnes.
+          «Forklar hva som skjer fra det øyeblikket en bruker skriver
+          <code>www.ntnu.no</code> i nettleserens adressefelt, til siden er
+          synlig på skjermen. Bruk faglige begreper.»
+        </p>
+      </div>
+
+      <p>Et godt svar nevner disse begrepene i denne rekkefølgen:</p>
+
+      <ol class="steps">
+        <li>
+          <strong>Klient/tjener.</strong> Slår fast at nettleseren er
+          klienten og at <code>ntnu.no</code> hostes på en tjener et annet
+          sted.
+        </li>
+        <li>
+          <strong>DNS-oppslag.</strong> Datamaskinen vet ikke hva
+          <code>www.ntnu.no</code> betyr i tall. Den spør en DNS-server, som
+          returnerer IP-adressen.
+        </li>
+        <li>
+          <strong>TCP/IP og pakker.</strong> Forespørselen pakkes etter
+          TCP/IP-modellens fire lag. Pakkene rutes dynamisk gjennom flere
+          nettverk via rutere.
+        </li>
+        <li>
+          <strong>HTTP-forespørsel.</strong> På applikasjonsnivå er det en
+          HTTP-forespørsel som sendes til tjeneren.
+        </li>
+        <li>
+          <strong>Tjenerens svar.</strong> Tjeneren henter HTML-fila fra sitt
+          lokale filsystem og sender den tilbake.
+        </li>
+        <li>
+          <strong>Rendering.</strong> Nettleseren mottar fila og rendrer
+          siden basert på markupen.
+        </li>
+        <li>
+          <strong>DOM.</strong> Internt representeres dokumentet som et tre
+          av noder — DOM — som senere lar JavaScript endre siden.
+        </li>
+      </ol>
+
+      <div class="callout-good">
+        <div class="label">Tips</div>
+        <p>
+          Sensor leter etter at du <em>navngir</em> begrepene riktig (DNS,
+          IP, HTTP, TCP/IP, ruter, DOM) og at <em>rekkefølgen</em> stemmer.
+          En tegning av klient → Internett → tjener er nesten alltid en
+          fordel.
         </p>
       </div>
     </div>
@@ -220,20 +518,101 @@
     <div class="container">
       <div class="section-badge">10 · Test deg selv</div>
       <h2>Helhets<em>spørsmål</em></h2>
-      <p class="section-intro">10–15 spørsmål som dekker hele kapittelet. Fylles inn etter at seksjonene over er skrevet.</p>
+      <p class="section-intro">Ti spørsmål fra pensum 1.1–1.3. Klikk «Se svar» når du har tenkt selv.</p>
 
       <div class="quiz" data-quiz>
-        <div class="q-label">Eksempel · Lett</div>
+        <div class="q-label">Spørsmål 1 · Lett</div>
         <div class="q-text">Hva er forskjellen på en klient og en tjener?</div>
         <div class="quiz-reveal">
           <button class="reveal-btn">Se svar</button>
-          <div class="answer">Tjeneren tilbyr ressurser, klienten ber om dem. Skal utdypes når seksjonen skrives.</div>
+          <div class="answer">Tjeneren er programvare som kjører på en datamaskin og svarer på forespørsler — websiden og databasen ligger på dens lokale filsystem. Klienten er programvaren brukeren bruker for å be om disse ressursene; i webteknologi er klienten typisk en nettleser (Firefox, Chrome, Safari).</div>
         </div>
       </div>
 
-      <div class="callout">
-        <div class="label">Skal fylles inn</div>
-        <p>Ti spørsmål til mangler: tre lette, fem middels og to vanskelige.</p>
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 2 · Lett</div>
+        <div class="q-text">Hva betyr forkortelsen DNS, og hva gjør en DNS-server?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">DNS = Domain Name Server. Den fungerer som en «telefonkatalog» som mapper domenenavn (f.eks. <code>ntnu.no</code>) til IP-adresser. Når du skriver et domene i adressefeltet, kontakter datamaskinen din en DNS-server, får tilbake IP-adressen, og kontakter deretter selve tjeneren med den IP-en.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 3 · Lett</div>
+        <div class="q-text">Hvilket år, og hvor, ble grunnlaget for World Wide Web lagt?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">I 1989, av Tim Berners-Lee og andre forskere ved CERN nær Genève i Sveits. De utviklet et system av sammenkoblede hypertekst-dokumenter.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 4 · Middels</div>
+        <div class="q-text">Nevn de fire lagene i TCP/IP-modellen og hva hver av dem er ansvarlig for.</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">
+            <strong>Applikasjonslaget:</strong> gir programmer tilgang til de andre lagenes tjenester og definerer protokollene programmer bruker for å utveksle data (f.eks. HTTP).<br>
+            <strong>Transportlaget:</strong> sørger for at hele meldinger leveres ende-til-ende (TCP, UDP).<br>
+            <strong>Nettverkslaget / Internett-laget:</strong> ruter meldinger fra ett sted til et annet (IP).<br>
+            <strong>Det fysiske laget:</strong> oversetter meldingen til en fysisk representasjon og legger den på kabelen, fiberen eller luften (Ethernet, WiFi).
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 5 · Middels</div>
+        <div class="q-text">Hva er forskjellen på LAN og WAN, og hva er det største WAN-et i verden?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">LAN (Local Area Network) er datamaskiner nær hverandre — i samme avdeling eller bygg. WAN (Wide Area Network) dekker større områder som flere bygg, byer eller mer. Det største WAN-et i verden er Internett.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 6 · Middels</div>
+        <div class="q-text">Hvorfor brytes en forespørsel opp i pakker når den sendes over Internett?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Fordi forespørselen reiser gjennom flere nettverk på vei til målet, og protokollen er bygget for å tåle upålitelige delnettverk. Pakkene kan rutes dynamisk — ulike pakker kan ta ulike veier — og settes sammen igjen ved destinasjonen.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 7 · Middels</div>
+        <div class="q-text">Hva er dynamisk ruting, og hvorfor må Internett være tegnet som en lattice/graf og ikke et hierarki?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Dynamisk ruting betyr at ruta velges ved sendetidspunktet ut fra hvordan nettverket ser ut akkurat da — så pakkene finner nye veier hvis foretrukne ruter ikke fungerer. Dette krever at nettverket ikke er hierarkisk: det skal ikke finnes kritiske noder hvor hele nettet faller om de svikter. Derfor er Internett tegnet som en lattice/graf med mange parallelle stier og tusenvis av rutere.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 8 · Middels</div>
+        <div class="q-text">Hva gjør W3C, og hvorfor får ikke nye standarder umiddelbar effekt i alle nettlesere?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">W3C (World Wide Web Consortium) er den internasjonale standardiseringsorganisasjonen for weben. De anbefaler hvordan f.eks. CSS skal oppføre seg. Men det er nettleserutviklerne som må <em>implementere</em> standarden, og det kan ta tid før en ny standard er innført — og forskjellige versjoner av samme nettleser kan tolke ting ulikt.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 9 · Vanskelig</div>
+        <div class="q-text">Hva er forskjellen på Internett og World Wide Web?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Internett er nettverket selv — selve infrastrukturen av sammenkoblede maskiner som kjører TCP/IP. World Wide Web er én av flere applikasjoner som benytter Internett: et distribuert hypertekst-system av sammenkoblede dokumenter. Andre applikasjoner over Internett inkluderer e-post, telnet, FTP og IRC. Web ≠ Internett — Web er én tjeneste som kjører oppå.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Spørsmål 10 · Vanskelig</div>
+        <div class="q-text">Hva er DOM, og hvorfor er det relevant at HTML-dokumentet kan ses som et tre?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">DOM (Document Object Model) er et programmeringsgrensesnitt for HTML- og XML-dokumenter. Det gir en strukturert representasjon av dokumentet som et tre av noder og objekter med egenskaper og metoder, og det er det som kobler websider til skript som JavaScript. Treet lar oss endre dokumentets struktur, stil og innhold programmatisk — den faktiske manipulasjonen lærer du i kapittel 10.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -243,9 +622,9 @@
       <div class="section-badge">11 · Kapittel-eksamen</div>
       <h2>Flashcards — <em>hele pensum i kortform</em></h2>
       <p class="section-intro">
-        Når kapittelet er ferdig fylt ut, legg inn 30–50 kort her: blanding
-        av begrepskort og regne-/oppgavekort. Bruk <kbd>←</kbd> <kbd>→</kbd>
-        til å bla, klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+        36 kort som dekker pensum 1.1–1.3. Bruk
+        <kbd>←</kbd> <kbd>→</kbd> til å bla, klikk for å snu,
+        <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
       </p>
       <div class="flashcard-deck" data-flashcards>
         <div class="flashcard-toolbar">
@@ -255,6 +634,657 @@
           <button class="fc-btn fc-btn--alt" data-fc-shuffle aria-label="Shuffle">Shuffle</button>
           <button class="fc-btn fc-btn--alt" data-fc-reset aria-label="Reset">Reset</button>
         </div>
+
+        <!-- 1.1.1 Web-arkitektur -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en tjener?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Programvare som kjører på en datamaskin og svarer på forespørsler fra klienter. Selve websiden og eventuell database ligger på tjenerens lokale filsystem.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en klient i web-sammenheng?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Programvaren brukeren bruker for å nå weben — typisk en nettleser som Firefox, Chrome eller Safari. Nettleserne finner og viser informasjon fra weben.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva betyr forkortelsen HTTP?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>HyperText Transfer Protocol — det avtalte språket (protokollen) som klient og tjener bruker for å kommunisere på weben.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er «skyen»?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Et nettverk av tjenere som har som formål å dele ressurser.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er forskjellen på et LAN og et WAN?</p>
+              <ul class="fc-opts">
+                <li><span class="opt-label">A</span>LAN er trådløst, WAN er kablet.</li>
+                <li><span class="opt-label">B</span>LAN er for hjemmebruk, WAN er for bedrifter.</li>
+                <li><span class="opt-label">C</span>LAN er maskiner nær hverandre (bygg/avdeling), WAN dekker større områder (byer eller mer).</li>
+              </ul>
+              <span class="fc-correct" style="display:none;">C</span>
+            </div>
+            <div class="flashcard__back">
+              <p><strong>Riktig: C.</strong> LAN = Local Area Network (datamaskiner som er nær hverandre, f.eks. samme bygg). WAN = Wide Area Network (dekker større områder som flere bygg eller byer). Internett er det største WAN-et i verden.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er det største WAN-et i verden?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Internett.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en node og en edge i et nettverk?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En node er en datamaskin (tjener eller klient) i nettverket. En edge er forbindelsen mellom to noder.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Web-arkitektur</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Beskriv hva som skjer i nettleseren etter at den har mottatt HTML-fila fra tjeneren.</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Når fila er mottatt, rendrer nettleseren siden basert på filene den har fått.</p>
+              <p class="fc-ref">Pensum 1.1.1</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.1.2 Internett -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva sto ARPANET for, og hvor mange noder besto det av i 1969?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>ARPA = Advanced Research Project Agency, finansiert av U.S. Department of Defence. I 1969 besto ARPANET av fire noder, koblet sammen med en telefonlinje.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er Internett — beskriv kort.</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Et «nettverk av nettverk» bestående av millioner av datamaskiner og annen maskinvare (smarttelefoner, TV-er, spillkonsoller, skrivere, lyspærer …). Den fysiske strukturen bruker fiberoptiske kabler, satellitter, telefonlinjer og andre telekommunikasjonsmedier.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva betyr TCP/IP?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Transmission Control Protocol / Internet Protocol — den felles protokollen alle datamaskiner og nettverk på Internett bruker. Hvis maskinen din kjører TCP/IP, kan den utveksle data med en hvilken som helst annen TCP/IP-maskin.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hvorfor ble TCP/IP utviklet?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>For å tåle upålitelige delnettverk. Protokollen garanterer riktig dataoverføring siden det fysiske nettverket selv ikke kan garantere det.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hvilke fire lag har TCP/IP-modellen?</p>
+              <ul class="fc-opts">
+                <li><span class="opt-label">A</span>Applikasjon, presentasjon, sesjon, transport.</li>
+                <li><span class="opt-label">B</span>Applikasjon, transport, nettverk/Internett, fysisk.</li>
+                <li><span class="opt-label">C</span>HTTP, TCP, IP, Ethernet.</li>
+              </ul>
+              <span class="fc-correct" style="display:none;">B</span>
+            </div>
+            <div class="flashcard__back">
+              <p><strong>Riktig: B.</strong> Applikasjon, transport, nettverk/Internett og fysisk lag. (C nevner protokoller, ikke lag.)</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva gjør applikasjonslaget i TCP/IP?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Det gir programmer tilgang til tjenestene i de andre lagene og definerer protokollene programmer bruker for å utveksle data. Eksempler: HTTP, telnet, ftp, e-post, voip.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er transportlagets jobb?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Å sørge for at hele meldinger leveres ende-til-ende. Eksempler på protokoller: TCP og UDP.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva gjør nettverkslaget (Internett-laget)?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Det ruter meldinger fra ett sted til et annet. Alle rutere på Internett kjører IP-protokollen.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva gjør det fysiske laget?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Det oversetter programvare-meldingen til en fysisk representasjon og legger den ut på kabelen, fiberen eller i lufta. Eksempler: Ethernet, WiFi, ATM, X.25, Frame Relay.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">På hvilket lag finner du HTTP, og på hvilket lag finner du IP?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>HTTP ligger på applikasjonslaget. IP ligger på nettverkslaget (Internett-laget).</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DNS -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DNS</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en IP-adresse?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En unik numerisk adresse som identifiserer en bestemt datamaskin på Internett. Datamaskiner trenger IP-adresser for å kunne kommunisere — symbolske navn er bare for menneskelig konsum.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DNS</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er et domenenavn?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Et menneskelesbart navn (f.eks. <code>ntnu.no</code>) som identifiserer institusjonen som eier datamaskinen. Domenet bygges opp av nivåer: <code>.no</code> er Norge, <code>ntnu</code> er NTNU.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DNS</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er et subdomene? Gi et eksempel.</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En underinndeling av et domene, brukt når en virksomhet har flere tjenere. Eksempel: <code>idi.ntnu.no</code> — der <code>idi</code> er subdomenet til <code>ntnu.no</code>.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DNS</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva betyr disse toppdomenene: .com, .edu, .gov, .org?</p>
+            </div>
+            <div class="flashcard__back">
+              <p><code>.com</code> = commercial (bedrifter). <code>.edu</code> = education (universiteter). <code>.gov</code> = governments (amerikanske føderale myndigheter). <code>.org</code> = organisasjoner (ofte non-profit).</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DNS</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva gjør en DNS-server, og hvorfor finnes den?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En DNS-server er datamaskinens «telefonkatalog»: den mapper symbolske navn (som <code>ntnu.no</code>) til IP-adresser. DNS finnes for at vi mennesker skal slippe å huske IP-adresser. Når du skriver et domene, kontakter datamaskinen DNS-serveren, får tilbake IP-en, og snakker så med tjeneren via den IP-en.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ruting -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Ruting</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er Internetts «backbone» / tier 1-nettverk?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Når en datamaskin kobler seg til Internett, kobler den seg til et mindre nettverk, som igjen er koblet til ryggraden — tier 1-nettverkene. Forespørselen din reiser potensielt gjennom flere nettverk før den når målet.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Ruting</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva skjer med en forespørsel når den sendes over Internett?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Forespørselen og dataen brytes opp i pakker. Pakkene reiser gjennom flere nettverk og settes sammen igjen ved målet.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Ruting</span>
+            <span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er dynamisk ruting, og hvorfor må Internett ha en lattice/graf-struktur?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Dynamisk ruting betyr at ruten velges ved sendetidspunktet, basert på nettverkstilstanden akkurat da — slik at protokollen finner nye veier hvis foretrukne ruter ikke fungerer. Dette krever et nettverk uten kritiske noder hvor svikt vil ta ned alt: nettverket kan derfor ikke være hierarkisk. Internett er tegnet som en lattice/graf med mange parallelle stier.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Ruting</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en ruter?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En vert (host) som utfører rutejobben — videresender pakker mellom nettverk. Det finnes tusenvis av rutere på Internett.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WWW -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">WWW</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hvem la grunnlaget for World Wide Web, hvor og når?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Tim Berners-Lee og andre forskere ved CERN nær Genève i Sveits, i 1989.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">WWW</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er hypertekst?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En måte å organisere informasjon som gir leseren kontroll over rekkefølgen informasjonen presenteres i.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">WWW</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en hyperlenke, og hva kan den peke til?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Et element i et hypertekst-dokument som lar deg hoppe fra ett tema til et annet. En lenke kan peke til en annen seksjon i samme dokument, til et helt annet dokument, til en fil på din egen maskin eller via Internett til en maskin hvor som helst i verden.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">WWW</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er forskjellen på en webside og et nettsted?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En samling sammenkoblede dokumenter kalles et <em>nettsted</em> (web site). Hypertekst-dokumentene innenfor et nettsted kalles <em>websider</em>. En webside kan inneholde tekst, lyd, video og programmer som kjøres eksternt.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">WWW</span>
+            <span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Nevn fem populære applikasjoner som kjører over Internett.</p>
+            </div>
+            <div class="flashcard__back">
+              <p>E-post, Telnet, File Transfer Protocol (FTP), Internet Relay Chat (IRC) og World Wide Web. Mange brukere blander Internett (nettverket) med disse applikasjonene som kjører oppå det.</p>
+              <p class="fc-ref">Pensum 1.1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 Developing for the web -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Verktøy</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hvilken type verktøy anbefales i kurset for å skrive web-kode, og hvilke tre eksempler nevnes?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>En tekstredigerer som lar deg skrive koden selv, fremhever nøkkelord og hjelper med autofullføring. Pensum nevner Atom, Sublime og Brackets.</p>
+              <p class="fc-ref">Pensum 1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Verktøy</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er W3C, og hvorfor ser samme CSS forskjellig ut i ulike nettlesere?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>W3C (World Wide Web Consortium) er den internasjonale standardiseringsorganisasjonen for weben. Den anbefaler hvordan f.eks. CSS skal oppføre seg, men det er nettleserutviklerne som må implementere standardene. Det tar tid før en ny standard er innført, og forskjellige versjoner av samme nettleser kan tolke kode ulikt.</p>
+              <p class="fc-ref">Pensum 1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Verktøy</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva er en HTML-/CSS-validator, og hvorfor trenger vi den?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Et verktøy fra W3C som leser HTML- eller CSS-fila di og rapporterer feil mot spesifikasjonen. Vi trenger den fordi både HTML og CSS er svært tilgivende: koden kan se riktig ut uten å være riktig, og da kan ulike nettlesere tolke den ulikt.</p>
+              <p class="fc-ref">Pensum 1.2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 DOM -->
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DOM</span>
+            <span class="flashcard__diff" data-diff="lett">Lett</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva betyr DOM, og for hvilke språk er det et grensesnitt?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>DOM = Document Object Model. Det er et programmeringsgrensesnitt for HTML- og XML-dokumenter.</p>
+              <p class="fc-ref">Pensum 1.3</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DOM</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva består DOM av, og hva gjør det med websider?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>DOM gir en strukturert representasjon av dokumentet som en gruppe av noder og objekter med egenskaper og metoder. Kort sagt kobler DOM websider til skript (som JavaScript) eller andre programmeringsspråk, slik at de kan endre dokumentets struktur, stil og innhold.</p>
+              <p class="fc-ref">Pensum 1.3</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DOM</span>
+            <span class="flashcard__diff" data-diff="middels">Middels</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">På hvilke tre måter kan en webside «vises», og hva har de felles?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>(1) I nettleservinduet, (2) som HTML-kildekode, (3) som et dokumenttre av noder og objekter. Alle tre er den samme websiden — bare ulike representasjoner.</p>
+              <p class="fc-ref">Pensum 1.3</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">DOM</span>
+            <span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hvorfor introduseres DOM allerede her, når selve manipulasjonen kommer senere?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>For å venne deg til å tenke på et HTML-dokument som en trestruktur. Selve manipulasjonen — å endre dokumentet med JavaScript — er emnet for kapittel 10 (pensum 1.13). Dette kapittelet er ment som en kort introduksjon til DOM-konseptet.</p>
+              <p class="fc-ref">Pensum 1.3</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

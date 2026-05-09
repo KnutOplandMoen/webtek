@@ -30,12 +30,12 @@
       <div class="eyebrow">Kapittel 7 · Forelesning 11 · Del 2</div>
       <h1>Multimedia på <em>web</em></h1>
       <p class="lede">
-        Bilder, video og audio — formater, attributter, og hvordan du
-        sørger for at innholdet virker både med fiber og dårlig nett.
+        Bilder, video og audio gjør innholdet rikere &mdash; men gjør også
+        filene mye større. Riktig HTML-element, riktig format og riktige
+        attributter er forskjellen mellom en rask side og en treg side.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.8</span>
-        <span class="pill">Slides: kommer</span>
         <span class="pill">Forelesning 11</span>
       </div>
     </div>
@@ -62,48 +62,341 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>multimedia</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Tekst er ikke nok — bilder, video og audio er forventet. Men de er også store filer, så valg av format og attributter betyr noe.</p>
-      <p><strong>Kilde:</strong> pensum 1.8.</p>
+
+    <p class="dropcap">
+      En side med bare tekst er sjelden nok. Bilder, video og lyd løfter
+      brukeropplevelsen og kan både forklare en tekst og fortelle en
+      historie i seg selv. Problemet er at slike filer ikke oppfører
+      seg som HTML og CSS.
+    </p>
+
+    <div class="callout-blue">
+      <div class="label">Premisset i 1.8</div>
+      <p>
+        HTML- og CSS-filer er som regel bare noen få kilobyte store. Når
+        vi legger til multimedia, øker filstørrelsen drastisk. Brukerne
+        sitter på alt fra fiber til mobilnett, og store filer kan være
+        både trege og dyre å laste ned.
+      </p>
+      <p>
+        Konsekvensen: innholdet skal skaleres etter bruken. Det er ingen
+        grunn til å laste et 3000&times;2000-piksel bilde på en 1080-piksel
+        skjerm. Mediefiler skal ikke være større enn de trenger å være.
+      </p>
     </div>
+
+    <p>
+      Resten av kapittelet handler derfor om to ting samtidig: <em>hvilket
+      HTML-element</em> som brukes for hver medietype, og <em>hvilket
+      format</em> som passer for hvilket innhold.
+    </p>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>Tre <em>medietyper</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Bilde (statisk), video (bilde + tid + lyd), audio (bare lyd). Hvert har sitt HTML-element, sine attributter og sine egne formatter.</p>
+
+    <p class="section-intro">
+      Pensum 1.8 deler multimedia i tre familier. Hver har sitt eget
+      HTML-element, sine egne formater og sine egne attributter &mdash;
+      men de følger samme grunnmønster.
+    </p>
+
+    <div class="compare-grid">
+      <div class="compare-cell"><div class="label">Bilde</div>
+        <p><strong>Element:</strong> <code>&lt;img&gt;</code> (selvlukkende).</p>
+        <p><strong>Innhold:</strong> statisk, ingen tid og ingen lyd.</p>
+        <p><strong>Formater:</strong> JPEG, PNG, GIF, SVG.</p>
+      </div>
+      <div class="compare-cell"><div class="label">Video</div>
+        <p><strong>Element:</strong> <code>&lt;video&gt;</code> med start- og slutt-tagg.</p>
+        <p><strong>Innhold:</strong> bilde + tid + (vanligvis) lyd.</p>
+        <p><strong>Formater:</strong> MP4, WebM, Ogg.</p>
+      </div>
+      <div class="compare-cell"><div class="label">Audio</div>
+        <p><strong>Element:</strong> <code>&lt;audio&gt;</code> med start- og slutt-tagg.</p>
+        <p><strong>Innhold:</strong> bare lyd.</p>
+        <p><strong>Formater:</strong> MP3, Wav, Ogg.</p>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">Felles mønster</div>
+      <p>
+        Både <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code> kan
+        peke på fila enten direkte med <code>src</code>, eller bruke ett
+        eller flere <code>&lt;source&gt;</code>-elementer inni for å tilby
+        flere formater. Tekst inni elementet er <em>fallback-innhold</em>
+        som vises hvis nettleseren ikke støtter elementet.
+      </p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Lag et <em>galleri</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: img med alt → figure med caption → picture med flere srcset → video med fallback-tekst → audio med controls.</p>
-    </div>
+    <h2>Bygg et <em>galleri</em></h2>
+
+    <p class="section-intro">
+      Vi bygger opp en gallerisseksjon i fire steg. Hvert steg legger til
+      én ting fra pensum 1.8.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <strong>Start med et bilde.</strong> Bruk <code>&lt;img&gt;</code>.
+        Elementet er selvlukkende. <code>src</code> peker på fila (vanligvis
+        en relativ URL), og <code>alt</code> er en tekstbeskrivelse for
+        skjermlesere, søkemotorer og når bildet ikke kan vises.
+<pre><code>&lt;img src="images/coffeetable.jpg"
+     alt="En kaffekopp står på et kaffebord"&gt;</code></pre>
+        <p>Lagre bilder i en <code>images</code>-undermappe. Når siden
+        vokser kan du opprette enda flere mapper inni, f.eks. <code>products</code>
+        og <code>icons</code>.</p>
+      </li>
+
+      <li>
+        <strong>Reserver plass og legg på en tittel.</strong> Bilder bruker
+        ofte lengre tid å laste enn HTML-koden. Hvis du angir
+        <code>width</code> og <code>height</code>, kan nettleseren reservere
+        plassen, slik at teksten ikke "hopper" når bildet endelig kommer.
+        <code>title</code> vises som verktøytips når brukeren holder musen
+        over bildet.
+<pre><code>&lt;img src="images/coffeetable.jpg"
+     alt="En kaffekopp står på et kaffebord"
+     title="Hjemme hos meg, lørdag morgen"
+     width="600" height="400"&gt;</code></pre>
+      </li>
+
+      <li>
+        <strong>Pakk inn i <code>&lt;figure&gt;</code> med
+        <code>&lt;figcaption&gt;</code>.</strong> En figure binder bildet
+        til bildeteksten. Du kan ha flere bilder inni, så lenge de deler
+        samme bildetekst.
+<pre><code>&lt;figure&gt;
+  &lt;img src="images/it2805.png" alt="IT2805-logoen"&gt;
+  &lt;figcaption&gt;Dette er IT2805-logoen&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+      </li>
+
+      <li>
+        <strong>Legg til en video med fallback.</strong> Bruk
+        <code>&lt;video&gt;</code>. <code>controls</code> er et boolsk
+        attributt som gjør at avspillingskontrollene blir tilgjengelige
+        (hover med mus). Inne i elementet kan du ha tekst som vises hvis
+        nettleseren ikke støtter HTML5-video. Med flere
+        <code>&lt;source&gt;</code> tilbyr du flere formater så
+        nettleseren velger ett den støtter.
+<pre><code>&lt;video controls poster="images/forhandsvisning.jpg"&gt;
+  &lt;source src="media/intro.mp4" type="video/mp4"&gt;
+  &lt;source src="media/intro.ogg" type="video/ogg"&gt;
+  &lt;p&gt;Nettleseren din støtter ikke HTML5-video.&lt;/p&gt;
+&lt;/video&gt;</code></pre>
+        <p>
+          <code>poster</code> tar en URL til et bilde som vises før brukeren
+          starter videoen. Hvis attributtet ikke er der, vises første frame
+          av videoen i stedet.
+        </p>
+      </li>
+
+      <li>
+        <strong>Legg til en lydklipp.</strong> <code>&lt;audio&gt;</code>
+        oppfører seg som <code>&lt;video&gt;</code>: <code>src</code> +
+        <code>controls</code>, eller flere <code>&lt;source&gt;</code> for
+        formatfallback, og en tekst inni som fallback-innhold.
+<pre><code>&lt;audio controls&gt;
+  &lt;source src="media/podkast.mp3" type="audio/mp3"&gt;
+  &lt;source src="media/podkast.ogg" type="audio/ogg"&gt;
+  &lt;p&gt;Nettleseren din støtter ikke HTML5-audio.&lt;/p&gt;
+&lt;/audio&gt;</code></pre>
+      </li>
+    </ol>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De tre <em>delene</em></h2>
+    <p class="section-intro">
+      Innholdet i kap 7 dekker tre HTML-elementer. Kortene under
+      oppsummerer hva pensum 1.8 sier om hver av dem.
+    </p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">img, alt, srcset, sizes, picture-element. Formater: JPG, PNG, SVG, WebP. Pensum 1.8.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · VID</div><div class="sp-title">Video</div><div class="sp-desc">video-element, source, controls, autoplay, muted. MP4 vs WebM. Pensum 1.8.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · AUD</div><div class="sp-title">Audio</div><div class="sp-desc">audio-element, controls, loop. MP3 vs Ogg. Pensum 1.8.3.</div></div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">A · IMG</div>
+        <div class="sp-title">Bilder</div>
+        <div class="sp-desc">
+          <code>&lt;img&gt;</code> med <code>src</code> + <code>alt</code>,
+          samt <code>title</code>, <code>width</code>, <code>height</code>.
+          Formater: JPEG, PNG, GIF, SVG. <code>&lt;figure&gt;</code> +
+          <code>&lt;figcaption&gt;</code>.<br>
+          <strong>Kilde:</strong> pensum 1.8 (Images).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">B · VID</div>
+        <div class="sp-title">Video</div>
+        <div class="sp-desc">
+          <code>&lt;video&gt;</code> med <code>controls</code>, valgfritt
+          <code>autoplay</code>, <code>loop</code>, <code>muted</code>,
+          <code>poster</code>, <code>width</code>, <code>height</code>.
+          Flere <code>&lt;source&gt;</code> for MP4/WebM/Ogg.<br>
+          <strong>Kilde:</strong> pensum 1.8 (Video).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">C · AUD</div>
+        <div class="sp-title">Audio</div>
+        <div class="sp-desc">
+          <code>&lt;audio&gt;</code> med <code>controls</code>, valgfritt
+          <code>autoplay</code>, <code>loop</code>, <code>muted</code>.
+          Flere <code>&lt;source&gt;</code> for MP3/Wav/Ogg.<br>
+          <strong>Kilde:</strong> pensum 1.8 (Audio).
+        </div>
+      </div>
     </div>
+
+    <h3 style="margin-top:2em;">Bildeformater i ett blikk</h3>
+    <table class="example-table">
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Type</th>
+          <th>Bra til</th>
+          <th>Dårlig til</th>
+          <th>Transparens</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>JPEG</strong></td>
+          <td>Lossy raster</td>
+          <td>Fotografier (mange farger / detaljer)</td>
+          <td>Logoer, illustrasjoner (gir artefakter)</td>
+          <td>Nei</td>
+        </tr>
+        <tr>
+          <td><strong>PNG</strong></td>
+          <td>Lossless raster</td>
+          <td>Logoer, illustrasjoner, grafer</td>
+          <td>Fotografier (stor fil)</td>
+          <td>Ja (0&ndash;100&nbsp;%)</td>
+        </tr>
+        <tr>
+          <td><strong>GIF</strong></td>
+          <td>Lossless raster</td>
+          <td>Logoer + animasjoner</td>
+          <td>Bilder med mer enn 256 farger</td>
+          <td>Ja (1-bit)</td>
+        </tr>
+        <tr>
+          <td><strong>SVG</strong></td>
+          <td>Vektor</td>
+          <td>Logoer, illustrasjoner, diagrammer (skalérbart)</td>
+          <td>Fotografier (for mange detaljer)</td>
+          <td>Ja</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:2em;">Nettleserstøtte for video- og audioformater</h3>
+    <p>
+      Pensum 1.8 viser en oversikt fra februar 2016 over hvilke nettlesere
+      som støttet hvilke formater. Tabellene under er disse:
+    </p>
+
+    <table class="example-table">
+      <thead>
+        <tr><th>Nettleser</th><th>MP4</th><th>WebM</th><th>Ogg</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Internet Explorer</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+        <tr><td>Chrome</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Firefox</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Safari</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+        <tr><td>Opera</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Microsoft Edge</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+      </tbody>
+    </table>
+
+    <table class="example-table">
+      <thead>
+        <tr><th>Nettleser</th><th>MP3</th><th>Wav</th><th>Ogg</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Internet Explorer</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+        <tr><td>Chrome</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Firefox</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Safari</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+        <tr><td>Opera</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Microsoft Edge</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Konklusjonen pensum trekker: bruk flere <code>&lt;source&gt;</code>
+      slik at minst ett av formatene treffer hver nettleser.
+    </p>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">Raster vs vektor</div><div class="fc-val">PNG/JPG vs SVG.</div></div>
-      <div class="fact-card"><div class="fc-key">alt-attributt</div><div class="fc-val">Tilgjengelighet og fallback.</div></div>
-      <div class="fact-card"><div class="fc-key">srcset</div><div class="fc-val">Velg riktig oppløsning per skjerm.</div></div>
-      <div class="fact-card"><div class="fc-key">controls</div><div class="fc-val">Standard avspillingskontroller.</div></div>
-      <div class="fact-card"><div class="fc-key">poster</div><div class="fc-val">Bilde vist før video starter.</div></div>
-      <div class="fact-card"><div class="fc-key">autoplay + muted</div><div class="fc-val">Browsere blokkerer autoplay med lyd.</div></div>
+      <div class="fact-card">
+        <div class="fc-key">src</div>
+        <div class="fc-val">Sti til mediefila &mdash; vanligvis en relativ URL.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">alt</div>
+        <div class="fc-val">Tekstbeskrivelse av bildet. Brukes av skjermlesere og søkemotorer, og vises hvis bildet ikke kan vises. Skal være tilstede selv når bildet er rent dekorativt &mdash; da med tom verdi.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">title</div>
+        <div class="fc-val">Tilleggsinformasjon. Vises som verktøytips ved hover.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">width / height</div>
+        <div class="fc-val">Størrelse i piksler eller prosent. La nettleseren reservere plass.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Lossy vs lossless</div>
+        <div class="fc-val">JPEG mister kvalitet hver gang den lagres. PNG, GIF og SVG mister ikke noe.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Raster vs vektor</div>
+        <div class="fc-val">JPEG, PNG, GIF lagrer piksler. SVG lagrer figurer &mdash; og kan skaleres uten kvalitetstap.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">figure / figcaption</div>
+        <div class="fc-val">Bilde + bildetekst som hører sammen. Kan inneholde flere bilder hvis de deler samme tekst.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">controls</div>
+        <div class="fc-val">Boolsk. Viser avspillingskontrollene på <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>. Uten det kan brukeren verken spille eller pause.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">autoplay</div>
+        <div class="fc-val">Boolsk. Starter avspilling så fort dataene tillater det &mdash; uten å vente på at hele fila er lastet.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">loop</div>
+        <div class="fc-val">Boolsk. Spoler tilbake til start når mediet når slutten.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">muted</div>
+        <div class="fc-val">Boolsk. Setter standardlydnivå til lydløs.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">poster</div>
+        <div class="fc-val">URL til et bilde som vises før videoen spilles eller spoles. Bare på <code>&lt;video&gt;</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">&lt;source&gt;</div>
+        <div class="fc-val">Tilbyr alternative formater inni <code>&lt;video&gt;</code> eller <code>&lt;audio&gt;</code>. Brukes i stedet for <code>src</code>-attributtet på elementet.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Fallback</div>
+        <div class="fc-val">Tekst (eller et annet element) inni <code>&lt;video&gt;</code> / <code>&lt;audio&gt;</code> som vises hvis nettleseren ikke støtter elementet.</div>
+      </div>
     </div>
   </div></section>
 
@@ -111,11 +404,16 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 7</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">velge bildeformat</span>
-      <span class="recap-pill">skrive video-element med fallback</span>
-      <span class="recap-pill">bruke alt riktig</span>
-      <span class="recap-pill">forklare srcset</span>
-      <span class="recap-pill">audio-element</span>
+      <span class="recap-pill">skrive et &lt;img&gt; med src + alt</span>
+      <span class="recap-pill">velge JPEG / PNG / GIF / SVG</span>
+      <span class="recap-pill">forklare lossy vs lossless</span>
+      <span class="recap-pill">raster vs vektor</span>
+      <span class="recap-pill">bruke figure + figcaption</span>
+      <span class="recap-pill">skrive et &lt;video&gt; med flere &lt;source&gt;</span>
+      <span class="recap-pill">forklare controls, autoplay, loop, muted, poster</span>
+      <span class="recap-pill">skrive et &lt;audio&gt; med fallback</span>
+      <span class="recap-pill">vite hvilke formater hvilke nettlesere støtter</span>
+      <span class="recap-pill">tom alt for dekorative bilder</span>
     </div>
   </div></section>
 
@@ -123,39 +421,294 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.8 (Web and multimedia).</li>
-      <li><strong>Slides:</strong> ikke i <code>presentasjoner/</code> ennå — sjekk BlackBoard.</li>
-      <li><strong>Eksterne:</strong> MDN — img/video/audio elementer.</li>
+      <li><strong>Lærebok:</strong> pensum 1.8 (Web and multimedia) &mdash; hele underseksjonen som dekker Images, Video og Audio.</li>
+      <li><strong>Forelesning 11:</strong> «Multimedia på web» (del 2).</li>
+      <li><strong>Eksterne ressurser:</strong> MDN &mdash; <code>&lt;img&gt;</code>, <code>&lt;figure&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code> og <code>&lt;source&gt;</code>.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Glemme alt; bruke kjempestore JPG-er; tro at autoplay alltid virker; ikke bruke source-elementer for fallback i video.</p>
+
+    <div class="callout-warn"><div class="label">Bilder</div>
+      <ul>
+        <li><strong>Glemmer <code>alt</code>.</strong> Skjermlesere får ingenting å lese, og bildet er usynlig hvis det ikke laster. For dekorative bilder skal <code>alt</code> være med, men tom: <code>alt=""</code>.</li>
+        <li><strong>JPEG på logoer.</strong> JPEG er lossy og lager artefakter rundt skarpe kanter. Bruk PNG eller SVG for stiliserte bilder med få farger.</li>
+        <li><strong>PNG på fotografier.</strong> PNG er lossless &mdash; resultatet blir riktig, men fila blir veldig stor. Bruk JPEG.</li>
+        <li><strong>SVG på fotografier.</strong> SVG kan ikke representere all detalj som finnes i et fotografi.</li>
+        <li><strong>Bruker <code>align</code>-attributtet.</strong> Det er ikke en del av HTML5. Bruk CSS for justering.</li>
+        <li><strong>Lagrer JPEG flere ganger.</strong> Hver lagring (f.eks. i Photoshop) gir tap av kvalitet.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warn"><div class="label">Video</div>
+      <ul>
+        <li><strong>Glemmer <code>controls</code>.</strong> Da kan ikke brukeren spille eller pause videoen i det hele tatt.</li>
+        <li><strong>Bare ett format.</strong> Uten flere <code>&lt;source&gt;</code> kan en nettleser uten støtte for det ene formatet ikke spille av noe. Tilby MP4 + WebM/Ogg.</li>
+        <li><strong>Glemmer fallback-tekst.</strong> Tekst inni <code>&lt;video&gt;</code> vises kun når nettleseren ikke støtter elementet i det hele tatt &mdash; uten den får brukeren ingen forklaring.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warn"><div class="label">Audio</div>
+      <ul>
+        <li><strong>Glemmer <code>controls</code> på <code>&lt;audio&gt;</code>.</strong> Samme problem som for video: brukeren kan ikke spille eller pause.</li>
+        <li><strong>Antar at Ogg fungerer overalt.</strong> Det gjør det ikke (f.eks. ikke Safari, ikke Edge per pensum-tabellen). Tilby MP3 i tillegg.</li>
+      </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
     <h2>Bygd <em>et bildegalleri</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Skriv HTML for et bildegalleri med tre bilder, hvert med tilhørende beskrivelse og høyoppløselig versjon for retina.»</p>
+
+    <div class="callout"><div class="label">Oppgave</div>
+      <p>
+        «Skriv HTML for en seksjon på en nettside som viser tre bilder med
+        tilhørende bildetekster, og under bildene en kort introduksjonsvideo
+        som har avspillingskontroller, en forhåndsvisning og fungerer både i
+        Chrome og Safari.»
+      </p>
+    </div>
+
+    <div class="callout-good"><div class="label">Modellsvar</div>
+<pre><code>&lt;section&gt;
+  &lt;h2&gt;Galleri&lt;/h2&gt;
+
+  &lt;figure&gt;
+    &lt;img src="images/torget.jpg"
+         alt="Torget i Trondheim en solfylt høstdag"&gt;
+    &lt;figcaption&gt;Torget en solfylt høstdag&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;figure&gt;
+    &lt;img src="images/nidaros.jpg"
+         alt="Nidarosdomen sett fra Bakklandet"&gt;
+    &lt;figcaption&gt;Nidarosdomen sett fra Bakklandet&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;figure&gt;
+    &lt;img src="images/gloshaugen.jpg"
+         alt="Hovedbygget på Gløshaugen"&gt;
+    &lt;figcaption&gt;Hovedbygget på Gløshaugen&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;video controls poster="images/intro.jpg"&gt;
+    &lt;source src="media/intro.mp4" type="video/mp4"&gt;
+    &lt;source src="media/intro.webm" type="video/webm"&gt;
+    &lt;p&gt;Nettleseren din støtter ikke HTML5-video.&lt;/p&gt;
+  &lt;/video&gt;
+&lt;/section&gt;</code></pre>
+      <p style="margin-top:1em;">
+        <strong>Hva sensor leter etter:</strong> at både <code>src</code>
+        og <code>alt</code> er med på alle bilder; at <code>&lt;figure&gt;</code>
+        og <code>&lt;figcaption&gt;</code> er brukt riktig; at videoen har
+        <code>controls</code>; at <code>poster</code> gir en forhåndsvisning;
+        at det er flere <code>&lt;source&gt;</code> så både Safari (MP4) og
+        Chrome (MP4 eller WebM) får et format de støtter; og at det finnes
+        fallback-tekst inni <code>&lt;video&gt;</code>.
+      </p>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Velg-format-MCQ er nyttig her.</p></div>
+    <p class="section-intro">
+      Tolv spørsmål som dekker bilder, video og audio. Klikk for å svare /
+      avsløre.
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">1 · Lett</div>
+      <div class="q-text">Hvilke to attributter MÅ være med på <code>&lt;img&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> src og title</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">B</span> src og alt</div>
+        <div class="mcq-opt"><span class="opt-label">C</span> src og width</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> alt og figcaption</div>
+      </div>
+      <div class="mcq-feedback">
+        <code>src</code> peker på fila, <code>alt</code> beskriver innholdet
+        for skjermlesere og når bildet ikke kan vises. Pensum 1.8 (Images).
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">2 · Lett</div>
+      <div class="q-text">Hvilket bildeformat er best for fotografier?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> PNG</div>
+        <div class="mcq-opt"><span class="opt-label">B</span> SVG</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">C</span> JPEG</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> GIF</div>
+      </div>
+      <div class="mcq-feedback">
+        JPEG passer fotografier fordi mange farger og detaljer skjuler
+        kompresjonsartefaktene. Pensum 1.8 (Image file formats).
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">3 · Lett</div>
+      <div class="q-text">Du skal lage en logo som må kunne skaleres opp uten kvalitetstap. Hvilket format er best?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> JPEG</div>
+        <div class="mcq-opt"><span class="opt-label">B</span> PNG</div>
+        <div class="mcq-opt"><span class="opt-label">C</span> GIF</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">D</span> SVG</div>
+      </div>
+      <div class="mcq-feedback">
+        SVG er et vektorformat. Bildet er lagret som figurer, ikke piksler,
+        og kan skaleres uendelig uten kvalitetstap.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">4 · Middels</div>
+      <div class="q-text">Hvor mange forskjellige farger kan en GIF maksimalt vise?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> 16</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">B</span> 256</div>
+        <div class="mcq-opt"><span class="opt-label">C</span> 1024</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Ubegrenset</div>
+      </div>
+      <div class="mcq-feedback">
+        GIF er begrenset til 256 farger. Derfor passer formatet til logoer,
+        men ikke til fotografier.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">5 · Middels</div>
+      <div class="q-text">Hva er hovedformålet med <code>&lt;source&gt;</code>-elementene inni <code>&lt;video&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Definere bildet som vises før videoen starter</div>
+        <div class="mcq-opt"><span class="opt-label">B</span> Sette undertekst på videoen</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Tilby alternative formater for ulike nettlesere</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Erstatte HTML5 i gamle nettlesere</div>
+      </div>
+      <div class="mcq-feedback">
+        Ikke alle nettlesere støtter alle formater. Nettleseren tar første
+        <code>&lt;source&gt;</code> den klarer å spille av.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">6 · Middels</div>
+      <div class="q-text">Hva gjør <code>poster</code>-attributtet på <code>&lt;video&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Plasserer videoen øverst på siden</div>
+        <div class="mcq-opt"><span class="opt-label">B</span> Setter en overskrift over videoen</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Viser et bilde før brukeren starter eller spoler</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Lager en miniatyrlenke i sidebaren</div>
+      </div>
+      <div class="mcq-feedback">
+        Hvis attributtet mangler, vises første frame av videoen i stedet.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">7 · Middels</div>
+      <div class="q-text">Hva skjer hvis du utelater <code>controls</code>-attributtet på <code>&lt;video&gt;</code> eller <code>&lt;audio&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Mediet starter automatisk</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Brukeren kan ikke spille av eller pause mediet</div>
+        <div class="mcq-opt"><span class="opt-label">C</span> Mediet erstattes med en tekstlenke</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Mediet blir automatisk lydløst</div>
+      </div>
+      <div class="mcq-feedback">
+        Uten <code>controls</code> er det ingen knapper i det hele tatt &mdash;
+        brukeren har ingen måte å starte eller stoppe på.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">8 · Middels</div>
+      <div class="q-text">Hvorfor er det lurt å spesifisere <code>width</code> og <code>height</code> på et <code>&lt;img&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Det krymper filstørrelsen</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Nettleseren kan reservere plassen så teksten ikke "hopper" når bildet er lastet</div>
+        <div class="mcq-opt"><span class="opt-label">C</span> Det er obligatorisk i HTML5</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Det forbedrer SEO</div>
+      </div>
+      <div class="mcq-feedback">
+        Bilder bruker oftest lengre tid å laste enn HTML-koden. Med
+        oppgitt størrelse blir layouten stabil.
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">9 · Vanskelig</div>
+      <div class="q-text">Du har et bilde som <em>bare</em> er dekorativt (en strek mellom to seksjoner). Hva er riktig håndtering av <code>alt</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Du kan utelate <code>alt</code> helt</div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>alt</code> skal være med, men tomt: <code>alt=""</code></div>
+        <div class="mcq-opt"><span class="opt-label">C</span> <code>alt="dekorativt bilde"</code></div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Bruk <code>title</code> i stedet</div>
+      </div>
+      <div class="mcq-feedback">
+        Pensum sier eksplisitt: «If the image is purely decorative, the alt
+        attribute should still be present, but the quotes should be left
+        empty.»
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">10 · Vanskelig</div>
+      <div class="q-text">Hva er korrekt om <code>&lt;figure&gt;</code>?</div>
+      <div class="mcq-options">
+        <div class="mcq-opt"><span class="opt-label">A</span> Kan bare inneholde nøyaktig ett bilde</div>
+        <div class="mcq-opt"><span class="opt-label">B</span> Krever alltid <code>&lt;figcaption&gt;</code></div>
+        <div class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Kan inneholde flere bilder, så lenge de deler samme bildetekst</div>
+        <div class="mcq-opt"><span class="opt-label">D</span> Kan kombinere bilde og video</div>
+      </div>
+      <div class="mcq-feedback">
+        Pensum: «You can have more than one image inside the
+        <code>&lt;figure&gt;</code> element, as long as they share the same
+        caption.»
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Vanskelig</div>
+      <div class="q-text">Forklar hva <code>autoplay</code>, <code>loop</code> og <code>muted</code> gjør på <code>&lt;video&gt;</code>, og hvilke som er boolske.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          Alle tre er boolske attributter. <code>autoplay</code> starter
+          videoen så snart dataene tillater det &mdash; uten å vente på at
+          hele fila er lastet. <code>loop</code> spoler tilbake til starten
+          når videoen når slutten. <code>muted</code> setter
+          standard-lydnivået til lydløst. Pensum 1.8 (Video).
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Vanskelig</div>
+      <div class="q-text">Du har én MP3-fil og vil tilby lydklippet til besøkende i Chrome, Firefox, Safari og Edge. Hvorfor holder det å bruke MP3 alene, ifølge pensum-tabellen?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          Tabellen i pensum 1.8 (Audio) viser at MP3 er støttet i samtlige
+          oppførte nettlesere (Internet Explorer, Chrome, Firefox, Safari,
+          Opera, Microsoft Edge). Hadde du derimot bare hatt Ogg, ville
+          verken IE, Safari eller Edge fått spilt av lyden &mdash; og du
+          måtte ha lagt til en MP3 som <code>&lt;source&gt;</code>.
+        </div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <h2>Flashcards &mdash; <em>hele kap 7 i kortform</em></h2>
+    <p class="section-intro">
+      Klikk på et kort for å snu det. Bruk <kbd>&larr;</kbd> <kbd>&rarr;</kbd>
+      til å bla, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+    </p>
+
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -164,6 +717,287 @@
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
       </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilke to attributter er obligatoriske på <code>&lt;img&gt;</code>?</div></div>
+          <div class="flashcard__back"><p><code>src</code> (sti til fila, vanligvis relativ URL) og <code>alt</code> (tekstbeskrivelse).</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Er <code>&lt;img&gt;</code> et selvlukkende eller et vanlig element?</div></div>
+          <div class="flashcard__back"><p>Selvlukkende. Det skal <em>ikke</em> ha en avslutningstagg.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva gjør <code>title</code>-attributtet på <code>&lt;img&gt;</code>?</div></div>
+          <div class="flashcard__back"><p>Gir tilleggsinformasjon om bildet. De fleste nettlesere viser innholdet som verktøytips når brukeren holder musen over bildet.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor sette <code>width</code> og <code>height</code> på <code>&lt;img&gt;</code>?</div></div>
+          <div class="flashcard__back"><p>Bilder bruker som regel lengre tid å laste enn HTML-koden. Nettleseren reserverer plassen, så teksten ikke "hopper" når bildet endelig kommer.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Er <code>&lt;img&gt;</code> et inline- eller blokk-element?</div></div>
+          <div class="flashcard__back"><p>Inline. Det vil ikke plasseres på en ny linje av seg selv.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvordan justerer du et bilde i HTML5?</div></div>
+          <div class="flashcard__back"><p>Med CSS. Det gamle <code>align</code>-attributtet er ikke en del av HTML5-spesifikasjonen.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Bildet ditt er rent dekorativt. Hva gjør du med <code>alt</code>?</div></div>
+          <div class="flashcard__back"><p>Lar det være med, men tomt: <code>alt=""</code>. Da hopper skjermlesere over det i stedet for å lese opp filnavnet eller en irrelevant tekst.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="fc-question">Hvilket format er best for fotografier?</div>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> PNG</li>
+              <li><span class="opt-label">B</span> JPEG</li>
+              <li><span class="opt-label">C</span> SVG</li>
+              <li><span class="opt-label">D</span> GIF</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. JPEG er lossy &mdash; mange farger og detaljer skjuler kompresjonsartefaktene.</p><p class="fc-ref">Pensum 1.8 (Image file formats)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva betyr at JPEG er et "lossy" format?</div></div>
+          <div class="flashcard__back"><p>Det er tap av kvalitet ved kompresjon. Hver gang du åpner og lagrer en JPEG (f.eks. i Photoshop), mister bildet litt mer kvalitet.</p><p class="fc-ref">Pensum 1.8 (JPEG)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Støtter JPEG transparens?</div></div>
+          <div class="flashcard__back"><p>Nei. Hvis du trenger transparens, må du bruke PNG, GIF eller SVG.</p><p class="fc-ref">Pensum 1.8 (JPEG)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva passer PNG godt til, og hva passer det dårlig til?</div></div>
+          <div class="flashcard__back"><p>Bra: bilder med få farger &mdash; logoer, illustrasjoner, grafer. PNG er lossless og støtter transparens fra 0&nbsp;% til 100&nbsp;%.</p><p>Dårlig: fotografier &mdash; resultatet blir riktig, men fila blir veldig stor.</p><p class="fc-ref">Pensum 1.8 (PNG)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor mange farger kan en GIF maksimalt vise, og hva er én ting GIF kan som PNG ikke kan?</div></div>
+          <div class="flashcard__back"><p>Maks 256 farger. GIF kan ha animasjoner.</p><p class="fc-ref">Pensum 1.8 (GIF)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er SVG, og hvorfor er det perfekt for logoer?</div></div>
+          <div class="flashcard__back"><p>SVG er et vektorformat. Bildet lagres som figurer, ikke piksler, så det kan skaleres uendelig opp uten kvalitetstap. Ideelt for logoer, illustrasjoner og diagrammer.</p><p class="fc-ref">Pensum 1.8 (SVG)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Formater</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor er SVG <em>uegnet</em> for fotografier?</div></div>
+          <div class="flashcard__back"><p>Et fotografi har for mange detaljer til å bli effektivt representert som vektorfigurer.</p><p class="fc-ref">Pensum 1.8 (SVG)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er <code>&lt;figure&gt;</code> og <code>&lt;figcaption&gt;</code>?</div></div>
+          <div class="flashcard__back"><p><code>&lt;figure&gt;</code> grupperer ett eller flere bilder med en tilhørende bildetekst. Bildeteksten skrives inni <code>&lt;figcaption&gt;</code>. Flere bilder i samme figure må dele samme tekst.</p><p class="fc-ref">Pensum 1.8 (Figure and figure caption)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilket attributt gjør avspillingskontrollene synlige på <code>&lt;video&gt;</code>?</div></div>
+          <div class="flashcard__back"><p><code>controls</code>. Det er et boolsk attributt &mdash; til stede eller ikke. Uten det kan ikke brukeren spille av eller pause.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er hensikten med teksten inni <code>&lt;video&gt;</code>?</div></div>
+          <div class="flashcard__back"><p>Det er fallback-innhold. Den vises hvis nettleseren ikke støtter <code>&lt;video&gt;</code>-elementet.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor bruke flere <code>&lt;source&gt;</code> i stedet for <code>src</code>-attributtet?</div></div>
+          <div class="flashcard__back"><p>Ikke alle nettlesere støtter alle videoformater. Med flere <code>&lt;source&gt;</code>-elementer prøver nettleseren ett etter ett til den finner et format den kan spille av.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="fc-question">Hvilket videoformat har bredest nettleserstøtte ifølge pensum-tabellen?</div>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> WebM</li>
+              <li><span class="opt-label">B</span> MP4</li>
+              <li><span class="opt-label">C</span> Ogg</li>
+              <li><span class="opt-label">D</span> AVI</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. MP4 har "Ja" på samtlige nettlesere i tabellen (IE, Chrome, Firefox, Safari, Opera, Edge).</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva gjør <code>autoplay</code>?</div></div>
+          <div class="flashcard__back"><p>Boolsk attributt. Hvis det er til stede, starter videoen så snart nettleseren har data nok &mdash; uten å vente på at hele fila er lastet.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva gjør <code>loop</code>?</div></div>
+          <div class="flashcard__back"><p>Boolsk attributt. Når mediet når slutten, spoles det tilbake til starten og spilles igjen.</p><p class="fc-ref">Pensum 1.8 (Video / Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva gjør <code>muted</code>?</div></div>
+          <div class="flashcard__back"><p>Boolsk attributt. Setter standard lydnivå til lydløst.</p><p class="fc-ref">Pensum 1.8 (Video / Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er <code>poster</code>, og hva vises hvis det ikke er satt?</div></div>
+          <div class="flashcard__back"><p><code>poster</code> tar en URL til et bilde som vises før brukeren spiller eller spoler. Hvis attributtet ikke er der, vises første frame av videoen i stedet.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Video</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvordan skal <code>height</code> og <code>width</code> settes på <code>&lt;video&gt;</code>?</div></div>
+          <div class="flashcard__back"><p>Til samme dimensjoner som videofila. Da slipper man at videoen skaleres opp eller ned i nettleseren.</p><p class="fc-ref">Pensum 1.8 (Video)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Audio</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilket element bruker du for å spille av en lydfil?</div></div>
+          <div class="flashcard__back"><p><code>&lt;audio&gt;</code>. Den oppfører seg som <code>&lt;video&gt;</code>: <code>src</code> + <code>controls</code>, fallback-tekst inni, og kan bruke flere <code>&lt;source&gt;</code> for ulike formater.</p><p class="fc-ref">Pensum 1.8 (Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Audio</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilke tre attributter (utenom <code>src</code> og <code>controls</code>) er felles mellom <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>?</div></div>
+          <div class="flashcard__back"><p><code>autoplay</code>, <code>loop</code> og <code>muted</code>. De oppfører seg likt på begge elementene.</p><p class="fc-ref">Pensum 1.8 (Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Audio</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="fc-question">Hvilket lydformat er støttet i alle nettleserne i pensum-tabellen?</div>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Wav</li>
+              <li><span class="opt-label">B</span> Ogg</li>
+              <li><span class="opt-label">C</span> MP3</li>
+              <li><span class="opt-label">D</span> FLAC</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">C</span>. MP3 har "Ja" hos IE, Chrome, Firefox, Safari, Opera og Edge.</p><p class="fc-ref">Pensum 1.8 (Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Audio</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">I hvilke nettlesere er Ogg <em>ikke</em> støttet for audio, ifølge pensum-tabellen?</div></div>
+          <div class="flashcard__back"><p>Internet Explorer, Safari og Microsoft Edge.</p><p class="fc-ref">Pensum 1.8 (Audio)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Multimedia</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor er filstørrelse viktig for multimedia på web?</div></div>
+          <div class="flashcard__back"><p>HTML/CSS er små. Multimedia drar filstørrelsen opp drastisk. Brukerne har varierende internett-hastigheter, og noen er på mobilnett der store filer kan være dyre. Skaler innholdet etter bruken.</p><p class="fc-ref">Pensum 1.8 (Web and multimedia)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Multimedia</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor er det dårlig idé å bruke et 3000&times;2000-piksel bilde på en 1080-piksel skjerm?</div></div>
+          <div class="flashcard__back"><p>Brukeren ser uansett ikke detaljene over skjermens oppløsning. Det eneste som skjer er at fila blir unødvendig stor &mdash; tregere lasting og høyere databruk.</p><p class="fc-ref">Pensum 1.8 (Web and multimedia)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Organisering</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor anbefaler pensum at du lagrer bildene dine?</div></div>
+          <div class="flashcard__back"><p>I en <code>images</code>-undermappe. Når siden vokser kan du lage undermapper inni, f.eks. <code>products</code> og <code>icons</code>.</p><p class="fc-ref">Pensum 1.8 (Images)</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Begreper</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilke fire bildeformater er relevante på web ifølge pensum, og hvilket er det eneste vektorformatet?</div></div>
+          <div class="flashcard__back"><p>JPEG, PNG, GIF og SVG. SVG er det eneste vektorformatet &mdash; de tre andre er rasterformater (lagrer piksler).</p><p class="fc-ref">Pensum 1.8 (Image file formats)</p></div>
+        </div>
+      </div>
+
     </div>
   </div></section>
 </main>

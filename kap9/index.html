@@ -62,44 +62,68 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>JavaScript</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>HTML strukturerer, CSS styler, JavaScript reagerer. Uten JS er en side bare lesestoff. Vis kontrast med en knapp som ikke gjør noe — og en som faktisk endrer DOM-en.</p>
-      <p><strong>Kilde:</strong> pensum 1.11.</p>
+    <div class="callout"><div class="label">Hvorfor</div>
+      <p>HTML strukturerer, CSS styler. Begge er statiske. <strong>JavaScript</strong> er programmeringsspråket som lar siden reagere, regne, hente data og endre seg — uten en ny request til tjeneren. Uten JS er en webside bare tekst og dekorasjon.</p>
+      <p>Pensum 1.11 starter helt på begynnelsen — hvor du skriver JS, datatyper, variabler, kontrollstruktur, arrays, objekter, loops, funksjoner og JSON. Pensum 1.12 åpner døra mot tjeneren med <code>XMLHttpRequest</code>, slik at JS kan hente data dynamisk.</p>
+      <p><strong>Kilde:</strong> pensum 1.11 — 1.12; slides <code>presentasjoner/basic_js.md</code>.</p>
     </div>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
-    <h2>Et <em>script</em> kjører i sin tur</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>JS leses ovenfra og ned, linje for linje. Variabler, funksjoner og kontrollstruktur følger samme mønster som de fleste språk — men noen ting er rare (typecoercion, hoisting, var vs let).</p>
+    <h2>Et <em>script</em> kjører ovenfra og ned</h2>
+    <div class="callout"><div class="label">Modell</div>
+      <p>Nettleseren leser HTML-dokumentet ovenfra og ned. Når den treffer en <code>&lt;script&gt;</code>-tag, kjøres koden umiddelbart. JavaScript kan referere til og manipulere HTML-elementer, men elementet må være rendret <em>før</em> JS prøver å nå det.</p>
+      <p style="font-style:italic; color:var(--ink-faded);">«You can't yell at a baby before it is born.»</p>
+      <p>Du har tre måter å unngå problemet på:</p>
+      <ul>
+        <li>Legg <code>&lt;script&gt;</code> nederst i <code>&lt;body&gt;</code> — DOM-en er da ferdig rendret.</li>
+        <li>Pakk koden inn i <code>window.onload = function() { … }</code>.</li>
+        <li>Skill ut JS i en egen fil og last den med <code>&lt;script src="path/to/script.js"&gt;&lt;/script&gt;</code>.</li>
+      </ul>
+      <p><strong>Kilde:</strong> pensum 1.11.1.</p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Fra <code>console.log</code> til <em>funksjon</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: skript-tag i HTML → console.log → variabler → kontrollstruktur → arrays → objekter → funksjoner → JSON. Gradvis bygging av forståelse.</p>
+    <h2>Fra <code>console.log</code> til <em>Ajax</em></h2>
+    <div class="callout"><div class="label">Stegvis</div>
+      <ol>
+        <li><strong>Hello world</strong> — skriv <code>console.log("Hei");</code> i en <code>&lt;script&gt;</code>-tag og åpne dev-konsollen.</li>
+        <li><strong>Variabler</strong> — lagre verdier med <code>const</code>, <code>let</code> eller <code>var</code>.</li>
+        <li><strong>Datatyper</strong> — string, number, boolean. Pluss <code>undefined</code> og <code>null</code>.</li>
+        <li><strong>Logiske operatorer</strong> — <code>===</code> for likhet, <code>&amp;&amp;</code> og <code>||</code> for kombinasjoner.</li>
+        <li><strong>Kontrollstruktur</strong> — bestem hva som skjer med <code>if / else if / else</code>.</li>
+        <li><strong>Arrays</strong> — lagre flere verdier i en ordnet liste.</li>
+        <li><strong>Objekter</strong> — lagre nøkkel-verdi-par.</li>
+        <li><strong>Loops</strong> — gjenta operasjoner med <code>for</code> eller <code>while</code>.</li>
+        <li><strong>Funksjoner</strong> — pakk gjentagende kode inn i et navn.</li>
+        <li><strong>JSON</strong> — strukturér data for utveksling med <code>JSON.stringify</code> og <code>JSON.parse</code>.</li>
+        <li><strong>Ajax</strong> — bruk <code>XMLHttpRequest</code> til å hente data uten full sidelast.</li>
+      </ol>
+      <p><strong>Kilde:</strong> pensum 1.11.1 — 1.12.</p>
     </div>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>De tolv <em>delene</em></h2>
+    <h2>De tretten <em>delene</em></h2>
+    <p class="section-intro">Pensum 1.11 har tolv delkapitler. Vi tar med 1.12 (Dynamic websites) som det trettende.</p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · WHE</div><div class="sp-title">Hvor skrive JS</div><div class="sp-desc">Inline, internal, external. Pensum 1.11.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · CMT</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>//</code> og <code>/* … */</code>. Pensum 1.11.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TYP</div><div class="sp-title">Datatyper</div><div class="sp-desc">number, string, boolean, null, undefined. Pensum 1.11.3.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · OPS</div><div class="sp-title">Logiske operatorer</div><div class="sp-desc">&amp;&amp;, ||, !, ==, ===. Pensum 1.11.4.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · VAR</div><div class="sp-title">Variabler og konstanter</div><div class="sp-desc">var, let, const. Pensum 1.11.5.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · NUL</div><div class="sp-title">Når noe ikke fins</div><div class="sp-desc">null vs undefined. Pensum 1.11.6.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · CTR</div><div class="sp-title">Kontrollstruktur</div><div class="sp-desc">if/else, switch. Pensum 1.11.7.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · ARR</div><div class="sp-title">Arrays</div><div class="sp-desc">[…], indeksering, length. Pensum 1.11.8.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · OBJ</div><div class="sp-title">Objekter</div><div class="sp-desc">{ key: value }, dot vs bracket. Pensum 1.11.9.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">J · LOO</div><div class="sp-title">Loops</div><div class="sp-desc">for, while, for...of, for...in. Pensum 1.11.10.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">K · FUN</div><div class="sp-title">Funksjoner</div><div class="sp-desc">declaration, expression, arrow. Pensum 1.11.11.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">L · JSO</div><div class="sp-title">JSON</div><div class="sp-desc">JSON.parse, JSON.stringify. Pensum 1.11.12.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · WHE</div><div class="sp-title">Hvor skrive JS</div><div class="sp-desc">Inline i <code>&lt;script&gt;</code>, eller eksternt med <code>src="…"</code>. Pensum 1.11.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · CMT</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>//</code> til linjeslutt, <code>/* … */</code> for blokk. Pensum 1.11.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TYP</div><div class="sp-title">Datatyper</div><div class="sp-desc">String, Number, Boolean. Pluss <code>Infinity</code> og <code>NaN</code>. Pensum 1.11.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · OPS</div><div class="sp-title">Logiske operatorer</div><div class="sp-desc"><code>&lt; &lt;= &gt; &gt;= == === != !== &amp;&amp; || !</code>. Pensum 1.11.4.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · VAR</div><div class="sp-title">Variabler og konstanter</div><div class="sp-desc"><code>var</code> (funksjons-scope), <code>let</code> (block-scope), <code>const</code>. Pensum 1.11.5.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · NUL</div><div class="sp-title">Når noe ikke fins</div><div class="sp-desc"><code>undefined</code> vs <code>null</code>. Pensum 1.11.6.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · CTR</div><div class="sp-title">Kontrollstruktur</div><div class="sp-desc"><code>if</code>, <code>else if</code>, <code>else</code>. Pensum 1.11.7.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · ARR</div><div class="sp-title">Arrays</div><div class="sp-desc"><code>[…]</code>, indeks fra 0, <code>.length</code>, <code>.push</code>, <code>.pop</code>. Pensum 1.11.8.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · OBJ</div><div class="sp-title">Objekter</div><div class="sp-desc"><code>{ key: value }</code>, <code>obj.key</code> eller <code>obj["key"]</code>. Pensum 1.11.9.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">J · LOO</div><div class="sp-title">Loops</div><div class="sp-desc"><code>for</code>, <code>while</code>, <code>break</code>, <code>continue</code>. Pensum 1.11.10.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">K · FUN</div><div class="sp-title">Funksjoner</div><div class="sp-desc">Declaration eller expression. Parameter vs argument. <code>return</code>. Pensum 1.11.11.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">L · JSO</div><div class="sp-title">JSON</div><div class="sp-desc"><code>JSON.stringify()</code>, <code>JSON.parse()</code>. Pensum 1.11.12.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">M · AJX</div><div class="sp-title">Dynamiske nettsider (Ajax)</div><div class="sp-desc"><code>XMLHttpRequest</code>, GET/POST/PUT/DELETE, statuskoder, JSONP. Pensum 1.12.</div></div>
     </div>
   </div></section>
 
@@ -107,14 +131,39 @@
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">let / const / var</div><div class="fc-val">Foretrukket: const &gt; let. Unngå var.</div></div>
-      <div class="fact-card"><div class="fc-key">==</div><div class="fc-val">Type-koersjon, vil gi overraskelser.</div></div>
-      <div class="fact-card"><div class="fc-key">===</div><div class="fc-val">Streng likhet — bruk denne.</div></div>
-      <div class="fact-card"><div class="fc-key">undefined</div><div class="fc-val">Variabel deklarert, ikke tildelt.</div></div>
-      <div class="fact-card"><div class="fc-key">null</div><div class="fc-val">Bevisst tom verdi.</div></div>
-      <div class="fact-card"><div class="fc-key">truthy / falsy</div><div class="fc-val">0, '', null, undefined, NaN er falsy.</div></div>
-      <div class="fact-card"><div class="fc-key">array vs object</div><div class="fc-val">Liste med rekkefølge vs nøkkel-verdi-par.</div></div>
-      <div class="fact-card"><div class="fc-key">JSON</div><div class="fc-val">Tekstformat for å overføre objekter.</div></div>
+      <div class="fact-card"><div class="fc-key">script-tag</div><div class="fc-val">Plassering: <code>head</code> eller <code>body</code>. Eksternt med <code>src</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">window.onload</div><div class="fc-val">Venter til DOM-en er ferdig rendret før JS kjøres.</div></div>
+      <div class="fact-card"><div class="fc-key">console.log()</div><div class="fc-val">Skriver til dev-konsollen.</div></div>
+      <div class="fact-card"><div class="fc-key">var</div><div class="fc-val">Funksjons-scopet, kan re-deklareres.</div></div>
+      <div class="fact-card"><div class="fc-key">let</div><div class="fc-val">Block-scopet (ES6), kan re-tilordnes.</div></div>
+      <div class="fact-card"><div class="fc-key">const</div><div class="fc-val">Block-scopet, kan ikke re-tilordnes.</div></div>
+      <div class="fact-card"><div class="fc-key">==</div><div class="fc-val">Likhet med automatisk type-koersjon.</div></div>
+      <div class="fact-card"><div class="fc-key">===</div><div class="fc-val">Streng likhet — samme verdi <em>og</em> samme type.</div></div>
+      <div class="fact-card"><div class="fc-key">undefined</div><div class="fc-val">Variabel deklarert, ikke tildelt verdi.</div></div>
+      <div class="fact-card"><div class="fc-key">null</div><div class="fc-val">Bevisst tom verdi. <code>typeof null === "object"</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">NaN</div><div class="fc-val">«Not a Number». F.eks. <code>0/0</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Infinity</div><div class="fc-val">Større enn alle tall. <code>Infinity + 1</code> er <code>Infinity</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">% (modulo)</div><div class="fc-val">Resten av en divisjon. <code>7 % 5 === 2</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">"use strict"</div><div class="fc-val">Slår på streng modus — fanger blant annet u-deklarerte variabler.</div></div>
+      <div class="fact-card"><div class="fc-key">camelCase</div><div class="fc-val">Konvensjon for variabelnavn: <code>myAge</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">array</div><div class="fc-val">Ordnet liste i <code>[]</code>, indeks fra 0.</div></div>
+      <div class="fact-card"><div class="fc-key">.length</div><div class="fc-val">Antall elementer i en array.</div></div>
+      <div class="fact-card"><div class="fc-key">.push() / .pop()</div><div class="fc-val">Legg til siste / fjern siste element.</div></div>
+      <div class="fact-card"><div class="fc-key">objekt</div><div class="fc-val">Nøkkel-verdi-par i <code>{}</code>, ikke ordnet.</div></div>
+      <div class="fact-card"><div class="fc-key">funksjon</div><div class="fc-val"><code>function navn(){…}</code> eller <code>const navn = function(){…}</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">parameter vs argument</div><div class="fc-val">Parameter står i deklarasjonen. Argument er verdien som sendes inn.</div></div>
+      <div class="fact-card"><div class="fc-key">return</div><div class="fc-val">Returnerer en verdi fra en funksjon.</div></div>
+      <div class="fact-card"><div class="fc-key">break / continue</div><div class="fc-val">Avbryter loop / hopper over én iterasjon.</div></div>
+      <div class="fact-card"><div class="fc-key">JSON</div><div class="fc-val">Tekstformat for utveksling. Doble fnutter rundt nøkler.</div></div>
+      <div class="fact-card"><div class="fc-key">JSON.stringify</div><div class="fc-val">JS-objekt → JSON-streng.</div></div>
+      <div class="fact-card"><div class="fc-key">JSON.parse</div><div class="fc-val">JSON-streng → JS-objekt.</div></div>
+      <div class="fact-card"><div class="fc-key">XMLHttpRequest</div><div class="fc-val">API for å sende HTTP-requests fra JS (Ajax).</div></div>
+      <div class="fact-card"><div class="fc-key">GET / POST / PUT / DELETE</div><div class="fc-val">Hente / opprette / oppdatere / slette.</div></div>
+      <div class="fact-card"><div class="fc-key">request.status</div><div class="fc-val">HTTP-statuskode på svaret.</div></div>
+      <div class="fact-card"><div class="fc-key">request.responseText</div><div class="fc-val">Selve dataen tjeneren returnerer.</div></div>
+      <div class="fact-card"><div class="fc-key">200 / 404 / 500</div><div class="fc-val">OK / Not found / Internal Server Error.</div></div>
+      <div class="fact-card"><div class="fc-key">Same-origin policy</div><div class="fc-val">JS får ikke hente fra en annen tjener uten videre.</div></div>
+      <div class="fact-card"><div class="fc-key">JSONP</div><div class="fc-val">Teknikk for å omgå same-origin ved å laste JS fra annen tjener.</div></div>
     </div>
   </div></section>
 
@@ -122,11 +171,19 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 9</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">skrive variabler og funksjoner</span>
+      <span class="recap-pill">skrive en script-tag, intern eller ekstern</span>
+      <span class="recap-pill">forklare hvorfor scriptet må kjøres etter DOM-en er rendret</span>
+      <span class="recap-pill">deklarere variabler med var, let og const</span>
       <span class="recap-pill">forskjell på == og ===</span>
-      <span class="recap-pill">arrays og objekter</span>
-      <span class="recap-pill">if/else, for, while</span>
+      <span class="recap-pill">forskjell på undefined og null</span>
+      <span class="recap-pill">if / else if / else</span>
+      <span class="recap-pill">for- og while-loop med break og continue</span>
+      <span class="recap-pill">arrays: indeksering, length, push, pop</span>
+      <span class="recap-pill">objekter: dot- og bracket-tilgang</span>
+      <span class="recap-pill">skrive funksjoner med return</span>
       <span class="recap-pill">parse og stringify JSON</span>
+      <span class="recap-pill">sende en GET-request med XMLHttpRequest</span>
+      <span class="recap-pill">tolke statuskoder 200 / 400 / 404 / 500</span>
     </div>
   </div></section>
 
@@ -134,39 +191,231 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.11 (alle 12 delkapitler) + 1.12 (Dynamic websites).</li>
+      <li><strong>Lærebok:</strong> pensum 1.11 (alle 12 delkapitler — How and where to write JS, Comments, Data types, Logical operators, Variables and constants, When something doesn't exist, Control structures, Arrays, Objects, Loops, Functions, JSON) og 1.12 (Dynamic websites — XMLHttpRequest, HTTP-metoder, statuskoder, JSONP).</li>
       <li><strong>Slides:</strong> <code>presentasjoner/basic_js.md</code>.</li>
-      <li><strong>Eksterne:</strong> Eloquent JavaScript (gratis bok), MDN — JavaScript Guide.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Bruke == i stedet for ===; tro at typeof null er null (det er object); blande array og objekt; ikke forstå at JavaScript er case-sensitive.</p>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code>, men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> hvis du ikke har en grunn til å la JS gjøre type-koersjon.</li>
+        <li><strong><code>typeof null</code> er <code>"object"</code>:</strong> en kjent egenart i språket. Sjekk for <code>null</code> eksplisitt.</li>
+        <li><strong>Referere et HTML-element før det er rendret:</strong> hvis scriptet ligger i <code>&lt;head&gt;</code> over elementet, finnes elementet ikke ennå. Legg scriptet nederst i <code>&lt;body&gt;</code> eller bruk <code>window.onload</code>.</li>
+        <li><strong>Glemme <code>let</code>/<code>var</code>/<code>const</code>:</strong> uten keyword (og uten <code>"use strict"</code>) blir variabelen automatisk global — det er nesten alltid feil.</li>
+        <li><strong>Tro at <code>const</code> betyr immutable:</strong> en <code>const</code>-array kan fortsatt endres med <code>.push()</code> — det er bare referansen som er låst.</li>
+        <li><strong>Off-by-one i loop:</strong> <code>i &lt;= array.length</code> går én for langt. Skal være <code>i &lt; array.length</code>.</li>
+        <li><strong>Lese et element som ikke fins:</strong> en array-indeks utenfor lengden gir feil; en property som ikke fins på et objekt gir <code>undefined</code> (ikke feil).</li>
+        <li><strong>Glemme parentes ved funksjonskall:</strong> <code>square</code> er en referanse til funksjonen, <code>square(5)</code> kjører den.</li>
+        <li><strong>Enkle fnutter i JSON:</strong> JSON krever doble fnutter rundt nøkler og strenger.</li>
+        <li><strong>Kommentarer i JSON:</strong> ikke tillatt. <code>JSON.parse</code> vil feile.</li>
+        <li><strong>XMLHttpRequest synkront:</strong> tredje argument til <code>open()</code> som <code>false</code> blokkerer UI-en. Bruk <code>true</code> og <code>onload</code>-callback.</li>
+        <li><strong>Same-origin policy:</strong> et <code>XMLHttpRequest</code> mot et annet domene blokkeres av nettleseren.</li>
+      </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
     <h2>Skriv en <em>funksjon</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Skriv en funksjon som tar et array av tall og returnerer summen av kun de positive.»</p>
+    <div class="callout"><div class="label">Oppgave</div>
+      <p><em>Skriv en JavaScript-funksjon <code>summerPositive(tall)</code> som tar et array av tall som argument, og returnerer summen av kun de positive (større enn 0). Bruk en <code>for</code>-loop og en <code>if</code>-test.</em></p>
+    </div>
+    <div class="callout"><div class="label">Forslag til løsning</div>
+<pre><code>function summerPositive(tall) {
+  let sum = 0;
+  for (let i = 0; i &lt; tall.length; i++) {
+    if (tall[i] &gt; 0) {
+      sum += tall[i];
+    }
+  }
+  return sum;
+}
+
+console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
+      <p><strong>Hva sensor sjekker:</strong> riktig <code>function</code>-syntaks, parameter brukt (ikke en hardkodet array), korrekte loop-grenser (<code>i &lt; tall.length</code>, ikke <code>&lt;=</code>), <code>if</code>-test mot <code>0</code>, <code>return</code> utenfor loopen, <code>let</code>/<code>const</code> brukt riktig.</p>
+    </div>
+
+    <div class="callout"><div class="label">Variant — XMLHttpRequest</div>
+      <p><em>Skriv en funksjon <code>hentNyheter()</code> som sender en GET-request til <code>/newsfeed</code>, og logger responsen til konsollen ved status 200.</em></p>
+<pre><code>function hentNyheter() {
+  const request = new XMLHttpRequest();
+  request.open('GET', '/newsfeed', true);
+  request.onload = function() {
+    if (request.status === 200) {
+      console.log(request.responseText);
+    } else {
+      console.log(request.status);
+    }
+  };
+  request.send();
+}</code></pre>
+      <p><strong>Sjekkes:</strong> ny instans med <code>new</code>, riktig HTTP-metode, asynkron flagg <code>true</code>, <code>onload</code> brukes til å håndtere svaret, <code>request.send()</code> til slutt.</p>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>«Hva returnerer denne koden?»-MCQ-er gir tett differensiering.</p></div>
+    <p class="section-intro">Et utvalg flervalgs- og forklaringsspørsmål. Alle hentet fra pensum 1.11 — 1.12.</p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Lett · Datatyper</div>
+      <div class="q-text">Hva returnerer <code>typeof null</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">"null"</li>
+        <li class="mcq-opt">"undefined"</li>
+        <li class="mcq-opt" data-correct="1">"object"</li>
+        <li class="mcq-opt">"boolean"</li>
+      </ul>
+      <div class="mcq-feedback"><code>typeof null</code> er <code>"object"</code> — en kjent egenart i JS. <code>typeof undefined</code> er <code>"undefined"</code>. Pensum 1.11.6.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Lett · Likhet</div>
+      <div class="q-text">Hva returnerer <code>"" == 0</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1">true</li>
+        <li class="mcq-opt">false</li>
+        <li class="mcq-opt">SyntaxError</li>
+        <li class="mcq-opt">undefined</li>
+      </ul>
+      <div class="mcq-feedback"><code>==</code> gjør type-koersjon. Tom streng evalueres til <code>false</code>, og <code>0</code> evalueres til <code>false</code> — så <code>false == false</code> er <code>true</code>. Med <code>===</code> ville svaret vært <code>false</code>. Pensum 1.11.4.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Lett · Variabler</div>
+      <div class="q-text">Hvilken variabeltype er <em>blokk-scopet</em> og kan ikke re-tilordnes?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">var</li>
+        <li class="mcq-opt">let</li>
+        <li class="mcq-opt" data-correct="1">const</li>
+        <li class="mcq-opt">function</li>
+      </ul>
+      <div class="mcq-feedback"><code>const</code> er blokk-scopet og kan ikke re-tilordnes. <code>let</code> er også blokk-scopet, men kan re-tilordnes. <code>var</code> er funksjons-scopet. Pensum 1.11.5.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Middels · Arrays</div>
+      <div class="q-text">Gitt <code>const a = ["x", "y", "z"]</code>. Hva er verdien av <code>a[a.length - 1]</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">"x"</li>
+        <li class="mcq-opt">"y"</li>
+        <li class="mcq-opt" data-correct="1">"z"</li>
+        <li class="mcq-opt">undefined</li>
+      </ul>
+      <div class="mcq-feedback">Arrayens lengde er 3, så indeks <code>3 - 1 = 2</code>, som er det siste elementet (<code>"z"</code>). Husk at indeksering starter på 0. Pensum 1.11.8.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Middels · Objekter</div>
+      <div class="q-text">Gitt <code>const p = { navn: "Anna" }</code>. Hva returnerer <code>p.alder</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">null</li>
+        <li class="mcq-opt" data-correct="1">undefined</li>
+        <li class="mcq-opt">ReferenceError</li>
+        <li class="mcq-opt">0</li>
+      </ul>
+      <div class="mcq-feedback">Å lese en property som ikke fins, gir <code>undefined</code> — ikke feil. Pensum 1.11.9.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Middels · Loops</div>
+      <div class="q-text">Hvilket nøkkelord <em>avbryter</em> en loop fullstendig?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">continue</li>
+        <li class="mcq-opt" data-correct="1">break</li>
+        <li class="mcq-opt">return</li>
+        <li class="mcq-opt">stop</li>
+      </ul>
+      <div class="mcq-feedback"><code>break</code> avbryter loopen. <code>continue</code> hopper bare over resten av <em>én</em> iterasjon. Pensum 1.11.10.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Middels · JSON</div>
+      <div class="q-text">Hvilket av disse er <em>ikke</em> tillatt i JSON?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Tall</li>
+        <li class="mcq-opt">Strenger med doble fnutter</li>
+        <li class="mcq-opt">Arrays</li>
+        <li class="mcq-opt" data-correct="1">Kommentarer</li>
+      </ul>
+      <div class="mcq-feedback">JSON tillater ikke kommentarer, funksjoner eller variabler — bare enkle data-uttrykk. Nøkler må omsluttes av doble fnutter. Pensum 1.11.12.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Middels · XMLHttpRequest</div>
+      <div class="q-text">Hva betyr statuskoden <strong>404</strong>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">OK</li>
+        <li class="mcq-opt">Bad Request</li>
+        <li class="mcq-opt" data-correct="1">Not Found</li>
+        <li class="mcq-opt">Internal Server Error</li>
+      </ul>
+      <div class="mcq-feedback"><strong>404 Not Found</strong> betyr at tjeneren ikke fant ressursen. <strong>500</strong> er Internal Server Error, <strong>200</strong> er OK, <strong>400</strong> er Bad Request. Pensum 1.12.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Vanskelig · Funksjoner</div>
+      <div class="q-text">Hva logges?<br><code>function f(x) { return x * x; }<br>console.log(f);</code></div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">undefined</li>
+        <li class="mcq-opt">NaN</li>
+        <li class="mcq-opt" data-correct="1">Selve funksjonsdefinisjonen</li>
+        <li class="mcq-opt">SyntaxError</li>
+      </ul>
+      <div class="mcq-feedback">Uten parentes refererer <code>f</code> til selve funksjonsobjektet, ikke et resultat. <code>f(5)</code> ville logget <code>25</code>. Pensum 1.11.11.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">Vanskelig · Ajax</div>
+      <div class="q-text">I <code>request.open('GET', url, true)</code> — hva betyr det tredje argumentet (<code>true</code>)?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">At cache skal brukes</li>
+        <li class="mcq-opt" data-correct="1">At requesten skal være asynkron</li>
+        <li class="mcq-opt">At svaret skal parses som JSON</li>
+        <li class="mcq-opt">At cookies skal sendes med</li>
+      </ul>
+      <div class="mcq-feedback">Det tredje argumentet er asynkron-flagget. <code>true</code> = asynkron (varsel via <code>onload</code>); <code>false</code> = synkron (<code>send()</code> blokkerer til svaret kommer). Pensum 1.12.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">Forklaring · Lett</div>
+      <div class="q-text">Forklar forskjellen på <code>undefined</code> og <code>null</code>.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>undefined</code> betyr at en variabel er deklarert, men ikke tildelt en verdi. <code>null</code> er en bevisst tom verdi som programmerer har satt. <code>undefined == null</code> gir <code>true</code> (samme «verdi»), men <code>undefined === null</code> gir <code>false</code> (ulik type — <code>typeof undefined</code> er <code>"undefined"</code>, mens <code>typeof null</code> er <code>"object"</code>). Pensum 1.11.6.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">Forklaring · Middels</div>
+      <div class="q-text">Forklar forskjellen mellom <em>parameter</em> og <em>argument</em>.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">En <strong>parameter</strong> er navnet i funksjonsdeklarasjonen — en variabel funksjonen forventer. Et <strong>argument</strong> er den faktiske verdien som sendes inn når funksjonen kalles. I <code>function square(x){…}</code> er <code>x</code> parameteren; i <code>square(5)</code> er <code>5</code> argumentet. Pensum 1.11.11.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">Forklaring · Vanskelig</div>
+      <div class="q-text">Forklar hva som skjer hvis du legger en script-tag i <code>&lt;head&gt;</code> som referer til et HTML-element i <code>&lt;body&gt;</code>.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Nettleseren leser HTML ovenfra og ned. Når den treffer scriptet i <code>&lt;head&gt;</code>, er <code>&lt;body&gt;</code> ikke rendret enda — så elementet finnes ikke i DOM-en. Referansen feiler. Løsninger: legg scriptet nederst i <code>&lt;body&gt;</code>, pakk koden i <code>window.onload = function() {…}</code>, eller bruk en ekstern <code>.js</code>-fil som lastes etter DOM. Pensum 1.11.1.</div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <h2>Flashcards — <em>hele pensum i kortform</em></h2>
+    <p class="section-intro">
+      Bruk <kbd>←</kbd> <kbd>→</kbd> for å bla, klikk for å snu,
+      <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+    </p>
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -174,6 +423,350 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.1 · Hvor skrive JS</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de to måtene å plassere JavaScript i et HTML-dokument?</p></div>
+          <div class="flashcard__back"><p>Inline (embedded) inne i en <code>&lt;script&gt;</code>-tag, eller eksternt med <code>&lt;script src="path/to/script.js"&gt;&lt;/script&gt;</code>. Begge varianter kan stå i <code>&lt;head&gt;</code> eller <code>&lt;body&gt;</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.1 · DOM-rekkefølge</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvorfor kan et script feile hvis det refererer et HTML-element?</p></div>
+          <div class="flashcard__back"><p>Fordi nettleseren leser HTML ovenfra og ned. Hvis scriptet kjøres før elementet er rendret, finnes elementet ikke ennå.</p><p><em>«You can't yell at a baby before it is born.»</em></p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.1 · window.onload</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>window.onload = function(){ … }</code>?</p></div>
+          <div class="flashcard__back"><p>Sørger for at koden inni først kjøres etter at hele DOM-en er ferdig rendret. Brukes for å unngå at scriptet refererer til elementer som ikke fins ennå.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.2 · Kommentarer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de to kommentar-syntaksene i JavaScript?</p></div>
+          <div class="flashcard__back"><p><code>// kommentar</code> — gjelder til linjeslutt.</p><p><code>/* kommentar */</code> — kan strekke seg over flere linjer.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.3 · Datatyper</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de tre grunnleggende datatypene i JavaScript?</p></div>
+          <div class="flashcard__back"><p><strong>String</strong> (tekst i fnutter), <strong>Number</strong> (alle tall), <strong>Boolean</strong> (<code>true</code>/<code>false</code>).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.3 · Strings</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>+</code>-operatoren mellom to strings?</p></div>
+          <div class="flashcard__back"><p>Konkatenerer dem (slår dem sammen) som de er. <code>"Hei " + "verden"</code> blir <code>"Hei verden"</code> — ingen mellomrom legges til automatisk.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.3 · Numbers</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>NaN</code>, og hvordan oppstår det?</p></div>
+          <div class="flashcard__back"><p><code>NaN</code> = «Not a Number». Returneres når en numerisk operasjon ikke gir et meningsfullt resultat, f.eks. <code>0 / 0</code>. Selv om navnet sier «not a number», er typen faktisk <code>number</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.3 · Modulo</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>7 % 5</code>?</p></div>
+          <div class="flashcard__back"><p><code>2</code>. Modulo-operatoren (<code>%</code>) returnerer resten etter heltallsdivisjon.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.4 · Likhet</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>==</code> og <code>===</code>?</p></div>
+          <div class="flashcard__back"><p><code>==</code> sjekker likhet med automatisk type-koersjon (<code>"" == 0</code> er <code>true</code>).</p><p><code>===</code> sjekker streng likhet — verdiene må ha samme type (<code>"" === 0</code> er <code>false</code>). Bruk <code>===</code> som standard.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.4 · Logiske operatorer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>&amp;&amp;</code> og <code>||</code> brukt til?</p></div>
+          <div class="flashcard__back"><p><code>&amp;&amp;</code> (AND): begge sider må være <code>true</code> for å returnere <code>true</code>.</p><p><code>||</code> (OR): minst én side må være <code>true</code>.</p><p>Begge bruker «short-circuit»: andre operand evalueres ikke hvis svaret allerede er bestemt av første.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.4 · Not</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>!</code>-operatoren?</p></div>
+          <div class="flashcard__back"><p>Negerer en boolean-verdi. <code>!true</code> blir <code>false</code>. <code>!!"hei"</code> konverterer en verdi til boolean ved å negere to ganger — en streng med innhold blir <code>true</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · var</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan er <code>var</code> scopet?</p></div>
+          <div class="flashcard__back"><p><code>var</code> er <strong>funksjons-scopet</strong>: variabelen er synlig i hele funksjonen den ble deklarert i. Også synlig globalt hvis deklarert utenfor en funksjon.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · let</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan er <code>let</code> scopet?</p></div>
+          <div class="flashcard__back"><p><code>let</code> er <strong>blokk-scopet</strong>: variabelen er kun synlig i den nærmeste omsluttende blokken (mellom <code>{</code> og <code>}</code>). Innført i ES6.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · const</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr <code>const</code> — er verdien immutable?</p></div>
+          <div class="flashcard__back"><p><code>const</code> betyr at <em>referansen</em> ikke kan re-tilordnes. Men hvis verdien er en array eller objekt, kan innholdet fortsatt endres med f.eks. <code>.push()</code> eller property-tilordning.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · "use strict"</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>"use strict";</code> øverst i et script?</p></div>
+          <div class="flashcard__back"><p>Aktiverer streng modus. Det fanger blant annet u-deklarerte variabler (uten <code>var</code>/<code>let</code>/<code>const</code>) og forbyr re-deklarering med <code>let</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · Navngivning</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke regler gjelder for variabelnavn i JavaScript?</p></div>
+          <div class="flashcard__back"><p>Ikke et reservert keyword. Ingen mellomrom. Tall er tillatt, men ikke som første tegn. Av punktuasjon er kun <code>$</code> og <code>_</code> tillatt. Konvensjonen er camelCase (<code>myAge</code>).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · undefined</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr <code>undefined</code>?</p></div>
+          <div class="flashcard__back"><p>En variabel som er deklarert, men ikke har fått en verdi tildelt. Returneres også når man prøver å lese en property som ikke fins på et objekt.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · null</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>typeof null</code>?</p></div>
+          <div class="flashcard__back"><p><code>"object"</code>. Dette er en kjent egenart i språket. <code>null</code> er en bevisst tom verdi som programmereren har satt.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · Likhet null/undefined</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>undefined == null</code> og <code>undefined === null</code>?</p></div>
+          <div class="flashcard__back"><p><code>undefined == null</code> er <code>true</code> — begge representerer «ingen verdi».</p><p><code>undefined === null</code> er <code>false</code> — de har ulik type.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.7 · if/else</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken rekkefølge evalueres en if/else if/else-kjede?</p></div>
+          <div class="flashcard__back"><p>Ovenfra og ned. Den første betingelsen som er <code>true</code> kjører — resten hoppes over. <code>else</code> (uten betingelse) er «catch all» og kjøres bare hvis ingen av de andre var <code>true</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.8 · Arrays</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan henter du første og siste element i en array?</p></div>
+          <div class="flashcard__back"><p>Første: <code>arr[0]</code>. Siste: <code>arr[arr.length - 1]</code> (fordi indeksering starter på 0).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.8 · push/pop</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>.push()</code> og <code>.pop()</code> på en array?</p></div>
+          <div class="flashcard__back"><p><code>.push(x)</code> legger <code>x</code> til som siste element.</p><p><code>.pop()</code> fjerner og returnerer det siste elementet.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · Objekter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan deklarerer man et objekt i JavaScript?</p></div>
+          <div class="flashcard__back"><p>Med krøllparenteser, og nøkkel-verdi-par adskilt med komma:</p><p><code>const p = { navn: "Anna", alder: 22 };</code></p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · Tilgang</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de to måtene å hente en property fra et objekt på?</p></div>
+          <div class="flashcard__back"><p>Dot-notasjon: <code>obj.navn</code></p><p>Bracket-notasjon: <code>obj["navn"]</code></p><p>Begge gir samme resultat.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · Legge til property</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan legger du til en property på et eksisterende objekt?</p></div>
+          <div class="flashcard__back"><p>Bare tilordne den: <code>obj.nyKey = "verdi";</code> eller <code>obj["nyKey"] = "verdi";</code>. Property opprettes om den ikke fins fra før.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.10 · for-loop</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de tre delene i parentesen til en for-loop?</p></div>
+          <div class="flashcard__back"><p><strong>1. Initialisering</strong> — <code>let i = 0</code>.</p><p><strong>2. Betingelse</strong> — <code>i &lt; 10</code> (loopen kjører så lenge dette er <code>true</code>).</p><p><strong>3. Oppdatering</strong> — <code>i++</code> (kjøres etter hver iterasjon).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.10 · while</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Når bruker man en while-loop fremfor en for-loop?</p></div>
+          <div class="flashcard__back"><p>Når man ikke vet på forhånd hvor mange iterasjoner som trengs, men har en betingelse som skal holde — f.eks. spørre brukeren om navn til hen oppgir noe.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.10 · break/continue</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>break</code> og <code>continue</code>?</p></div>
+          <div class="flashcard__back"><p><code>break</code> avslutter hele loopen umiddelbart.</p><p><code>continue</code> hopper over resten av <em>én</em> iterasjon og går til neste.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.11 · Funksjoner</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de to måtene å skrive en funksjon på?</p></div>
+          <div class="flashcard__back"><p><strong>Declaration:</strong> <code>function navn(p){ … }</code></p><p><strong>Expression:</strong> <code>var navn = function(p){ … }</code></p><p>Begge er likeverdige; valg er personlig preferanse.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.11 · Parameter vs argument</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <em>parameter</em> og <em>argument</em>?</p></div>
+          <div class="flashcard__back"><p><strong>Parameter:</strong> navnet i funksjonsdeklarasjonen — variabelen funksjonen forventer.</p><p><strong>Argument:</strong> verdien som faktisk sendes inn ved kall.</p><p><code>function f(x){…}</code> — <code>x</code> er parameter. <code>f(5)</code> — <code>5</code> er argument.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.11 · return</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>return</code> i en funksjon?</p></div>
+          <div class="flashcard__back"><p>Returnerer verdien som følger etter <code>return</code> til den som kalte funksjonen. Resten av funksjonen kjøres ikke. Uten <code>return</code> returnerer funksjonen <code>undefined</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · JSON</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr JSON, og hva brukes det til?</p></div>
+          <div class="flashcard__back"><p><strong>JavaScript Object Notation</strong>. Et tekstformat for utveksling av data — særlig mellom klient og tjener. Filnavn ender på <code>.json</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · JSON-regler</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på JSON og et JavaScript-objekt?</p></div>
+          <div class="flashcard__back"><p>JSON er strengere: alle nøkler må omsluttes av doble fnutter, kun enkle data-uttrykk er tillatt (ingen funksjoner, variabler eller beregninger), og ingen kommentarer.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · stringify/parse</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>JSON.stringify()</code> og <code>JSON.parse()</code>?</p></div>
+          <div class="flashcard__back"><p><code>JSON.stringify(obj)</code> tar et JS-objekt og returnerer en JSON-streng.</p><p><code>JSON.parse(str)</code> tar en JSON-streng og returnerer det tilsvarende JS-objektet.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · XMLHttpRequest</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>XMLHttpRequest</code> (Ajax)?</p></div>
+          <div class="flashcard__back"><p>Et API som lar JavaScript sende HTTP-requests fra nettleseren — slik at innhold kan lastes dynamisk uten å oppdatere hele siden.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · open()</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr argumentene i <code>request.open('GET', '/url', true)</code>?</p></div>
+          <div class="flashcard__back"><p><strong>1.</strong> HTTP-metode (GET).</p><p><strong>2.</strong> URL/sti til ressursen.</p><p><strong>3.</strong> Asynkron-flagg: <code>true</code> = asynkron (med <code>onload</code>-callback), <code>false</code> = synkron (blokkerer).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · onload</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>request.onload</code>?</p></div>
+          <div class="flashcard__back"><p>En funksjon som kjøres når tjeneren har svart på requesten. Inni denne kan man lese <code>request.status</code> og <code>request.responseText</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · HTTP-metoder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på GET, POST, PUT og DELETE?</p></div>
+          <div class="flashcard__back"><p><strong>GET:</strong> hente data uten å endre noe.</p><p><strong>POST:</strong> opprette / lagre ny data.</p><p><strong>PUT:</strong> oppdatere eksisterende data.</p><p><strong>DELETE:</strong> slette data.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · Statuskoder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr statuskodene 200, 404 og 500?</p></div>
+          <div class="flashcard__back"><p><strong>200 OK</strong> — request var vellykket.</p><p><strong>404 Not Found</strong> — tjeneren fant ikke ressursen.</p><p><strong>500 Internal Server Error</strong> — tjener-feil som tjeneren ikke vet hvordan håndteres.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · 4xx-koder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr 400, 401 og 403?</p></div>
+          <div class="flashcard__back"><p><strong>400 Bad Request</strong> — ugyldig syntaks i requesten.</p><p><strong>401 Unauthorized</strong> — autentisering kreves.</p><p><strong>403 Forbidden</strong> — klienten har ikke tilgang (autentisering hjelper ikke).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · responseText</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva inneholder <code>request.responseText</code>?</p></div>
+          <div class="flashcard__back"><p>Selve dataen tjeneren returnerte, som tekststreng. Hvis det er JSON, kan man bruke <code>JSON.parse(request.responseText)</code> for å få et JS-objekt.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · Same-origin</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er Same-origin policy?</p></div>
+          <div class="flashcard__back"><p>En sikkerhetsbegrensning i nettleseren som hindrer en side på en server fra å laste innhold fra en annen server via <code>XMLHttpRequest</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.12 · JSONP</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er JSONP, og hvilket problem løser det?</p></div>
+          <div class="flashcard__back"><p>En teknikk for å omgå Same-origin policy. JSONP utnytter at JavaScript fra en annen tjener <em>kan</em> lastes inn (det stoppes ikke av policy-en) — typisk via en callback-parameter den andre tjeneren støtter.</p></div>
+        </div>
       </div>
     </div>
   </div></section>

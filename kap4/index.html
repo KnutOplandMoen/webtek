@@ -30,9 +30,10 @@
       <div class="eyebrow">Kapittel 4 · Forelesning 7 · Del 2</div>
       <h1>CSS — <em>videregående</em></h1>
       <p class="lede">
-        Document flow, display-egenskaper og når en boks plutselig flyter
-        over kanten. Det andre laget av CSS, der layout begynner å bli
-        ekte.
+        Kap 3 lærte deg å fargelegge én boks. Kap 4 lærer deg hvordan
+        boksene henger sammen i normal flow — og hvordan
+        <code>display</code>, <code>position</code>, <code>float</code>
+        og <code>overflow</code> kan endre det.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.7</span>
@@ -63,40 +64,630 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>mer CSS</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Kap 3 lærte deg å fargelegge én boks. Kap 4 lærer deg hvordan boksene henger sammen — og hvorfor en kort tekst plutselig kan dytte alle de andre nedover.</p>
-      <p><strong>Kilde:</strong> pensum 1.7.</p>
+    <p class="dropcap">
+      I kapittel 3 lærte du grunnleggende CSS — selektorer, kaskaden, arv,
+      farger, fonter, margin og padding. Det dekker hvordan én boks ser ut.
+      Kapittel 4 handler om hvordan boksene <em>oppfører seg sammen</em>:
+      hvordan de plasseres ved siden av eller under hverandre, hvordan du kan
+      flytte dem ut av den vanlige flyten, og hva som skjer når innholdet er
+      større enn boksen sin.
+    </p>
+    <p>
+      Pensum 1.7 introduserer syv konkrete temaer som henger sammen i én
+      mental modell — <strong>document flow</strong>. Når du skjønner hva
+      flow er, vet du også hva <code>display</code>, <code>position</code>,
+      <code>float</code> og <code>overflow</code> faktisk gjør.
+    </p>
+    <div class="callout-blue">
+      <div class="label">Det du skal kunne</div>
+      <ul>
+        <li>Style lister med <code>list-style-type</code>, <code>list-style-image</code> og <code>list-style-position</code>.</li>
+        <li>Veksle mellom inline og block med <code>display</code>, og skjule elementer på to måter.</li>
+        <li>Forklare normal flow og hvordan <code>position</code> og <code>float</code> bryter den.</li>
+        <li>Bruke <code>z-index</code> til å styre stable rekkefølge når bokser overlapper.</li>
+        <li>Skrive flere pseudo-klasser, blant annet <code>:nth-child</code>, <code>:checked</code>, <code>:valid</code>.</li>
+        <li>Velge riktig verdi for <code>overflow</code> når innhold flyter over.</li>
+      </ul>
+      <p><strong>Kilde:</strong> pensum 1.7 (CSS continued), delkapittel 1.7.1–1.7.7.</p>
     </div>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>Document <em>flow</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Forklar hvordan elementer plasseres etter hverandre i normal flow, hvordan block og inline oppfører seg, og hvordan display kan endre dette.</p>
-      <p><strong>Kilde:</strong> pensum 1.7.4 (Document flow).</p>
+    <p>
+      <em>Flow</em> beskriver hvordan elementer følger hverandre i dokumentet,
+      og hvordan de oppfører seg ved siden av hverandre. Hvert element har en
+      standardregel som styrer dette:
+    </p>
+    <div class="compare-grid">
+      <div class="compare-cell good">
+        <div class="label">Block-elementer</div>
+        <p>
+          Starter alltid på ny linje og legger seg <strong>oppå hverandre</strong>.
+          Selv om to bokser ville fått plass ved siden av hverandre, gjør de
+          det ikke i normal flow.
+        </p>
+      </div>
+      <div class="compare-cell">
+        <div class="label">Inline-elementer</div>
+        <p>
+          Fortsetter på <strong>samme linje</strong> som elementet før.
+          Bokser med tekst flyter side om side til linja er full og brytes.
+        </p>
+      </div>
+    </div>
+    <p>
+      Denne standardoppførselen er det vi kaller <strong>normal flow</strong>.
+      Du trenger ingen CSS-regel for å få den — det er bare slik nettleseren
+      tegner siden hvis du ikke sier noe annet. Syntaksen for å være eksplisitt
+      er <code>position: static;</code>.
+    </p>
+    <p>Tre CSS-egenskaper kan endre den vanlige flyten:</p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">display</div><div class="fc-val">Bytter et element fra block til inline (eller omvendt), eller fjerner det helt.</div></div>
+      <div class="fact-card"><div class="fc-key">position</div><div class="fc-val">Flytter elementet relativt til normal flow, til containing element, eller til nettleservinduet.</div></div>
+      <div class="fact-card"><div class="fc-key">float</div><div class="fc-val">Tar elementet ut av flow og plasserer det helt til venstre eller høyre i containeren — annet innhold flyter rundt.</div></div>
+    </div>
+    <div class="def-box">
+      <div class="def-label">Definisjon</div>
+      <div class="def-term">Containing element</div>
+      <p>
+        Når et block-element ligger inni et annet block-element, kalles det
+        ytterste det <em>containing</em> (eller <em>parent</em>) elementet.
+        Det er <strong>alltid den direkte foreldren</strong> til elementet,
+        selv om det er nestet flere nivåer ned. Dette begrepet blir viktig
+        når vi skal forstå <code>position: absolute</code>.
+      </p>
+      <p><strong>Kilde:</strong> pensum 1.7.4.</p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Når én boks <em>flyter over</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: hva er overflow → visible (default) → hidden → scroll → auto. Hvilke konsekvenser dette har for layout og brukeropplevelse.</p>
-    </div>
+    <h2>Reisen gjennom <em>layout</em></h2>
+    <p class="section-intro">
+      Slik henger pensum 1.7 sammen som en sekvens. Hvert steg løser et
+      konkret problem du møter når du går fra «én stylet boks» til «en hel
+      side med struktur».
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>Style listene først.</strong> Med <code>list-style-type</code>,
+        <code>list-style-image</code> og <code>list-style-position</code>
+        bestemmer du om bullets skal være <code>disc</code>, <code>square</code>,
+        <code>none</code>, et bilde, eller om markøren skal sitte
+        <code>inside</code> eller <code>outside</code> tekstboksen. Pensum 1.7.1.
+      </li>
+      <li>
+        <strong>Bytt block ↔ inline med <code>display</code>.</strong> Et
+        klassisk grep er å gjøre <code>li</code>-elementer <code>inline</code>
+        for å lage en horisontal navigasjon. Verdiene er <code>inline</code>,
+        <code>block</code>, <code>inline-block</code> og <code>none</code>.
+        Pensum 1.7.2.
+      </li>
+      <li>
+        <strong>Velg riktig måte å skjule på.</strong>
+        <code>visibility: hidden</code> gjemmer elementet, men holder plassen.
+        <code>display: none</code> fjerner det fra layout helt. Pensum 1.7.3.
+      </li>
+      <li>
+        <strong>Bryt normal flow med <code>position</code>.</strong>
+        <code>relative</code> flytter et element fra der det skulle vært,
+        uten å påvirke naboene. <code>absolute</code> tar det ut av flow og
+        posisjonerer i forhold til containing element. <code>fixed</code> låser
+        det til nettleservinduet. Pensum 1.7.4.
+      </li>
+      <li>
+        <strong>Plasser side om side med <code>float</code>.</strong> En
+        flytende boks blir block-level og lar annet innhold flyte rundt.
+        Husk å sette <code>width</code>. Bruk <code>clear</code> hvis et
+        element ikke skal berøre venstre eller høyre side av en flytende boks.
+        Pensum 1.7.4.
+      </li>
+      <li>
+        <strong>Bestem stable rekkefølge med <code>z-index</code>.</strong> Når
+        posisjonerte bokser overlapper, vinner det elementet som står sist i
+        HTML-en — med mindre du gir et høyere <code>z-index</code> til en
+        annen boks. Pensum 1.7.4.
+      </li>
+      <li>
+        <strong>Bruk pseudo-klasser presist.</strong> <code>:nth-child(an+b)</code>
+        for hver n-te rad, <code>:checked</code> for radio/checkbox,
+        <code>:valid</code> og <code>:invalid</code> for skjemavalidering.
+        Pensum 1.7.6.
+      </li>
+      <li>
+        <strong>Håndter for mye innhold med <code>overflow</code>.</strong>
+        <code>visible</code> (default) lar det renne ut, <code>hidden</code>
+        klipper, <code>scroll</code> gir alltid scrollbar, <code>auto</code>
+        lar nettleseren bestemme. Pensum 1.7.7.
+      </li>
+    </ol>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De syv <em>delene</em></h2>
+    <p class="section-intro">Hvert delkapittel av 1.7 — kort oppsummert.</p>
+
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · LST</div><div class="sp-title">Styling lists</div><div class="sp-desc">list-style-type, image, position. Pensum 1.7.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · DSP</div><div class="sp-title">Block ↔ inline</div><div class="sp-desc">display: block, inline, inline-block, none. Pensum 1.7.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · HID</div><div class="sp-title">Skjule bokser</div><div class="sp-desc">display: none vs visibility: hidden. Pensum 1.7.3.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · FLW</div><div class="sp-title">Document flow</div><div class="sp-desc">Normal flow, float, position. Pensum 1.7.4.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ARV</div><div class="sp-title">Mer om arv</div><div class="sp-desc">inherit, initial, unset. Pensum 1.7.5.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · PSC</div><div class="sp-title">Mer pseudo-klasser</div><div class="sp-desc">:nth-child, :first-of-type. Pensum 1.7.6.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · OVF</div><div class="sp-title">Overflow</div><div class="sp-desc">visible, hidden, scroll, auto. Pensum 1.7.7.</div></div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">A · LST</div>
+        <div class="sp-title">1.7.1 Styling lists</div>
+        <div class="sp-desc">
+          <code>list-style-type</code>: <code>none</code>, <code>disc</code>,
+          <code>circle</code>, <code>square</code> for <code>ul</code>;
+          <code>decimal</code>, <code>decimal-leading-zero</code>,
+          <code>lower-alpha</code>, <code>upper-alpha</code>,
+          <code>lower-roman</code>, <code>upper-roman</code> for <code>ol</code>.
+          <code>list-style-image: url("...")</code> bytter bullet med bilde.
+          <code>list-style-position</code>: <code>outside</code> (default) eller
+          <code>inside</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">B · DSP</div>
+        <div class="sp-title">1.7.2 Display</div>
+        <div class="sp-desc">
+          <code>display</code> bytter et element mellom inline og block — eller
+          fjerner det. Verdier: <code>inline</code>, <code>block</code>,
+          <code>inline-block</code>, <code>none</code>. Inline-elementer skal
+          ikke lage block-elementer.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">C · HID</div>
+        <div class="sp-title">1.7.3 Skjule bokser</div>
+        <div class="sp-desc">
+          <code>visibility: hidden</code> gjemmer, men <strong>etterlater
+          plassen</strong>. <code>visibility: visible</code> viser. Bruk
+          <code>display: none</code> hvis du <em>ikke</em> vil ha tom plass.
+          Innholdet er fortsatt synlig i kildekoden.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">D · FLW</div>
+        <div class="sp-title">1.7.4 Document flow</div>
+        <div class="sp-desc">
+          Normal flow + <code>position</code> (<code>static</code>,
+          <code>relative</code>, <code>absolute</code>, <code>fixed</code>)
+          med offset-egenskapene <code>top</code>, <code>bottom</code>,
+          <code>left</code>, <code>right</code>. <code>float</code>:
+          <code>left</code>/<code>right</code>; <code>clear</code>:
+          <code>left</code>/<code>right</code>/<code>both</code>/<code>none</code>;
+          <code>z-index</code> for stable rekkefølge.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">E · ARV</div>
+        <div class="sp-title">1.7.5 Inheritance</div>
+        <div class="sp-desc">
+          Child-elementer arver fra parent — også når parent ikke er
+          containing block. Et element arver bare hvis det <strong>ikke selv
+          definerer</strong> egenskapen. Mer spesifikk regel vinner.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">F · PSC</div>
+        <div class="sp-title">1.7.6 Mer pseudo-klasser</div>
+        <div class="sp-desc">
+          <code>:nth-child(an+b)</code> (også <code>odd</code>/<code>even</code>),
+          <code>:last-child</code>, <code>:required</code>, <code>:focus</code>,
+          <code>:checked</code>, <code>:enabled</code>/<code>:disabled</code>,
+          <code>:valid</code>/<code>:invalid</code>, <code>:lang()</code>.
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">G · OVF</div>
+        <div class="sp-title">1.7.7 Overflow</div>
+        <div class="sp-desc">
+          Hva skjer når innholdet er større enn boksen?
+          <code>visible</code> (default), <code>hidden</code>,
+          <code>scroll</code>, <code>auto</code>. Krever bounding height
+          eller <code>white-space: nowrap</code> for å virke.
+        </div>
+      </div>
+    </div>
+
+    <h3>1.7.1 — Styling lists i praksis</h3>
+    <div class="code-result">
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>ul.menu {
+  list-style-type: square;
+  list-style-position: inside;
+}
+
+ol.steg {
+  list-style-type: upper-roman;
+}
+
+ul.bilde-bullets {
+  list-style-image: url("images/star.png");
+}</code></pre>
+      </div>
+    </div>
+    <p>
+      <code>list-style-type</code> kan brukes på regler som gjelder
+      <code>ul</code>, <code>ol</code> og <code>li</code>.
+      <code>list-style-image</code> kan brukes på <code>ul</code> og
+      <code>li</code>. Standardverdien for <code>list-style-position</code>
+      er <code>outside</code> — markøren sitter til venstre for tekstboksen.
+      <code>inside</code> flytter den inn i boksen.
+    </p>
+
+    <h3>1.7.2 — Bytte mellom inline og block</h3>
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre><code>&lt;ul&gt;
+  &lt;li&gt;Home&lt;/li&gt;
+  &lt;li&gt;Products&lt;/li&gt;
+  &lt;li class="coming-soon"&gt;Services&lt;/li&gt;
+  &lt;li&gt;About&lt;/li&gt;
+  &lt;li&gt;Contact&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>li {
+  display: inline;
+  margin-right: 10px;
+}
+li.coming-soon {
+  display: none;
+}</code></pre>
+      </div>
+    </div>
+    <p>
+      <code>li</code> behandles vanligvis som block-elementer. Med
+      <code>display: inline</code> sitter de side om side — et klassisk
+      navigasjonstriks. <code>display: none</code> får siden til å oppføre
+      seg som om elementet ikke fantes (men det ligger fortsatt i kildekoden,
+      så hvem som helst kan se innholdet via «vis kilde»).
+    </p>
+
+    <h3>1.7.3 — Skjule, men beholde plassen</h3>
+    <div class="compare-grid">
+      <div class="compare-cell">
+        <div class="label">visibility: hidden</div>
+        <p>
+          Boksen er usynlig, men <strong>tar fortsatt plass</strong> i
+          layouten. Det blir et tomt felt der elementet skulle vært.
+        </p>
+      </div>
+      <div class="compare-cell good">
+        <div class="label">display: none</div>
+        <p>
+          Elementet er fjernet fra layouten — naboene flytter seg som om
+          det ikke var der i det hele tatt.
+        </p>
+      </div>
+    </div>
+
+    <h3>1.7.4 — Document flow: posisjonering</h3>
+    <p>
+      CSS har følgende posisjoneringsskjema som du styrer med
+      <code>position</code>: normal flow, relative, absolute (med fixed som
+      en variant). I tillegg kan du flyte elementer med <code>float</code>.
+    </p>
+
+    <div class="def-box">
+      <div class="def-label">position: static (normal flow)</div>
+      <p>
+        Default. Hvert block-element legger seg på en ny linje under det
+        forrige. Selv om bokser har plass til å sitte side om side, gjør de
+        det ikke. Du trenger ingen regel for dette, men du <em>kan</em> skrive
+        det eksplisitt: <code>position: static;</code>.
+      </p>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">position: relative</div>
+      <p>
+        Flytter elementet fra der det <em>ville</em> vært i normal flow.
+        Naboene blir stående der de var — det er bare boksen selv som hopper.
+        Du angir hvor mye den skal flyttes med <code>top</code>,
+        <code>bottom</code>, <code>left</code> eller <code>right</code> i
+        piksler, prosent eller em.
+      </p>
+      <pre><code>.relative {
+  position: relative;
+  left: 100px;
+}</code></pre>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">position: absolute</div>
+      <p>
+        Tas <strong>helt ut av normal flow</strong>. Naboene oppfører seg
+        som om elementet ikke fantes. Plasseres relativt til
+        <em>containing element</em>. Boksen flytter seg sammen med siden når
+        brukeren scroller.
+      </p>
+      <pre><code>h1 {
+  position: absolute;
+  top: 0px;
+  left: 500px;
+  width: 250px;
+}</code></pre>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">position: fixed</div>
+      <p>
+        En variant av absolute. Plasseres relativt til <strong>nettleservinduet</strong>
+        og blir stående når brukeren scroller. Brukes ofte til en topbar.
+      </p>
+      <pre><code>h1 {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: #efefef;
+}</code></pre>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">float</div>
+      <p>
+        Tar elementet ut av normal flow og plasserer det helt til venstre
+        eller høyre i containeren. Boksen blir block-level, og annet
+        innhold flyter rundt. Sett alltid en <code>width</code> sammen
+        med <code>float</code>; ellers blir resultatet inkonsistent.
+      </p>
+      <pre><code>blockquote {
+  float: left;
+  width: 250px;
+  margin: 10px;
+  padding: 10px;
+}</code></pre>
+      <p>
+        Når flere bokser flyter, kan høyden på en boks hindre den neste i
+        å gå helt ut til venstre kant — den setter seg under den forrige.
+        Løsningen er ikke å sette lik <code>height</code> manuelt, men å
+        bruke <code>clear</code>.
+      </p>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">clear</div>
+      <p>
+        Sier at <em>ingen</em> element (i samme containing element) skal
+        berøre venstre eller høyre side av denne boksen. Verdier:
+      </p>
+      <ul>
+        <li><code>left</code> — venstre side skal ikke berøres.</li>
+        <li><code>right</code> — høyre side skal ikke berøres.</li>
+        <li><code>both</code> — verken venstre eller høyre.</li>
+        <li><code>none</code> — kan berøres på begge sider.</li>
+      </ul>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">z-index</div>
+      <p>
+        Når bokser overlapper (med <code>relative</code>, <code>absolute</code>
+        eller <code>fixed</code>), vinner det som står sist i HTML-en. For å
+        styre dette setter du <code>z-index</code> til et tall — jo høyere,
+        jo nærmere fronten. <code>z-index: 10</code> ligger over
+        <code>z-index: 5</code>.
+      </p>
+    </div>
+
+    <h3>1.7.5 — Inheritance, gjenbesøkt</h3>
+    <p>
+      Child-elementer arver fra parent, selv når parent ikke er containing
+      block. Men: et element arver bare hvis det <strong>ikke selv har
+      definert</strong> egenskapen.
+    </p>
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre><code>&lt;body&gt;
+  &lt;h1&gt;Hello inheritance&lt;/h1&gt;
+  &lt;p class="intro"&gt;
+    Let me introduce you to the world of inheritance.
+  &lt;/p&gt;
+  &lt;p&gt;
+    If a child element has not defined a property, it
+    will take that property from its parent.
+  &lt;/p&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>body {
+  font-family: Georgia, serif;
+  color: black;
+}
+h1 {
+  font-family: Helvetica, sans-serif;
+}
+.intro {
+  color: #FAA21B;
+}</code></pre>
+      </div>
+    </div>
+    <p>
+      Alt under <code>body</code> bruker Georgia — bortsett fra <code>h1</code>,
+      som har overstyrt med Helvetica. <code>p.intro</code> får oransje
+      farge fordi den selv har definert <code>color</code>; den vanlige
+      <code>p</code>-en arver svart fra <code>body</code>.
+    </p>
+
+    <h3>1.7.6 — Mer pseudo-klasser</h3>
+    <p>Syntaks fra forrige kapittel gjelder fortsatt:</p>
+    <pre><code>selector:pseudo-class {
+  property: value;
+}</code></pre>
+
+    <h4><code>:nth-child(an + b)</code></h4>
+    <p>
+      Matcher det n-te child-elementet basert på formelen <code>an + b</code>,
+      der <code>a</code> og <code>b</code> må være heltall, og første child
+      har indeks 1. Vanlig bruk: hver andre rad i en tabell.
+    </p>
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre><code>&lt;ul&gt;
+  &lt;li&gt;li:nth-child(2n+1)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(odd)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(2n)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(even)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(0n+1)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(1)&lt;/li&gt;
+  &lt;li&gt;li:nth-child(-n+3)&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>li:nth-child(2n+1) {
+  color: blue;
+}</code></pre>
+      </div>
+    </div>
+    <ul>
+      <li><code>tr:nth-child(2n+1)</code> og <code>tr:nth-child(odd)</code> — odde rader.</li>
+      <li><code>tr:nth-child(2n)</code> og <code>tr:nth-child(even)</code> — like rader.</li>
+      <li><code>span:nth-child(0n+1)</code> og <code>span:nth-child(1)</code> — første child som er <code>span</code>.</li>
+      <li><code>span:nth-child(-n+3)</code> — matcher hvis elementet er blant de tre første og er <code>span</code>.</li>
+    </ul>
+
+    <h4><code>:last-child</code></h4>
+    <p>Representerer det <em>siste</em> child-elementet av sin parent.</p>
+    <pre><code>li:last-child {
+  color: blue;
+}</code></pre>
+
+    <h4><code>:required</code></h4>
+    <p>
+      Matcher <code>&lt;input&gt;</code>-elementer som har <code>required</code>-attributtet.
+      Lar deg lett markere hvilke felt som må fylles ut før innsending.
+    </p>
+    <pre><code>input:required {
+  property: value;
+}</code></pre>
+
+    <h4><code>:focus</code></h4>
+    <p>
+      Brukes når et element har fått fokus — enten ved at brukeren har
+      klikket på det med musa, eller ved tastaturnavigasjon.
+    </p>
+    <pre><code>input:focus {
+  property: value;
+}</code></pre>
+
+    <h4><code>:checked</code></h4>
+    <p>
+      Matcher radio (<code>&lt;input type="radio"&gt;</code>), checkbox
+      (<code>&lt;input type="checkbox"&gt;</code>) eller option
+      (<code>&lt;option&gt;</code> i en <code>&lt;select&gt;</code>) som er
+      avkrysset eller toggled på. Brukeren kan endre tilstanden ved å klikke
+      eller velge en annen verdi.
+    </p>
+    <pre><code>/* enhver "checkable" */
+:checked {
+  color: green;
+}
+
+/* bare radio */
+input[type="radio"]:checked { color: green; }
+
+/* bare checkbox */
+input[type="checkbox"]:checked { color: green; }
+
+/* bare option */
+option:checked { color: green; }</code></pre>
+
+    <h4><code>:enabled</code> og <code>:disabled</code></h4>
+    <p>
+      <code>:enabled</code> matcher elementer som kan aktiveres (klikkes,
+      få tekstinput) eller motta fokus. <code>:disabled</code> matcher
+      elementer som <em>ikke</em> kan aktiveres — de er skrudd av.
+    </p>
+    <pre><code>input:enabled {
+  color: green;
+}
+
+input[type="text"]:disabled {
+  background: #ccc;
+}</code></pre>
+
+    <h4><code>:valid</code> og <code>:invalid</code></h4>
+    <p>
+      Matcher <code>&lt;input&gt;</code> eller <code>&lt;form&gt;</code> hvor
+      innholdet validerer (eller ikke validerer) i forhold til
+      <code>type</code>. Lar deg gi rød bakgrunn på feil felt og grønn på
+      gyldige felt.
+    </p>
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre><code>&lt;form&gt;
+  &lt;label&gt;Enter a URL:&lt;/label&gt;
+  &lt;input type="url" /&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>input:invalid {
+  background-color: #ffdddd;
+}
+input:valid {
+  background-color: #ddffdd;
+}</code></pre>
+      </div>
+    </div>
+
+    <h4><code>:lang()</code></h4>
+    <p>
+      Matcher elementer basert på språket de er bestemt til å være på. I
+      HTML bestemmes språk av <code>lang</code>-attributtet,
+      <code>&lt;meta&gt;</code>-elementet, og eventuelt protokoll-headere.
+    </p>
+    <pre><code>:lang(en) &gt; q { quotes: '\201C' '\201D' '\2018' '\2019'; }
+:lang(fr) &gt; q { quotes: '« ' ' »'; }
+:lang(de) &gt; q { quotes: '»' '«' '\2039' '\203A'; }</code></pre>
+
+    <h3>1.7.7 — Overflow</h3>
+    <p>
+      <code>overflow</code> bestemmer hva som skjer når innholdet er større
+      enn block-level-containeren — skal det klippes, vises scrollbar, eller
+      bare flyte ut?
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">visible</div><div class="fc-val">Default. Innholdet klippes ikke — det kan rendres utenfor content-boksen.</div></div>
+      <div class="fact-card"><div class="fc-key">hidden</div><div class="fc-val">Innholdet klippes. Ingen scrollbar.</div></div>
+      <div class="fact-card"><div class="fc-key">scroll</div><div class="fc-val">Innholdet klippes. Desktop-nettlesere viser scrollbar — uavhengig av om noe faktisk overflows.</div></div>
+      <div class="fact-card"><div class="fc-key">auto</div><div class="fc-val">Avhenger av user agent. Firefox og co. viser scrollbar bare når innholdet overflows.</div></div>
+    </div>
+    <pre><code>/* Innholdet klippes ikke */
+overflow: visible;
+
+/* Innholdet klippes, ingen scrollbars */
+overflow: hidden;
+
+/* Innholdet klippes, med scrollbars */
+overflow: scroll;
+
+/* La nettleseren bestemme */
+overflow: auto;</code></pre>
+    <div class="callout-warn">
+      <div class="label">Forutsetning</div>
+      <p>
+        For at <code>overflow</code> skal ha effekt, må block-level-containeren
+        ha en bounding height (<code>height</code> eller <code>max-height</code>),
+        eller ha <code>white-space</code> satt til <code>nowrap</code>.
+      </p>
+      <p>
+        En annen verdi enn <code>visible</code> oppretter en ny block
+        formatting context. Dette er teknisk nødvendig — hvis et float-element
+        krysset scroll-elementet, måtte innholdet rewrappes hvert scroll-steg,
+        og det ville gjort scrollingen treg.
+      </p>
     </div>
   </div></section>
 
@@ -104,12 +695,28 @@
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">display</div><div class="fc-val">block, inline, inline-block, none.</div></div>
-      <div class="fact-card"><div class="fc-key">position</div><div class="fc-val">static, relative, absolute, fixed, sticky.</div></div>
-      <div class="fact-card"><div class="fc-key">float</div><div class="fc-val">left, right, none — hvordan det påvirker flow.</div></div>
-      <div class="fact-card"><div class="fc-key">overflow</div><div class="fc-val">Pensum 1.7.7.</div></div>
-      <div class="fact-card"><div class="fc-key">z-index</div><div class="fc-val">Stable order kun for posisjonerte elementer.</div></div>
-      <div class="fact-card"><div class="fc-key">visibility</div><div class="fc-val">hidden vs display: none.</div></div>
+      <div class="fact-card"><div class="fc-key">list-style-type</div><div class="fc-val">Form på bullet/nummer. <code>none</code>, <code>disc</code>, <code>circle</code>, <code>square</code> for ul; <code>decimal</code>, <code>decimal-leading-zero</code>, <code>lower-alpha</code>, <code>upper-alpha</code>, <code>lower-roman</code>, <code>upper-roman</code> for ol. Pensum 1.7.1.</div></div>
+      <div class="fact-card"><div class="fc-key">list-style-image</div><div class="fc-val">Bytter bullet med bilde: <code>url("...")</code>. Pensum 1.7.1.</div></div>
+      <div class="fact-card"><div class="fc-key">list-style-position</div><div class="fc-val"><code>outside</code> (default) eller <code>inside</code>. Pensum 1.7.1.</div></div>
+      <div class="fact-card"><div class="fc-key">display</div><div class="fc-val"><code>inline</code>, <code>block</code>, <code>inline-block</code>, <code>none</code>. Pensum 1.7.2.</div></div>
+      <div class="fact-card"><div class="fc-key">visibility</div><div class="fc-val"><code>hidden</code> (gjemmer, beholder plassen) eller <code>visible</code>. Pensum 1.7.3.</div></div>
+      <div class="fact-card"><div class="fc-key">Normal flow</div><div class="fc-val">Default-oppførsel: block over hverandre, inline ved siden av. Tilsvarer <code>position: static</code>. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">position</div><div class="fc-val"><code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Offset-egenskaper</div><div class="fc-val"><code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>. Piksler, prosent eller em. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Containing element</div><div class="fc-val">Direkte block-level-parent — referansen for <code>position: absolute</code>. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">float</div><div class="fc-val"><code>left</code>, <code>right</code>. Tar element ut av flow, blir block-level, innhold flyter rundt. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">clear</div><div class="fc-val"><code>left</code>, <code>right</code>, <code>both</code>, <code>none</code>. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">z-index</div><div class="fc-val">Tall — høyere = nærmere fronten. Krever posisjonert element. Pensum 1.7.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Inheritance</div><div class="fc-val">Child arver fra parent kun hvis child ikke selv definerer egenskapen. Pensum 1.7.5.</div></div>
+      <div class="fact-card"><div class="fc-key">:nth-child(an+b)</div><div class="fc-val">Heltall a og b. Indeks 1 = første. <code>odd</code>, <code>even</code> som keywords. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:last-child</div><div class="fc-val">Siste child av sin parent. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:required</div><div class="fc-val">Input med <code>required</code>-attributt. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:focus</div><div class="fc-val">Element som har fokus (klikk eller tastatur). Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:checked</div><div class="fc-val">Radio, checkbox eller option som er på. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:enabled / :disabled</div><div class="fc-val">Aktive vs deaktiverte input. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:valid / :invalid</div><div class="fc-val">Innhold som validerer (eller ikke) i forhold til input-type. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">:lang()</div><div class="fc-val">Matcher språk via <code>lang</code>-attributt, <code>&lt;meta&gt;</code> eller protokoll. Pensum 1.7.6.</div></div>
+      <div class="fact-card"><div class="fc-key">overflow</div><div class="fc-val"><code>visible</code> (default), <code>hidden</code>, <code>scroll</code>, <code>auto</code>. Pensum 1.7.7.</div></div>
     </div>
   </div></section>
 
@@ -117,11 +724,16 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 4</em></h2>
     <div class="recap-grid">
+      <span class="recap-pill">style ul og ol fullstendig</span>
       <span class="recap-pill">forklare normal flow</span>
-      <span class="recap-pill">velge display-verdi</span>
-      <span class="recap-pill">forklare overflow-utfall</span>
-      <span class="recap-pill">styre lister fullstendig</span>
-      <span class="recap-pill">bruke nth-child korrekt</span>
+      <span class="recap-pill">velge mellom display: none og visibility: hidden</span>
+      <span class="recap-pill">forskjellen på relative, absolute, fixed</span>
+      <span class="recap-pill">bruke float og clear</span>
+      <span class="recap-pill">forstå når z-index virker</span>
+      <span class="recap-pill">skrive :nth-child(an+b)</span>
+      <span class="recap-pill">koble :checked/:valid/:invalid til skjema</span>
+      <span class="recap-pill">forutsi overflow-utfall</span>
+      <span class="recap-pill">forklare arv på nytt</span>
     </div>
   </div></section>
 
@@ -129,39 +741,269 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.7 (alle syv delkapitler).</li>
+      <li><strong>Lærebok:</strong> pensum 1.7 (CSS continued) — delkapittel 1.7.1 til 1.7.7.</li>
       <li><strong>Slides:</strong> <code>presentasjoner/css_props.md</code>.</li>
-      <li><strong>Eksterne:</strong> MDN — Visual formatting model, Block formatting context.</li>
+      <li><strong>Forelesning:</strong> 7.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Eksempler: blande visibility: hidden og display: none; tro at z-index virker uten position; glemme at inline-element ikke aksepterer width/height.</p>
+    <div class="callout-warn">
+      <div class="label">Felle 1 — visibility ≠ display</div>
+      <p>
+        <code>visibility: hidden</code> beholder plassen i layouten — det
+        blir et tomt felt. Hvis du vil at naboene skal flytte seg som om
+        elementet ikke var der, må du bruke <code>display: none</code>.
+        Husk også at innhold med <code>visibility: hidden</code> fortsatt
+        ligger i HTML-kildekoden og kan leses der.
+      </p>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Felle 2 — z-index uten posisjon</div>
+      <p>
+        <code>z-index</code> virker bare på posisjonerte elementer
+        (<code>relative</code>, <code>absolute</code> eller <code>fixed</code>).
+        Et element med <code>position: static</code> og <code>z-index: 99</code>
+        får <em>ingen</em> effekt — pensum nevner z-index nettopp i
+        sammenheng med disse tre posisjonsverdiene.
+      </p>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Felle 3 — float uten width</div>
+      <p>
+        Når du bruker <code>float</code>, bør du også sette <code>width</code>.
+        Hvis du ikke gjør det, blir resultatet inkonsistent — boksen tar
+        gjerne hele bredden av containeren slik den ville gjort i normal flow.
+      </p>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Felle 4 — overflow uten bounding height</div>
+      <p>
+        For at <code>overflow</code> skal ha effekt, må containeren ha en
+        bounding height (<code>height</code> eller <code>max-height</code>),
+        eller ha <code>white-space: nowrap</code>. Uten dette har egenskapen
+        ingen synlig effekt.
+      </p>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Felle 5 — flytende bokser sitter fast</div>
+      <p>
+        Når flere bokser flyter ved siden av hverandre, kan høyden på en
+        boks hindre den neste i å gå helt ut til venstre kant. Den setter
+        seg under den foregående i stedet. Løsningen er ikke å hardkode
+        lik <code>height</code>, men å bruke <code>clear</code> på det
+        elementet som skal starte på en ren linje.
+      </p>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Felle 6 — inline-elementer som «block»</div>
+      <p>
+        <code>display</code> kan teknisk endre et inline-element til et
+        block-element, men inline-elementer er ikke ment å lage
+        block-level-elementer. Pensum understreker at dette er viktig å
+        merke seg — det bryter HTML-strukturens forventning.
+      </p>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Forutsi <em>render</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Gitt en HTML- og CSS-snutt, beskriv hvordan siden ser ut. Klassisk eksamensoppgave.</p>
+    <h2>Forutsi <em>hvordan siden ser ut</em></h2>
+    <p>
+      En klassisk eksamensoppgave gir deg en HTML- og CSS-snutt, og ber deg
+      beskrive hvordan siden ser ut. Bruk denne sjekklisten:
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>Start med normal flow.</strong> Hvilke elementer er block,
+        hvilke er inline? Hvor ville hver boks havnet uten ekstra CSS?
+      </li>
+      <li>
+        <strong>Sjekk <code>display</code>-overstyringer.</strong> Er det
+        <code>li</code>-er som er gjort <code>inline</code>? Er noe satt til
+        <code>none</code>?
+      </li>
+      <li>
+        <strong>Se etter <code>visibility: hidden</code>.</strong> Da
+        forsvinner innholdet, men plassen står tom.
+      </li>
+      <li>
+        <strong>Identifiser posisjonerte elementer.</strong>
+        <code>relative</code> flytter uten å påvirke naboer.
+        <code>absolute</code> tas ut av flow og legges relativt til
+        containing element. <code>fixed</code> låses til vinduet.
+      </li>
+      <li>
+        <strong>Følg float-ene.</strong> Hvor flyter de? Har de
+        <code>width</code>? Hvilke elementer flyter rundt? Bruker noen
+        <code>clear</code>?
+      </li>
+      <li>
+        <strong>Z-index for overlap.</strong> Hvis bokser overlapper, hvem
+        har høyest <code>z-index</code>? Husk at posisjon må være satt.
+      </li>
+      <li>
+        <strong>Vurder overflow.</strong> Er innholdet større enn
+        containeren? Hva sier <code>overflow</code>: <code>visible</code>,
+        <code>hidden</code>, <code>scroll</code> eller <code>auto</code>?
+      </li>
+      <li>
+        <strong>Husk arv.</strong> Hvilke font/farge-egenskaper arves fra
+        parent når child ikke har definert dem selv?
+      </li>
+    </ol>
+    <div class="callout">
+      <div class="label">Tips</div>
+      <p>
+        Hvis du ser <code>:nth-child</code>, regn ut hvilke elementer som
+        matcher <strong>før</strong> du svarer. Husk at indeks starter på 1,
+        og <code>odd</code> = <code>2n+1</code>, <code>even</code> =
+        <code>2n</code>.
+      </p>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder forutsi-render-spørsmål med MCQ.</p></div>
+    <p class="section-intro">12 spørsmål som dekker hele 1.7. Trykk «Se svar» når du har tenkt selv.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">1 · Lett · 1.7.1</div>
+      <div class="q-text">Hvilke fire verdier av <code>list-style-type</code> bruker du for en <code>&lt;ul&gt;</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>none</code>, <code>disc</code>, <code>circle</code>, <code>square</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">2 · Lett · 1.7.1</div>
+      <div class="q-text">Hva er default-verdien for <code>list-style-position</code>, og hvor sitter markøren da?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>outside</code>. Markøren sitter til venstre for tekstboksen som inneholder hovedpunktet. <code>inside</code> flytter markøren inn i tekstboksen (som da indenteres).</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">3 · Middels · 1.7.2</div>
+      <div class="q-text">Hva gjør <code>display: inline-block</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Oppfører seg som inline, og kan ikke ta width/height.</li>
+        <li class="mcq-opt">Skjuler elementet uten å beholde plassen.</li>
+        <li class="mcq-opt" data-correct="1">Får et block-level-element til å flyte som inline, men beholder block-level-egenskaper.</li>
+        <li class="mcq-opt">Tar elementet ut av normal flow.</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt — pensum 1.7.2: «inline-block: This causes a block-level element to flow like an inline element, while retaining other features of a block-level element.»</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">4 · Lett · 1.7.3</div>
+      <div class="q-text">Forskjellen på <code>visibility: hidden</code> og <code>display: none</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>visibility: hidden</code> gjemmer elementet, men <em>etterlater plassen</em> der det skulle vært. <code>display: none</code> fjerner det helt fra layouten — naboene oppfører seg som om elementet ikke fantes.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">5 · Middels · 1.7.4</div>
+      <div class="q-text">Hva er <code>position</code>-verdien for normal flow?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">normal</li>
+        <li class="mcq-opt">relative</li>
+        <li class="mcq-opt" data-correct="1">static</li>
+        <li class="mcq-opt">default</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt. Du trenger ikke skrive den, men syntaksen er <code>position: static;</code>.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">6 · Middels · 1.7.4</div>
+      <div class="q-text">Forskjellen på <code>position: absolute</code> og <code>position: fixed</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>absolute</code> posisjonerer elementet i forhold til <em>containing element</em>; det flytter seg sammen med siden når brukeren scroller. <code>fixed</code> posisjonerer i forhold til <em>nettleservinduet</em>; elementet blir stående når brukeren scroller.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">7 · Middels · 1.7.4</div>
+      <div class="q-text">Hvilken egenskap bør du alltid sette sammen med <code>float</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">height</li>
+        <li class="mcq-opt" data-correct="1">width</li>
+        <li class="mcq-opt">clear</li>
+        <li class="mcq-opt">overflow</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt. Pensum 1.7.4: «When you use the float property, you should also use the width property.» Uten width blir resultatet inkonsistent.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">8 · Middels · 1.7.4</div>
+      <div class="q-text">Hva gjør <code>clear: both</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Sier at <em>verken</em> venstre eller høyre side av boksen skal berøre andre elementer i samme containing element. Brukes typisk for å starte på en ren linje under flere flytende bokser.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">9 · Vanskelig · 1.7.4</div>
+      <div class="q-text">På hvilke <code>position</code>-verdier virker <code>z-index</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">På alle, også static.</li>
+        <li class="mcq-opt" data-correct="1">På relative, absolute og fixed.</li>
+        <li class="mcq-opt">Bare på absolute.</li>
+        <li class="mcq-opt">Bare på fixed.</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt. Pensum 1.7.4 nevner z-index spesifikt for relative, fixed og absolute — fordi det er da bokser kan overlappe.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">10 · Vanskelig · 1.7.6</div>
+      <div class="q-text">Hva matcher <code>li:nth-child(2n+1)</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Hvert andre li-element fra og med det andre.</li>
+        <li class="mcq-opt" data-correct="1">Hvert odde li-element (1., 3., 5., …).</li>
+        <li class="mcq-opt">De to første li-elementene.</li>
+        <li class="mcq-opt">Det første li-elementet.</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt. <code>2n+1</code> = 1, 3, 5, 7, … — som er det samme som <code>odd</code>.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Middels · 1.7.6</div>
+      <div class="q-text">Hva er forskjellen på <code>:enabled</code> og <code>:checked</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>:enabled</code> matcher input-elementer som ikke er deaktiverte — altså som kan klikkes, fylles ut eller motta fokus. <code>:checked</code> matcher radio/checkbox/option som er <em>avkrysset</em> eller toggled på.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">12 · Vanskelig · 1.7.7</div>
+      <div class="q-text">Hva er forskjellen på <code>overflow: scroll</code> og <code>overflow: auto</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Ingen — de er aliaser.</li>
+        <li class="mcq-opt"><code>scroll</code> klipper, <code>auto</code> klipper ikke.</li>
+        <li class="mcq-opt" data-correct="1"><code>scroll</code> viser scrollbar uansett, <code>auto</code> overlater til nettleseren — typisk scrollbar bare når innhold faktisk overflows.</li>
+        <li class="mcq-opt">Begge skjuler innholdet uten scrollbar.</li>
+      </ul>
+      <div class="mcq-feedback">Korrekt. Pensum 1.7.7: «scroll … desktop browsers use scrollbars, whether or not any content is clipped.» «auto: Depends on the user agent.»</div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <h2>Flashcards — <em>hele 1.7 i kortform</em></h2>
+    <p class="section-intro">
+      32 kort. Klikk eller trykk mellomrom for å snu, piltaster for å bla,
+      <kbd>S</kbd> for shuffle og <kbd>R</kbd> for reset.
+    </p>
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -169,6 +1011,299 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.1 · Lister</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken egenskap styrer formen på bullet-en i en uordnet liste?</p></div>
+          <div class="flashcard__back"><p><code>list-style-type</code>. Verdier for ul: <code>none</code>, <code>disc</code>, <code>circle</code>, <code>square</code>.</p><p class="fc-ref">Pensum 1.7.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.1 · Lister</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Nevn seks gyldige verdier av <code>list-style-type</code> for en <code>&lt;ol&gt;</code>.</p></div>
+          <div class="flashcard__back"><p><code>decimal</code>, <code>decimal-leading-zero</code>, <code>lower-alpha</code>, <code>upper-alpha</code>, <code>lower-roman</code>, <code>upper-roman</code>.</p><p class="fc-ref">Pensum 1.7.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.1 · Lister</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan setter du et bilde som bullet?</p></div>
+          <div class="flashcard__back"><p><code>list-style-image: url("path/til/bilde.png");</code> — på regler som gjelder <code>ul</code> eller <code>li</code>.</p><p class="fc-ref">Pensum 1.7.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.1 · Lister</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>list-style-position: outside</code> og <code>inside</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> outside flytter listen ut av sidemarginen</li>
+              <li><span class="opt-label">B</span> inside gjør listen usynlig</li>
+              <li><span class="opt-label">C</span> outside (default) plasserer markøren til venstre for tekstboksen, inside flytter den inn i boksen</li>
+              <li><span class="opt-label">D</span> de er aliaser for hverandre</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">C</span>. <code>outside</code> er default; markøren sitter til venstre for tekstblokken. <code>inside</code> sitter inni boksen, som da indenteres.</p><p class="fc-ref">Pensum 1.7.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.2 · Display</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>display</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>inline</code>, <code>block</code>, <code>inline-block</code>, <code>none</code>.</p><p class="fc-ref">Pensum 1.7.2</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.2 · Display</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>display: inline-block</code>?</p></div>
+          <div class="flashcard__back"><p>Får et block-level-element til å flyte som et inline-element, mens det beholder andre block-level-egenskaper (f.eks. å kunne ha <code>width</code>/<code>height</code>).</p><p class="fc-ref">Pensum 1.7.2</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.2 · Display</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">En klassisk grunn til å sette <code>li { display: inline; }</code>?</p></div>
+          <div class="flashcard__back"><p>Lage horisontal navigasjon — listene legger seg side om side i stedet for å stables. Margin-right brukes ofte til å skille dem.</p><p class="fc-ref">Pensum 1.7.2</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.3 · Skjule</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke to verdier kan <code>visibility</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>hidden</code> og <code>visible</code>.</p><p class="fc-ref">Pensum 1.7.3</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.3 · Skjule</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Når bør du bruke <code>display: none</code> i stedet for <code>visibility: hidden</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Når elementet skal være tilgjengelig for skjermlesere</li>
+              <li><span class="opt-label">B</span> Når du ikke vil at det skal stå igjen et tomt felt der elementet var</li>
+              <li><span class="opt-label">C</span> Når elementet er en <code>li</code></li>
+              <li><span class="opt-label">D</span> Når elementet er posisjonert</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. <code>visibility: hidden</code> etterlater en blank plass; <code>display: none</code> gjør at siden oppfører seg som om elementet ikke var der.</p><p class="fc-ref">Pensum 1.7.3</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.3 · Skjule</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Er innhold med <code>visibility: hidden</code> faktisk skjult fra alle?</p></div>
+          <div class="flashcard__back"><p>Nei. Pensum understreker at innholdet fortsatt ligger i HTML-kildekoden og kan leses ved å vise kilde i nettleseren — det samme gjelder for <code>display: none</code>.</p><p class="fc-ref">Pensum 1.7.2 og 1.7.3</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <em>normal flow</em>?</p></div>
+          <div class="flashcard__back"><p>Default-oppførsel: hvert block-element legger seg på en ny linje under det forrige; inline-elementer fortsetter på samme linje. Tilsvarer <code>position: static</code>.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>position</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er offset-egenskapene som brukes med <code>position</code>?</p></div>
+          <div class="flashcard__back"><p><code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>. Verdiene oppgis vanligvis i piksler, prosent eller em.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva karakteriserer <code>position: relative</code>?</p></div>
+          <div class="flashcard__back"><p>Flytter elementet i forhold til der det <em>ville</em> vært i normal flow. Naboene står stille — bare boksen selv flyttes.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva karakteriserer <code>position: absolute</code>?</p></div>
+          <div class="flashcard__back"><p>Tas ut av normal flow — naboene oppfører seg som om elementet ikke var der. Plasseres i forhold til <em>containing element</em>. Flytter seg når brukeren scroller.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan skiller <code>position: fixed</code> seg fra <code>absolute</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> fixed flytter seg sammen med scroll, absolute står stille</li>
+              <li><span class="opt-label">B</span> fixed plasseres i forhold til nettleservinduet og blir stående når brukeren scroller</li>
+              <li><span class="opt-label">C</span> fixed virker bare på h1</li>
+              <li><span class="opt-label">D</span> fixed beholder elementet i normal flow</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. <code>fixed</code> er en form for absolute, men referansen er nettleservinduet, og elementet blir værende på samme sted når brukeren scroller.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <em>containing element</em>?</p></div>
+          <div class="flashcard__back"><p>Den direkte block-level-foreldren til et element — også når elementet ligger nestet flere nivåer ned. Brukes som referanse for <code>position: absolute</code>.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>float: left</code>?</p></div>
+          <div class="flashcard__back"><p>Tar elementet ut av normal flow og plasserer det helt til venstre i containeren. Boksen blir block-level. Annet innhold flyter rundt den.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>clear</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>left</code>, <code>right</code>, <code>both</code>, <code>none</code>. <code>both</code> betyr at verken venstre eller høyre side skal berøres av andre elementer i samme containing element.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.4 · Flow</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva styrer <code>z-index</code>, og hva er forutsetningen?</p></div>
+          <div class="flashcard__back"><p>Styrer hvilken boks som ligger foran når flere overlapper. Verdien er et tall — høyere = nærmere fronten. Krever at elementet er <code>relative</code>, <code>absolute</code> eller <code>fixed</code>; uten posisjonering har <code>z-index</code> ingen effekt.</p><p class="fc-ref">Pensum 1.7.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.5 · Arv</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Når arver et child-element en egenskap fra parent?</p></div>
+          <div class="flashcard__back"><p>Når child-elementet selv ikke definerer den egenskapen. Hvis child har sin egen verdi, vinner den.</p><p class="fc-ref">Pensum 1.7.5</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er syntaksen for en pseudo-klasse?</p></div>
+          <div class="flashcard__back"><pre><code>selector:pseudo-class {
+  property: value;
+}</code></pre><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er formelen for <code>:nth-child</code>, og hva må <code>a</code> og <code>b</code> være?</p></div>
+          <div class="flashcard__back"><p><code>an + b</code>, plassert i parentes. Både <code>a</code> og <code>b</code> må være <strong>heltall</strong>. Indeks for første child er 1.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva matcher <code>tr:nth-child(odd)</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Like rader (2, 4, 6, …)</li>
+              <li><span class="opt-label">B</span> Odde rader (1, 3, 5, …)</li>
+              <li><span class="opt-label">C</span> Bare første rad</li>
+              <li><span class="opt-label">D</span> Bare siste rad</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. <code>odd</code> er ekvivalent med <code>2n+1</code>.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva matcher <code>span:nth-child(-n+3)</code>?</p></div>
+          <div class="flashcard__back"><p>Et element som er blant de <strong>tre første</strong> children av sin parent <em>og</em> er en <code>span</code>.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken pseudo-klasse matcher det siste child-elementet?</p></div>
+          <div class="flashcard__back"><p><code>:last-child</code>.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre input-typer kan <code>:checked</code> matche?</p></div>
+          <div class="flashcard__back"><p><code>&lt;input type="radio"&gt;</code>, <code>&lt;input type="checkbox"&gt;</code>, og <code>&lt;option&gt;</code> i en <code>&lt;select&gt;</code>.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva representerer <code>:valid</code>?</p></div>
+          <div class="flashcard__back"><p>Ethvert <code>&lt;input&gt;</code> eller <code>&lt;form&gt;</code> hvor innholdet validerer i forhold til input-ens <code>type</code>. Kombineres ofte med <code>:invalid</code> for å gi grønn/rød tilbakemelding.</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.6 · Pseudo</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor henter <code>:lang()</code> språket fra?</p></div>
+          <div class="flashcard__back"><p>Fra <code>lang</code>-attributtet, <code>&lt;meta&gt;</code>-elementet, og eventuelt protokoll-headere (f.eks. HTTP).</p><p class="fc-ref">Pensum 1.7.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.7 · Overflow</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>overflow</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>visible</code> (default), <code>hidden</code>, <code>scroll</code>, <code>auto</code>.</p><p class="fc-ref">Pensum 1.7.7</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.7 · Overflow</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>overflow: scroll</code> og <code>overflow: auto</code>?</p></div>
+          <div class="flashcard__back"><p><code>scroll</code> klipper innholdet og viser scrollbar uansett om noe overflows eller ikke. <code>auto</code> overlater til user agent — typisk vises scrollbar bare når innholdet faktisk er for stort.</p><p class="fc-ref">Pensum 1.7.7</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.7.7 · Overflow</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forutsetningen for at <code>overflow</code> skal ha effekt?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Containeren må være posisjonert</li>
+              <li><span class="opt-label">B</span> Containeren må ha bounding height (height eller max-height) eller white-space: nowrap</li>
+              <li><span class="opt-label">C</span> Det må finnes en scrollbar i parent-elementet</li>
+              <li><span class="opt-label">D</span> Display må være block</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>Riktig: <span class="fc-correct">B</span>. Pensum 1.7.7: «In order for the overflow property to have an effect, the block level container must either have a bounding height (height or max-height) or have white-space set to nowrap.»</p><p class="fc-ref">Pensum 1.7.7</p></div>
+        </div>
       </div>
     </div>
   </div></section>

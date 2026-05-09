@@ -64,9 +64,32 @@
     <div class="container">
       <div class="section-badge">01 · Helhetsbilde</div>
       <h2>Hvorfor <em>HTML</em>?</h2>
-      <div class="callout"><div class="label">Skal skrives</div>
-        <p>Motiver hvorfor markup må skille innhold fra utseende. Hovedpoeng: en lesbar HTML-side er tilgjengelig for skjermlesere, søkemotorer og fremtidige nettlesere. Kontraster med <code>div</code>-suppe.</p>
-        <p><strong>Kilde:</strong> pensum 1.4 (HTML), slides <code>presentasjoner/basics_html.md</code>.</p>
+      <p>
+        HTML (HyperText Markup Language) beskriver <strong>strukturen og
+        innholdet</strong> i en nettside. Det er et markup-språk: du tagger
+        innholdet ditt med elementer som forteller hva det <em>er</em> — en
+        overskrift, et avsnitt, en liste, et bilde — ikke hvordan det skal
+        se ut. Utseendet er CSS sin jobb (kapittel 3 og 4).
+      </p>
+      <p>
+        Hvorfor skille innhold og utseende? Fordi den samme HTML-en blir
+        lest av flere mottakere enn bare nettleseren. En skjermleser
+        leser opp innholdet for en blind bruker. En søkemotor indekserer
+        siden. En annen nettleser kanskje finnes om ti år. Når du bruker
+        riktige elementer (<code>&lt;article&gt;</code>,
+        <code>&lt;nav&gt;</code>, <code>&lt;h1&gt;</code>) skjønner alle
+        disse mottakerne hva siden handler om — uten å måtte gjette.
+      </p>
+      <div class="callout-good">
+        <div class="label">Mental modell</div>
+        <p>
+          Et HTML-element består som regel av en <strong>åpningstag</strong>,
+          innhold, og en <strong>lukketag</strong>: <code>&lt;p&gt;tekst&lt;/p&gt;</code>.
+          Lukketagen har en skråstrek foran navnet. Noen elementer (som
+          <code>&lt;img&gt;</code>) har ikke noe innhold og trenger ikke
+          lukketag — de kalles <em>void-elementer</em>.
+        </p>
+        <p><strong>Kilde:</strong> pensum 1.4 (HTML).</p>
       </div>
     </div>
   </section>
@@ -75,10 +98,46 @@
     <div class="container">
       <div class="section-badge">02 · Mental modell</div>
       <h2>Et HTML-dokument er et <em>tre</em></h2>
-      <div class="callout"><div class="label">Skal skrives</div>
-        <p>Vis SVG av DOM-tre (html → head + body → barn). Forklar at hver tag åpner og lukker en node, og at indentering er for mennesker.</p>
-        <p><strong>Kilde:</strong> pensum 1.4.1 (Document Structure).</p>
+      <p>
+        Et HTML-dokument må alltid starte med dokumentdeklarasjonen
+        <code>&lt;!DOCTYPE html&gt;</code>, som forteller nettleseren at
+        dette er HTML5. Deretter har du rotelementet
+        <code>&lt;html&gt;</code> som inneholder nøyaktig to barn:
+        <code>&lt;head&gt;</code> (metadata, ikke synlig) og
+        <code>&lt;body&gt;</code> (alt synlig innhold). Hvert element under
+        kan ha barn igjen, og slik dannes <strong>dokumenttreet</strong>.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Skjelett</div>
+          <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Min første side&lt;/title&gt;
+    &lt;link href="style.css" rel="stylesheet"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hei verden&lt;/h1&gt;
+    &lt;p&gt;Et avsnitt.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
       </div>
+
+      <p>
+        Innrykket er kun for mennesker — nettleseren bryr seg ikke. Men en
+        konsekvent indentering gjør det lett å se hvilke elementer som er
+        barn av hvilke. Inni <code>&lt;body&gt;</code> har vi to typer
+        elementer: <strong>blokkelementer</strong> som starter på ny linje
+        og fyller hele bredden (<code>&lt;h1&gt;–&lt;h6&gt;</code>,
+        <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>,
+        <code>&lt;form&gt;</code>) og <strong>inline-elementer</strong>
+        som flyter med teksten (<code>&lt;span&gt;</code>,
+        <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>).
+      </p>
+      <p><strong>Kilde:</strong> pensum 1.4.1 (Document Structure).</p>
     </div>
   </section>
 
@@ -86,9 +145,57 @@
     <div class="container">
       <div class="section-badge">03 · Reisen</div>
       <h2>Bygg en side <em>fra bunn</em></h2>
-      <div class="callout"><div class="label">Skal skrives</div>
-        <p>Stegvis: <code>&lt;!DOCTYPE html&gt;</code> → html → head (title, meta, link) → body → headings → paragraphs → lists → links → images → tables → semantiske containere. Bruk <code>.steps</code>.</p>
-      </div>
+      <p class="section-intro">
+        Sju steg fra blanke ark til en semantisk korrekt HTML-side. Følg
+        rekkefølgen — hvert steg bygger på forrige.
+      </p>
+
+      <ol class="steps">
+        <li>
+          <strong>Doctype og rot.</strong> Skriv
+          <code>&lt;!DOCTYPE html&gt;</code> øverst, og pakk alt inn i
+          <code>&lt;html&gt;…&lt;/html&gt;</code>.
+        </li>
+        <li>
+          <strong>Head med metadata.</strong> Inni
+          <code>&lt;head&gt;</code> setter du
+          <code>&lt;meta charset="UTF-8"&gt;</code> (slik at æ, ø og å
+          rendres riktig), <code>&lt;title&gt;</code> (vises i fanen) og
+          <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> for
+          stilarket.
+        </li>
+        <li>
+          <strong>Body.</strong> Alt synlig innhold går i
+          <code>&lt;body&gt;</code>.
+        </li>
+        <li>
+          <strong>Overskrifter og avsnitt.</strong> Bruk
+          <code>&lt;h1&gt;</code> for sidens hovedtittel, deretter
+          <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> osv. i logisk
+          rekkefølge. Hvert tekstavsnitt i <code>&lt;p&gt;</code>.
+        </li>
+        <li>
+          <strong>Lister og lenker.</strong>
+          <code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code> med
+          <code>&lt;li&gt;</code>-elementer for lister.
+          <code>&lt;a href="…"&gt;</code> for lenker.
+        </li>
+        <li>
+          <strong>Bilder og tabeller.</strong> <code>&lt;img&gt;</code> med
+          <code>src</code> og <code>alt</code> for bilder. Tabeller bygges
+          rad for rad: <code>&lt;table&gt;</code> &gt;
+          <code>&lt;tr&gt;</code> &gt; <code>&lt;td&gt;</code>/<code>&lt;th&gt;</code>.
+        </li>
+        <li>
+          <strong>Semantiske containere.</strong> Pakk innholdet i
+          <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>,
+          <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code> og
+          <code>&lt;footer&gt;</code> i stedet for å bruke
+          <code>&lt;div&gt;</code> overalt. Dette gir mening for både
+          skjermlesere og søkemotorer.
+        </li>
+      </ol>
+      <p><strong>Kilde:</strong> pensum 1.4.1–1.4.9.</p>
     </div>
   </section>
 
@@ -96,17 +203,53 @@
     <div class="container">
       <div class="section-badge">04 · Hovedtemaer</div>
       <h2>De ni <em>delene</em></h2>
-      <p class="section-intro">Pensum 1.4 har ni undertema. Hvert kort beskriver hva som skal stå.</p>
+      <p class="section-intro">Pensum 1.4 har ni undertemaer. Hvert kort viser hva som dekkes.</p>
       <div class="subpage-card-grid">
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · STR</div><div class="sp-title">Document structure</div><div class="sp-desc">DOCTYPE, html, head, body. Pensum 1.4.1.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · ATT</div><div class="sp-title">Attributter</div><div class="sp-desc">Navn = "verdi", lang, id, class. Pensum 1.4.2.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TXT</div><div class="sp-title">Tekst</div><div class="sp-desc">Headings h1–h6, p, b, i, sup, sub, br, white-space. Pensum 1.4.3.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · LST</div><div class="sp-title">Lister</div><div class="sp-desc">ol, ul, li, dl. Pensum 1.4.4 + slides <code>list.md</code>.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · LNK</div><div class="sp-title">Lenker</div><div class="sp-desc">a-element, href, relative vs absolute, target. Pensum 1.4.5.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">img, src, alt, width/height. Pensum 1.4.6.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · TBL</div><div class="sp-title">Tabeller</div><div class="sp-desc">table, tr, td, th, thead, tbody. Pensum 1.4.7.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · CMT</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>&lt;!-- ... --&gt;</code>. Pensum 1.4.8.</div></div>
-        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · SEM</div><div class="sp-title">Semantiske elementer</div><div class="sp-desc">header, nav, main, article, section, footer. Pensum 1.4.9 + 1.5.</div></div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">A · STR</div>
+          <div class="sp-title">Document structure</div>
+          <div class="sp-desc">DOCTYPE, html, head, body — og forskjellen på blokk og inline.<br><strong>Pensum:</strong> 1.4.1.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">B · ATT</div>
+          <div class="sp-title">Attributter</div>
+          <div class="sp-desc">Navn = "verdi" i åpningstaggen. Eksempler: <code>lang</code>, <code>id</code>, <code>class</code>.<br><strong>Pensum:</strong> 1.4.2.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">C · TXT</div>
+          <div class="sp-title">Tekst</div>
+          <div class="sp-desc">h1–h6, <code>p</code>, <code>b</code>, <code>i</code>, <code>sup</code>, <code>sub</code>, <code>br</code> og white-space collapsing.<br><strong>Pensum:</strong> 1.4.3.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">D · LST</div>
+          <div class="sp-title">Lister</div>
+          <div class="sp-desc">Ordnede (<code>ol</code>) og uordnede (<code>ul</code>) lister, <code>li</code>, og nøsting.<br><strong>Pensum:</strong> 1.4.4.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">E · LNK</div>
+          <div class="sp-title">Lenker</div>
+          <div class="sp-desc"><code>a</code>-element, <code>href</code>, absolutt vs relativ URL, fragment-lenker, <code>target</code>, <code>mailto:</code>.<br><strong>Pensum:</strong> 1.4.5.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">F · IMG</div>
+          <div class="sp-title">Bilder</div>
+          <div class="sp-desc"><code>img</code> med <code>src</code>/<code>alt</code>, <code>width</code>/<code>height</code>, og bildeformater (JPEG, PNG, GIF, SVG).<br><strong>Pensum:</strong> 1.4.6.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">G · TBL</div>
+          <div class="sp-title">Tabeller</div>
+          <div class="sp-desc"><code>table</code>, <code>tr</code>, <code>td</code>, <code>th</code>, <code>colspan</code>/<code>rowspan</code>, <code>thead</code>/<code>tbody</code>/<code>tfoot</code>.<br><strong>Pensum:</strong> 1.4.7.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">H · CMT</div>
+          <div class="sp-title">Kommentarer</div>
+          <div class="sp-desc">Kommentar-syntaksen <code>&lt;!-- … --&gt;</code> og bruk av <code>&lt;div&gt;</code> som ikke-semantisk gruppering.<br><strong>Pensum:</strong> 1.4.8.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">I · SEM</div>
+          <div class="sp-title">Semantiske elementer</div>
+          <div class="sp-desc"><code>header</code>, <code>footer</code>, <code>section</code>, <code>article</code>, <code>nav</code>, <code>figure</code>/<code>figcaption</code>, <code>strong</code>, <code>em</code>, <code>blockquote</code>, <code>q</code>, <code>address</code>.<br><strong>Pensum:</strong> 1.4.9 + 1.5.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -116,14 +259,18 @@
       <div class="section-badge">05 · Begreper</div>
       <h2>Nøkkel<em>begreper</em></h2>
       <div class="fact-grid">
-        <div class="fact-card"><div class="fc-key">Element</div><div class="fc-val">Definisjon — pensum 1.4.</div></div>
-        <div class="fact-card"><div class="fc-key">Tag</div><div class="fc-val">Definisjon — pensum 1.4.</div></div>
-        <div class="fact-card"><div class="fc-key">Attributt</div><div class="fc-val">Definisjon — pensum 1.4.2.</div></div>
-        <div class="fact-card"><div class="fc-key">Block vs inline</div><div class="fc-val">Definisjon — pensum 1.4.1 (Body).</div></div>
-        <div class="fact-card"><div class="fc-key">Void-element</div><div class="fc-val">Eksempler: img, br, hr.</div></div>
-        <div class="fact-card"><div class="fc-key">Semantikk</div><div class="fc-val">Hvorfor article ≠ div. Pensum 1.4.9.</div></div>
-        <div class="fact-card"><div class="fc-key">Dokumenthierarki</div><div class="fc-val">h1–h6 må følge logisk rekkefølge.</div></div>
-        <div class="fact-card"><div class="fc-key">White-space collapsing</div><div class="fc-val">Pensum 1.4.3.</div></div>
+        <div class="fact-card"><div class="fc-key">Element</div><div class="fc-val">En struktur i dokumentet, som regel bestående av en åpningstag, innhold og en lukketag. Eks: <code>&lt;p&gt;tekst&lt;/p&gt;</code>. Pensum 1.4.</div></div>
+        <div class="fact-card"><div class="fc-key">Tag</div><div class="fc-val">Det som står mellom vinkelparenteser, f.eks. <code>&lt;body&gt;</code>. Lukketaggen har skråstrek foran navnet. Pensum 1.4.</div></div>
+        <div class="fact-card"><div class="fc-key">Attributt</div><div class="fc-val">Ekstra informasjon i åpningstaggen: navn = "verdi". Eks: <code>&lt;p lang="no"&gt;</code>. Pensum 1.4.2.</div></div>
+        <div class="fact-card"><div class="fc-key">Block vs inline</div><div class="fc-val">Blokkelementer (<code>div</code>, <code>h1</code>–<code>h6</code>, <code>p</code>, <code>form</code>) starter på ny linje og fyller bredden. Inline (<code>span</code>, <code>a</code>, <code>img</code>) gjør ikke det. Pensum 1.4.1.</div></div>
+        <div class="fact-card"><div class="fc-key">Void-element</div><div class="fc-val">Element uten innhold og dermed uten lukketag. Eks: <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;input&gt;</code>. Pensum 1.4 + 1.4.6.</div></div>
+        <div class="fact-card"><div class="fc-key">Semantikk</div><div class="fc-val">At elementet beskriver hva innholdet <em>er</em>. <code>&lt;article&gt;</code> bærer mening, <code>&lt;div&gt;</code> gjør ikke. Hjelper søkemotorer og skjermlesere. Pensum 1.4.9.</div></div>
+        <div class="fact-card"><div class="fc-key">Dokumenthierarki</div><div class="fc-val"><code>&lt;h1&gt;</code> er viktigst, <code>&lt;h6&gt;</code> minst. Bruk i logisk rekkefølge — ikke hopp over nivåer for å justere størrelse. Pensum 1.4.3.</div></div>
+        <div class="fact-card"><div class="fc-key">White-space collapsing</div><div class="fc-val">Flere mellomrom og linjeskift i kilden blir slått sammen til ett mellomrom når siden rendres. Pensum 1.4.3.</div></div>
+        <div class="fact-card"><div class="fc-key">Absolutt URL</div><div class="fc-val">Full adresse med protokoll: <code>http://it2805.github.com</code>. Brukes når du lenker ut av eget nettsted. Pensum 1.4.5 + 1.5.</div></div>
+        <div class="fact-card"><div class="fc-key">Relativ URL</div><div class="fc-val">Adressen relativt til der du lenker fra. <code>products/x.html</code> går ned, <code>../index.html</code> går opp. Pensum 1.4.5.</div></div>
+        <div class="fact-card"><div class="fc-key">Fragment</div><div class="fc-val">Lenker til <code>id</code> på en side: <code>&lt;a href="#summary"&gt;</code>. <code>id</code> må starte med bokstav eller understrek og være unik. Pensum 1.4.5.</div></div>
+        <div class="fact-card"><div class="fc-key">GET vs POST</div><div class="fc-val">GET henter data, parametre i URL-en, kan caches/bokmerkes. POST sender data som egen melding, bruk for sensitiv eller stor data. Pensum 1.5.</div></div>
       </div>
     </div>
   </section>
@@ -134,10 +281,18 @@
       <h2>Hva du skal kunne <em>etter kap 2</em></h2>
       <div class="recap-grid">
         <span class="recap-pill">skrive et gyldig HTML-dokument fra hukommelsen</span>
-        <span class="recap-pill">bruke semantiske elementer riktig</span>
-        <span class="recap-pill">forklare attributter</span>
-        <span class="recap-pill">lage tabeller og lister</span>
-        <span class="recap-pill">koble inn stilark og bilder</span>
+        <span class="recap-pill">forklare forskjellen på blokk og inline</span>
+        <span class="recap-pill">bruke attributter (lang, id, class, href, src, alt)</span>
+        <span class="recap-pill">strukturere tekst med h1–h6, p, b/strong, i/em, sup, sub</span>
+        <span class="recap-pill">lage ordnede og uordnede lister, også nøstede</span>
+        <span class="recap-pill">lenke absolutt, relativt og til id-er på samme side</span>
+        <span class="recap-pill">koble inn bilder med src, alt, width, height</span>
+        <span class="recap-pill">velge riktig bildeformat (JPEG, PNG, GIF, SVG)</span>
+        <span class="recap-pill">bygge tabeller med rader, celler, kolonne-/radspenn og thead/tbody/tfoot</span>
+        <span class="recap-pill">velge semantiske elementer i stedet for div-suppe</span>
+        <span class="recap-pill">tolke alle delene av en URL</span>
+        <span class="recap-pill">forklare når GET er trygt og når POST er nødvendig</span>
+        <span class="recap-pill">tegne et site map (lineær, hierarkisk, blandet)</span>
       </div>
     </div>
   </section>
@@ -147,9 +302,9 @@
       <div class="section-badge">07 · Notatmapping</div>
       <h2>Hvor <em>finner du det</em></h2>
       <ul>
-        <li><strong>Lærebok:</strong> pensum 1.4 (HTML, alle ni delkapitler) + 1.5 (Site structure).</li>
+        <li><strong>Lærebok:</strong> pensum 1.4 (HTML, alle ni delkapitler) + 1.5 (Site structure — URL, GET/POST, site map).</li>
         <li><strong>Slides:</strong> <code>presentasjoner/basics_html.md</code>, <code>presentasjoner/list.md</code>.</li>
-        <li><strong>Øving:</strong> <code>oppgaver/basic_html.md</code>.</li>
+        <li><strong>Øving:</strong> <code>oppgaver/basic_html.md</code> — 17 småoppgaver + et mini-prosjekt (reise-blogg).</li>
         <li><strong>Eksterne:</strong> MDN HTML-referanse, W3C HTML-validator.</li>
       </ul>
     </div>
@@ -159,8 +314,82 @@
     <div class="container">
       <div class="section-badge">08 · Vanlige feller</div>
       <h2>Vanlige <em>feller</em></h2>
-      <div class="callout-warn"><div class="label">Skal skrives</div>
-        <p>Eksempler: glemme alt-attributtet på img; bruke h-tag for å justere skriftstørrelse; blande b/strong og i/em; manglende DOCTYPE.</p>
+
+      <div class="callout-warn">
+        <div class="label">Bilder uten alt</div>
+        <p>
+          Hvis du glemmer <code>alt</code>-attributtet på <code>&lt;img&gt;</code>,
+          får skjermlesere ingenting å lese opp og søkemotorer kan ikke
+          indeksere bildet. Skriv en konkret beskrivelse av innholdet, ikke
+          «bilde».
+        </p>
+        <p><strong>Pensum:</strong> 1.4.6.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Overskrifter for å justere størrelse</div>
+        <p>
+          Ikke bruk <code>&lt;h3&gt;</code> bare fordi du vil ha mindre
+          tekst. Overskrifts-nivåene bærer semantisk mening og skal følge
+          logisk rekkefølge. Hvis du vil endre fontstørrelse, bruk
+          CSS-egenskapen <code>font-size</code>.
+        </p>
+        <p><strong>Pensum:</strong> 1.4.3.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">b/strong og i/em om hverandre</div>
+        <p>
+          <code>&lt;b&gt;</code> og <code>&lt;i&gt;</code> er bare visuelle.
+          <code>&lt;strong&gt;</code> betyr <em>viktig</em> og
+          <code>&lt;em&gt;</code> betyr <em>emphasis</em>. Skjermlesere
+          uttaler ofte de to siste annerledes. Bruk semantikken når du
+          faktisk mener det.
+        </p>
+        <p><strong>Pensum:</strong> 1.4.3 + 1.4.9.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Manglende DOCTYPE</div>
+        <p>
+          Uten <code>&lt;!DOCTYPE html&gt;</code> går nettleseren over i
+          «quirks mode» og gjetter seg fram til hva dokumentet betyr.
+          Resultatet kan se forskjellig ut i forskjellige nettlesere.
+        </p>
+        <p><strong>Pensum:</strong> 1.4.1.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Same id brukt to ganger</div>
+        <p>
+          På én og samme side må hver <code>id</code>-verdi være unik.
+          Også: <code>id</code> må starte med en bokstav eller en
+          understrek (ikke et tall).
+        </p>
+        <p><strong>Pensum:</strong> 1.4.5.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">div-suppe</div>
+        <p>
+          Å pakke alt i <code>&lt;div&gt;</code> er fristende, men gir
+          null semantikk. Bruk <code>&lt;header&gt;</code>,
+          <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>,
+          <code>&lt;section&gt;</code> og <code>&lt;footer&gt;</code> der
+          det passer. <code>&lt;div&gt;</code> er kun til gruppering når
+          ingen semantisk container passer.
+        </p>
+        <p><strong>Pensum:</strong> 1.4.8 + 1.4.9.</p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Sensitiv data via GET</div>
+        <p>
+          Passord eller kontonummer skal aldri sendes med
+          <code>method="GET"</code>. URL-er caches, ligger i nettleserens
+          historikk, kan bokmerkes og deles. Bruk <code>POST</code>.
+        </p>
+        <p><strong>Pensum:</strong> 1.5 (GET and POST).</p>
       </div>
     </div>
   </section>
@@ -169,8 +398,70 @@
     <div class="container">
       <div class="section-badge">09 · Eksamensscenario</div>
       <h2>Skriv en <em>side fra spec</em></h2>
-      <div class="callout"><div class="label">Skal skrives</div>
-        <p>Eksempel: «Skriv HTML for en blogg-artikkel med tittel, ingress, to avsnitt og en bildegalleri-tabell.» Vis svaret med riktig semantikk.</p>
+      <div class="callout">
+        <div class="label">Oppgave</div>
+        <p>
+          «Skriv HTML for en blogg-artikkel med tittel, et kort
+          ingresstekst, to avsnitt brødtekst, et bilde med bildetekst og
+          en navigasjon med tre lenker. Bruk semantiske elementer.»
+        </p>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Forventet svar</div>
+          <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="no"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Min blogg&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Min blogg&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Hjem&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="om.html"&gt;Om&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="kontakt.html"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;article&gt;
+    &lt;h2&gt;Første tur til Lofoten&lt;/h2&gt;
+    &lt;p&gt;&lt;strong&gt;Kort om turen:&lt;/strong&gt; tre dager med pakksekk og kamera.&lt;/p&gt;
+    &lt;p&gt;Vi gikk over Reinebringen i sol og motvind. Stien var brattere enn forventet.&lt;/p&gt;
+    &lt;p&gt;På toppen tok vi en lang pause før vi gikk ned igjen til havna.&lt;/p&gt;
+    &lt;figure&gt;
+      &lt;img src="bilder/reine.jpg" alt="Utsikt fra Reinebringen mot fjorden"&gt;
+      &lt;figcaption&gt;Utsikten fra Reinebringen.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/article&gt;
+
+  &lt;footer&gt;
+    &lt;address&gt;Kontakt: &lt;a href="mailto:meg@eksempel.no"&gt;meg@eksempel.no&lt;/a&gt;&lt;/address&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+      </div>
+
+      <div class="callout-good">
+        <div class="label">Hva sensor ser etter</div>
+        <p>
+          (1) <code>&lt;!DOCTYPE html&gt;</code> og
+          <code>lang</code>-attributt. (2) <code>&lt;meta charset="UTF-8"&gt;</code>
+          og <code>&lt;title&gt;</code> i <code>&lt;head&gt;</code>.
+          (3) <code>&lt;article&gt;</code> rundt blogginnlegget — ikke
+          <code>&lt;div&gt;</code>. (4) <code>&lt;nav&gt;</code> rundt
+          lenkene, lenker som <code>&lt;li&gt;</code> i en
+          <code>&lt;ul&gt;</code>. (5) <code>&lt;figure&gt;</code> +
+          <code>&lt;figcaption&gt;</code> rundt bildet, og
+          <code>alt</code>-tekst som beskriver hva som er på bildet.
+          (6) <code>&lt;h1&gt;</code> brukt én gang, og
+          <code>&lt;h2&gt;</code> for artikkeloverskriften.
+        </p>
       </div>
     </div>
   </section>
@@ -179,8 +470,121 @@
     <div class="container">
       <div class="section-badge">10 · Test deg selv</div>
       <h2>Helhets<em>spørsmål</em></h2>
-      <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-      <div class="callout"><div class="label">Skal fylles inn</div><p>Skriv 10–15 reveal-quiz-spørsmål med blanding av lett, middels og vanskelig.</p></div>
+      <p class="section-intro">Tolv spørsmål som dekker pensum 1.4 og 1.5. Klikk «Se svar» når du har formulert ditt eget.</p>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">01 · Lett</div>
+        <div class="q-text">Hva er forskjellen på en åpningstag og en lukketag?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Lukketaggen har en skråstrek foran elementnavnet, f.eks. <code>&lt;p&gt;</code> (åpning) og <code>&lt;/p&gt;</code> (lukking). Sammen med innholdet utgjør de et element. Pensum 1.4.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">02 · Lett</div>
+        <div class="q-text">Hvilken tag bruker du for en ordnet (nummerert) liste, og hvilken for en uordnet?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer"><code>&lt;ol&gt;</code> for ordnet, <code>&lt;ul&gt;</code> for uordnet. Begge bruker <code>&lt;li&gt;</code> for hvert listeelement. Pensum 1.4.4.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">03 · Lett</div>
+        <div class="q-text">Hva er <code>alt</code>-attributtet på <code>&lt;img&gt;</code> til for?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Det gir en tekstbeskrivelse av bildet som leses opp av skjermlesere og indekseres av søkemotorer. Bør beskrive innholdet, ikke bare si «bilde». Pensum 1.4.6.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">04 · Middels</div>
+        <div class="q-text">Hva forteller <code>&lt;!DOCTYPE html&gt;</code> nettleseren?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">At dokumentet skal tolkes som HTML5. Uten den går nettleseren i «quirks mode» og gjetter, noe som gir inkonsistent rendering. Pensum 1.4.1.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">05 · Middels</div>
+        <div class="q-text">Når bør du bruke <code>&lt;strong&gt;</code> i stedet for <code>&lt;b&gt;</code>?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer"><code>&lt;strong&gt;</code> bærer semantisk betydning «viktig» og leses gjerne med ekstra trykk av skjermlesere. <code>&lt;b&gt;</code> er kun visuelt fet tekst uten semantikk. Bruk <code>&lt;strong&gt;</code> når innholdet faktisk er viktig. Pensum 1.4.3 + 1.4.9.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">06 · Middels</div>
+        <div class="q-text">Du står i filen <code>products/starblaster.html</code> og vil lenke til <code>index.html</code> i rotmappa. Hva skriver du i <code>href</code>?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer"><code>&lt;a href="../index.html"&gt;Hjem&lt;/a&gt;</code>. <code>../</code> betyr én mappe opp. Pensum 1.4.5.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">07 · Middels</div>
+        <div class="q-text">Hvordan lenker du til en bestemt overskrift på samme side?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Gi overskriften en unik <code>id</code>, f.eks. <code>&lt;h2 id="summary"&gt;</code>, og lenk til den med <code>&lt;a href="#summary"&gt;</code>. Pensum 1.4.5.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">08 · Middels</div>
+        <div class="q-text">Når bør du bruke <code>&lt;article&gt;</code> i stedet for <code>&lt;section&gt;</code>?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer"><code>&lt;article&gt;</code> er for selvstendig innhold som kan distribueres uavhengig (blogg-innlegg, nyhetsartikkel, forum-post). <code>&lt;section&gt;</code> er en tematisk gruppering med en overskrift og bør passe inn i dokumentets disposisjon. Pensum 1.4.9.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">09 · Middels</div>
+        <div class="q-text">Hva gjør <code>colspan="2"</code> på en <code>&lt;td&gt;</code>?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Cellen strekker seg over to kolonner. Tilsvarende strekker <code>rowspan="2"</code> cellen over to rader. Pensum 1.4.7.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">10 · Vanskelig</div>
+        <div class="q-text">Hvorfor er det lurt å oppgi <code>width</code> og <code>height</code> på et bilde, selv om bildefilen allerede har en størrelse?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Bilder lastes ofte saktere enn HTML-en. Når nettleseren vet bildets størrelse, kan den reservere riktig plass og rendre resten av siden uten å hoppe når bildet til slutt kommer. Husk: attributtene endrer kun visningsstørrelsen — filstørrelsen i kilobytes er den samme. Pensum 1.4.6.</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">11 · Vanskelig</div>
+        <div class="q-text">Hvorfor skal du aldri sende et passord med <code>method="GET"</code>?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">GET legger parametrene i URL-en. URL-er kan caches, lagres i nettleserhistorikken, bokmerkes og deles. URL har også en maks-lengde. Sensitiv data hører hjemme i en POST-forespørsel, som sendes som en separat melding. Pensum 1.5 (GET and POST).</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">12 · Vanskelig</div>
+        <div class="q-text">Hvilke fire bildeformater dekker pensum, og når passer hvert av dem?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">
+            <strong>JPEG</strong> — fotografier og bilder med gradienter; tapsgivende komprimering.<br>
+            <strong>PNG</strong> — illustrasjoner, logoer og bilder med transparente områder; tapsfri.<br>
+            <strong>GIF</strong> — enkle animasjoner; begrenset fargepalett.<br>
+            <strong>SVG</strong> — vektorgrafikk for logoer og diagrammer; skalerer uten kvalitetstap.<br>
+            Pensum 1.4.6.
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -188,7 +592,7 @@
     <div class="container">
       <div class="section-badge">11 · Kapittel-eksamen</div>
       <h2>Flashcards — <em>hele pensum i kortform</em></h2>
-      <p class="section-intro">30–50 kort, blanding av begrepskort og regne-/oppgavekort.</p>
+      <p class="section-intro">35 kort som dekker pensum 1.4 (HTML, ni delkapitler) og 1.5 (Site structure). Klikk for å snu, <kbd>←</kbd>/<kbd>→</kbd> bla, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.</p>
       <div class="flashcard-deck" data-flashcards>
         <div class="flashcard-toolbar">
           <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -196,6 +600,294 @@
           <button class="fc-btn" data-fc-next>Neste &rarr;</button>
           <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
           <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Document structure</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva forteller <code>&lt;!DOCTYPE html&gt;</code> nettleseren?</p></div>
+            <div class="flashcard__back"><p>At dokumentet skal tolkes som HTML5. Skal alltid stå øverst i filen.</p><div class="fc-ref">Pensum 1.4.1</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Document structure</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilke to elementer er barn av <code>&lt;html&gt;</code>?</p></div>
+            <div class="flashcard__back"><p><code>&lt;head&gt;</code> (metadata, ikke synlig) og <code>&lt;body&gt;</code> (alt synlig innhold).</p><div class="fc-ref">Pensum 1.4.1</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Document structure</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva gjør <code>&lt;meta charset="UTF-8"&gt;</code>?</p></div>
+            <div class="flashcard__back"><p>Forteller nettleseren hvordan tegnene skal tolkes. Med UTF-8 vises norske tegn (æ, ø, å) korrekt.</p><div class="fc-ref">Pensum 1.4.1</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Document structure</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på et blokkelement og et inline-element?</p></div>
+            <div class="flashcard__back"><p>Blokkelementer (<code>div</code>, <code>h1</code>–<code>h6</code>, <code>p</code>, <code>form</code>) starter på ny linje og fyller hele bredden. Inline-elementer (<code>span</code>, <code>a</code>, <code>img</code>) starter ikke på ny linje og bruker bare så mye plass de trenger.</p><div class="fc-ref">Pensum 1.4.1</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Attributter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvordan ser et HTML-attributt ut?</p></div>
+            <div class="flashcard__back"><p>Et navn og en verdi adskilt med likhetstegn, inni åpningstaggen. Eks: <code>&lt;p lang="no"&gt;</code>.</p><div class="fc-ref">Pensum 1.4.2</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er reglene for <code>id</code>-attributtet?</p></div>
+            <div class="flashcard__back"><p>Verdien må starte med en bokstav eller understrek (ikke et tall). På én side kan ingen to elementer ha samme <code>id</code>.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvor mange overskriftsnivåer finnes, og hvilket er viktigst?</p></div>
+            <div class="flashcard__back"><p>Seks: <code>&lt;h1&gt;</code> til <code>&lt;h6&gt;</code>. <code>&lt;h1&gt;</code> er viktigst, <code>&lt;h6&gt;</code> minst. Bruk i logisk rekkefølge — ikke hopp over nivå for å justere størrelse.</p><div class="fc-ref">Pensum 1.4.3</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>&lt;b&gt;</code> og <code>&lt;strong&gt;</code>?</p></div>
+            <div class="flashcard__back"><p>Begge rendres feit som standard, men <code>&lt;strong&gt;</code> har semantisk betydning «viktig» og oppfattes slik av skjermlesere og søkemotorer. <code>&lt;b&gt;</code> er bare visuell fremheving.</p><div class="fc-ref">Pensum 1.4.3 + 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva betyr «white-space collapsing» i HTML?</p></div>
+            <div class="flashcard__back"><p>Flere mellomrom og linjeskift i kilden blir slått sammen til ett mellomrom når siden rendres. Det lar deg innrykke kilden uten at det påvirker visningen.</p><div class="fc-ref">Pensum 1.4.3</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva gjør <code>&lt;br&gt;</code>?</p></div>
+            <div class="flashcard__back"><p>Lager et linjeskift inni samme avsnitt. Trenger ikke lukketag.</p><div class="fc-ref">Pensum 1.4.3</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilke tagger bruker du for hevet og senket skrift?</p></div>
+            <div class="flashcard__back"><p><code>&lt;sup&gt;</code> for hevet (superscript) og <code>&lt;sub&gt;</code> for senket (subscript).</p><div class="fc-ref">Pensum 1.4.3</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lister</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>&lt;ol&gt;</code> og <code>&lt;ul&gt;</code>?</p></div>
+            <div class="flashcard__back"><p><code>&lt;ol&gt;</code> er en ordnet liste (nummerert). <code>&lt;ul&gt;</code> er en uordnet liste (kuler). Begge bruker <code>&lt;li&gt;</code> for hvert element.</p><div class="fc-ref">Pensum 1.4.4</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lister</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvordan lager du en nøstet liste?</p></div>
+            <div class="flashcard__back"><p>Putt en hel <code>&lt;ol&gt;</code>/<code>&lt;ul&gt;</code> inni en <code>&lt;li&gt;</code>. Husk: åpne og lukk med samme tag, og lukketaggen for ytre <code>&lt;li&gt;</code> kommer etter den indre listen.</p><div class="fc-ref">Pensum 1.4.4</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lenker</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilket attributt forteller hvor en lenke skal gå?</p></div>
+            <div class="flashcard__back"><p><code>href</code> på <code>&lt;a&gt;</code>-elementet. Verdien er en URL.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lenker</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Når bruker du absolutt URL og når relativ?</p></div>
+            <div class="flashcard__back"><p>Absolutt (full URL med <code>http://</code>) når du lenker til et annet nettsted. Relativ når du lenker innen ditt eget nettsted — du slipper å hardkode domenet og lenkene fungerer også når du jobber lokalt.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lenker</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva betyr <code>../</code> i en relativ URL?</p></div>
+            <div class="flashcard__back"><p>«Gå én mappe opp». <code>../../</code> betyr to mapper opp.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lenker</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva gjør <code>target="_blank"</code> på en <code>&lt;a&gt;</code>-tag?</p></div>
+            <div class="flashcard__back"><p>Åpner lenken i en ny fane. Bør kun brukes når det er meningsfylt — for eksempel når lenken peker til et annet nettsted og du vil at brukeren skal komme tilbake.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lenker</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvordan lager du en lenke som åpner brukerens e-postklient?</p></div>
+            <div class="flashcard__back"><p><code>&lt;a href="mailto:noen@eksempel.no"&gt;Send e-post&lt;/a&gt;</code>. Verdien starter med <code>mailto:</code> etterfulgt av e-postadressen.</p><div class="fc-ref">Pensum 1.4.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Bilder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilke to attributter må en <code>&lt;img&gt;</code> ha?</p></div>
+            <div class="flashcard__back"><p><code>src</code> (path til bildefilen) og <code>alt</code> (tekstbeskrivelse av innholdet). <code>alt</code> brukes av skjermlesere og søkemotorer.</p><div class="fc-ref">Pensum 1.4.6</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Bilder</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvorfor er det lurt å sette <code>width</code> og <code>height</code> på bilder?</p></div>
+            <div class="flashcard__back"><p>Bilder lastes saktere enn HTML-en. Når nettleseren vet størrelsen, kan den reservere plass og rendre resten av siden uten å hoppe når bildet kommer. Husk: attributtene endrer kun visningsstørrelsen — selve filen er like stor.</p><div class="fc-ref">Pensum 1.4.6</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilket bildeformat passer for fotografier, og hvorfor?</p></div>
+            <div class="flashcard__back"><p>JPEG. Det er tapsgivende komprimering som fjerner detaljer mennesker ikke ser, og gir små filer for fotografier og bilder med gradienter. Dårlig for logoer med store ensfargede flater.</p><div class="fc-ref">Pensum 1.4.6</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Bilder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er fordelen med SVG sammenlignet med JPEG/PNG/GIF?</p></div>
+            <div class="flashcard__back"><p>SVG er vektorgrafikk — bildet beskrives matematisk og kan skaleres uendelig uten kvalitetstap. JPEG, PNG og GIF er rasterformater og blir pikselete når de forstørres. SVG passer for logoer og diagrammer, ikke fotografier.</p><div class="fc-ref">Pensum 1.4.6</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tabeller</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er den grunnleggende strukturen for en HTML-tabell?</p></div>
+            <div class="flashcard__back"><p><code>&lt;table&gt;</code> inneholder rader (<code>&lt;tr&gt;</code>), som inneholder celler (<code>&lt;td&gt;</code> for data, <code>&lt;th&gt;</code> for header).</p><div class="fc-ref">Pensum 1.4.7</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tabeller</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva gjør <code>colspan</code> og <code>rowspan</code>?</p></div>
+            <div class="flashcard__back"><p><code>colspan="2"</code> får cellen til å strekke seg over to kolonner. <code>rowspan="2"</code> får den til å strekke seg over to rader. Brukes på <code>&lt;td&gt;</code> eller <code>&lt;th&gt;</code>.</p><div class="fc-ref">Pensum 1.4.7</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tabeller</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> og <code>&lt;tfoot&gt;</code> til?</p></div>
+            <div class="flashcard__back"><p>De skiller hovedinnholdet i tabellen fra topp- og bunnrader. Hjelper skjermlesere, lar deg style delene forskjellig, og gjør at lange tabeller kan beholde header/footer synlige under scrolling/utskrift.</p><div class="fc-ref">Pensum 1.4.7</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Kommentarer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er syntaksen for en HTML-kommentar?</p></div>
+            <div class="flashcard__back"><p><code>&lt;!-- kommentar --&gt;</code>. Innholdet rendres ikke i nettleseren. Brukes til å forklare koden eller midlertidig fjerne deler uten å slette dem.</p><div class="fc-ref">Pensum 1.4.8</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>&lt;header&gt;</code> og <code>&lt;head&gt;</code>?</p></div>
+            <div class="flashcard__back"><p><code>&lt;head&gt;</code> inneholder metadata om dokumentet og rendres ikke. <code>&lt;header&gt;</code> ligger inni <code>&lt;body&gt;</code> og er en synlig topp-seksjon med f.eks. logo, hovedoverskrift og navigasjon.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Når bruker du <code>&lt;article&gt;</code>?</p></div>
+            <div class="flashcard__back"><p>For selvstendig innhold som skal kunne distribueres uavhengig: en blogg-post, en nyhetsartikkel, et forum-innlegg. Hvert <code>&lt;article&gt;</code> bør ha en egen overskrift som barn.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilken tommelfingerregel skiller <code>&lt;section&gt;</code> fra <code>&lt;div&gt;</code>?</p></div>
+            <div class="flashcard__back"><p><code>&lt;section&gt;</code> skal logisk dukke opp i dokumentets disposisjon (med en egen overskrift). Trenger du bare en generisk container — typisk for styling — bruk <code>&lt;div&gt;</code>.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Når bruker du <code>&lt;nav&gt;</code>?</p></div>
+            <div class="flashcard__back"><p>Kun for store navigasjonsblokker — typisk hovedmenyen i headeren. Lenker i bunntekst trenger ikke pakkes inn i <code>&lt;nav&gt;</code>.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er <code>&lt;figure&gt;</code> og <code>&lt;figcaption&gt;</code> til?</p></div>
+            <div class="flashcard__back"><p><code>&lt;figure&gt;</code> pakker selvstendig innhold (typisk et bilde eller en illustrasjon). <code>&lt;figcaption&gt;</code> er en valgfri bildetekst, plassert som første eller siste barn av <code>&lt;figure&gt;</code>.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.5 · URL</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Nevn delene av URL-en <code>http://www.example.com:80/path/file.html?key=val#anchor</code>.</p></div>
+            <div class="flashcard__back"><p><strong>Protokoll:</strong> <code>http://</code>. <strong>Domene:</strong> <code>www.example.com</code>. <strong>Port:</strong> <code>:80</code> (utelates oftest). <strong>Path:</strong> <code>/path/file.html</code>. <strong>Parametre:</strong> <code>?key=val</code>. <strong>Anker:</strong> <code>#anchor</code>.</p><div class="fc-ref">Pensum 1.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.5 · GET vs POST</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Når skal du bruke GET og når POST?</p></div>
+            <div class="flashcard__back"><p><strong>GET</strong> for å hente data — trygg, idempotent operasjon. Parametre i URL-en. <strong>POST</strong> for å sende data som endrer tilstand på serveren, eller når data er sensitiv eller stor. POST sendes som egen melding, ikke i URL-en.</p><div class="fc-ref">Pensum 1.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.5 · GET vs POST</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvorfor skal du ikke sende et passord med GET?</p></div>
+            <div class="flashcard__back"><p>GET legger parametrene i URL-en. URL-er kan caches, lagres i nettleserhistorikk, bokmerkes og deles. URL-er har også maks-lengde. POST sendes derimot som separat melding, caches ikke og ligger ikke i historikken.</p><div class="fc-ref">Pensum 1.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.5 · Site map</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er et site map (storyboard) og hvorfor lager du det?</p></div>
+            <div class="flashcard__back"><p>Et diagram av nettstedets sider og hvordan de er lenket sammen. Lages før du begynner å kode, slik at du kan bestemme den beste strukturen — og for at brukeren ikke skal gå seg vill.</p><div class="fc-ref">Pensum 1.5</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.5 · Struktur</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på lineær og hierarkisk site-struktur?</p></div>
+            <div class="flashcard__back"><p><strong>Lineær:</strong> hver side er lenket til forrige og neste i en kjede — passer for galleri eller lange artikler delt over flere sider. <strong>Hierarkisk:</strong> sidene er ordnet fra generelt til spesifikt; bruker beveger seg opp og ned i treet. Større nettsteder bruker ofte en blanding.</p><div class="fc-ref">Pensum 1.5</div></div>
+          </div>
         </div>
       </div>
     </div>

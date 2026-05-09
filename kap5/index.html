@@ -30,12 +30,14 @@
       <div class="eyebrow">Kapittel 5 · Forelesning 8 · Del 2</div>
       <h1>Layout — <em>Flexbox og Grid</em></h1>
       <p class="lede">
-        To moderne CSS-systemer som erstattet float-hacks. Flexbox tenker
-        i én dimensjon, Grid i to. Her lærer du når du bruker hva.
+        To CSS-systemer for å plassere elementer på siden. Flexbox er
+        én-dimensjonalt (én rad eller én kolonne om gangen), Grid er
+        to-dimensjonalt (rader og kolonner samtidig). Pensum dette
+        kapittelet er <em>kun slides</em> — ikke gitbook-læreboka.
       </p>
       <div class="pill-row">
-        <span class="pill">Pensum: slides (utenom gitbook)</span>
-        <span class="pill">Slides: grid_flebox.md, exam_info.md</span>
+        <span class="pill">Pensum: slides (utenfor gitbook)</span>
+        <span class="pill">Slides: grid_flebox.md / exam_info.md</span>
         <span class="pill">Forelesning 8</span>
       </div>
     </div>
@@ -62,35 +64,216 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>Flexbox og Grid</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Før Flexbox/Grid brukte folk float, position og tabeller for layout. Det var skjørt og uforutsigbart. Vis kontrasten med en konkret «center vertical»-oppgave før og etter.</p>
-      <p><strong>Kilde:</strong> slides <code>presentasjoner/grid_flebox.md</code> + <code>presentasjoner/exam_info.md</code> linje 1–90.</p>
+    <p>
+      Slidene åpner med en kontrast: «Before Flexbox» levde man av <code>display</code>
+      (block, inline), <code>float</code> (left, right), <code>position</code>
+      (absolute, relative, static + top/left/bottom/right) — og helt tilbake i tid:
+      tabeller for layout. Disse verktøyene fungerer, men er ikke laget for layout.
+      De kan kombineres til nesten hva som helst, men resultatet blir ofte skjørt:
+      én endring og hele siden kollapser.
+    </p>
+    <p>
+      Flexbox er beskrevet i slidene som <em>«simple and flexible — FLEXible BOX model»</em>
+      med poenget «layout is easy → no need for position, float, align». Grid løser det
+      neste steget: «one of the most powerful layout systems», <em>2-dimensional</em>,
+      som lar deg plassere elementer i rader <strong>og</strong> kolonner samtidig.
+      Det er disse to systemene kapittelet handler om.
+    </p>
+    <div class="callout-blue">
+      <div class="label">Pensumkilde</div>
+      <p>
+        Lærebok-gitbooken dekker <em>ikke</em> Flexbox og Grid. Pensumet hentes
+        fullt og helt fra slidene <code>presentasjoner/grid_flebox.md</code> /
+        <code>presentasjoner/exam_info.md</code> (samme innhold).
+      </p>
     </div>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>1D <em>versus</em> 2D</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>SVG-figur som viser flexbox (én rad eller én kolonne) versus grid (rader OG kolonner samtidig). Forklar main axis og cross axis for flex; rows og columns for grid.</p>
-      <p><strong>Kilde:</strong> slides <code>exam_info.md</code> linje 36–60.</p>
+    <p>
+      Den viktigste forskjellen — og den slidene gjentar — er antallet
+      dimensjoner systemet tenker i:
+    </p>
+    <div class="compare-grid">
+      <div class="compare-cell good">
+        <div class="label">Flexbox · 1-dimensjonalt</div>
+        <p>
+          Tenker i <strong>én</strong> retning om gangen: enten en rad eller en
+          kolonne. Det styres av <code>flex-direction</code>. Den retningen kalles
+          <em>main axis</em> (hovedaksen). Linja på tvers av den kalles
+          <em>cross axis</em>.
+        </p>
+      </div>
+      <div class="compare-cell good">
+        <div class="label">Grid · 2-dimensjonalt</div>
+        <p>
+          Tenker i rader <strong>og</strong> kolonner samtidig. Du beskriver
+          rutenettet med <code>grid-template-rows</code> og
+          <code>grid-template-columns</code>, og barna plasserer seg i cellene.
+        </p>
+      </div>
     </div>
+
+    <h3>Main axis og cross axis</h3>
+    <p>
+      Slidene viser to oppsett for main/cross-aksen i Flexbox. De avhenger
+      utelukkende av <code>flex-direction</code>:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">flex-direction: row</div>
+        <div class="fc-val">Main axis går horisontalt (venstre→høyre).<br>Cross axis går vertikalt.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">flex-direction: column</div>
+        <div class="fc-val">Main axis går vertikalt (oppe→nede).<br>Cross axis går horisontalt.</div>
+      </div>
+    </div>
+    <p>
+      Konsekvens: <code>justify-content</code> jobber alltid langs main axis, og
+      <code>align-items</code> jobber alltid langs cross axis — hva «horisontal»
+      og «vertikal» betyr for dem bytter altså med <code>flex-direction</code>.
+    </p>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Bygg en <em>side-layout</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: page-grid (header, sidebar, main, footer) i Grid → kort-rad i Flexbox → meny i Flexbox → galleriet i Grid. Vis at du nesten alltid bruker begge sammen.</p>
-    </div>
+    <h2>Stegvis: bygg et <em>layout</em></h2>
+    <p>
+      Slik beveger du deg gjennom slide-pensumet i praksis, fra tom container
+      til ferdig layout:
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>Velg system.</strong> Skal elementene følge én rad (eller én
+        kolonne)? Da er Flexbox riktig. Skal de fylle et rutenett med
+        rader <em>og</em> kolonner? Da er Grid riktig.
+      </li>
+      <li>
+        <strong>Slå på systemet på containeren.</strong> <code>display: flex</code>
+        eller <code>display: grid</code>. Barneelementene blir nå hhv. flex-items
+        eller grid-items.
+      </li>
+      <li>
+        <strong>Sett retningen (kun Flexbox).</strong> <code>flex-direction</code>
+        bestemmer main axis: <code>row</code> eller <code>column</code>.
+      </li>
+      <li>
+        <strong>Definer rutenettet (kun Grid).</strong>
+        <code>grid-template-columns</code> og <code>grid-template-rows</code>
+        beskriver hvor brede kolonnene og hvor høye radene er. Eventuelt
+        <code>grid-template-areas</code> for navngitte områder.
+      </li>
+      <li>
+        <strong>Plasser items langs aksene.</strong> I Flexbox:
+        <code>justify-content</code> (main) og <code>align-items</code> (cross).
+        I Grid: <code>justify-items</code>/<code>align-items</code> per celle, og
+        <code>justify-content</code>/<code>align-content</code> for hele rutenettet.
+      </li>
+      <li>
+        <strong>Finjuster enkelt-items.</strong> Flex: <code>order</code>,
+        <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code>,
+        <code>flex</code>, <code>align-self</code>. Grid:
+        <code>grid-column</code>/<code>grid-row</code> (start/end),
+        <code>grid-area</code>, <code>justify-self</code>/<code>align-self</code>.
+      </li>
+      <li>
+        <strong>Legg til mellomrom.</strong> Grid har egne gap-egenskaper
+        (<code>grid-column-gap</code>, <code>grid-row-gap</code>,
+        <code>grid-gap</code>). Flexbox har <code>flex-wrap</code> for å bryte
+        til ny linje når det blir trangt.
+      </li>
+    </ol>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De to <em>systemene</em></h2>
-    <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · FLEX</div><div class="sp-title">Flexbox</div><div class="sp-desc">display: flex, flex-direction, justify-content, align-items, flex-wrap, flex-grow/shrink/basis. Slides linje 19–47.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · GRID</div><div class="sp-title">Grid</div><div class="sp-desc">display: grid, grid-template-columns/rows, grid-area, grid-gap, justify/align-items. Slides linje 48–90.</div></div>
+    <p class="section-intro">
+      Slidene er delt rent: først alt om Flexbox, så alt om Grid. Vi følger samme
+      todeling.
+    </p>
+
+    <h3>A · Flexbox</h3>
+    <p>
+      Flexbox er beskrevet av slidene som «relatively new», «FLEXible BOX model»
+      og en måte å unngå <code>position</code>, <code>float</code> og manuell
+      <code>align</code> på. Egenskapene deles i to: de som settes på
+      <em>containeren</em>, og de som settes på <em>items</em>.
+    </p>
+
+    <h4>Container-egenskaper (slide-listet)</h4>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">display</div><div class="fc-val">Slå på Flexbox med <code>display: flex</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">flex-direction</div><div class="fc-val">Definerer main axis: <code>row</code> eller <code>column</code> (slidene viser disse to).</div></div>
+      <div class="fact-card"><div class="fc-key">flex-wrap</div><div class="fc-val">Om items skal pakkes til neste linje når det blir trangt.</div></div>
+      <div class="fact-card"><div class="fc-key">flex-flow</div><div class="fc-val">Snarvei: <code>flex-direction</code> + <code>flex-wrap</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">justify-content</div><div class="fc-val">Plassering av items langs main axis.</div></div>
+      <div class="fact-card"><div class="fc-key">align-items</div><div class="fc-val">Plassering av items langs cross axis.</div></div>
+      <div class="fact-card"><div class="fc-key">align-content</div><div class="fc-val">Plassering av flere linjer langs cross axis (kun når det wrappes).</div></div>
+    </div>
+
+    <h4>Item-egenskaper (slide-listet)</h4>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">order</div><div class="fc-val">Endrer rekkefølgen items vises i, uten å endre HTML.</div></div>
+      <div class="fact-card"><div class="fc-key">flex-grow</div><div class="fc-val">Hvor mye av ekstra plass et item får.</div></div>
+      <div class="fact-card"><div class="fc-key">flex-shrink</div><div class="fc-val">Hvor mye et item krymper når det er for lite plass.</div></div>
+      <div class="fact-card"><div class="fc-key">flex-basis</div><div class="fc-val">Itemets startstørrelse før grow/shrink jobber.</div></div>
+      <div class="fact-card"><div class="fc-key">flex</div><div class="fc-val">Snarvei for grow + shrink + basis.</div></div>
+      <div class="fact-card"><div class="fc-key">align-self</div><div class="fc-val">Overstyr <code>align-items</code> for ett enkelt item.</div></div>
+    </div>
+
+    <h3>B · Grid</h3>
+    <p>
+      Grid kalles i slidene «one of the most powerful layout system», med to
+      poenger som er det viktige å huske: <em>2-dimensional</em> og «can be used
+      to layout elements in rows and columns at the same time». Det skiller det
+      fra Flexbox.
+    </p>
+
+    <h4>Grid-konseptene (slide-figuren)</h4>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Grid line</div><div class="fc-val">De nummererte linjene som deler rutenettet — både horisontale og vertikale.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid track</div><div class="fc-val">Mellomrommet mellom to grid lines: én rad eller én kolonne.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid cell</div><div class="fc-val">Skjæringspunktet mellom én rad og én kolonne — den minste byggesteinen.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid area</div><div class="fc-val">Et rektangulært område som dekker én eller flere celler.</div></div>
+    </div>
+
+    <h4>Container-egenskaper (slide-listet)</h4>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">grid-template-columns</div><div class="fc-val">Definerer kolonnene — hvor mange og hvor brede.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-template-rows</div><div class="fc-val">Definerer radene — hvor mange og hvor høye.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-template-areas</div><div class="fc-val">Navngir områder («header», «sidebar» osv.) i et visuelt mønster.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-template</div><div class="fc-val">Snarvei for de tre over.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-column-gap</div><div class="fc-val">Mellomrom mellom kolonner.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-row-gap</div><div class="fc-val">Mellomrom mellom rader.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-gap</div><div class="fc-val">Snarvei for gap i begge retninger.</div></div>
+      <div class="fact-card"><div class="fc-key">justify-items</div><div class="fc-val">Plassering av items i sin celle, langs inline-aksen.</div></div>
+      <div class="fact-card"><div class="fc-key">align-items</div><div class="fc-val">Plassering av items i sin celle, langs block-aksen.</div></div>
+      <div class="fact-card"><div class="fc-key">place-items</div><div class="fc-val">Snarvei: <code>align-items</code> + <code>justify-items</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">justify-content</div><div class="fc-val">Plassering av hele rutenettet langs inline-aksen.</div></div>
+      <div class="fact-card"><div class="fc-key">align-content</div><div class="fc-val">Plassering av hele rutenettet langs block-aksen.</div></div>
+      <div class="fact-card"><div class="fc-key">place-content</div><div class="fc-val">Snarvei: <code>align-content</code> + <code>justify-content</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-auto-columns</div><div class="fc-val">Størrelse på kolonner som genereres implisitt.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-auto-rows</div><div class="fc-val">Størrelse på rader som genereres implisitt.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-auto-flow</div><div class="fc-val">Hvilken vei items plasseres automatisk: row eller column.</div></div>
+      <div class="fact-card"><div class="fc-key">grid</div><div class="fc-val">Den korteste snarveien — alle template- og auto-egenskaper i én.</div></div>
+    </div>
+
+    <h4>Item-egenskaper (slide-listet)</h4>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">grid-column-start</div><div class="fc-val">Hvilken kolonnelinje itemet starter på.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-column-end</div><div class="fc-val">Hvilken kolonnelinje itemet slutter på.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-row-start</div><div class="fc-val">Hvilken radlinje itemet starter på.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-row-end</div><div class="fc-val">Hvilken radlinje itemet slutter på.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-column</div><div class="fc-val">Snarvei for column-start / -end.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-row</div><div class="fc-val">Snarvei for row-start / -end.</div></div>
+      <div class="fact-card"><div class="fc-key">grid-area</div><div class="fc-val">Plasser item i et navngitt område — eller alle fire linjer på én gang.</div></div>
+      <div class="fact-card"><div class="fc-key">justify-self</div><div class="fc-val">Overstyr <code>justify-items</code> for ett item.</div></div>
+      <div class="fact-card"><div class="fc-key">align-self</div><div class="fc-val">Overstyr <code>align-items</code> for ett item.</div></div>
+      <div class="fact-card"><div class="fc-key">place-self</div><div class="fc-val">Snarvei: <code>align-self</code> + <code>justify-self</code>.</div></div>
     </div>
   </div></section>
 
@@ -98,14 +281,15 @@
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">Main axis</div><div class="fc-val">Flex-aksen som bestemmes av flex-direction.</div></div>
-      <div class="fact-card"><div class="fc-key">Cross axis</div><div class="fc-val">Aksen vinkelrett på main.</div></div>
-      <div class="fact-card"><div class="fc-key">Grid line</div><div class="fc-val">De numbered linjene mellom celler.</div></div>
-      <div class="fact-card"><div class="fc-key">Grid track</div><div class="fc-val">Mellomrom mellom to linjer (kolonne eller rad).</div></div>
-      <div class="fact-card"><div class="fc-key">Grid area</div><div class="fc-val">Rektangulært område dekket av flere celler.</div></div>
-      <div class="fact-card"><div class="fc-key">fr-enheten</div><div class="fc-val">Fraksjon av tilgjengelig plass i Grid.</div></div>
-      <div class="fact-card"><div class="fc-key">justify-content</div><div class="fc-val">Plassering langs main axis (flex) / inline-axen (grid).</div></div>
-      <div class="fact-card"><div class="fc-key">align-items</div><div class="fc-val">Plassering på cross axis.</div></div>
+      <div class="fact-card"><div class="fc-key">Flex container</div><div class="fc-val">Element med <code>display: flex</code>. Barna blir flex-items.</div></div>
+      <div class="fact-card"><div class="fc-key">Flex item</div><div class="fc-val">Direkte barn av en flex-container.</div></div>
+      <div class="fact-card"><div class="fc-key">Main axis</div><div class="fc-val">Flex-aksen som bestemmes av <code>flex-direction</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Cross axis</div><div class="fc-val">Aksen vinkelrett på main axis.</div></div>
+      <div class="fact-card"><div class="fc-key">1D vs 2D</div><div class="fc-val">Flexbox er 1D, Grid er 2D — slidens hovedskille.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid line</div><div class="fc-val">Nummerert linje mellom celler.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid track</div><div class="fc-val">En rad eller kolonne — rommet mellom to linjer.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid cell</div><div class="fc-val">Skjæringspunktet mellom én rad og én kolonne.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid area</div><div class="fc-val">Rektangulært område av flere celler.</div></div>
     </div>
   </div></section>
 
@@ -113,11 +297,15 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 5</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">velge mellom flex og grid</span>
-      <span class="recap-pill">forklare main vs cross axis</span>
-      <span class="recap-pill">skrive grid-template-columns</span>
-      <span class="recap-pill">bruke fr-enheten</span>
-      <span class="recap-pill">flex-grow/shrink/basis</span>
+      <span class="recap-pill">velge mellom Flexbox og Grid</span>
+      <span class="recap-pill">forklare main axis og cross axis</span>
+      <span class="recap-pill">koble flex-direction til hva justify- og align- gjør</span>
+      <span class="recap-pill">ramse opp Flexbox container-egenskapene</span>
+      <span class="recap-pill">ramse opp Flexbox item-egenskapene</span>
+      <span class="recap-pill">forklare grid line, track, cell og area</span>
+      <span class="recap-pill">ramse opp Grid container-egenskapene</span>
+      <span class="recap-pill">ramse opp Grid item-egenskapene</span>
+      <span class="recap-pill">forklare hvorfor float/position/tabeller var dårlig layout</span>
     </div>
   </div></section>
 
@@ -125,39 +313,240 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> Flexbox/Grid er <em>ikke</em> i gitbook-pensum, men er pensum via slides.</li>
-      <li><strong>Slides:</strong> <code>presentasjoner/grid_flebox.md</code> (placeholder) og <code>presentasjoner/exam_info.md</code> (innholder faktisk Flexbox/Grid-slidene tross misvisende navn).</li>
-      <li><strong>Eksterne:</strong> CSS Tricks — A Complete Guide to Flexbox; A Complete Guide to Grid.</li>
+      <li><strong>Lærebok (gitbook):</strong> dekker <em>ikke</em> Flexbox/Grid. Dette kapittelet er pensum kun via slides.</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/grid_flebox.md</code> og <code>presentasjoner/exam_info.md</code> (samme innhold).</li>
+      <li><strong>Forelesning:</strong> Forelesning 8, del 2 — Kshitij (K) Sharma.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Eksempler: bruke flex til 2D-layout som blir vrient; glemme at justify- og align- bytter mening mellom flex og grid avhengig av direction; ikke vite at grid-template-areas krever quotes.</p>
+    <div class="callout-warn">
+      <div class="label">Feller fra slide-listene</div>
+      <p>
+        <strong>1) Tro at <code>justify-content</code> alltid er horisontal.</strong>
+        Den følger main axis. Med <code>flex-direction: column</code> jobber den
+        loddrett.
+      </p>
+      <p>
+        <strong>2) Bruke Flexbox til 2D-layout.</strong> Slidene er tydelige:
+        Flexbox er 1-dimensjonalt. Skal du ha rader og kolonner samtidig (et
+        rutenett), bruk Grid.
+      </p>
+      <p>
+        <strong>3) Glemme at <code>align-content</code> bare gjør noe når flere linjer.</strong>
+        I Flexbox krever den <code>flex-wrap</code> og at det faktisk er mer enn
+        én linje — ellers er <code>align-items</code> det du vil ha.
+      </p>
+      <p>
+        <strong>4) Blande container- og item-egenskaper.</strong> Slidene deler
+        eksplisitt mellom de to. <code>flex-grow</code> hører hjemme på item-et,
+        ikke containeren; <code>justify-content</code> hører hjemme på containeren,
+        ikke item-et.
+      </p>
+      <p>
+        <strong>5) Holde fast på <code>float</code> og <code>position</code> for layout.</strong>
+        Slidens «Before Flexbox» beskriver disse som problemet Flexbox skulle
+        løse — bruk dem til det de er gode for, ikke til hele sidelayouten.
+      </p>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Skriv <em>grid-template</em> til skissen</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Gitt en visuell skisse av en sidelayout, skriv CSS-en som realiserer den med Grid. Klassisk eksamensoppgave.</p>
+    <h2>«Velg <em>system</em> og forklar»</h2>
+    <p>
+      Klassisk scenario fra slide-pensumet: gitt en oppgavebeskrivelse, peker
+      du ut hvilket system som passer og hvilke egenskaper du ville brukt.
+    </p>
+    <div class="callout">
+      <div class="label">Oppgavetype</div>
+      <p>
+        «Du skal lage en sidelayout med header øverst, en sidebar til venstre,
+        et hovedområde, og en footer nederst — alle synlige samtidig.»
+      </p>
+      <p>
+        <strong>Forventet svar:</strong> Layoutet er to-dimensjonalt (rader OG
+        kolonner samtidig), så Grid er riktig system. Du beskriver rutenettet
+        med <code>grid-template-columns</code> og <code>grid-template-rows</code>,
+        og kan navngi feltene med <code>grid-template-areas</code>. Hvert
+        barn-element får sin plass via <code>grid-area</code> eller via
+        <code>grid-column</code>/<code>grid-row</code>. Mellomrom legges på med
+        <code>grid-gap</code>.
+      </p>
+    </div>
+    <div class="callout">
+      <div class="label">Variant</div>
+      <p>
+        «En menylinje skal ha logo til venstre og lenker til høyre, alt på én
+        rad.» — Dette er én-dimensjonalt, så Flexbox passer best.
+        <code>display: flex</code> på containeren, <code>flex-direction: row</code>
+        (default), og <code>justify-content: space-between</code> for å skyve
+        logoen til venstre og lenkene til høyre. Om de skal sentreres vertikalt:
+        <code>align-items: center</code>.
+      </p>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder «velg riktig grid-template-columns»-MCQ.</p></div>
+    <p class="section-intro">Tolv spørsmål — strengt fra slidene.</p>
+
+    <div class="quiz mcq">
+      <div class="q-label">1 · Lett</div>
+      <div class="q-text">Hvilket layout-system er én-dimensjonalt?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Grid</li>
+        <li class="mcq-opt" data-correct="1">Flexbox</li>
+        <li class="mcq-opt">Begge</li>
+        <li class="mcq-opt">Ingen av dem</li>
+      </ul>
+      <div class="mcq-feedback">Slidene: «Flexbox (1-dimensional)» vs «Grid (2-dimensional)».</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">2 · Lett</div>
+      <div class="q-text">Hvilken CSS-egenskap slår på Flexbox på en container?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">flex-direction: row</li>
+        <li class="mcq-opt" data-correct="1">display: flex</li>
+        <li class="mcq-opt">flex: 1</li>
+        <li class="mcq-opt">flex-flow: row</li>
+      </ul>
+      <div class="mcq-feedback">«display» er det første punktet i container-listen i slidene.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">3 · Lett</div>
+      <div class="q-text">Hva avgjør hvor main axis går i Flexbox?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">justify-content</li>
+        <li class="mcq-opt">align-items</li>
+        <li class="mcq-opt" data-correct="1">flex-direction</li>
+        <li class="mcq-opt">flex-wrap</li>
+      </ul>
+      <div class="mcq-feedback">Slidene viser «flex-direction: row» og «flex-direction: column» som de to oppsettene.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">4 · Middels</div>
+      <div class="q-text">Når <code>flex-direction: column</code>, hva er da cross axis?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Vertikal</li>
+        <li class="mcq-opt" data-correct="1">Horisontal</li>
+        <li class="mcq-opt">Diagonal</li>
+        <li class="mcq-opt">Den finnes ikke i column-modus</li>
+      </ul>
+      <div class="mcq-feedback">Main er vertikal når direction er column → cross står vinkelrett, altså horisontal.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">5 · Middels</div>
+      <div class="q-text">Hvilken Flexbox-egenskap er en <em>item</em>-egenskap (ikke container)?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">justify-content</li>
+        <li class="mcq-opt">align-items</li>
+        <li class="mcq-opt" data-correct="1">flex-grow</li>
+        <li class="mcq-opt">flex-wrap</li>
+      </ul>
+      <div class="mcq-feedback">Slidene deler eksplisitt: container vs item. flex-grow står i item-listen.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">6 · Middels</div>
+      <div class="q-text">Hva slår <code>flex-flow</code> sammen?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">justify-content + align-items</li>
+        <li class="mcq-opt" data-correct="1">flex-direction + flex-wrap</li>
+        <li class="mcq-opt">flex-grow + flex-shrink</li>
+        <li class="mcq-opt">align-items + align-content</li>
+      </ul>
+      <div class="mcq-feedback">flex-flow er snarveien for direction og wrap.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">7 · Lett</div>
+      <div class="q-text">Hvor mange dimensjoner tenker Grid i?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Én</li>
+        <li class="mcq-opt" data-correct="1">To</li>
+        <li class="mcq-opt">Tre</li>
+        <li class="mcq-opt">Avhenger av grid-direction</li>
+      </ul>
+      <div class="mcq-feedback">Slidene: «Grid (2-dimensional)».</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">8 · Lett</div>
+      <div class="q-text">Hvilket av disse er <em>ikke</em> blant Grid-konseptene fra slide-figuren?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Grid line</li>
+        <li class="mcq-opt">Grid track</li>
+        <li class="mcq-opt" data-correct="1">Grid axis</li>
+        <li class="mcq-opt">Grid area</li>
+      </ul>
+      <div class="mcq-feedback">Slidens fire konsepter: grid line, grid track, grid cell, grid area. «Axis» er Flexbox-vokabular.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">9 · Middels</div>
+      <div class="q-text">Hvilken egenskap brukes for å definere antall og bredde på Grid-kolonnene?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">grid-column</li>
+        <li class="mcq-opt" data-correct="1">grid-template-columns</li>
+        <li class="mcq-opt">grid-auto-columns</li>
+        <li class="mcq-opt">grid-column-start</li>
+      </ul>
+      <div class="mcq-feedback">grid-template-columns definerer eksplisitt rutenettets kolonner.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">10 · Middels</div>
+      <div class="q-text">Hvilken egenskap er på <em>itemet</em> i Grid?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">grid-template-areas</li>
+        <li class="mcq-opt">grid-gap</li>
+        <li class="mcq-opt" data-correct="1">grid-area</li>
+        <li class="mcq-opt">grid-auto-flow</li>
+      </ul>
+      <div class="mcq-feedback">grid-area er i item-listen i slidene; de tre andre er container-egenskaper.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">11 · Vanskelig</div>
+      <div class="q-text">Slidens «Before Flexbox»-liste nevner <em>ikke</em> én av disse — hvilken?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">display</li>
+        <li class="mcq-opt">float</li>
+        <li class="mcq-opt">position</li>
+        <li class="mcq-opt" data-correct="1">opacity</li>
+      </ul>
+      <div class="mcq-feedback">Slidene lister display, float, position og «use a table» — opacity er ikke layout-verktøy.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">12 · Vanskelig</div>
+      <div class="q-text">Hva er forskjellen på <code>justify-self</code> og <code>justify-items</code> i Grid?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt">Ingen — de er synonymer</li>
+        <li class="mcq-opt" data-correct="1"><code>justify-items</code> er på containeren, <code>justify-self</code> overstyrer for ett item</li>
+        <li class="mcq-opt">Den ene gjelder rader, den andre kolonner</li>
+        <li class="mcq-opt"><code>justify-self</code> finnes bare i Flexbox</li>
+      </ul>
+      <div class="mcq-feedback">Slidene plasserer <code>justify-items</code> i container-listen og <code>justify-self</code> i item-listen.</div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
     <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort. Mange skriv-CSS-til-skisse-kort.</p>
+    <p class="section-intro">
+      30 kort som dekker hele slide-pensumet. Klikk for å snu;
+      <kbd>←</kbd> <kbd>→</kbd> for å bla; <kbd>S</kbd> shuffle; <kbd>R</kbd> reset.
+    </p>
+
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -165,6 +554,273 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva står Flexbox for ifølge slidene?</p></div>
+          <div class="flashcard__back"><p>«FLEXible BOX model» — et fleksibelt boks-system for layout.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor mange dimensjoner tenker Flexbox i?</p></div>
+          <div class="flashcard__back"><p>Én. Flexbox er 1-dimensjonalt — én rad eller én kolonne om gangen.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor mange dimensjoner tenker Grid i?</p></div>
+          <div class="flashcard__back"><p>To. Grid er 2-dimensjonalt — rader og kolonner samtidig.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Før Flexbox</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire layout-mekanismer ble brukt før Flexbox, ifølge slidene?</p></div>
+          <div class="flashcard__back"><p>display (block, inline …), float (left, right …), position (absolute, relative, static + top/left/bottom/right) og tabeller.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken CSS-erklæring gjør et element til en flex-container?</p></div>
+          <div class="flashcard__back"><p><code>display: flex;</code></p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · akser</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva bestemmer main axis i Flexbox?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span>justify-content</li>
+              <li><span class="opt-label">B</span>flex-direction</li>
+              <li><span class="opt-label">C</span>align-items</li>
+              <li><span class="opt-label">D</span>flex-wrap</li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>Riktig: <span class="fc-correct">B</span></strong></p>
+            <p><code>flex-direction: row</code> → main horisontal. <code>flex-direction: column</code> → main vertikal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · akser</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er cross axis?</p></div>
+          <div class="flashcard__back"><p>Aksen som står vinkelrett på main axis. Det er <code>align-items</code> som styrer plassering langs den.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Ramse opp de syv container-egenskapene i Flexbox.</p></div>
+          <div class="flashcard__back"><p><code>display</code>, <code>flex-direction</code>, <code>flex-wrap</code>, <code>flex-flow</code>, <code>justify-content</code>, <code>align-items</code>, <code>align-content</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Ramse opp de seks item-egenskapene i Flexbox.</p></div>
+          <div class="flashcard__back"><p><code>order</code>, <code>flex-grow</code>, <code>flex-shrink</code>, <code>flex-basis</code>, <code>flex</code>, <code>align-self</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva styrer <code>order</code> på et flex-item?</p></div>
+          <div class="flashcard__back"><p>Visuell rekkefølge. Endrer hvor itemet vises uten å endre HTML-rekkefølgen.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>flex-grow</code> og <code>flex-shrink</code>?</p></div>
+          <div class="flashcard__back"><p><code>flex-grow</code> bestemmer hvor mye av <em>ekstra</em> plass et item får. <code>flex-shrink</code> bestemmer hvor mye det krymper når plassen er for liten.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>flex-basis</code>?</p></div>
+          <div class="flashcard__back"><p>Itemets startstørrelse — utgangspunktet før grow/shrink jobber.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er <code>flex</code> en snarvei for?</p></div>
+          <div class="flashcard__back"><p><code>flex-grow</code> + <code>flex-shrink</code> + <code>flex-basis</code> i én erklæring.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>align-self</code>?</p></div>
+          <div class="flashcard__back"><p>Overstyrer containerens <code>align-items</code> for ett enkelt item.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>align-items</code> og <code>align-content</code>?</p></div>
+          <div class="flashcard__back"><p><code>align-items</code> plasserer items på cross axis innenfor sin linje. <code>align-content</code> plasserer flere linjer (krever <code>flex-wrap</code> og mer enn én linje).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Flexbox · container</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva slår <code>flex-flow</code> sammen?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span>justify-content + align-items</li>
+              <li><span class="opt-label">B</span>flex-grow + flex-shrink</li>
+              <li><span class="opt-label">C</span>flex-direction + flex-wrap</li>
+              <li><span class="opt-label">D</span>align-items + align-content</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p><strong>Riktig: <span class="fc-correct">C</span></strong></p><p>Snarvei for retning og pakking.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · konsepter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er en <em>grid line</em>?</p></div>
+          <div class="flashcard__back"><p>De nummererte horisontale og vertikale linjene som deler rutenettet inn i celler.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · konsepter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er en <em>grid track</em>?</p></div>
+          <div class="flashcard__back"><p>Mellomrommet mellom to grid lines — altså én rad eller én kolonne.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · konsepter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er en <em>grid cell</em>?</p></div>
+          <div class="flashcard__back"><p>Skjæringspunktet mellom én rad og én kolonne — den minste byggesteinen i et grid.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · konsepter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er en <em>grid area</em>?</p></div>
+          <div class="flashcard__back"><p>Et rektangulært område som dekker én eller flere celler. Kan navngis med <code>grid-template-areas</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken erklæring gjør et element til en grid-container?</p></div>
+          <div class="flashcard__back"><p><code>display: grid;</code></p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>grid-template-columns</code>?</p></div>
+          <div class="flashcard__back"><p>Definerer kolonnene i rutenettet — antall og bredde.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>grid-template-areas</code>?</p></div>
+          <div class="flashcard__back"><p>Navngir områder i rutenettet, så barn kan plasseres med <code>grid-area: navn</code> i stedet for med tallinjer.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · container</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>grid-column-gap</code>, <code>grid-row-gap</code> og <code>grid-gap</code>?</p></div>
+          <div class="flashcard__back"><p>Gap mellom hhv. kolonner, rader, og <code>grid-gap</code> er snarveien for begge samtidig.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · auto</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva styrer <code>grid-auto-flow</code>?</p></div>
+          <div class="flashcard__back"><p>Hvilken vei items plasseres automatisk når de ikke har eksplisitt plassering — <code>row</code> eller <code>column</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilken egenskap er <em>ikke</em> en Grid item-egenskap?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span>grid-column-start</li>
+              <li><span class="opt-label">B</span>grid-area</li>
+              <li><span class="opt-label">C</span>grid-template-rows</li>
+              <li><span class="opt-label">D</span>align-self</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p><strong>Riktig: <span class="fc-correct">C</span></strong></p><p><code>grid-template-rows</code> er container-egenskap. De andre er på itemet.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · item</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>grid-area</code> på et item?</p></div>
+          <div class="flashcard__back"><p>Plasserer itemet i et navngitt område, eller setter alle fire grid-linjene (row-start / column-start / row-end / column-end) i én erklæring.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Grid · justering</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>justify-items</code> og <code>justify-content</code> i Grid?</p></div>
+          <div class="flashcard__back"><p><code>justify-items</code>: hvert item innenfor sin celle (langs inline-aksen). <code>justify-content</code>: hele rutenettet i forhold til containeren.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Velg system</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Du skal lage en sidelayout med header, sidebar, hovedfelt og footer som vises samtidig. Hva passer best?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span>Flexbox — det er én container</li>
+              <li><span class="opt-label">B</span>Grid — to-dimensjonalt</li>
+              <li><span class="opt-label">C</span>position: absolute</li>
+              <li><span class="opt-label">D</span>Tabell-elementer</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p><strong>Riktig: <span class="fc-correct">B</span></strong></p><p>Layoutet trenger rader OG kolonner samtidig — Grid sitt domene.</p></div>
+        </div>
       </div>
     </div>
   </div></section>

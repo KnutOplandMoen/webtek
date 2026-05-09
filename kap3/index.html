@@ -30,12 +30,12 @@
       <div class="eyebrow">Kapittel 3 · Forelesning 5–6 · Del 2</div>
       <h1>CSS — <em>presentasjonens språk</em></h1>
       <p class="lede">
-        Hvordan tre regler kan kjempe om samme element, hvem som vinner,
-        og hvorfor arv ikke alltid gjør det du tror. Selektorer, kaskade
-        og box-modellen.
+        Hver HTML-tag lever inni en usynlig boks. CSS er reglene som styrer
+        hvordan boksen og innholdet ser ut: farger, fonter, marger, kanter
+        og hvilken regel som vinner når flere prøver å gjelde samtidig.
       </p>
       <div class="pill-row">
-        <span class="pill">Pensum: 1.6</span>
+        <span class="pill">Pensum: 1.6.1 – 1.6.12</span>
         <span class="pill">Slides: css.md, selectors.md</span>
         <span class="pill">Forelesning 5–6</span>
       </div>
@@ -63,45 +63,89 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>CSS</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Motiver hvorfor presentasjon skilles fra struktur. Hovedpoeng: én HTML, mange stiler — lettere vedlikehold, raskere lasting, bedre tilgjengelighet.</p>
-      <p><strong>Kilde:</strong> pensum 1.6.1 (Understanding CSS).</p>
+    <p>
+      <strong>CSS</strong> står for <em>Cascading Style Sheets</em>. Det er regler
+      som bestemmer hvordan et element — eller innholdet i et element — skal se
+      ut. Tankemodellen er enkel: rundt hvert HTML-element ligger en usynlig
+      <strong>boks</strong>, og CSS styrer både boksen og innholdet i den.
+    </p>
+    <p>
+      Når reglene står i en egen fil kan flere HTML-sider dele samme stil. Da
+      slipper du å skrive den samme stilen flere steder, og du kan endre hele
+      sidens utseende på ett sted. Dette kalles ofte <em>Don't repeat yourself</em>
+      (DRY) i pensum.
+    </p>
+    <div class="callout-blue"><div class="label">Kjerneidé</div>
+      <p>HTML beskriver <em>hva</em> innholdet er. CSS beskriver <em>hvordan</em>
+      det skal se ut. Skill struktur fra presentasjon — én HTML, mange stiler.</p>
+      <p><strong>Kilde:</strong> pensum 1.6.1 (Understanding CSS), 1.6.4 (Cascade — embedded vs. external).</p>
     </div>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>Kaskaden — hvem <em>vinner</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Animert SVG som viser tre regler som matcher samme element. Steg 1: matcher. Steg 2: spesifisitet. Steg 3: kilde-rekkefølge. Steg 4: vinneren får verdien.</p>
-      <p><strong>Kilde:</strong> pensum 1.6.4 (Cascade), 1.6.5 (Inheritance), slides <code>css.md</code>.</p>
+    <p>
+      Når flere regler treffer det samme elementet, må nettleseren velge én.
+      Pensum 1.6.4 sier at rekkefølgen avgjøres av tre ting:
+    </p>
+    <ol class="steps">
+      <li><strong>Spesifisitet.</strong> En mer spesifikk selektor vinner over en mindre spesifikk. <code>p</code> er mer spesifikk enn <code>*</code>, og <code>p b</code> er mer spesifikk enn <code>p</code>. ID-er er mer spesifikke enn klasser.</li>
+      <li><strong>Siste regel.</strong> Hvis to regler er like spesifikke og treffer samme egenskap på samme element, vinner den som er skrevet sist (lengst ned).</li>
+      <li><strong><code>!important</code>.</strong> En verdi merket <code>!important</code> overstyrer andre regler for samme element. Skal brukes med varsomhet.</li>
+    </ol>
+    <p>
+      I tillegg har det betydning <em>hvor</em> stilen er definert. Pensum lister
+      fem nivåer i synkende rekkefølge:
+    </p>
+    <ol class="steps">
+      <li><strong>Inline-stil.</strong> Skrevet rett på elementet via <code>style="…"</code>. Høyest presedens.</li>
+      <li><strong>Embedded styles.</strong> Inni <code>&lt;style&gt;…&lt;/style&gt;</code> i HTML-dokumentet, gjerne i <code>&lt;head&gt;</code>.</li>
+      <li><strong>External style sheet.</strong> Egen <code>.css</code>-fil koblet inn med <code>&lt;link&gt;</code>.</li>
+      <li><strong>Brukerdefinerte regler.</strong> Stilark satt opp av sluttbrukeren i nettleseren. Lavere presedens enn dine egne stilark.</li>
+      <li><strong>Browser default.</strong> Nettleserens standardstil — brukes når ingen andre nivåer har sagt noe.</li>
+    </ol>
+    <div class="callout"><div class="label">Praktisk konsekvens</div>
+      <p>Hvis du undres over hvorfor en farge ikke endrer seg: sjekk i rekkefølge — finnes det inline-stil? Finnes det en mer spesifikk selektor lenger ned i filen? Står det <code>!important</code> noe sted?</p>
+      <p><strong>Kilde:</strong> pensum 1.6.4 (Cascade), 1.6.5 (Inheritance).</p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
     <h2>Fra naken side til <em>stylet</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis liste: link inline-stylesheet → typografi → farger → margin/padding → sentrering → borders → pseudo-klasser. Bruk <code>.steps</code>.</p>
-    </div>
+    <p>En typisk vei fra usidet HTML til ferdig stylet side, slik pensum 1.6.1–1.6.12 går igjennom det:</p>
+    <ol class="steps">
+      <li><strong>Koble inn et stilark.</strong> Lag <code>style.css</code>, og legg <code>&lt;link href="style.css" rel="stylesheet"&gt;</code> i <code>&lt;head&gt;</code>. (1.6.4 — External style sheets)</li>
+      <li><strong>Skriv den første regelen.</strong> Selektor + <code>{</code> + erklæring(er) + <code>}</code>. Hver erklæring er <code>egenskap: verdi;</code> og avsluttes med semikolon. (1.6.2)</li>
+      <li><strong>Velg riktig selektor.</strong> Type, klasse <code>.x</code>, ID <code>#y</code>, etterkommer <code>p a</code>, barn <code>li &gt; a</code>, eller universell <code>*</code>. (1.6.6)</li>
+      <li><strong>Sett farger.</strong> <code>color</code> for tekst, <code>background-color</code> for bakgrunn. Bruk hex (<code>#0060A3</code>), navn (<code>cyan</code>) eller rgb/rgba. (1.6.7)</li>
+      <li><strong>Forstå boks-modellen.</strong> Innhold → padding → border → margin. Juster avstand inne i boksen med <code>padding</code>, og avstand mellom bokser med <code>margin</code>. (1.6.8)</li>
+      <li><strong>Sentrer den ytre boksen.</strong> Sett bredde mindre enn 100&nbsp;%, så <code>margin-left: auto;</code> og <code>margin-right: auto;</code>. (1.6.9)</li>
+      <li><strong>Tegn rammer.</strong> <code>border-width</code>, <code>border-style</code>, <code>border-color</code> — eller kortformen <code>border: 4px dashed #0060A3;</code>. (1.6.10)</li>
+      <li><strong>Stil typografien.</strong> <code>font-family</code> (med fallback), <code>font-weight</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>, <code>color</code>. (1.6.11)</li>
+      <li><strong>Reager på brukeren.</strong> Pseudo-klasser: <code>:link</code>, <code>:visited</code>, <code>:hover</code>, <code>:active</code> — i den rekkefølgen for lenker. (1.6.12)</li>
+      <li><strong>Bruk arv smart.</strong> Sett <code>font-family</code> og <code>color</code> på <code>body</code>; barna arver verdien. Tving arv ved behov med <code>inherit</code>. (1.6.5)</li>
+    </ol>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De tolv <em>delene</em></h2>
+    <p class="section-intro">Pensum 1.6 har tolv delkapitler. Hvert kort under sammenfatter det viktigste fra et delkapittel.</p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · UND</div><div class="sp-title">Forstå CSS</div><div class="sp-desc">Hva CSS er konseptuelt. Pensum 1.6.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SYN</div><div class="sp-title">Syntaks</div><div class="sp-desc">selektor { property: value; }. Pensum 1.6.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · KMM</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>/* … */</code>. Pensum 1.6.3.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · KAS</div><div class="sp-title">Kaskaden</div><div class="sp-desc">Spesifisitet, opprinnelse, rekkefølge. Pensum 1.6.4.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ARV</div><div class="sp-title">Arv</div><div class="sp-desc">Hvilke egenskaper arves, hvilke ikke. Pensum 1.6.5.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · SEL</div><div class="sp-title">Selektorer</div><div class="sp-desc">Type, klasse, id, attributt, descendant. Pensum 1.6.6 + slides <code>selectors.md</code>.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · CLR</div><div class="sp-title">Farger</div><div class="sp-desc">Navn, hex, rgb, rgba, hsl. Pensum 1.6.7.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · BOX</div><div class="sp-title">Margin og padding</div><div class="sp-desc">Box-modellen. Pensum 1.6.8.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · CTR</div><div class="sp-title">Sentrering</div><div class="sp-desc">margin: auto og text-align. Pensum 1.6.9.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">J · BDR</div><div class="sp-title">Borders</div><div class="sp-desc">border-width, style, color, radius. Pensum 1.6.10.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">K · FNT</div><div class="sp-title">Tekst og fonter</div><div class="sp-desc">font-family, size, weight, line-height. Pensum 1.6.11.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">L · PSC</div><div class="sp-title">Pseudo-klasser</div><div class="sp-desc">:hover, :active, :focus. Pensum 1.6.12.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · UND</div><div class="sp-title">Forstå CSS</div><div class="sp-desc">Hvert HTML-element ligger i en usynlig boks. CSS-regler styrer boksen og innholdet. Pensum 1.6.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SYN</div><div class="sp-title">Syntaks</div><div class="sp-desc"><code>selektor { egenskap: verdi; }</code>. Erklæringer ender med semikolon. Pensum 1.6.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · KMM</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>/* … */</code>. Brukes til forklaring eller å midlertidig skru av regler. Pensum 1.6.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · KAS</div><div class="sp-title">Kaskaden</div><div class="sp-desc">Spesifisitet, siste regel, <code>!important</code>. Fem nivåer fra inline til browser default. Pensum 1.6.4.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ARV</div><div class="sp-title">Arv</div><div class="sp-desc"><code>font-family</code> og <code>color</code> arves; <code>border</code> arves ikke. Tving med <code>inherit</code>. Pensum 1.6.5.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · SEL</div><div class="sp-title">Selektorer</div><div class="sp-desc">Universell <code>*</code>, type, klasse <code>.x</code>, id <code>#y</code>, barn <code>&gt;</code>, etterkommer, <code>+</code>, <code>~</code>. Pensum 1.6.6 + slides <code>selectors.md</code>.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · CLR</div><div class="sp-title">Farger</div><div class="sp-desc">Hex (<code>#0060A3</code>), 147 navn, og rgb/rgba med alfa-kanal 0–1. Pensum 1.6.7.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · BOX</div><div class="sp-title">Margin og padding</div><div class="sp-desc">Boks-modellen: content → padding → border → margin. Shorthand <code>padding</code> / <code>margin</code>. Pensum 1.6.8.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · CTR</div><div class="sp-title">Sentrering</div><div class="sp-desc"><code>margin-left:auto; margin-right:auto;</code> på en boks som er smalere enn vinduet. Pensum 1.6.9.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">J · BDR</div><div class="sp-title">Borders</div><div class="sp-desc"><code>border-width</code>, <code>-style</code>, <code>-color</code> — eller shorthand <code>border</code>. Sider med <code>-top</code>/<code>-right</code>/.... Pensum 1.6.10.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">K · FNT</div><div class="sp-title">Tekst og fonter</div><div class="sp-desc">serif, sans-serif, monospace. <code>font-family</code> med fallback, <code>font-weight</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>. Pensum 1.6.11.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">L · PSC</div><div class="sp-title">Pseudo-klasser</div><div class="sp-desc">Tilstand: <code>:link</code>, <code>:visited</code>, <code>:hover</code>, <code>:active</code>, <code>:checked</code>. Rekkefølgen betyr noe. Pensum 1.6.12.</div></div>
     </div>
   </div></section>
 
@@ -109,14 +153,18 @@
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">Selektor</div><div class="fc-val">Definisjon. Pensum 1.6.6.</div></div>
-      <div class="fact-card"><div class="fc-key">Spesifisitet</div><div class="fc-val">Tellesystem (a,b,c,d). Pensum 1.6.4.</div></div>
-      <div class="fact-card"><div class="fc-key">Kaskade</div><div class="fc-val">Pensum 1.6.4.</div></div>
-      <div class="fact-card"><div class="fc-key">Arv</div><div class="fc-val">Pensum 1.6.5.</div></div>
-      <div class="fact-card"><div class="fc-key">Box-modellen</div><div class="fc-val">content + padding + border + margin.</div></div>
-      <div class="fact-card"><div class="fc-key">Pseudo-klasse</div><div class="fc-val">Pensum 1.6.12.</div></div>
-      <div class="fact-card"><div class="fc-key">!important</div><div class="fc-val">Bruk og misbruk.</div></div>
-      <div class="fact-card"><div class="fc-key">Inline / internal / external</div><div class="fc-val">Tre måter å koble CSS.</div></div>
+      <div class="fact-card"><div class="fc-key">Regel</div><div class="fc-val">Selektor + erklæringsblokk. Bestemmer stil for ett eller flere elementer. Pensum 1.6.2.</div></div>
+      <div class="fact-card"><div class="fc-key">Selektor</div><div class="fc-val">Mønsteret før <code>{</code> som peker ut hvilke elementer regelen gjelder. Pensum 1.6.2 / 1.6.6.</div></div>
+      <div class="fact-card"><div class="fc-key">Erklæring</div><div class="fc-val">Ett par <code>egenskap: verdi;</code>. Erklæringsblokk = alt mellom <code>{</code> og <code>}</code>. Pensum 1.6.2.</div></div>
+      <div class="fact-card"><div class="fc-key">Spesifisitet</div><div class="fc-val">Mer spesifikk selektor vinner. ID &gt; klasse &gt; type &gt; <code>*</code>. Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Kaskade</div><div class="fc-val">Reglene for hvilken regel som vinner: spesifisitet, siste regel, <code>!important</code>, og kilde-nivå. Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Arv</div><div class="fc-val">Visse egenskaper (f.eks. <code>font-family</code>, <code>color</code>) arves fra forelder. Andre, som <code>border</code>, arves ikke. Pensum 1.6.5.</div></div>
+      <div class="fact-card"><div class="fc-key">Boks-modellen</div><div class="fc-val">Content + padding + border + margin. Pensum 1.6.8.</div></div>
+      <div class="fact-card"><div class="fc-key">Inline / embedded / external</div><div class="fc-val">Tre måter å koble CSS: i <code>style</code>-attributtet, i <code>&lt;style&gt;</code>-tag, eller via <code>&lt;link&gt;</code>. Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Pseudo-klasse</div><div class="fc-val">Et stikkord etter selektoren som matcher tilstand: <code>:hover</code>, <code>:visited</code>, <code>:link</code>, <code>:active</code>, <code>:checked</code>. Pensum 1.6.12.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>!important</code></div><div class="fc-val">Overstyrer andre regler for samme egenskap. Pensum advarer mot misbruk. Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">DRY</div><div class="fc-val">Don't Repeat Yourself — embedded og external stilark gjør at samme stil ikke må skrives flere steder. Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Web-safe font</div><div class="fc-val">Font installert på alle klienter (f.eks. Arial, Georgia). Brukes som fallback. Pensum 1.6.11.</div></div>
     </div>
   </div></section>
 
@@ -124,11 +172,16 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 3</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">skrive selektorer for komplekse mønstre</span>
-      <span class="recap-pill">forklare hvilken regel som vinner</span>
-      <span class="recap-pill">tegne box-modellen</span>
-      <span class="recap-pill">styre fonter og farger</span>
-      <span class="recap-pill">bruke pseudo-klasser</span>
+      <span class="recap-pill">skrive en CSS-regel med riktig syntaks</span>
+      <span class="recap-pill">forklare kaskaden og hvilken regel som vinner</span>
+      <span class="recap-pill">koble CSS inline, embedded og external</span>
+      <span class="recap-pill">velge selektor for klasse, id og kombinasjoner</span>
+      <span class="recap-pill">tegne boks-modellen med fire lag</span>
+      <span class="recap-pill">sentrere et element med <code>margin: auto</code></span>
+      <span class="recap-pill">styre rammer med shorthand</span>
+      <span class="recap-pill">sette font-family med fallback</span>
+      <span class="recap-pill">bruke pseudo-klasser i riktig rekkefølge</span>
+      <span class="recap-pill">vite hvilke egenskaper som arves</span>
     </div>
   </div></section>
 
@@ -136,39 +189,183 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.6 (alle 12 delkapitler).</li>
-      <li><strong>Slides:</strong> <code>presentasjoner/css.md</code>, <code>presentasjoner/selectors.md</code>.</li>
-      <li><strong>Eksterne:</strong> MDN — CSS Cascade and Inheritance, W3C CSS-validator.</li>
+      <li><strong>Lærebok:</strong> pensum 1.6 (CSS intro) med alle 12 delkapitler — 1.6.1 Understanding CSS, 1.6.2 Syntax, 1.6.3 Comments, 1.6.4 Cascade, 1.6.5 Inheritance, 1.6.6 Selectors, 1.6.7 Color, 1.6.8 Margin and padding, 1.6.9 Center elements, 1.6.10 Borders, 1.6.11 Text and fonts, 1.6.12 Pseudo-classes.</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/css.md</code> (intro, syntaks, kaskade), <code>presentasjoner/selectors.md</code> (selektor-typene).</li>
+      <li><strong>Eksterne (nevnt i pensum):</strong> MDN — full liste over border-stiler og pseudo-klasser; Adobe Color for fargevalg; Google Fonts for ekstra fonter.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Eksempler: tro at id alltid vinner over klasse uansett (jo, men forklar hvorfor); blande margin og padding; glemme at width regner ut fra content-box som default; misbruk av <code>!important</code>.</p>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong>Glemmer semikolon.</strong> Hver erklæring må avsluttes med <code>;</code>. Uten det forstår ikke nettleseren at erklæringen er ferdig (1.6.2).</li>
+        <li><strong>Tror at klasse alltid vinner over type.</strong> Det stemmer som tommelfingerregel, men siste regel og <code>!important</code> kan snu det. Husk: ID &gt; klasse &gt; type, <em>gitt</em> at ikke noe overstyrer (1.6.4).</li>
+        <li><strong>Setter <code>border</code> på <code>body</code> og forventer at <code>p</code> arver det.</strong> <code>border</code> arves <em>ikke</em>. Bruk <code>inherit</code> hvis du virkelig vil ha det (1.6.5).</li>
+        <li><strong>Pseudo-klasser i feil rekkefølge for lenker.</strong> <code>:link</code> → <code>:visited</code> → <code>:hover</code> → <code>:active</code>. Skriver du <code>:hover</code> før <code>:visited</code>, vil <code>:hover</code>-stilen ikke vises (1.6.12).</li>
+        <li><strong>Misbruk av <code>!important</code>.</strong> Pensum advarer eksplisitt: bruk det med varsomhet, ellers blir kaskaden uleselig (1.6.4).</li>
+        <li><strong>Glemmer fallback i <code>font-family</code>.</strong> Pensum krever at du oppgir generisk familie (serif/sans-serif/monospace) til slutt, så nettleseren har noe å falle tilbake på (1.6.11).</li>
+        <li><strong>Sentrering uten å sette bredde.</strong> <code>margin: 0 auto;</code> virker bare hvis elementet er smalere enn vinduet (1.6.9).</li>
+        <li><strong>Lav kontrast tekst/bakgrunn.</strong> Pensum 1.6.11 påpeker at lav kontrast gjør teksten vanskelig å lese, særlig for synshemmede.</li>
+      </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
     <h2>Hvilken <em>regel vinner</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Klassisk eksamensoppgave: gitt fire CSS-regler og et HTML-fragment, regn ut spesifisitet og pek på vinneren. Vis utregningen.</p>
+    <p>Klassisk eksamensoppgave: gitt et HTML-fragment og noen CSS-regler — hvilken farge får teksten?</p>
+
+    <div class="code-result two-col">
+      <div class="pane"><div class="pane-label">HTML</div><pre>&lt;div id="boks" class="varsel"&gt;
+  Hei!
+&lt;/div&gt;</pre></div>
+      <div class="pane"><div class="pane-label">CSS</div><pre>div          { color: black;  }
+.varsel      { color: orange; }
+#boks        { color: red;    }
+.varsel      { color: green;  }</pre></div>
     </div>
+
+    <div class="callout"><div class="label">Tankegangen</div>
+      <ol class="steps">
+        <li><strong>List opp regler som matcher.</strong> Alle fire treffer <code>div</code>-en (type, klasse to ganger, ID).</li>
+        <li><strong>Sammenlign spesifisitet.</strong> ID er mest spesifikk, klasse mer spesifikk enn type. <code>#boks</code> slår de andre.</li>
+        <li><strong>Konklusjon.</strong> Teksten blir <strong>rød</strong>. De to <code>.varsel</code>-reglene konkurrerer kun seg imellom (siste regel vinner: <code>green</code>), men begge taper mot <code>#boks</code>.</li>
+      </ol>
+      <p><strong>Hva hvis vi legger til <code>color: blue !important;</code> på <code>.varsel</code>?</strong> Da vinner klassen, fordi <code>!important</code> overstyrer vanlig spesifisitet. Teksten blir blå.</p>
+    </div>
+
+    <p>Andre typiske oppgaver fra pensum 1.6:</p>
+    <ul>
+      <li>«Tegn boks-modellen og marker margin, border, padding og content.» (1.6.8)</li>
+      <li>«Skriv en CSS-regel som sentrerer en <code>div</code> med klasse <code>kort</code> og 600&nbsp;px bredde.» (1.6.9)</li>
+      <li>«Hva blir bakgrunnsfargen til en <code>p</code> hvis <code>body</code> har <code>background-color: gray;</code>?» Svar: ingenting — <code>background-color</code> er ikke listet som arvet i pensum, og standard er gjennomsiktig.</li>
+      <li>«Skriv pseudo-klassene for å style en lenke i alle fire tilstander, i riktig rekkefølge.» (1.6.12)</li>
+    </ul>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder MCQ-er for spesifisitet — det gir tette differensieringspoeng.</p></div>
+    <p class="section-intro">12 spørsmål som dekker pensum 1.6.1–1.6.12. Klikk «Se svar» når du har tenkt selv.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">1 · Lett · Pensum 1.6.2</div>
+      <div class="q-text">Hva heter de tre delene av en CSS-regel?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Selektor, egenskap (property) og verdi. Et par av egenskap+verdi kalles en <em>erklæring</em>. Alle erklæringene mellom <code>{</code> og <code>}</code> kalles en <em>erklæringsblokk</em>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">2 · Lett · Pensum 1.6.3</div>
+      <div class="q-text">Hvordan skriver du en kommentar i CSS?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>/* dette er en kommentar */</code>. Kan også omslutte CSS-regler for midlertidig å skru dem av.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">3 · Lett · Pensum 1.6.7</div>
+      <div class="q-text">Nevn de tre måtene å oppgi en farge på i CSS som pensum lister.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Hex-kode (<code>#0060A3</code>), fargenavn (<code>cyan</code>) og rgb/rgba-verdier (<code>rgb(0, 96, 163)</code> eller <code>rgba(0, 96, 163, 0.5)</code>).</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">4 · Middels · Pensum 1.6.4</div>
+      <div class="q-text">Hvilke fem nivåer av stiler finnes, og hvilken har høyest presedens?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Inline → embedded → external → user-specified → browser default. Inline-stil har høyest presedens.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">5 · Middels · Pensum 1.6.4</div>
+      <div class="q-text">To regler treffer samme element og setter samme egenskap. De er like spesifikke. Hvilken vinner?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Den som er skrevet sist (lengst ned) i CSS-en. Det er regelen om «last rule» i kaskaden.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">6 · Middels · Pensum 1.6.5</div>
+      <div class="q-text">Hvorfor blir hele dokumentet ofte i samme font selv om du bare har skrevet <code>font-family</code> på <code>body</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>font-family</code> er en av egenskapene som arves fra forelder til barn. Alle barn av <code>body</code> arver fonten med mindre de selv overstyrer den. Det samme gjelder <code>color</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">7 · Middels · Pensum 1.6.6</div>
+      <div class="q-text">Forskjell på <code>p a</code> og <code>p &gt; a</code>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>p a</code> er en <em>etterkommer-selektor</em> — treffer alle <code>&lt;a&gt;</code> som ligger inni en <code>&lt;p&gt;</code>, uansett hvor dypt. <code>p &gt; a</code> er en <em>barn-selektor</em> — treffer kun <code>&lt;a&gt;</code> som er direkte barn av <code>&lt;p&gt;</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">8 · Middels · Pensum 1.6.8</div>
+      <div class="q-text">Tegn lagene i boks-modellen fra innerst til ytterst.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Innerst: <strong>content</strong>. Så <strong>padding</strong> rundt innholdet. Så <strong>border</strong> som kanten. Ytterst: <strong>margin</strong>, som skiller boksen fra naboene.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">9 · Middels · Pensum 1.6.9</div>
+      <div class="q-text">Hvordan sentrerer du et element horisontalt i nettleservinduet?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Sett en bredde mindre enn 100&nbsp;%, og bruk <code>margin-left: auto;</code> sammen med <code>margin-right: auto;</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">10 · Middels · Pensum 1.6.10</div>
+      <div class="q-text">Skriv shorthand for en 4&nbsp;px stiplet, blå ramme.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>border: 4px dashed #0060A3;</code>. Rekkefølgen er <code>border-width</code>, <code>border-style</code>, <code>border-color</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Vanskelig · Pensum 1.6.12</div>
+      <div class="q-text">I hvilken rekkefølge må <code>:link</code>, <code>:visited</code>, <code>:hover</code> og <code>:active</code> stå i CSS-en for at alle skal virke?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>a:link</code> → <code>a:visited</code> → <code>a:hover</code> → <code>a:active</code>. Skriver du f.eks. <code>:hover</code> før <code>:visited</code>, vil <code>:hover</code>-stilen ikke ta effekt fordi <code>:visited</code> overstyrer den (siste regel + lik spesifisitet).</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Vanskelig · Pensum 1.6.4 + 1.6.6</div>
+      <div class="q-text">Gitt <code>&lt;p class="advarsel" id="topp"&gt;Hei&lt;/p&gt;</code> og reglene:
+        <code>p { color: black; }</code>,
+        <code>.advarsel { color: orange; }</code>,
+        <code>#topp { color: red; }</code>. Hvilken farge får teksten?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Rød. ID-selektoren <code>#topp</code> er mer spesifikk enn klasse, som igjen er mer spesifikk enn type. Rekkefølgen i filen spiller ingen rolle her, fordi spesifisitet avgjør først.</div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards — <em>hele pensum i kortform</em></h2>
-    <p class="section-intro">30–50 kort. Inkluder mange spesifisitets-utregninger.</p>
+    <h2>Flashcards — <em>hele pensum 1.6 i kortform</em></h2>
+    <p class="section-intro">32 kort som dekker 1.6.1–1.6.12. Klikk for å snu. Bla med <kbd>←</kbd>/<kbd>→</kbd>, shuffle med <kbd>S</kbd>.</p>
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -176,6 +373,262 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.1 · Forstå CSS</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva står CSS for?</p></div>
+          <div class="flashcard__back"><p>Cascading Style Sheets.</p><p class="fc-ref">Pensum 1.6.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.1 · Forstå CSS</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken usynlig figur omgir hvert HTML-element ifølge pensum?</p></div>
+          <div class="flashcard__back"><p>En boks. CSS-regler styrer både boksen og innholdet i boksen.</p><p class="fc-ref">Pensum 1.6.1</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.2 · Syntaks</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva kalles paret <code>egenskap: verdi;</code>?</p></div>
+          <div class="flashcard__back"><p>En <strong>erklæring</strong> (declaration). Alle erklæringer mellom <code>{</code> og <code>}</code> kalles en <em>erklæringsblokk</em>.</p><p class="fc-ref">Pensum 1.6.2</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.2 · Syntaks</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilket tegn må stå etter hver erklæring?</p></div>
+          <div class="flashcard__back"><p>Semikolon (<code>;</code>). Det forteller nettleseren at erklæringen er ferdig.</p><p class="fc-ref">Pensum 1.6.2</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.3 · Kommentarer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan ser en CSS-kommentar ut?</p></div>
+          <div class="flashcard__back"><p><code>/* … */</code>. Brukes til å forklare eller for midlertidig å skru av regler.</p><p class="fc-ref">Pensum 1.6.3</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.4 · Kaskaden</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre faktorer avgjør hvilken regel som vinner?</p></div>
+          <div class="flashcard__back"><p>1) Spesifisitet, 2) siste regel (rekkefølge), 3) <code>!important</code>.</p><p class="fc-ref">Pensum 1.6.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.4 · Kaskaden</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">List de fem stilnivåene i fallende presedens.</p></div>
+          <div class="flashcard__back"><p>Inline → embedded → external → user-specified → browser default.</p><p class="fc-ref">Pensum 1.6.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.4 · Kaskaden</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvorfor er <code>p b</code> mer spesifikk enn <code>p</code>?</p></div>
+          <div class="flashcard__back"><p>Den krever to ting samtidig (en <code>&lt;b&gt;</code> inni en <code>&lt;p&gt;</code>), ikke bare en <code>&lt;p&gt;</code>. Mer spesifikk selektor vinner.</p><p class="fc-ref">Pensum 1.6.4 / 1.6.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.4 · Kaskaden</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>!important</code>, og hva er pensumets råd?</p></div>
+          <div class="flashcard__back"><p>Markerer en erklæring som viktigere enn andre regler for samme egenskap. Pensum sier: bruk med varsomhet.</p><p class="fc-ref">Pensum 1.6.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.4 · Kaskaden</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan kobler du inn et eksternt stilark?</p></div>
+          <div class="flashcard__back"><p><code>&lt;link href="path/to/stylesheet.css" rel="stylesheet"&gt;</code> i <code>&lt;head&gt;</code>.</p><p class="fc-ref">Pensum 1.6.4</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.5 · Arv</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Nevn to egenskaper som arves automatisk, og én som ikke arves.</p></div>
+          <div class="flashcard__back"><p>Arves: <code>font-family</code>, <code>color</code>. Arves ikke: <code>border</code> (eksempel fra pensum).</p><p class="fc-ref">Pensum 1.6.5</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.5 · Arv</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan tvinger du en egenskap til å arve verdien fra forelder?</p></div>
+          <div class="flashcard__back"><p>Sett verdien til <code>inherit</code>, f.eks. <code>border-radius: inherit;</code>.</p><p class="fc-ref">Pensum 1.6.5</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.6 · Selektorer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan refereres en klasse, og hvordan refereres en ID i CSS?</p></div>
+          <div class="flashcard__back"><p>Klasse: <code>.klassenavn</code>. ID: <code>#id-navn</code>. ID kan kun forekomme én gang per side; klasse kan brukes på flere elementer.</p><p class="fc-ref">Pensum 1.6.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.6 · Selektorer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva treffer den universelle selektoren <code>*</code>?</p></div>
+          <div class="flashcard__back"><p>Alle elementer i dokumentet.</p><p class="fc-ref">Pensum 1.6.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.6 · Selektorer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen mellom <code>li &gt; a</code> og <code>p a</code>?</p></div>
+          <div class="flashcard__back"><p><code>li &gt; a</code> er <em>barn-selektor</em> — direkte barn. <code>p a</code> er <em>etterkommer-selektor</em> — alle <code>a</code> nestet inni en <code>p</code>, uansett dybde.</p><p class="fc-ref">Pensum 1.6.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.6 · Selektorer</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva treffer <code>h1+p</code> og <code>h1~p</code>?</p></div>
+          <div class="flashcard__back"><p><code>h1+p</code> = <em>adjacent sibling</em> — den første <code>&lt;p&gt;</code> rett etter en <code>&lt;h1&gt;</code>. <code>h1~p</code> = <em>general sibling</em> — alle <code>&lt;p&gt;</code> som er søsken etter en <code>&lt;h1&gt;</code>.</p><p class="fc-ref">Pensum 1.6.6</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.7 · Farger</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken farge gir <code>#000000</code>, og hvilken gir <code>#FFFFFF</code>?</p></div>
+          <div class="flashcard__back"><p><code>#000000</code> = svart (alle tre kanaler 0). <code>#FFFFFF</code> = hvit (alle tre kanaler maks).</p><p class="fc-ref">Pensum 1.6.7</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.7 · Farger</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør den fjerde verdien i <code>rgba(0, 96, 163, 0.5)</code>?</p></div>
+          <div class="flashcard__back"><p>Det er alfa-kanalen (opasitet). 0 = helt gjennomsiktig, 1 = helt ugjennomsiktig. 0.5 = 50&nbsp;% opasitet.</p><p class="fc-ref">Pensum 1.6.7</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.7 · Farger</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvor mange forhåndsdefinerte fargenavn gjenkjenner nettlesere ifølge pensum?</p></div>
+          <div class="flashcard__back"><p>147 fargenavn — f.eks. <code>blue</code>, <code>cyan</code>, <code>lightgoldenrodyellow</code>.</p><p class="fc-ref">Pensum 1.6.7</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.8 · Boks-modellen</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">List opp de fire delene av boks-modellen fra innerst til ytterst.</p></div>
+          <div class="flashcard__back"><p>Content → padding → border → margin.</p><p class="fc-ref">Pensum 1.6.8</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.8 · Boks-modellen</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>padding</code> og <code>margin</code>?</p></div>
+          <div class="flashcard__back"><p><code>padding</code> er rommet mellom innholdet og rammen — bakgrunnen til elementet strekker seg ut hit. <code>margin</code> er det tomme rommet utenfor rammen som skiller boksen fra naboene.</p><p class="fc-ref">Pensum 1.6.8</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.9 · Sentrering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan sentrerer du ytre element i nettleservinduet?</p></div>
+          <div class="flashcard__back"><p>Sett en bredde mindre enn 100&nbsp;%, og bruk <code>margin-left: auto;</code> + <code>margin-right: auto;</code>.</p><p class="fc-ref">Pensum 1.6.9</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.10 · Borders</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre egenskaper styrer en ramme?</p></div>
+          <div class="flashcard__back"><p><code>border-width</code>, <code>border-style</code>, <code>border-color</code>. Eller shorthand: <code>border: 4px dashed #0060A3;</code>.</p><p class="fc-ref">Pensum 1.6.10</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.10 · Borders</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Nevn fem mulige verdier for <code>border-style</code>.</p></div>
+          <div class="flashcard__back"><p>F.eks. <code>none</code>, <code>hidden</code>, <code>dotted</code>, <code>dashed</code>, <code>solid</code>, <code>double</code>.</p><p class="fc-ref">Pensum 1.6.10</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.10 · Borders</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan setter du forskjellig stil per side på en ramme?</p></div>
+          <div class="flashcard__back"><p>Med <code>-top</code>, <code>-right</code>, <code>-bottom</code>, <code>-left</code>: f.eks. <code>border-top-style: solid;</code> og <code>border-left-style: dashed;</code>.</p><p class="fc-ref">Pensum 1.6.10</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.11 · Tekst og fonter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre typeface-klassifiseringer nevner pensum?</p></div>
+          <div class="flashcard__back"><p>Serif, sans-serif og monospace.</p><p class="fc-ref">Pensum 1.6.11</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.11 · Tekst og fonter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvorfor avsluttes <code>font-family</code>-listen typisk med en generisk familie som <code>serif</code>?</p></div>
+          <div class="flashcard__back"><p>Det er en fallback: hvis ingen av de foregående fontene finnes på klienten, skal nettleseren bruke sin standard serif-font.</p><p class="fc-ref">Pensum 1.6.11</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.11 · Tekst og fonter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>text-align</code> ta?</p></div>
+          <div class="flashcard__back"><p><code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>. Justify strekker linjene så hver linje er like bred (som i aviser).</p><p class="fc-ref">Pensum 1.6.11</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.11 · Tekst og fonter</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken tommelfingerregel gir pensum for <code>line-height</code>?</p></div>
+          <div class="flashcard__back"><p>1.2× til 1.5× fontstørrelsen. Økt linjehøyde gir mer luft og bedre lesbarhet, men gjør ikke teksten større.</p><p class="fc-ref">Pensum 1.6.11</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.12 · Pseudo-klasser</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr <code>:hover</code>?</p></div>
+          <div class="flashcard__back"><p>En tilstand som matcher når musepekeren er over elementet. Skrives som <code>selektor:hover { … }</code>.</p><p class="fc-ref">Pensum 1.6.12</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.12 · Pseudo-klasser</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvorfor må pseudo-klassene for lenker stå i en bestemt rekkefølge?</p></div>
+          <div class="flashcard__back"><p>Fordi flere kan matche samme element samtidig, og siste regel vinner ved lik spesifisitet. <code>a:link</code> → <code>a:visited</code> → <code>a:hover</code> → <code>a:active</code>. Settes <code>:hover</code> før <code>:visited</code>, vil <code>:hover</code>-stilen ikke synes.</p><p class="fc-ref">Pensum 1.6.12</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.6.12 · Pseudo-klasser</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken pseudo-klasse matcher avkrysset tilstand på et form-element?</p></div>
+          <div class="flashcard__back"><p><code>:checked</code>. Pensum nevner den som eksempel på status av innholdet, ved siden av <code>:hover</code> (musens posisjon) og <code>:visited</code> (navigasjonshistorikk).</p><p class="fc-ref">Pensum 1.6.12</p></div>
+        </div>
       </div>
     </div>
   </div></section>

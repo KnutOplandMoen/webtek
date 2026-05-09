@@ -30,8 +30,9 @@
       <div class="eyebrow">Kapittel 11 · Forelesning 13 · Del 4</div>
       <h1>XML — <em>strukturert data</em></h1>
       <p class="lede">
-        Et beslektet markup-språk til HTML. Strenge syntaksregler, men
-        fleksible navn — perfekt for konfigurasjon og dataoverføring.
+        Et generelt markup-språk for å dele data mellom systemer. Samme
+        tag-syntaks som HTML, men du definerer taggene selv — og reglene
+        er strengere.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.14</span>
@@ -62,36 +63,130 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>XML</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>XML deler syntaksfilosofi med HTML, men er for data, ikke utseende. Brukes i SOAP, RSS, SVG, og masse legacy-systemer. JSON tok over mye, men XML lever videre.</p>
-      <p><strong>Kilde:</strong> pensum 1.14.</p>
-    </div>
+    <p>
+      XML — <strong>Extensible Markup Language</strong> — er et markup-språk
+      som ligner på HTML. Forskjellen er hva det brukes til: HTML beskriver
+      en side i en nettleser, mens XML er et <em>generelt</em> markup-språk
+      der du selv definerer taggene. Hovedformålet er å dele data mellom
+      ulike systemer, på samme måte som JSON.
+    </p>
+    <p>
+      Der HTML har en fast vokabular (<code>&lt;p&gt;</code>,
+      <code>&lt;h1&gt;</code>, <code>&lt;table&gt;</code>), står du fritt i
+      XML til å bruke <code>&lt;person&gt;</code>,
+      <code>&lt;height&gt;</code> eller hva enn dataene dine handler om.
+      Til gjengjeld må XML være <em>well-formed</em>: riktig nøstet, korrekt
+      lukket, og case-sensitivt — ellers godtar parseren det ikke.
+    </p>
+    <p><strong>Kilde:</strong> pensum 1.14 (Extensible Markup Language).</p>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>Som HTML, men <em>strengere</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Sammenlign HTML og XML side ved side: tags, attributter, hierarki. Forskjellen er at XML krever lukke-tag, case-sensitive, kvotering, og at egne tag-navn er greit.</p>
-    </div>
+    <p>
+      Tenk på XML som HTML uten det innebygde vokabularet, og uten
+      slingringsmonn. To regler holder mesteparten av syntaksen sammen:
+    </p>
+    <ol>
+      <li><strong>Ett root-element</strong> som omslutter alt annet.</li>
+      <li><strong>Alt skal lukkes</strong> i samme rekkefølge det åpnes,
+        med samme bokstav-case.</li>
+    </ol>
+    <p>
+      Et XML-dokument er en trestruktur: et root-element med barn, som
+      igjen kan ha barn, helt ned til tekst-noder. Strukturen kan
+      valideres mot en <strong>DTD</strong> eller <strong>XSD</strong>
+      som beskriver hvilke tagger som er lovlige og hvordan de kan
+      kombineres.
+    </p>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Et <em>note-dokument</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: <code>&lt;?xml version="1.0"?&gt;</code> → root-element → barn-elementer → attributter → CDATA-blokk → XML-validering.</p>
-    </div>
+    <h2>Skriv et <em>person-dokument</em></h2>
+    <p>Bygg dokumentet stegvis — slik kommer alle delene fra pensum 1.14 fram.</p>
+
+    <ol class="path-list">
+      <li>
+        <strong>Start med XML-deklarasjonen (prologen).</strong>
+        Den er valgfri, men hvis den brukes må den stå først:
+        <pre><code>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</code></pre>
+        Versjon, encoding (UTF-8 er default) og standalone (om dokumentet
+        står på egne bein, eller henter informasjon fra eksterne kilder).
+      </li>
+      <li>
+        <strong>Legg til root-elementet.</strong> Hvert XML-dokument må ha
+        nøyaktig ett root-element som omslutter alt annet:
+        <pre><code>&lt;persons&gt;
+  …
+&lt;/persons&gt;</code></pre>
+      </li>
+      <li>
+        <strong>Plasser barne-elementer inni.</strong> Tagg-navnene velger
+        du selv — de skal beskrive dataene:
+        <pre><code>&lt;persons&gt;
+  &lt;person&gt;
+    &lt;name&gt;Name Nameson&lt;/name&gt;
+    &lt;height&gt;173&lt;/height&gt;
+    &lt;age&gt;23&lt;/age&gt;
+  &lt;/person&gt;
+&lt;/persons&gt;</code></pre>
+      </li>
+      <li>
+        <strong>Sjekk at alt er well-formed.</strong> Lukket i riktig
+        rekkefølge? Samme case på åpne- og lukke-tag? Hvis ikke parses
+        ikke dokumentet.
+      </li>
+      <li>
+        <strong>Erstatt spesialtegn med entity references.</strong> Skal
+        dataene inneholde <code>&lt;</code> eller <code>&amp;</code>,
+        bruk <code>&amp;lt;</code> og <code>&amp;amp;</code> — ellers
+        tror parseren det er markup.
+      </li>
+      <li>
+        <strong>Valider mot en DTD eller XSD</strong> hvis du vil
+        garantere at strukturen er korrekt — ikke bare well-formed,
+        men <em>valid</em>.
+      </li>
+    </ol>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>De viktigste <em>delene</em></h2>
+    <h2>De seks <em>delene</em></h2>
+    <p class="section-intro">Pensum 1.14 dekker disse temaene. Hvert kort er ett område du må kunne.</p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · SYN</div><div class="sp-title">Syntaks</div><div class="sp-desc">Element, attributt, tekst, CDATA, kommentarer.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · WLF</div><div class="sp-title">Well-formed</div><div class="sp-desc">Hva er et gyldig dokument: én root, alle tags lukket, riktig nesting.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · NMS</div><div class="sp-title">Namespaces</div><div class="sp-desc">xmlns og prefiks.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · USE</div><div class="sp-title">Bruksområder</div><div class="sp-desc">SVG, RSS, SOAP, konfig — i praksis.</div></div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">A · DCL</div>
+        <div class="sp-title">XML-deklarasjon</div>
+        <div class="sp-desc">Prologen: version, encoding, standalone. Valgfri, men må stå først om brukt.</div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">B · SYN</div>
+        <div class="sp-title">Syntaks og nesting</div>
+        <div class="sp-desc">Åpne/lukke-tag, root-element, korrekt nesting, case-sensitivitet.</div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">C · ENT</div>
+        <div class="sp-title">Entity references</div>
+        <div class="sp-desc">Fem reserverte tegn: &lt; &gt; &amp; ' " — må erstattes med entitet.</div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">D · CMT</div>
+        <div class="sp-title">Kommentarer</div>
+        <div class="sp-desc"><code>&lt;!-- … --&gt;</code> — som i HTML.</div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">E · VAL</div>
+        <div class="sp-title">DTD og XSD</div>
+        <div class="sp-desc">Beskriver gyldig grammatikk. PCDATA vs CDATA. Simple, complex og global types i XSD.</div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">F · DSP</div>
+        <div class="sp-title">Visning med CSS</div>
+        <div class="sp-desc"><code>&lt;?xml-stylesheet type="text/css" href="…"?&gt;</code> styrer visningen i nettleser.</div>
+      </div>
     </div>
   </div></section>
 
@@ -99,12 +194,18 @@
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">XML-deklarasjon</div><div class="fc-val"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">Root-element</div><div class="fc-val">Alltid nøyaktig ett.</div></div>
-      <div class="fact-card"><div class="fc-key">Well-formed</div><div class="fc-val">Følger XML-syntaks.</div></div>
-      <div class="fact-card"><div class="fc-key">Valid</div><div class="fc-val">Følger DTD/Schema.</div></div>
-      <div class="fact-card"><div class="fc-key">CDATA</div><div class="fc-val">Tekst som ikke skal parses.</div></div>
-      <div class="fact-card"><div class="fc-key">Namespace</div><div class="fc-val">Unngår tag-navn-konflikter.</div></div>
+      <div class="fact-card"><div class="fc-key">XML</div><div class="fc-val">Extensible Markup Language. Generelt markup-språk for dataoverføring.</div></div>
+      <div class="fact-card"><div class="fc-key">Prolog / deklarasjon</div><div class="fc-val"><code>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</code> — valgfri, må stå først.</div></div>
+      <div class="fact-card"><div class="fc-key">Root-element</div><div class="fc-val">Nøyaktig ett. Forelder til alle andre elementer.</div></div>
+      <div class="fact-card"><div class="fc-key">Well-formed</div><div class="fc-val">Følger XML-syntaks: alt lukket, riktig nøstet, ett root.</div></div>
+      <div class="fact-card"><div class="fc-key">Valid</div><div class="fc-val">Well-formed <em>og</em> følger en DTD eller XSD.</div></div>
+      <div class="fact-card"><div class="fc-key">Case-sensitiv</div><div class="fc-val"><code>&lt;Name&gt;</code> ≠ <code>&lt;name&gt;</code>. Åpne- og lukke-tag må matche eksakt.</div></div>
+      <div class="fact-card"><div class="fc-key">Entity reference</div><div class="fc-val">Erstatter reserverte tegn: <code>&amp;lt;</code> <code>&amp;gt;</code> <code>&amp;amp;</code> <code>&amp;apos;</code> <code>&amp;quot;</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">DTD</div><div class="fc-val">Document Type Definition. Beskriver lovlige elementer i prologen.</div></div>
+      <div class="fact-card"><div class="fc-key">XSD</div><div class="fc-val">XML Schema Definition. Alternativ til DTD; bruker selv XML-syntaks.</div></div>
+      <div class="fact-card"><div class="fc-key">PCDATA</div><div class="fc-val">"Parsed Character Data" — tekst som parses som markup.</div></div>
+      <div class="fact-card"><div class="fc-key">CDATA</div><div class="fc-val">Tekst som <em>ikke</em> parses — behandles som ren tekst.</div></div>
+      <div class="fact-card"><div class="fc-key">XSD-typer</div><div class="fc-val">Simple (xs:int, xs:string …), complex (container), global (gjenbrukbar).</div></div>
     </div>
   </div></section>
 
@@ -112,11 +213,15 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 11</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">skille XML fra HTML</span>
-      <span class="recap-pill">skrive et well-formed XML</span>
-      <span class="recap-pill">bruke attributter og tekst</span>
-      <span class="recap-pill">forklare CDATA</span>
-      <span class="recap-pill">peke på bruksområder</span>
+      <span class="recap-pill">forklare hva XML er og hva det brukes til</span>
+      <span class="recap-pill">skrive et well-formed XML-dokument</span>
+      <span class="recap-pill">forklare prologen (version, encoding, standalone)</span>
+      <span class="recap-pill">peke ut root-elementet og forklare nesting</span>
+      <span class="recap-pill">bruke de fem entity references</span>
+      <span class="recap-pill">skille well-formed fra valid</span>
+      <span class="recap-pill">lese og skrive en enkel DTD</span>
+      <span class="recap-pill">forklare PCDATA vs CDATA</span>
+      <span class="recap-pill">koble et CSS-stilark til XML</span>
     </div>
   </div></section>
 
@@ -124,39 +229,261 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.14 (XML).</li>
-      <li><strong>Slides:</strong> kommer — sjekk BlackBoard.</li>
-      <li><strong>Eksterne:</strong> W3Schools — XML Tutorial.</li>
+      <li><strong>Lærebok:</strong> pensum 1.14 (XML) — XML declaration, Syntax, Nesting, Case sensitivity, Entity references, Comments, JSON som XML, DTD, XSD, Displaying XML documents.</li>
+      <li><strong>Slides:</strong> kommer — sjekk BlackBoard etter F13.</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Glemme lukke-tag (XML er strengt); bruke ulike case i åpne- og lukke-tag; manglende quotes på attributtverdier; tro at HTML er XML.</p>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ol>
+        <li><strong>Glemmer lukke-tag.</strong> XML har ingen «void»-elementer — alt skal lukkes. Gjør du ikke det er ikke dokumentet well-formed.</li>
+        <li><strong>Mismatch på case.</strong> <code>&lt;Name&gt;…&lt;/name&gt;</code> er en feil. XML er case-sensitivt; HTML er ikke.</li>
+        <li><strong>Feil nesting.</strong> <code>&lt;a&gt;&lt;b&gt;…&lt;/a&gt;&lt;/b&gt;</code> bryter struktur — barnet må lukkes før forelderen.</li>
+        <li><strong>Mer enn ett root-element.</strong> Et XML-dokument har nøyaktig ett. Hvis du har flere "person", pakk dem i en <code>&lt;persons&gt;</code>.</li>
+        <li><strong>Bruker reserverte tegn rått.</strong> Skriver du <code>&lt;</code> i tekst tror parseren at en ny tag begynner. Bruk <code>&amp;lt;</code>.</li>
+        <li><strong>Tror HTML er XML.</strong> HTML godtar manglende lukke-tag og blanding av case; XML gjør det ikke.</li>
+        <li><strong>Forveksler well-formed og valid.</strong> Well-formed = riktig syntaks. Valid = riktig <em>og</em> følger DTD/XSD.</li>
+        <li><strong>Plasserer prologen feil.</strong> XML-deklarasjonen må stå <em>først</em> i dokumentet hvis den finnes — ingen tegn før den.</li>
+      </ol>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Skriv <em>XML for noen data</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Skriv et XML-dokument som beskriver et bibliotek med tre bøker, hver med tittel, forfatter og utgivelsesår.»</p>
+    <h2>Skriv et XML-dokument for <em>noen data</em></h2>
+    <div class="callout">
+      <div class="label">Oppgave</div>
+      <p>
+        «Skriv et well-formed XML-dokument som beskriver tre personer.
+        Hver person har et navn, høyde og alder. Inkluder en korrekt
+        XML-deklarasjon.»
+      </p>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">Eksempelsvar</div>
+      <div class="q-text">Slik bygger du opp svaret stegvis — sjekk fasit etterpå.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;persons&gt;
+  &lt;person&gt;
+    &lt;name&gt;Name Nameson&lt;/name&gt;
+    &lt;height&gt;173&lt;/height&gt;
+    &lt;age&gt;23&lt;/age&gt;
+  &lt;/person&gt;
+  &lt;person&gt;
+    &lt;name&gt;Another Nameson&lt;/name&gt;
+    &lt;height&gt;181&lt;/height&gt;
+    &lt;age&gt;25&lt;/age&gt;
+  &lt;/person&gt;
+  &lt;person&gt;
+    &lt;name&gt;Third Nameson&lt;/name&gt;
+    &lt;height&gt;168&lt;/height&gt;
+    &lt;age&gt;30&lt;/age&gt;
+  &lt;/person&gt;
+&lt;/persons&gt;</code></pre>
+          <p><strong>Sensor leter etter:</strong> prolog først, ett root-element (<code>persons</code>), riktig nesting og lukking, samme case på alle åpne/lukke-tag.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="label">Variant</div>
+      <p>
+        «Legg til en DTD som krever at hver <code>person</code> inneholder
+        nøyaktig <code>name</code>, <code>height</code> og <code>age</code>
+        i den rekkefølgen.»
+      </p>
+      <p>Forventet løsning følger mønsteret <code>&lt;!DOCTYPE persons [ &lt;!ELEMENT person (name, height, age)&gt; &lt;!ELEMENT name (#PCDATA)&gt; … ]&gt;</code> plassert etter prologen.</p>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Hvilket dokument er well-formed? Gjenkjenne syntaksfeil.</p></div>
+    <p class="section-intro">Klikk «Se svar» når du har tenkt gjennom spørsmålet selv.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">01 · Lett</div>
+      <div class="q-text">Hva står forkortelsen XML for, og hva er hovedformålet med språket?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Extensible Markup Language. Hovedformålet er å dele data mellom ulike systemer — på samme måte som JSON.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">02 · Lett</div>
+      <div class="q-text">Hvilken viktig forskjell finnes mellom HTML og XML når det gjelder tag-navn?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">HTML har et fast sett med tag-navn. I XML definerer du tag-navnene selv — språket er «extensible».</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">03 · Lett</div>
+      <div class="q-text">Skriv en gyldig XML-deklarasjon med versjon 1.0 og UTF-8-encoding.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code></div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">04 · Lett</div>
+      <div class="q-text">Hvor i dokumentet må XML-deklarasjonen stå?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Først — før alt annet. Deklarasjonen er valgfri, men hvis den brukes må den være det første i dokumentet.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">05 · Middels</div>
+      <div class="q-text">Hva betyr det at et XML-dokument er <em>well-formed</em>?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Det følger XML-syntaksen: alle tagger er korrekt lukket, riktig nøstet, det finnes nøyaktig ett root-element, og åpne- og lukke-tag har samme case.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">06 · Middels</div>
+      <div class="q-text">Hva er forskjellen på «well-formed» og «valid»?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Well-formed handler om syntaks. Valid betyr at dokumentet i tillegg følger en DTD eller XSD som beskriver hvilke tagger som er lov og hvordan de kan kombineres.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">07 · Middels</div>
+      <div class="q-text">Hvilke fem tegn må erstattes med entity references i XML, og hvilke entiteter brukes?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          <code>&lt;</code> → <code>&amp;lt;</code><br>
+          <code>&gt;</code> → <code>&amp;gt;</code><br>
+          <code>&amp;</code> → <code>&amp;amp;</code><br>
+          <code>'</code> → <code>&amp;apos;</code><br>
+          <code>"</code> → <code>&amp;quot;</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">08 · Middels</div>
+      <div class="q-text">Vurder om denne snutten er well-formed: <code>&lt;person&gt;&lt;name&gt;Per&lt;/person&gt;&lt;/name&gt;</code></div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Nei. <code>name</code> er åpnet inni <code>person</code> men lukkes etter <code>person</code>. Reglene for nesting krever at barnet lukkes før forelderen.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">09 · Middels</div>
+      <div class="q-text">Vurder om denne snutten er well-formed: <code>&lt;Person&gt;Per&lt;/person&gt;</code></div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Nei. XML er case-sensitivt. <code>&lt;Person&gt;</code> og <code>&lt;person&gt;</code> regnes som ulike tagger.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">10 · Middels</div>
+      <div class="q-text">Hvor mange root-elementer kan et XML-dokument ha?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Nøyaktig ett. Hvis du har flere objekter på topp-nivå må du pakke dem i et felles root-element.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Middels</div>
+      <div class="q-text">Skriv en XML-kommentar som forklarer hva neste element representerer.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>&lt;!-- Personen er kursleder --&gt;</code></div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Middels</div>
+      <div class="q-text">Oversett denne JSON-en til XML:
+        <pre><code>{ "person": { "name": "Name Nameson", "height": 173, "age": 23 } }</code></pre>
+      </div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>&lt;person&gt;
+  &lt;name&gt;Name Nameson&lt;/name&gt;
+  &lt;height&gt;173&lt;/height&gt;
+  &lt;age&gt;23&lt;/age&gt;
+&lt;/person&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">13 · Vanskelig</div>
+      <div class="q-text">Hva er forskjellen mellom PCDATA og CDATA i en DTD?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">PCDATA («Parsed Character Data») er tekst som parseren tolker som XML — markup blir lest. CDATA er tekst som <em>ikke</em> parses; alt behandles som ren tekst, så «&lt;» og «&amp;» trenger ingen entiteter.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">14 · Vanskelig</div>
+      <div class="q-text">Skriv en DTD som krever at <code>person</code> inneholder <code>name</code>, <code>height</code> og <code>age</code>, alle som tekst.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>&lt;!DOCTYPE person [
+  &lt;!ELEMENT person (name, height, age)&gt;
+  &lt;!ELEMENT name (#PCDATA)&gt;
+  &lt;!ELEMENT height (#PCDATA)&gt;
+  &lt;!ELEMENT age (#PCDATA)&gt;
+]&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">15 · Vanskelig</div>
+      <div class="q-text">Hvilke tre typer finnes i XSD, og hva brukes de til?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          <strong>Simple type</strong> — for tekstinnhold, f.eks. <code>xs:int</code>, <code>xs:boolean</code>, <code>xs:string</code>, <code>xs:date</code>.<br>
+          <strong>Complex type</strong> — container for andre elementer; bygger hierarki.<br>
+          <strong>Global type</strong> — én definisjon som gjenbrukes på flere steder, slik at endringer bare trengs ett sted.
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">16 · Vanskelig</div>
+      <div class="q-text">Hvordan kobler du et CSS-stilark til et XML-dokument slik at innholdet vises stylet i nettleser?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Sett en stylesheet-instruksjon etter prologen: <code>&lt;?xml-stylesheet type="text/css" href="stylesheet.css"?&gt;</code>. Deretter bruker du vanlig CSS som om dokumentet var HTML.</div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
     <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <p class="section-intro">Bla med <kbd>←</kbd>/<kbd>→</kbd>, klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.</p>
+
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -164,6 +491,284 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XML · Hva</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva står XML for?</div></div>
+          <div class="flashcard__back"><p>Extensible Markup Language.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XML · Formål</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er hovedformålet med XML?</div></div>
+          <div class="flashcard__back"><p>Å dele data mellom ulike systemer — på samme måte som JSON.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XML vs HTML</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er den viktigste forskjellen mellom XML og HTML?</div></div>
+          <div class="flashcard__back"><p>HTML har et fast sett med tagger; i XML definerer du tag-navnene selv. XML brukes til data, HTML til presentasjon.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Prolog</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Skriv en standard XML-deklarasjon.</div></div>
+          <div class="flashcard__back"><p><code>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</code></p><div class="fc-ref">pensum 1.14 — XML declaration</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Prolog · plassering</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor må prologen plasseres?</div></div>
+          <div class="flashcard__back"><p>Først i dokumentet — før alt annet. Den er valgfri, men hvis den brukes må den være det første.</p><div class="fc-ref">pensum 1.14 — XML declaration</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Encoding</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="fc-question">Hva er default-encoding for XML?</div>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> ASCII</li>
+              <li><span class="opt-label">B</span> UTF-8</li>
+              <li><span class="opt-label">C</span> UTF-16</li>
+              <li><span class="opt-label">D</span> ISO-8859-1</li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>UTF-8. Det er default og det vanligste valget. <span class="fc-correct">Riktig: B</span></p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Standalone</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva betyr <code>standalone="no"</code> i prologen?</div></div>
+          <div class="flashcard__back"><p>Dokumentet er avhengig av informasjon fra eksterne kilder (f.eks. ekstern DTD).</p><div class="fc-ref">pensum 1.14 — XML declaration</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Root</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor mange root-elementer kan et XML-dokument ha?</div></div>
+          <div class="flashcard__back"><p>Nøyaktig ett. Det er forelder til alle andre elementer.</p><div class="fc-ref">pensum 1.14 — Nesting</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Well-formed</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva må til for at et XML-dokument er well-formed?</div></div>
+          <div class="flashcard__back"><p>Alle tagger lukket, riktig nøstet, samme case på åpne/lukke-tag, og nøyaktig ett root-element.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Valid</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Forskjellen på <em>well-formed</em> og <em>valid</em>?</div></div>
+          <div class="flashcard__back"><p>Well-formed = riktig syntaks. Valid = well-formed <em>og</em> følger en DTD eller XSD.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Case</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Er <code>&lt;Name&gt;</code> og <code>&lt;name&gt;</code> samme tag i XML?</div></div>
+          <div class="flashcard__back"><p>Nei. XML er case-sensitivt. Åpne- og lukke-tag må ha samme case.</p><div class="fc-ref">pensum 1.14 — Case sensitivity</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Nesting</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <div class="fc-question">Hvilken snutt er well-formed?</div>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> <code>&lt;a&gt;&lt;b&gt;X&lt;/a&gt;&lt;/b&gt;</code></li>
+              <li><span class="opt-label">B</span> <code>&lt;a&gt;&lt;b&gt;X&lt;/b&gt;&lt;/a&gt;</code></li>
+              <li><span class="opt-label">C</span> <code>&lt;A&gt;&lt;b&gt;X&lt;/B&gt;&lt;/a&gt;</code></li>
+              <li><span class="opt-label">D</span> <code>&lt;a&gt;X&lt;a&gt;</code></li>
+            </ul>
+          </div>
+          <div class="flashcard__back"><p>B — riktig nesting og lukking. <span class="fc-correct">Riktig: B</span></p><div class="fc-ref">pensum 1.14 — Nesting</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Entity reference</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilken entitet erstatter <code>&lt;</code>?</div></div>
+          <div class="flashcard__back"><p><code>&amp;lt;</code></p><div class="fc-ref">pensum 1.14 — Entity references</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Entity reference</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvilken entitet erstatter <code>&amp;</code>?</div></div>
+          <div class="flashcard__back"><p><code>&amp;amp;</code></p><div class="fc-ref">pensum 1.14 — Entity references</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Entity reference</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor mange pre-definerte entity references finnes i XML?</div></div>
+          <div class="flashcard__back"><p>Fem: <code>&amp;lt;</code> <code>&amp;gt;</code> <code>&amp;amp;</code> <code>&amp;apos;</code> <code>&amp;quot;</code>.</p><div class="fc-ref">pensum 1.14 — Entity references</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Entity reference</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor må <code>&lt;</code> erstattes inni elementinnhold?</div></div>
+          <div class="flashcard__back"><p>Fordi parseren tolker <code>&lt;</code> som starten på en ny tag — uten erstatning blir det parse-feil.</p><div class="fc-ref">pensum 1.14 — Entity references</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Kommentar</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvordan skriver du en kommentar i XML?</div></div>
+          <div class="flashcard__back"><p><code>&lt;!-- kommentaren her --&gt;</code> — samme som i HTML.</p><div class="fc-ref">pensum 1.14 — Comments</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">DTD</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva står DTD for?</div></div>
+          <div class="flashcard__back"><p>Document Type Definition.</p><div class="fc-ref">pensum 1.14 — Document Type Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">DTD</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva brukes DTD og XSD til?</div></div>
+          <div class="flashcard__back"><p>Til å beskrive XML-språket presist — hvilke elementer som er lov og hvordan de kan kombineres. Et dokument må følge DTD/XSD for å være <em>valid</em>.</p><div class="fc-ref">pensum 1.14</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">DTD · plassering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvor i dokumentet plasseres DTD-en?</div></div>
+          <div class="flashcard__back"><p>I prologen, etter XML-deklarasjonen og før body-en (selve elementene).</p><div class="fc-ref">pensum 1.14 — Document Type Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">DTD · syntaks</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Skriv DTD som krever at <code>person</code> inneholder <code>name</code>, <code>height</code>, <code>age</code>.</div></div>
+          <div class="flashcard__back">
+<pre><code>&lt;!DOCTYPE person [
+  &lt;!ELEMENT person (name, height, age)&gt;
+  &lt;!ELEMENT name (#PCDATA)&gt;
+  &lt;!ELEMENT height (#PCDATA)&gt;
+  &lt;!ELEMENT age (#PCDATA)&gt;
+]&gt;</code></pre>
+            <div class="fc-ref">pensum 1.14 — Document Type Definition</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">PCDATA</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva betyr PCDATA?</div></div>
+          <div class="flashcard__back"><p>«Parsed Character Data» — tekst som parseren leser og tolker som XML.</p><div class="fc-ref">pensum 1.14 — Document Type Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">CDATA</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva betyr CDATA, og hva skiller det fra PCDATA?</div></div>
+          <div class="flashcard__back"><p>CDATA er tekst som <em>ikke</em> parses — alt regnes som ren tekst, så markup blir ikke tolket.</p><div class="fc-ref">pensum 1.14 — Document Type Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XSD</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva står XSD for?</div></div>
+          <div class="flashcard__back"><p>XML Schema Definition.</p><div class="fc-ref">pensum 1.14 — XML Schema Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XSD vs DTD</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva er forskjellen mellom XSD og DTD?</div></div>
+          <div class="flashcard__back"><p>Begge beskriver og validerer struktur, men XSD er selv skrevet i XML-syntaks og støtter rikere typer (f.eks. xs:int, xs:date).</p><div class="fc-ref">pensum 1.14 — XML Schema Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XSD · typer</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Nevn de tre typene i XSD.</div></div>
+          <div class="flashcard__back"><p><strong>Simple type</strong> — kun tekst (xs:int, xs:string …).<br><strong>Complex type</strong> — container for andre elementer.<br><strong>Global type</strong> — én definisjon, gjenbrukes flere steder.</p><div class="fc-ref">pensum 1.14 — XML Schema Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XSD · simple type</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Nevn fire pre-definerte simple types i XSD.</div></div>
+          <div class="flashcard__back"><p><code>xs:int</code>, <code>xs:boolean</code>, <code>xs:string</code>, <code>xs:date</code>.</p><div class="fc-ref">pensum 1.14 — XML Schema Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">XSD · global type</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvorfor bruke en <em>global type</em> i XSD?</div></div>
+          <div class="flashcard__back"><p>Du definerer én gang og refererer flere steder. Endringer (f.eks. å legge til «postcode») trenger bare gjøres ett sted — enklere vedlikehold.</p><div class="fc-ref">pensum 1.14 — XML Schema Definition</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Visning</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hva skjer hvis du åpner et rått XML-dokument i nettleseren uten styling?</div></div>
+          <div class="flashcard__back"><p>Den raw XML-en vises som den er. For å vise stylet må du peke på et stilark.</p><div class="fc-ref">pensum 1.14 — Displaying XML documents</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Visning · CSS</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvordan kobler du CSS til et XML-dokument?</div></div>
+          <div class="flashcard__back"><p><code>&lt;?xml-stylesheet type="text/css" href="stylesheet.css"?&gt;</code> — plasseres i prologen. Deretter brukes vanlig CSS.</p><div class="fc-ref">pensum 1.14 — Displaying XML documents</div></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">JSON ↔ XML</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><div class="fc-question">Hvordan ser <code>{ "person": { "name": "X", "age": 23 } }</code> ut som XML?</div></div>
+          <div class="flashcard__back">
+<pre><code>&lt;person&gt;
+  &lt;name&gt;X&lt;/name&gt;
+  &lt;age&gt;23&lt;/age&gt;
+&lt;/person&gt;</code></pre>
+            <div class="fc-ref">pensum 1.14 — How a JSON might look like as XML</div>
+          </div>
+        </div>
       </div>
     </div>
   </div></section>

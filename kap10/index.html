@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../favicon.png" type="image/png">
-<title>Kap 10 — JavaScript videregående: DOM og events</title>
+<title>Kap 10 — JavaScript videregående: Arrays, scope, tid, DOM og events</title>
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../flashcards.css">
 </head>
@@ -24,19 +24,19 @@
   </div>
 </nav>
 
-<main data-chapter="Kapittel 10: JavaScript videregående — DOM og events">
+<main data-chapter="Kapittel 10: JavaScript videregående — Arrays, scope, tid, DOM og events">
   <header class="hero">
     <div class="container">
       <div class="eyebrow">Kapittel 10 · Forelesning 11 · Del 3</div>
-      <h1>JS — <em>DOM og events</em></h1>
+      <h1>JavaScript — <em>videregående</em></h1>
       <p class="lede">
-        Nå begynner JavaScript å gjøre noe synlig. DOM-manipulering og
-        eventlyttere er motoren bak alt interaktivt på en nettside.
+        Array-metoder, scope, tid, DOM og events. Det er her JavaScript
+        slutter å være regneuttrykk og begynner å gjøre noe synlig på siden.
       </p>
       <div class="pill-row">
         <span class="pill">Pensum: 1.13</span>
-        <span class="pill">Slides: kommer</span>
         <span class="pill">Forelesning 11</span>
+        <span class="pill">Del 3 av JS</span>
       </div>
     </div>
   </header>
@@ -44,122 +44,576 @@
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">
-        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor DOM/events?</a></li>
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor disse fem temaene?</a></li>
         <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
         <li><span class="toc-num">03</span><a href="#reisen">Bygg en interaktiv side</a></li>
-        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
-        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
-        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
-        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
-        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
-        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
-        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
-        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+        <li><span class="toc-num">04</span><a href="#arrays">Array-metoder</a></li>
+        <li><span class="toc-num">05</span><a href="#scope">Scope</a></li>
+        <li><span class="toc-num">06</span><a href="#tid">Tid</a></li>
+        <li><span class="toc-num">07</span><a href="#dom">DOM</a></li>
+        <li><span class="toc-num">08</span><a href="#events">Events</a></li>
+        <li><span class="toc-num">09</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">10</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">11</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">12</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">13</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">14</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
       </ol>
     </div>
   </nav>
 
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
-    <h2>Hvorfor <em>DOM og events</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>JS får mening først når det møter siden. DOM er kontaktflaten; events er triggerne. Vis kontrast: en knapp som ikke gjør noe vs. en som åpner en modal.</p>
-      <p><strong>Kilde:</strong> pensum 1.13.</p>
-    </div>
+    <h2>Hvorfor <em>disse fem temaene</em>?</h2>
+    <p>
+      I kapittel 9 lærte du syntaksen til JavaScript: variabler, funksjoner, løkker, objekter.
+      Det gir deg språk, men ikke kontaktflate mot siden. Kapittel 10 dekker de fem
+      verktøyene du må kombinere for å lage en faktisk interaktiv nettside:
+    </p>
+    <ul>
+      <li><strong>Array-metoder</strong> for å filtrere og transformere data uten å skrive løkker selv.</li>
+      <li><strong>Scope</strong> for å forstå hvor en variabel er synlig — og hvorfor du noen ganger får <code>ReferenceError</code>.</li>
+      <li><strong>Tid</strong> (<code>setTimeout</code>, <code>setInterval</code>) for å utsette eller gjenta noe.</li>
+      <li><strong>DOM</strong> for å velge, endre, legge til og fjerne elementer i sida.</li>
+      <li><strong>Events</strong> for å la siden reagere på brukeren.</li>
+    </ul>
+    <p><strong>Kilde:</strong> pensum 1.13.</p>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
-    <h2>Tre <em>handlinger</em>: lese, endre, lytte</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>JS gjør tre ting på en side: <strong>lese</strong> (querySelector, getAttribute), <strong>endre</strong> (innerHTML, classList, style), og <strong>lytte</strong> (addEventListener). Alt annet er kombinasjoner.</p>
+    <h2>JS gjør tre <em>handlinger</em> mot DOM-treet</h2>
+    <p>
+      DOM er et tre med <code>document</code> som rot. JavaScript gjør tre ting mot
+      dette treet: <strong>velger</strong> elementer, <strong>endrer</strong> dem,
+      og <strong>lytter</strong> etter at noe skjer i dem. Alt annet i kapittelet
+      (arrays, scope, tid) er støtteverktøy for disse tre handlingene.
+    </p>
+    <div class="callout">
+      <div class="label">Husk</div>
+      <p>
+        DOM er strukturert som et tre. <code>document</code> er roten.
+        Hvert HTML-element er en node, og en node kan ha barn og foreldre.
+      </p>
+      <p><strong>Kilde:</strong> pensum 1.13.4.</p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
-    <h2>Lag en <em>klikkbar teller</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: querySelector → addEventListener('click') → endre tekstinnhold → lagre tall i variabel → vis i DOM. Den klassiske «counter»-historien som dekker alt sentralt.</p>
+    <h2>Bygg en <em>handleliste</em></h2>
+    <p class="section-intro">
+      Vi bruker eksempelet fra pensum: en <code>ul</code> med tre <code>li</code>-elementer
+      (Milk, Bread, Cheese). Stegene under kombinerer alt fra delkapitlene 1.13.4 og 1.13.5.
+    </p>
+    <ol class="steps">
+      <li><strong>Velg lista.</strong> <code>document.getElementsByTagName('ul')[0]</code> gir oss <code>ul</code>-elementet.</li>
+      <li><strong>Endre et element.</strong> Sett <code>groceries[0].innerText = 'Juice'</code> for å bytte Milk til Juice.</li>
+      <li><strong>Legg til.</strong> <code>document.createElement('li')</code> + sett <code>innerText</code> + <code>appendChild</code>.</li>
+      <li><strong>Fjern.</strong> Pek på elementet (f.eks. <code>groceryList.firstChild</code>) og kall <code>removeChild</code> på forelderen.</li>
+      <li><strong>Lytt.</strong> Legg til en knapp med <code>addEventListener('click', …)</code> som gjør én av handlingene over.</li>
+    </ol>
+  </div></section>
+
+  <section id="arrays"><div class="container">
+    <div class="section-badge">04 · Pensum 1.13.1</div>
+    <h2>Array-<em>metoder</em></h2>
+    <p>
+      Når du har en <code>Array</code>, vil du som regel gjøre noe med innholdet. Pensum
+      lister fem metoder du må kunne. Alle tar en funksjon som argument og kalles
+      direkte på arrayet.
+    </p>
+
+    <h3>filter — behold elementer som oppfyller en betingelse</h3>
+    <p>
+      <code>filter</code> returnerer en ny array med de elementene som returnerer <code>true</code> i funksjonen.
+      Pensumeksempelet er en silsk metafor: vi siler bort frø og pulp og beholder juice.
+    </p>
+    <pre><code>['juice', 'seed', 'pulp'].filter(ingredient =&gt; ingredient === 'juice');
+// =&gt; ['juice']</code></pre>
+
+    <h3>map — transformer hvert element</h3>
+    <p>
+      <code>map</code> returnerer en ny array hvor hvert element er resultatet av funksjonen
+      anvendt på det opprinnelige elementet.
+    </p>
+    <pre><code>['Norway', 'Sweden', 'Denmark'].map(country =&gt; country.toUpperCase());
+// =&gt; ['NORWAY', 'SWEDEN', 'DENMARK']</code></pre>
+
+    <h3>some — finnes det minst ett element som oppfyller betingelsen?</h3>
+    <p>
+      <code>some</code> returnerer <strong>boolean</strong>. Den skiller seg fra filter/map ved at
+      du får tilbake <code>true</code> eller <code>false</code>, ikke en ny array.
+    </p>
+    <pre><code>[1, 3, 5, 7].some(n =&gt; n % 2 === 0);   // false (ingen partall)
+[1, 3, 5, 4].some(n =&gt; n % 2 === 0);   // true  (4 er partall)</code></pre>
+
+    <h3>every — oppfyller alle elementer betingelsen?</h3>
+    <p>
+      <code>every</code> returnerer også boolean, men krever at <strong>alle</strong> elementer
+      passerer testen.
+    </p>
+    <pre><code>[2, 4, 6, 8].every(n =&gt; n % 2 === 0);  // true
+[2, 4, 6, 7].every(n =&gt; n % 2 === 0);  // false</code></pre>
+
+    <h3>forEach — gjør noe for hvert element, uten å returnere</h3>
+    <p>
+      Når du ikke vil beholde, transformere eller spørre — bare kjøre noe per element —
+      bruk <code>forEach</code>. Returverdien er <code>undefined</code>; vi gjør det for
+      bivirkningen, f.eks. logging.
+    </p>
+    <pre><code>['Norway', 'Sweden', 'Denmark'].forEach(country =&gt;
+  console.log('Country: ' + country)
+);
+// Country: Norway
+// Country: Sweden
+// Country: Denmark</code></pre>
+
+    <div class="callout-good">
+      <div class="label">Velg riktig metode</div>
+      <p>
+        Trenger du <strong>en kortere liste</strong>? <code>filter</code>.<br>
+        Trenger du <strong>en transformert liste</strong>? <code>map</code>.<br>
+        Trenger du å <strong>vite om noen</strong> oppfyller noe? <code>some</code>.<br>
+        Trenger du å <strong>vite om alle</strong> gjør det? <code>every</code>.<br>
+        Trenger du bare å <strong>gjøre noe</strong> per element? <code>forEach</code>.
+      </p>
     </div>
   </div></section>
 
-  <section id="deler"><div class="container">
-    <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>De fem <em>delene</em></h2>
-    <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · ARR</div><div class="sp-title">Arrays continued</div><div class="sp-desc">map, filter, forEach, reduce. Pensum 1.13.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SCP</div><div class="sp-title">Scope</div><div class="sp-desc">global, function, block. Hoisting. Pensum 1.13.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TIM</div><div class="sp-title">Tid</div><div class="sp-desc">setTimeout, setInterval, Date. Pensum 1.13.3.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · DOM</div><div class="sp-title">DOM-manipulering</div><div class="sp-desc">querySelector, createElement, appendChild, classList, style. Pensum 1.13.4.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · EVT</div><div class="sp-title">Events</div><div class="sp-desc">addEventListener, event-objektet, bubbling, preventDefault. Pensum 1.13.5.</div></div>
+  <section id="scope"><div class="container">
+    <div class="section-badge">05 · Pensum 1.13.2</div>
+    <h2><em>Scope</em> — hvor en variabel er synlig</h2>
+    <p>
+      Scope avgjør hvor du har tilgang til en variabel eller funksjon. Er noe
+      &laquo;utenfor scope&raquo; betyr det at du ikke kan lese det. Pensum nevner
+      tre former for scope.
+    </p>
+
+    <h3>Globalt scope</h3>
+    <p>
+      Alt som er definert <em>utenfor</em> en funksjon, ligger i globalt scope og er
+      tilgjengelig hvor som helst.
+    </p>
+    <pre><code>var planet = 'earth';   // globalt — tilgjengelig overalt</code></pre>
+
+    <h3>Lokalt scope</h3>
+    <p>
+      Definerer du variabelen <em>inne i</em> en funksjon, er den begrenset til den
+      funksjonens scope. Forsøk på å lese den utenfra gir <code>ReferenceError</code>.
+    </p>
+    <pre><code>function universe() {
+  var planet = 'earth';
+}
+console.log(planet);
+// ReferenceError: planet is not defined</code></pre>
+
+    <h3>Leksikalsk scope</h3>
+    <p>
+      En funksjon som er definert <em>inne i</em> en annen funksjon, har tilgang til
+      den ytre funksjonens variabler. Det er det leksikalske scopet.
+    </p>
+    <pre><code>function universe() {
+  var planet = 'earth';
+  function milkyWay() {
+    console.log(planet);   // ser 'earth'
+  }
+  milkyWay();
+}</code></pre>
+
+    <div class="callout">
+      <div class="label">Hvorfor det er kontraintuitivt</div>
+      <p>
+        Du tenker kanskje at en indre funksjon er &laquo;helt uavhengig&raquo; av den
+        ytre. Men siden den er <em>skrevet inne i</em> den ytre, arver den scopet
+        derfra. Dette er nyttig når du vil dele en variabel mellom flere indre
+        funksjoner uten å gjøre den global.
+      </p>
     </div>
+  </div></section>
+
+  <section id="tid"><div class="container">
+    <div class="section-badge">06 · Pensum 1.13.3</div>
+    <h2><em>Tid</em> — utsette og gjenta</h2>
+    <p>
+      Vanligvis kjører JavaScript sekvensielt. Noen ganger vil du derimot vente
+      eller gjenta noe. Pensum nevner to funksjoner.
+    </p>
+
+    <h3>setTimeout — kjør én gang etter en forsinkelse</h3>
+    <p>
+      <code>setTimeout(fn, ms)</code> planlegger funksjonen <code>fn</code> til å
+      kjøres om <code>ms</code> millisekunder. Pensumeksempelet er en SpaceX-rakett
+      som tennes etter ett minutt.
+    </p>
+    <pre><code>setTimeout(() =&gt; {
+  liftOff();
+}, 60000);   // 60 000 ms = 1 minutt</code></pre>
+
+    <h3>setInterval — gjenta i et intervall</h3>
+    <p>
+      <code>setInterval(fn, ms)</code> kjører funksjonen igjen og igjen, hver
+      <code>ms</code> millisekund. Merk: den kjører <strong>ikke</strong> umiddelbart,
+      men ved første intervall.
+    </p>
+    <pre><code>setInterval(() =&gt; {
+  measureTemperature();
+}, 60000);   // måler én gang per minutt</code></pre>
+
+    <div class="callout-warn">
+      <div class="label">Vær obs</div>
+      <p>
+        Andre argument er millisekunder (ikke sekunder!). 1 sekund = 1000 ms.
+        En vanlig feil på eksamen er å skrive <code>60</code> og tro at det er
+        ett minutt.
+      </p>
+    </div>
+  </div></section>
+
+  <section id="dom"><div class="container">
+    <div class="section-badge">07 · Pensum 1.13.4</div>
+    <h2><em>DOM</em> — velg, endre, legg til, fjern</h2>
+    <p>
+      DOM (Document Object Model) er broa mellom HTML-elementene og JavaScript.
+      Pensum dekker fire operasjoner mot DOM-treet.
+    </p>
+
+    <h3>Velge elementer</h3>
+    <p>Pensum nevner fire metoder du kan kalle på <code>document</code>:</p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">getElementsByTagName('li')</div><div class="fc-val">Alle <code>li</code>-elementer på siden.</div></div>
+      <div class="fact-card"><div class="fc-key">getElementById('id')</div><div class="fc-val">Det ene elementet med gitt <code>id</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">getElementsByClassName('class')</div><div class="fc-val">Alle elementer med gitt klasse.</div></div>
+      <div class="fact-card"><div class="fc-key">querySelector('selector')</div><div class="fc-val">Første element som matcher en CSS-selektor.</div></div>
+    </div>
+
+    <p>Pensumeksempelet med en handleliste:</p>
+    <pre><code>&lt;ul&gt;
+  &lt;li&gt;Milk&lt;/li&gt;
+  &lt;li&gt;Bread&lt;/li&gt;
+  &lt;li&gt;Cheese&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    <pre><code>const groceries = document.getElementsByTagName('li');
+console.log(groceries[0].innerText);   // 'Milk'
+console.log(groceries[1].innerText);   // 'Bread'
+console.log(groceries[2].innerText);   // 'Cheese'</code></pre>
+
+    <h3>Endre elementer</h3>
+    <p>
+      Hver node har egenskaper du kan lese og skrive. Pensum bruker
+      <code>innerText</code> for å bytte ut teksten.
+    </p>
+    <pre><code>const groceries = document.getElementsByTagName('li');
+groceries[0].innerText = 'Juice';   // Milk → Juice</code></pre>
+
+    <h3>Legge til elementer</h3>
+    <p>
+      Nye noder lages med <code>document.createElement</code> og kobles inn i treet
+      som barn av et element via <code>appendChild</code>.
+    </p>
+    <pre><code>const groceryList = document.getElementsByTagName('ul')[0];
+const soapItem = document.createElement('li');
+soapItem.innerText = 'Soap';
+groceryList.appendChild(soapItem);</code></pre>
+
+    <h3>Fjerne elementer</h3>
+    <p>
+      Du fjerner et barn ved å kalle <code>removeChild</code> på <em>forelderen</em>.
+      Pensum bruker <code>firstChild</code> for å peke på første barn av lista.
+    </p>
+    <pre><code>const groceryList = document.getElementsByTagName('ul')[0];
+const milkItem = groceryList.firstChild;
+groceryList.removeChild(milkItem);   // fjerner Milk</code></pre>
+  </div></section>
+
+  <section id="events"><div class="container">
+    <div class="section-badge">08 · Pensum 1.13.5</div>
+    <h2><em>Events</em> — sida reagerer på brukeren</h2>
+    <p>
+      Events signaliserer at noe har skjedd i DOM-en. Noen er bruker-genererte
+      (mus, tastatur), andre er bivirkninger (en video som pauser, en animasjon
+      som er ferdig).
+    </p>
+    <p>
+      For å reagere på en event registrerer du en <strong>event listener</strong> —
+      en funksjon som planlegges til å kjøre når eventen fyres. Eventen sendes
+      inn som argument til lytteren.
+    </p>
+
+    <h3>Click — den vanligste eventen</h3>
+    <pre><code>&lt;button id="greeting"&gt;Howdy&lt;/button&gt;</code></pre>
+    <pre><code>const greetingButton = document.getElementById('greeting');
+greetingButton.addEventListener('click', (event) =&gt; {
+  alert('... partner!');
+});</code></pre>
+
+    <h3>Keypress — tastatur-events</h3>
+    <p>Når brukeren trykker en tast, fyres som regel tre events:</p>
+    <ol class="steps">
+      <li><strong>keydown</strong> — når tasten først blir trykt ned.</li>
+      <li><strong>keypress</strong> — kun hvis tasten ikke er en modifikator (f.eks. Shift).</li>
+      <li><strong>keyup</strong> — når brukeren slipper tasten.</li>
+    </ol>
+
+    <p>
+      Hver tast har en unik <code>keyCode</code>-verdi du leser av eventen for å
+      skille hvilken tast som ble trykt. Pensum lister blant annet:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">a / b / c</div><div class="fc-val">65 / 66 / 67</div></div>
+      <div class="fact-card"><div class="fc-key">← (venstre)</div><div class="fc-val">37</div></div>
+      <div class="fact-card"><div class="fc-key">→ (høyre)</div><div class="fc-val">38</div></div>
+      <div class="fact-card"><div class="fc-key">↑ (opp)</div><div class="fc-val">39</div></div>
+      <div class="fact-card"><div class="fc-key">↓ (ned)</div><div class="fc-val">40</div></div>
+      <div class="fact-card"><div class="fc-key">F1 / F2 / F3</div><div class="fc-val">112 / 113 / 114</div></div>
+    </div>
+
+    <p>
+      Eksempel fra pensum: alert hvis brukeren trykker en piltast hvor som helst i DOM-en.
+    </p>
+    <pre><code>document.addEventListener('keydown', (event) =&gt; {
+  if (event.keyCode &gt; 36 &amp;&amp; event.keyCode &lt; 41) {
+    alert('You pressed an arrow key.');
+  }
+});</code></pre>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
-    <div class="section-badge">05 · Begreper</div>
+    <div class="section-badge">09 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">querySelector</div><div class="fc-val">CSS-selektor → første matchende node.</div></div>
-      <div class="fact-card"><div class="fc-key">querySelectorAll</div><div class="fc-val">CSS-selektor → NodeList av alle treff.</div></div>
-      <div class="fact-card"><div class="fc-key">addEventListener</div><div class="fc-val">Knytter en callback til en event.</div></div>
-      <div class="fact-card"><div class="fc-key">event-objektet</div><div class="fc-val">Argumentet til callbacken; har target, type, preventDefault.</div></div>
-      <div class="fact-card"><div class="fc-key">classList</div><div class="fc-val">add, remove, toggle, contains.</div></div>
-      <div class="fact-card"><div class="fc-key">innerHTML vs textContent</div><div class="fc-val">HTML vs ren tekst.</div></div>
-      <div class="fact-card"><div class="fc-key">scope</div><div class="fc-val">Hvor en variabel er synlig.</div></div>
-      <div class="fact-card"><div class="fc-key">setTimeout</div><div class="fc-val">Kjør én gang etter ms.</div></div>
+      <div class="fact-card"><div class="fc-key">filter</div><div class="fc-val">Beholder elementer som returnerer true. Pensum 1.13.1.</div></div>
+      <div class="fact-card"><div class="fc-key">map</div><div class="fc-val">Transformerer hvert element. Pensum 1.13.1.</div></div>
+      <div class="fact-card"><div class="fc-key">some / every</div><div class="fc-val">Boolean: minst én vs. alle. Pensum 1.13.1.</div></div>
+      <div class="fact-card"><div class="fc-key">forEach</div><div class="fc-val">Kjører funksjon per element, ingen returverdi. Pensum 1.13.1.</div></div>
+      <div class="fact-card"><div class="fc-key">Globalt scope</div><div class="fc-val">Definert utenfor funksjon. Pensum 1.13.2.</div></div>
+      <div class="fact-card"><div class="fc-key">Lokalt scope</div><div class="fc-val">Definert i funksjon — usynlig utenfra. Pensum 1.13.2.</div></div>
+      <div class="fact-card"><div class="fc-key">Leksikalsk scope</div><div class="fc-val">Indre funksjon ser ytre funksjons variabler. Pensum 1.13.2.</div></div>
+      <div class="fact-card"><div class="fc-key">setTimeout</div><div class="fc-val">Kjør én gang etter ms. Pensum 1.13.3.</div></div>
+      <div class="fact-card"><div class="fc-key">setInterval</div><div class="fc-val">Gjenta hver ms (ikke umiddelbart). Pensum 1.13.3.</div></div>
+      <div class="fact-card"><div class="fc-key">document</div><div class="fc-val">Roten av DOM-treet. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">innerText</div><div class="fc-val">Tekstinnholdet i et element. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">createElement / appendChild</div><div class="fc-val">Lag node + heng på som barn. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">removeChild</div><div class="fc-val">Forelder fjerner et barn. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">addEventListener</div><div class="fc-val">Knytter en lytterfunksjon til en event. Pensum 1.13.5.</div></div>
+      <div class="fact-card"><div class="fc-key">keyCode</div><div class="fc-val">Tallverdi som identifiserer tasten. Pensum 1.13.5.</div></div>
+      <div class="fact-card"><div class="fc-key">keydown / keypress / keyup</div><div class="fc-val">Tre faser av tastetrykk. Pensum 1.13.5.</div></div>
     </div>
   </div></section>
 
   <section id="oppsummering"><div class="container">
-    <div class="section-badge">06 · Oppsummering</div>
+    <div class="section-badge">10 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 10</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">finne elementer i DOM</span>
-      <span class="recap-pill">endre innhold og klasser</span>
-      <span class="recap-pill">registrere eventlyttere</span>
-      <span class="recap-pill">forklare scope og hoisting</span>
-      <span class="recap-pill">bruke setTimeout/setInterval</span>
+      <span class="recap-pill">velge riktig array-metode (filter / map / some / every / forEach)</span>
+      <span class="recap-pill">forklare globalt, lokalt og leksikalsk scope</span>
+      <span class="recap-pill">bruke setTimeout og setInterval med riktig ms</span>
+      <span class="recap-pill">velge elementer i DOM på fire måter</span>
+      <span class="recap-pill">endre elementer med innerText</span>
+      <span class="recap-pill">legge til og fjerne noder med createElement / appendChild / removeChild</span>
+      <span class="recap-pill">registrere event listener for click</span>
+      <span class="recap-pill">skille keydown, keypress og keyup og bruke keyCode</span>
     </div>
   </div></section>
 
-  <section id="notatmapping"><div class="container">
-    <div class="section-badge">07 · Notatmapping</div>
-    <h2>Hvor <em>finner du det</em></h2>
-    <ul>
-      <li><strong>Lærebok:</strong> pensum 1.13 (alle fem delkapitler).</li>
-      <li><strong>Slides:</strong> kommer — sjekk BlackBoard etter F11.</li>
-      <li><strong>Eksterne:</strong> MDN — Document Object Model, Event reference.</li>
-    </ul>
-  </div></section>
-
   <section id="feller"><div class="container">
-    <div class="section-badge">08 · Vanlige feller</div>
+    <div class="section-badge">11 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Skrive script i head uten <code>defer</code> (DOM ikke klar); blande innerHTML og textContent; glemme preventDefault på form.submit; tro at <code>this</code> er det samme i arrow og vanlig funksjon.</p>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ul>
+        <li><strong>forEach returnerer ikke noe.</strong> Bruker du <code>const x = arr.forEach(...)</code> blir <code>x</code> alltid <code>undefined</code>. Bruk <code>map</code> eller <code>filter</code> hvis du trenger en ny array.</li>
+        <li><strong>some/every gir boolean, ikke en array.</strong> Pensum understreker at returverdien skiller seg fra de andre.</li>
+        <li><strong>Lese variabel utenfor scope</strong> gir <code>ReferenceError</code>. Sjekk om variabelen er definert inne i en funksjon.</li>
+        <li><strong>setTimeout / setInterval bruker millisekunder.</strong> 60 betyr 60 ms, ikke 60 sekunder.</li>
+        <li><strong>setInterval kjører ikke umiddelbart</strong> — første kjøring skjer etter første intervall.</li>
+        <li><strong>removeChild kalles på forelderen</strong>, ikke på elementet selv. Du må først finne foreldernoden.</li>
+        <li><strong>keypress fyres ikke for modifikatorer</strong> som Shift; bruk keydown hvis du må fange dem også.</li>
+      </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
-    <div class="section-badge">09 · Eksamensscenario</div>
-    <h2>Implementer en <em>todo-liste</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Skriv JavaScript som lar brukeren legge til, hake av og fjerne todos. Gitt HTML er en input, en knapp og en ul.»</p>
+    <div class="section-badge">12 · Eksamensscenario</div>
+    <h2>Bytt og <em>utvid handlelista</em></h2>
+    <div class="callout">
+      <div class="label">Oppgave</div>
+      <p>Gitt følgende HTML:</p>
+      <pre><code>&lt;ul id="groceries"&gt;
+  &lt;li&gt;Milk&lt;/li&gt;
+  &lt;li&gt;Bread&lt;/li&gt;
+  &lt;li&gt;Cheese&lt;/li&gt;
+&lt;/ul&gt;
+&lt;button id="add-soap"&gt;Legg til Soap&lt;/button&gt;</code></pre>
+      <p>
+        Skriv JavaScript som (a) bytter Milk til Juice ved sideoppstart, og (b)
+        legger til <code>Soap</code> nederst i lista når brukeren klikker på knappen.
+      </p>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">Forslag til løsning</div>
+      <div class="q-text">Klikk for å se en mulig løsning.</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>// (a) Bytt Milk til Juice
+const items = document.getElementsByTagName('li');
+items[0].innerText = 'Juice';
+
+// (b) Legg til Soap når knappen klikkes
+const list = document.getElementById('groceries');
+const button = document.getElementById('add-soap');
+
+button.addEventListener('click', (event) =&gt; {
+  const soap = document.createElement('li');
+  soap.innerText = 'Soap';
+  list.appendChild(soap);
+});</code></pre>
+          <p>
+            Vi velger <code>li</code>-ene med <code>getElementsByTagName</code> og endrer
+            første element via <code>innerText</code>. Knappen får en
+            <code>addEventListener('click', …)</code> som lager en ny <code>li</code> med
+            <code>createElement</code>, gir den tekst, og kobler den inn med
+            <code>appendChild</code>.
+          </p>
+        </div>
+      </div>
     </div>
   </div></section>
 
   <section id="quiz"><div class="container">
-    <div class="section-badge">10 · Test deg selv</div>
+    <div class="section-badge">13 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder kode-output-MCQ-er for scope og events.</p></div>
+    <p class="section-intro">Tolv spørsmål som dekker alle fem delkapitler i 1.13.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">1 · Lett · 1.13.1</div>
+      <div class="q-text">Hva returnerer <code>['a','b','c'].forEach(x =&gt; x.toUpperCase())</code>?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>undefined</code>. <code>forEach</code> returnerer ingenting — du gjør noe per element men får ikke en ny array. Hadde du brukt <code>map</code>, ville svaret vært <code>['A','B','C']</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">2 · Lett · 1.13.1</div>
+      <div class="q-text">Hva er forskjellen på <code>some</code> og <code>every</code>?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>some</code> returnerer <code>true</code> hvis <strong>minst ett</strong> element oppfyller betingelsen. <code>every</code> returnerer <code>true</code> bare hvis <strong>alle</strong> elementer gjør det. Begge returnerer boolean.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">3 · Middels · 1.13.1</div>
+      <div class="q-text">Hva blir resultatet av <code>[1, 2, 3, 4].filter(n =&gt; n &gt; 2).map(n =&gt; n * 10)</code>?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>[30, 40]</code>. Først filtreres bort 1 og 2 (gir <code>[3, 4]</code>), deretter ganges hvert element med 10.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">4 · Lett · 1.13.2</div>
+      <div class="q-text">Hva skjer når koden under kjører?</div>
+      <pre><code>function f() { var x = 10; }
+console.log(x);</code></pre>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>ReferenceError: x is not defined</code>. <code>x</code> er erklært inne i <code>f</code> og ligger derfor i lokalt scope. Den er usynlig fra utsiden.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">5 · Middels · 1.13.2</div>
+      <div class="q-text">Hva logger koden under?</div>
+      <pre><code>function ytre() {
+  var hilsen = 'hei';
+  function indre() { console.log(hilsen); }
+  indre();
+}
+ytre();</code></pre>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>hei</code>. <code>indre</code> har leksikalsk tilgang til <code>hilsen</code> fordi den er definert <em>inne i</em> <code>ytre</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">6 · Lett · 1.13.3</div>
+      <div class="q-text">Hvor lenge venter <code>setTimeout(fn, 60000)</code> før <code>fn</code> kjører?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">60 000 millisekunder, dvs. 60 sekunder = 1 minutt.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">7 · Middels · 1.13.3</div>
+      <div class="q-text">Når kjører funksjonen i <code>setInterval(fn, 1000)</code> første gang?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">Etter 1000 ms — pensum understreker at <code>setInterval</code> ikke kjører umiddelbart, men ved første intervall.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">8 · Lett · 1.13.4</div>
+      <div class="q-text">Hva er roten i DOM-treet?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">Den globale variabelen <code>document</code>. Alle metoder for å velge i DOM kalles på den.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">9 · Middels · 1.13.4</div>
+      <div class="q-text">Hva gjør koden under, gitt en <code>&lt;ul&gt;</code> med tre <code>&lt;li&gt;</code>-elementer?</div>
+      <pre><code>const ul = document.getElementsByTagName('ul')[0];
+ul.removeChild(ul.firstChild);</code></pre>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">Fjerner det første <code>li</code>-elementet i lista. <code>removeChild</code> kalles på forelderen (<code>ul</code>), og <code>firstChild</code> peker på første barn.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">10 · Vanskelig · 1.13.4</div>
+      <div class="q-text">Skriv tre linjer JS som lager et nytt <code>&lt;li&gt;Soap&lt;/li&gt;</code> og legger det inn nederst i en <code>&lt;ul&gt;</code> uten <code>id</code>.</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>const ul = document.getElementsByTagName('ul')[0];
+const li = document.createElement('li');
+li.innerText = 'Soap';
+ul.appendChild(li);</code></pre>
+          Velg lista, lag elementet, gi det tekst, koble det inn som barn.
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">11 · Lett · 1.13.5</div>
+      <div class="q-text">Hvilke tre events fyres typisk når brukeren trykker en bokstav-tast?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>keydown</code> (tasten trykkes ned), <code>keypress</code> (kun for ikke-modifikatorer), og <code>keyup</code> (tasten slippes).</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Vanskelig · 1.13.5</div>
+      <div class="q-text">Skriv en event listener som varsler &laquo;piltast trykket&raquo; når brukeren bruker en av de fire piltastene.</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">
+<pre><code>document.addEventListener('keydown', (event) =&gt; {
+  if (event.keyCode &gt; 36 &amp;&amp; event.keyCode &lt; 41) {
+    alert('Piltast trykket');
+  }
+});</code></pre>
+          Piltastene har keyCode 37, 38, 39 og 40 ifølge pensum, så betingelsen <code>&gt; 36 &amp;&amp; &lt; 41</code> dekker akkurat dem.
+        </div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
-    <div class="section-badge">11 · Kapittel-eksamen</div>
-    <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <div class="section-badge">14 · Kapittel-eksamen</div>
+    <h2>Flashcards — <em>hele kap 10 i kortform</em></h2>
+    <p class="section-intro">
+      20 kort som dekker alle fem delkapitler. Bruk <kbd>←</kbd> <kbd>→</kbd> for å bla,
+      klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+    </p>
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -168,6 +622,218 @@
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
       </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.1 Arrays</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>filter</code>?</p></div>
+          <div class="flashcard__back"><p>En ny array som bare inneholder elementene som returnerte <code>true</code> i funksjonen.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.1 Arrays</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>map</code>?</p></div>
+          <div class="flashcard__back"><p>En ny array hvor hvert element er resultatet av funksjonen anvendt på det opprinnelige elementet.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.1 Arrays</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva returnerer <code>['a','b','c'].forEach(x =&gt; x.toUpperCase())</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> ['A','B','C']</li>
+              <li><span class="opt-label">B</span> undefined</li>
+              <li><span class="opt-label">C</span> 'ABC'</li>
+              <li><span class="opt-label">D</span> ReferenceError</li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>B — undefined.</strong> <code>forEach</code> kjører funksjonen per element, men returnerer ingenting.</p>
+            <p class="fc-correct">Riktig: B</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.1 Arrays</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>some</code> og <code>every</code>?</p></div>
+          <div class="flashcard__back"><p><code>some</code> sier <em>finnes det minst ett</em> element som passer betingelsen. <code>every</code> krever at <em>alle</em> elementer passer. Begge returnerer boolean.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.1 Arrays</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken metode bruker du hvis du vil <em>logge</em> hvert element uten å bygge en ny array?</p></div>
+          <div class="flashcard__back"><p><code>forEach</code>. Den er laget for bivirkninger; <code>map</code> er feil siden returverdien ikke brukes.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.2 Scope</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er globalt scope?</p></div>
+          <div class="flashcard__back"><p>Scopet for alt som er definert utenfor en funksjon. Slike variabler er tilgjengelige hvor som helst.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.2 Scope</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva skjer hvis du leser en variabel som er erklært inne i en funksjon, fra utsiden?</p></div>
+          <div class="flashcard__back"><p>Du får <code>ReferenceError: ... is not defined</code>. Variabelen er bundet til funksjonens lokale scope.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.2 Scope</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forklar leksikalsk scope.</p></div>
+          <div class="flashcard__back"><p>En funksjon definert <em>inne i</em> en annen funksjon har tilgang til den ytre funksjonens variabler. Tilgangen følger hvor koden er <em>skrevet</em>, ikke hvor den blir <em>kalt</em>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.3 Tid</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>setTimeout</code> og <code>setInterval</code>?</p></div>
+          <div class="flashcard__back"><p><code>setTimeout</code> kjører funksjonen <strong>én gang</strong> etter forsinkelsen. <code>setInterval</code> kjører funksjonen <strong>gjentatt</strong>, hver gang intervallet utløper.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.3 Tid</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvor lenge venter <code>setTimeout(fn, 60000)</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> 60 sekunder</li>
+              <li><span class="opt-label">B</span> 60 millisekunder</li>
+              <li><span class="opt-label">C</span> 60 minutter</li>
+              <li><span class="opt-label">D</span> 6 sekunder</li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>A — 60 sekunder.</strong> Andre argument er millisekunder, og 60 000 ms = 60 s.</p>
+            <p class="fc-correct">Riktig: A</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.3 Tid</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Når kjører <code>setInterval</code>-funksjonen første gang?</p></div>
+          <div class="flashcard__back"><p>Etter første intervall — den kjører <strong>ikke</strong> umiddelbart.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.4 DOM</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er roten i DOM-treet?</p></div>
+          <div class="flashcard__back"><p>Den globale variabelen <code>document</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.4 DOM</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Nevn fire metoder for å velge elementer i DOM (fra pensum).</p></div>
+          <div class="flashcard__back"><p><code>getElementsByTagName</code>, <code>getElementById</code>, <code>getElementsByClassName</code>, <code>querySelector</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.4 DOM</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilken egenskap brukes for å lese eller endre teksten i et element (i pensumeksempelet)?</p></div>
+          <div class="flashcard__back"><p><code>innerText</code>. Pensum bruker <code>element.innerText</code> både for å lese og skrive.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.4 DOM</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke to steg trengs for å legge til et helt nytt element i DOM-en?</p></div>
+          <div class="flashcard__back"><p>1) Lag elementet med <code>document.createElement('tag')</code>.<br>2) Heng det på et eksisterende element med <code>parent.appendChild(nytt)</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.4 DOM</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">På hvilket element kalles <code>removeChild</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> På elementet som skal fjernes</li>
+              <li><span class="opt-label">B</span> På <code>document</code></li>
+              <li><span class="opt-label">C</span> På foreldrenoden</li>
+              <li><span class="opt-label">D</span> På <code>window</code></li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>C — på foreldrenoden.</strong> Du må først finne forelderen, og så kalle <code>parent.removeChild(barn)</code>.</p>
+            <p class="fc-correct">Riktig: C</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.5 Events</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er en event listener?</p></div>
+          <div class="flashcard__back"><p>En funksjon som er planlagt til å kjøre når en event fyres. Du registrerer den med <code>element.addEventListener(type, fn)</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.5 Events</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke tre events fyres når man trykker en bokstav-tast?</p></div>
+          <div class="flashcard__back"><p><code>keydown</code> → <code>keypress</code> → <code>keyup</code>. <code>keypress</code> hoppes over hvis tasten er en modifikator (f.eks. Shift).</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.5 Events</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvordan finner du ut hvilken tast brukeren trykte?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> event.value</li>
+              <li><span class="opt-label">B</span> event.keyCode</li>
+              <li><span class="opt-label">C</span> event.text</li>
+              <li><span class="opt-label">D</span> event.id</li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>B — event.keyCode.</strong> Hver tast har en unik tallverdi (a=65, ←=37, ↑=39, osv.).</p>
+            <p class="fc-correct">Riktig: B</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.13.5 Events</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Skriv en lytter som alert-er når brukeren trykker en piltast.</p></div>
+          <div class="flashcard__back">
+<pre><code>document.addEventListener('keydown', (event) =&gt; {
+  if (event.keyCode &gt; 36 &amp;&amp; event.keyCode &lt; 41) {
+    alert('You pressed an arrow key.');
+  }
+});</code></pre>
+            <p>Piltastene har keyCode 37–40, så <code>&gt; 36 &amp;&amp; &lt; 41</code> matcher akkurat dem.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div></section>
 </main>

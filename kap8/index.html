@@ -62,51 +62,323 @@
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Helhetsbilde</div>
     <h2>Hvorfor <em>forms</em>?</h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Forms er lim mellom bruker og tjener. Login, søk, registrering, oppgavelevering — alt går gjennom et skjema.</p>
-      <p><strong>Kilde:</strong> pensum 1.9, slides <code>presentasjoner/forms.md</code>.</p>
+    <p class="section-intro">
+      Et skjema er broen mellom bruker og tjener. Hver gang du logger inn,
+      registrerer en konto, søker etter noe, eller laster opp en fil — er
+      det et HTML-form som samler verdiene og sender dem av sted.
+    </p>
+
+    <div class="callout">
+      <div class="label">Definisjon</div>
+      <p>
+        Et <strong>form</strong> samler informasjon fra brukeren via én eller
+        flere <em>kontroller</em> (også kalt <em>widgets</em>) — tekstfelt,
+        nedtrekkslister, radioknapper, avkrysningsbokser, tekstområder — og
+        avsluttes typisk med en submit-knapp. Når brukeren trykker submit,
+        sendes <em>navn/verdi-par</em> til tjeneren.
+      </p>
     </div>
+
+    <div class="callout-good">
+      <div class="label">Hva sendes</div>
+      <p>
+        For hver kontroll i skjemaet har du et <code>name</code>-attributt og
+        en verdi. Det er disse parene tjeneren mottar: <code>username=evan&amp;genre=rock</code>.
+        Uten <code>name</code> sendes ikke kontrollen i det hele tatt.
+      </p>
+    </div>
+
+    <p><strong>Kilde:</strong> pensum 1.9 (Forms), slides <code>presentasjoner/forms.md</code>.</p>
   </div></section>
 
   <section id="hierarki"><div class="container">
     <div class="section-badge">02 · Mental modell</div>
     <h2>Tre <em>roller</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Form-elementet (containeren), input-feltene (data), submit-knappen (handlingen). action og method (URL og HTTP-verb) avgjør hvor og hvordan data sendes.</p>
+    <p class="section-intro">
+      Tenk på et form som tre lag: <em>containeren</em> som vet hvor og
+      hvordan data skal sendes, <em>widgetene</em> som samler inn data, og
+      <em>knappen</em> som utløser sendingen.
+    </p>
+
+    <div class="def-box">
+      <div class="def-label">A · Containeren</div>
+      <div class="def-term"><code>&lt;form action="..." method="..."&gt;</code></div>
+      <p>
+        Et blokkelement som omslutter alle kontrollene. <code>action</code>
+        er URL-en data sendes til. <code>method</code> er HTTP-metoden
+        (<code>GET</code> eller <code>POST</code>).
+      </p>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">B · Widgetene</div>
+      <div class="def-term"><code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code></div>
+      <p>
+        Selve datainnsamlingen. <code>input</code> dekker alt fra korte
+        tekstfelt til avkrysningsbokser og filopplastning — <code>type</code>-attributtet
+        bestemmer hvilken variant. Hver widget bør ha en <code>&lt;label&gt;</code>.
+      </p>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">C · Submit-handlingen</div>
+      <div class="def-term"><code>&lt;input type="submit"&gt;</code> eller <code>&lt;button&gt;</code></div>
+      <p>
+        Knappen som faktisk sender skjemaet. Når den trykkes, samler
+        nettleseren navn/verdi-par fra alle kontroller med
+        <code>name</code>-attributt og sender dem til <code>action</code>-URL-en.
+      </p>
     </div>
   </div></section>
 
   <section id="reisen"><div class="container">
     <div class="section-badge">03 · Reisen</div>
     <h2>Bygg et <em>kontaktskjema</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Stegvis: form med action og method → label + input(text) → input(email) med required → textarea → button(submit). Vis HTML5-validering ved tom innsending.</p>
+    <p class="section-intro">
+      Stegvis: vi starter med ett tekstfelt og bygger oss frem til et
+      validert skjema med flere kontrolltyper. Hvert steg viser hvilken
+      del av pensum 1.9 vi er i.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <strong>Steg 1 — form-elementet.</strong>
+        <code>&lt;form action="/contact" method="post"&gt;...&lt;/form&gt;</code>
+        omslutter resten. <code>action</code> peker på siden som mottar data,
+        <code>method</code> er HTTP-metoden.
+      </li>
+      <li>
+        <strong>Steg 2 — label + input.</strong>
+        Hver widget får en <code>&lt;label for="..."&gt;</code> som peker på
+        widgetens <code>id</code>. Da kan brukeren klikke på etiketten for å
+        sette markøren — viktig for tilgjengelighet.
+      </li>
+      <li>
+        <strong>Steg 3 — riktig type.</strong>
+        Bytt fra <code>type="text"</code> til <code>type="email"</code> for
+        e-post. Nettleseren sjekker da automatisk at verdien ser ut som en
+        e-postadresse.
+      </li>
+      <li>
+        <strong>Steg 4 — flere felt + textarea.</strong>
+        Legg til et <code>&lt;textarea&gt;</code> for melding (flere linjer).
+        Husk <code>name</code> på alle, ellers havner ikke verdien i innsendingen.
+      </li>
+      <li>
+        <strong>Steg 5 — gruppering.</strong>
+        Pakk relaterte felt i <code>&lt;fieldset&gt;</code> med en
+        <code>&lt;legend&gt;</code>. Skjermlesere bruker legend til å beskrive
+        gruppen.
+      </li>
+      <li>
+        <strong>Steg 6 — validering.</strong>
+        Sett <code>required</code> på obligatoriske felt og bruk CSS
+        <code>:valid</code>/<code>:invalid</code> til å gi visuell tilbakemelding.
+      </li>
+      <li>
+        <strong>Steg 7 — submit.</strong>
+        Avslutt med <code>&lt;button&gt;Send&lt;/button&gt;</code> eller
+        <code>&lt;input type="submit" value="Send"&gt;</code>.
+      </li>
+    </ol>
+
+    <div class="code-result">
+      <div class="pane">
+        <div class="pane-label">HTML — ferdig kontaktskjema</div>
+        <pre>&lt;form action="/contact" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Kontakt oss&lt;/legend&gt;
+
+    &lt;label for="navn"&gt;Navn:&lt;/label&gt;
+    &lt;input type="text" id="navn" name="navn" required&gt;
+
+    &lt;label for="epost"&gt;E-post:&lt;/label&gt;
+    &lt;input type="email" id="epost" name="epost" required&gt;
+
+    &lt;label for="melding"&gt;Melding:&lt;/label&gt;
+    &lt;textarea id="melding" name="melding"
+              rows="6" cols="40" required&gt;&lt;/textarea&gt;
+
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</pre>
+      </div>
     </div>
   </div></section>
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>De fire <em>delene</em></h2>
+    <p class="section-intro">Pensum 1.9 deler seg naturlig i fire deler. Hver av dem dekker en del av eksamen.</p>
+
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · ELT</div><div class="sp-title">Form-elementet</div><div class="sp-desc">action, method, enctype. Pensum 1.9.1.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · STR</div><div class="sp-title">Form-struktur</div><div class="sp-desc">label, input, textarea, select, button. fieldset, legend. Pensum 1.9.2.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · VAL</div><div class="sp-title">Validering</div><div class="sp-desc">required, pattern, min, max, type=email/url/number. Pensum 1.9.3.</div></div>
-      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · DSG</div><div class="sp-title">Skjema-design</div><div class="sp-desc">UX-prinsipper, ledetekster, feilmeldinger. Pensum 1.9.4.</div></div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">A · ELT</div>
+        <div class="sp-title">Form-elementet</div>
+        <div class="sp-desc">
+          <code>&lt;form&gt;</code> med <code>action</code> og <code>method</code>.
+          GET vs POST. Hva som skjer når submit trykkes.<br>
+          <strong>Kilde:</strong> pensum 1.9 (The form element).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">B · STR</div>
+        <div class="sp-title">Form-struktur</div>
+        <div class="sp-desc">
+          <code>fieldset</code>, <code>legend</code>, <code>label</code>,
+          <code>input</code>, <code>textarea</code>, <code>select</code>,
+          <code>output</code>.<br>
+          <strong>Kilde:</strong> pensum 1.9 (Form structure).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">C · VAL</div>
+        <div class="sp-title">Validering</div>
+        <div class="sp-desc">
+          <code>required</code>, <code>pattern</code>, <code>min</code>/<code>max</code>,
+          riktig <code>type</code>. CSS <code>:valid</code>/<code>:invalid</code>.<br>
+          <strong>Kilde:</strong> pensum 1.9 (Form validation).
+        </div>
+      </div>
+      <div class="subpage-card" style="cursor:default;">
+        <div class="sp-icon">D · DSG</div>
+        <div class="sp-title">Skjema-design</div>
+        <div class="sp-desc">
+          <code>autofocus</code>, <code>disabled</code>, <code>value</code>,
+          <code>tabindex</code>. Tips for effektive skjemaer.<br>
+          <strong>Kilde:</strong> pensum 1.9 (How to design a form).
+        </div>
+      </div>
     </div>
+
+    <h3 style="margin-top: 2.4em;">A · Form-elementet — GET vs POST</h3>
+    <p>
+      <code>method</code>-attributtet bestemmer hvordan data sendes:
+      som tekst i URL-en (GET), eller som en separat melding i request-body
+      (POST). Valget påvirker både synlighet, sikkerhet og bruksområde.
+    </p>
+
+    <div class="compare-grid">
+      <div class="compare-cell good">
+        <div class="label">GET</div>
+        <p>
+          Data legges på URL-en etter <code>?</code> som
+          <code>?navn=Per&amp;alder=20</code>. Kan caches, kan bookmarkes,
+          kan deles, blir liggende i browser-historikken. Brukes til
+          <em>oppslag</em> og <em>søk</em> — ikke sensitive data.
+        </p>
+      </div>
+      <div class="compare-cell bad">
+        <div class="label">POST</div>
+        <p>
+          Data sendes som en separat melding (i request-body), ikke i URL-en.
+          Brukes for sensitive data (passord, betalinger) og når
+          interaksjonen <em>endrer</em> noe på tjeneren. IE har maks
+          URL-lengde på 2048 tegn, så bruk POST også for store mengder data.
+        </p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.4em;">B · Form-struktur — input-typer</h3>
+    <p>
+      <code>&lt;input&gt;</code> er det viktigste elementet i et skjema.
+      <code>type</code>-attributtet avgjør hvordan kontrollen ser ut og
+      oppfører seg. Hvis nettleseren ikke støtter en gitt
+      <code>type</code>-verdi, fallback-er den til <code>text</code>.
+    </p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">Tekstfelt på én linje</div>
+        <div class="fc-val"><code>text</code>, <code>email</code>, <code>password</code>, <code>search</code>, <code>tel</code>, <code>url</code></div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Uten tekstinput</div>
+        <div class="fc-val"><code>checkbox</code>, <code>radio</code>, <code>file</code>, <code>number</code>, <code>range</code></div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Tid og dato</div>
+        <div class="fc-val"><code>date</code>, <code>time</code></div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Knapper</div>
+        <div class="fc-val"><code>button</code>, <code>reset</code>, <code>submit</code>, <code>image</code></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.4em;">C · Validering med HTML5</h3>
+    <p>
+      Du skal alltid validere på tjeneren også, men klientside-validering
+      gir brukeren rask tilbakemelding og fanger åpenbare feil før
+      innsending. HTML5 har validering bakt inn — du trenger ikke skrive
+      JavaScript for grunnleggende sjekker.
+    </p>
+
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre>&lt;form&gt;
+  &lt;label for="email"&gt;E-post:&lt;/label&gt;
+  &lt;input type="email" id="email"
+         name="email" required&gt;
+  &lt;button&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre>input:invalid {
+  border: 1px solid red;
+}
+input:valid {
+  border: 1px solid green;
+}</pre>
+      </div>
+    </div>
+
+    <p>
+      <code>required</code> hindrer innsending hvis feltet er tomt — brukeren
+      får en innebygd melding fra nettleseren. <code>type="email"</code>
+      sjekker formatet. <code>pattern</code> tar et regulært uttrykk.
+      <code>min</code>, <code>max</code> og <code>maxlength</code> begrenser
+      verdier.
+    </p>
+
+    <h3 style="margin-top: 2.4em;">D · Designe et skjema</h3>
+    <p>
+      Målet er at brukeren skal fullføre raskt og uten forvirring. Pensum
+      trekker frem fire attributter du kan styre brukeropplevelsen med:
+    </p>
+
+    <ul>
+      <li><code>autofocus</code> — markøren går automatisk til feltet når siden lastes. Bruk på det viktigste feltet på siden (f.eks. søkefelt på Google), <em>ikke</em> på et lite kontaktskjema nederst.</li>
+      <li><code>disabled</code> — gjør feltet uklikkbart. Brukes når feltet ikke skal fylles ut før noe annet er gjort. Må fjernes med JavaScript.</li>
+      <li><code>value</code> — forhåndsutfylt verdi. Kan hjelpe brukeren (f.eks. by basert på lokasjon), men brukere overser ofte ferdigutfylte verdier.</li>
+      <li><code>tabindex</code> — styrer tab-rekkefølgen. Negativ verdi = utenfor tab-flyt. <code>0</code> = naturlig posisjon. Positiv verdi = manuell rekkefølge.</li>
+    </ul>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
     <div class="section-badge">05 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">action</div><div class="fc-val">URL data sendes til.</div></div>
-      <div class="fact-card"><div class="fc-key">method</div><div class="fc-val">GET (i URL) vs POST (i body).</div></div>
-      <div class="fact-card"><div class="fc-key">name-attributt</div><div class="fc-val">Hvordan inputen identifiseres på tjeneren.</div></div>
-      <div class="fact-card"><div class="fc-key">label-for</div><div class="fc-val">Knytter etikett til input — viktig for tilgjengelighet.</div></div>
-      <div class="fact-card"><div class="fc-key">required</div><div class="fc-val">HTML5-validering.</div></div>
-      <div class="fact-card"><div class="fc-key">input-typer</div><div class="fc-val">text, email, url, number, date, password, checkbox, radio, file.</div></div>
-      <div class="fact-card"><div class="fc-key">placeholder</div><div class="fc-val">Hint, ikke verdi.</div></div>
-      <div class="fact-card"><div class="fc-key">pattern</div><div class="fc-val">Regex-validering på input.</div></div>
+      <div class="fact-card"><div class="fc-key">action</div><div class="fc-val">URL-en form-data sendes til.</div></div>
+      <div class="fact-card"><div class="fc-key">method</div><div class="fc-val">HTTP-metode: <code>GET</code> (data i URL) eller <code>POST</code> (data i body).</div></div>
+      <div class="fact-card"><div class="fc-key">name</div><div class="fc-val">Identifiserer kontrollen i innsendingen. Uten <code>name</code> sendes ikke verdien.</div></div>
+      <div class="fact-card"><div class="fc-key">label-for</div><div class="fc-val">Knytter etikett til widget via widgetens <code>id</code>. Klikk på label setter fokus på input.</div></div>
+      <div class="fact-card"><div class="fc-key">fieldset / legend</div><div class="fc-val">Grupperer relaterte kontroller. Legend beskriver gruppen for skjermlesere.</div></div>
+      <div class="fact-card"><div class="fc-key">required</div><div class="fc-val">HTML5-validering: feltet må fylles ut før submit kan utføres.</div></div>
+      <div class="fact-card"><div class="fc-key">pattern</div><div class="fc-val">RegEx som verdien sjekkes mot. Pattern omsluttes ikke av <code>/</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">placeholder</div><div class="fc-val">Hint i feltet. Forsvinner når brukeren begynner å skrive. <em>Ikke</em> en erstatning for label.</div></div>
+      <div class="fact-card"><div class="fc-key">type</div><div class="fc-val">Avgjør hvilken kontroll som rendres: <code>text</code>, <code>email</code>, <code>checkbox</code>, <code>radio</code>, <code>number</code>, <code>file</code>, …</div></div>
+      <div class="fact-card"><div class="fc-key">checked</div><div class="fc-val">Boolean for <code>radio</code> og <code>checkbox</code> — markerer som valgt fra start.</div></div>
+      <div class="fact-card"><div class="fc-key">multiple</div><div class="fc-val">Tillat flere verdier — gyldig for <code>email</code> og <code>file</code>, samt <code>select</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">accept</div><div class="fc-val">For <code>type="file"</code>: hvilke filtyper aksepteres (f.eks. <code>image/*</code>, <code>.jpg, .png</code>).</div></div>
+      <div class="fact-card"><div class="fc-key">min / max / step</div><div class="fc-val">Numeriske og dato-grenser. <code>step</code> styrer tillatte intervaller.</div></div>
+      <div class="fact-card"><div class="fc-key">maxlength</div><div class="fc-val">Maks antall tegn for tekst-typer (<code>text</code>, <code>email</code>, <code>password</code>, …).</div></div>
+      <div class="fact-card"><div class="fc-key">autofocus</div><div class="fc-val">Setter fokus på feltet automatisk ved sidelast.</div></div>
+      <div class="fact-card"><div class="fc-key">disabled</div><div class="fc-val">Feltet er ikke aktivt — kan ikke fylles ut. Fjernes med JavaScript.</div></div>
+      <div class="fact-card"><div class="fc-key">tabindex</div><div class="fc-val">Styrer rekkefølgen for tab-tasten. Negativ = utenfor; 0 = naturlig; positiv = manuell.</div></div>
+      <div class="fact-card"><div class="fc-key">:valid / :invalid</div><div class="fc-val">CSS-pseudoklasser som matcher kontroller hvis verdi tilfredsstiller (eller bryter) reglene.</div></div>
     </div>
   </div></section>
 
@@ -114,11 +386,17 @@
     <div class="section-badge">06 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 8</em></h2>
     <div class="recap-grid">
-      <span class="recap-pill">skrive et komplett skjema</span>
-      <span class="recap-pill">velge input-typer</span>
-      <span class="recap-pill">forklare GET vs POST</span>
-      <span class="recap-pill">bruke validering-attributter</span>
+      <span class="recap-pill">skrive et komplett form-element</span>
+      <span class="recap-pill">forklare action og method</span>
+      <span class="recap-pill">velge GET vs POST</span>
       <span class="recap-pill">koble label til input</span>
+      <span class="recap-pill">bruke fieldset og legend</span>
+      <span class="recap-pill">velge riktig input-type</span>
+      <span class="recap-pill">bruke required, pattern, min/max</span>
+      <span class="recap-pill">style :valid og :invalid</span>
+      <span class="recap-pill">skrive textarea og select</span>
+      <span class="recap-pill">forklare radio vs checkbox</span>
+      <span class="recap-pill">bruke autofocus, disabled, tabindex</span>
     </div>
   </div></section>
 
@@ -126,39 +404,284 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.9.1–1.9.4.</li>
-      <li><strong>Slides:</strong> <code>presentasjoner/forms.md</code>.</li>
-      <li><strong>Eksterne:</strong> MDN — Form data validation; Web Forms guide.</li>
+      <li><strong>Lærebok:</strong> pensum 1.9 — fra «Forms» til og med «How to design a form».</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/forms.md</code> (HTML Forms — Kshitij Sharma).</li>
+      <li><strong>Eksterne:</strong> MDN — «How to structure an HTML form»; MDN — «Client-side form validation».</li>
     </ul>
   </div></section>
 
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
-    <div class="callout-warn"><div class="label">Skal skrives</div>
-      <p>Glemme name-attributt (input havner ikke i submit-data); bruke placeholder som label; tro at klientside-validering er sikkerhet (det er det ikke); blande GET og POST.</p>
+
+    <div class="callout-warn">
+      <div class="label">Felle 1 — glemmer name</div>
+      <p>
+        En kontroll uten <code>name</code>-attributt finnes for brukeren,
+        men sendes <em>ikke</em> til tjeneren ved submit. Hvis feltet ditt
+        ikke dukker opp i innsendingen — sjekk <code>name</code> først.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 2 — placeholder som label</div>
+      <p>
+        Placeholder forsvinner når brukeren begynner å skrive, og leses
+        ikke alltid av skjermlesere. Bruk alltid <code>&lt;label&gt;</code>
+        i tillegg — placeholder er et <em>hint</em>, ikke en etikett.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 3 — klientside-validering som sikkerhet</div>
+      <p>
+        HTML5-validering hjelper brukeren, men kan slås av (Inspect-element
+        eller deaktiver JS). Tjeneren <em>må</em> validere på nytt — ellers
+        sender en angriper bare ugyldige verdier rett inn.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 4 — GET med passord</div>
+      <p>
+        Sender du passord med <code>method="get"</code> havner det i URL-en,
+        som kan caches, lagres i historikk og sees i serverlogger. Bruk
+        <code>POST</code> for sensitive data.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 5 — radio-knapper uten samme name</div>
+      <p>
+        Radio-knapper i samme gruppe må ha samme <code>name</code>. Ulike
+        navn = de oppfører seg som uavhengige felt, og brukeren kan velge
+        flere. Med samme <code>name</code> kan kun én velges av gangen.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 6 — label uten for</div>
+      <p>
+        En <code>&lt;label&gt;</code> uten <code>for</code> (eller uten å
+        omslutte input-en) er bare tekst. Klikk på den gjør ingenting, og
+        skjermlesere kobler den ikke til feltet.
+      </p>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
     <div class="section-badge">09 · Eksamensscenario</div>
     <h2>Skriv et <em>registreringsskjema</em></h2>
-    <div class="callout"><div class="label">Skal skrives</div>
-      <p>Eksempel: «Skriv HTML for et registreringsskjema med navn, e-post, passord (min 8 tegn), og samtykke-checkbox. Bruk validering der det passer.»</p>
+
+    <div class="callout-blue">
+      <div class="label">Oppgave</div>
+      <p>
+        «Skriv HTML for et registreringsskjema med følgende felt:
+        fullt navn (obligatorisk), e-post (obligatorisk, må være gyldig),
+        passord (obligatorisk, minst 8 tegn), foretrukket
+        programmeringsspråk (velg fra Python/JavaScript/Java) og en
+        avkrysningsboks for å samtykke til vilkårene. Skjemaet skal sendes
+        med POST til <code>/register</code>. Bruk validering der det passer
+        og koble alle labels til riktige felt.»
+      </p>
     </div>
+
+    <div class="code-result">
+      <div class="pane">
+        <div class="pane-label">Mønstersvar</div>
+        <pre>&lt;form action="/register" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Registrer ny bruker&lt;/legend&gt;
+
+    &lt;label for="navn"&gt;Fullt navn:&lt;/label&gt;
+    &lt;input type="text" id="navn" name="navn" required&gt;
+
+    &lt;label for="epost"&gt;E-post:&lt;/label&gt;
+    &lt;input type="email" id="epost" name="epost" required&gt;
+
+    &lt;label for="passord"&gt;Passord (min. 8 tegn):&lt;/label&gt;
+    &lt;input type="password" id="passord" name="passord"
+           pattern=".{8,}" required&gt;
+
+    &lt;label for="sprak"&gt;Foretrukket språk:&lt;/label&gt;
+    &lt;select id="sprak" name="sprak"&gt;
+      &lt;option value="python"&gt;Python&lt;/option&gt;
+      &lt;option value="javascript"&gt;JavaScript&lt;/option&gt;
+      &lt;option value="java"&gt;Java&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;label&gt;
+      &lt;input type="checkbox" name="samtykke" required&gt;
+      Jeg godtar vilkårene
+    &lt;/label&gt;
+
+    &lt;button type="submit"&gt;Registrer&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</pre>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.6em;">
+      Sensorens sjekkliste: <code>method="post"</code>, riktig
+      <code>action</code>, alle felt har <code>name</code>, alle labels
+      enten har <code>for</code> eller omslutter input-en,
+      <code>type="email"</code> for e-post, <code>type="password"</code>
+      med <code>pattern=".{8,}"</code>, <code>select</code> med tre
+      <code>option</code>, <code>required</code> der oppgitt.
+    </p>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
-    <div class="callout"><div class="label">Skal fylles inn</div><p>Mange spørsmål om input-typer, action, method.</p></div>
+    <p class="section-intro">12 spørsmål som dekker alle deler av kapittelet.</p>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">01 · Lett</div>
+      <div class="q-text">Hva sendes til tjeneren når en bruker submit-er et skjema?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Navn/verdi-par fra alle kontroller som har et <code>name</code>-attributt. F.eks. <code>username=evan&amp;genre=rock</code>.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">02 · Lett</div>
+      <div class="q-text">Hvilket attributt definerer URL-en data sendes til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>method</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>action</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>name</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>target</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B — <code>action</code></strong>. <code>method</code> er HTTP-metoden, ikke URL-en.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">03 · Lett</div>
+      <div class="q-text">Hvor ender form-data hvis du bruker <code>method="get"</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">A</span> Lagt til på URL-en etter <code>?</code></li>
+        <li class="mcq-opt"><span class="opt-label">B</span> I HTTP-bodyen som en separat melding</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> I en cookie</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Bare i nettleserens minne</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>A</strong>. GET legger data i URL-en (<code>?navn=Per&amp;alder=20</code>) — synlig, cachebart, bookmark-bart.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">04 · Middels</div>
+      <div class="q-text">Hvorfor skal du <em>aldri</em> sende passord med GET?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Med GET havner verdien i URL-en, som kan caches, lagres i nettleserhistorikk, dukker opp i serverlogger og kan deles via lenker. Bruk POST for sensitive data.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">05 · Lett</div>
+      <div class="q-text">Hvilket element grupperer relaterte kontroller og kan beskrives med en <code>&lt;legend&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>&lt;section&gt;</code></li>
+        <li class="mcq-opt"><span class="opt-label">B</span> <code>&lt;group&gt;</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> <code>&lt;fieldset&gt;</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>&lt;form-group&gt;</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>C — <code>&lt;fieldset&gt;</code></strong>. <code>&lt;legend&gt;</code> kommer som første element inne i fieldset-en.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">06 · Middels</div>
+      <div class="q-text">Hva er hovedforskjellen på <code>radio</code> og <code>checkbox</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Radio er for tekst, checkbox er for tall</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Bare én radio i samme gruppe kan velges; flere checkboxes kan velges</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Radio sender data, checkbox gjør det ikke</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Det er ingen praktisk forskjell</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Radioer i samme gruppe har samme <code>name</code> og er gjensidig utelukkende. Checkboxes kan alle krysses av samtidig.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">07 · Middels</div>
+      <div class="q-text">Hva gjør <code>for</code>-attributtet på <code>&lt;label&gt;</code>, og hvorfor er det viktig?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          <code>for</code> peker på <code>id</code>-en til en input. To effekter: (1) klikk på label setter fokus på input — særlig nyttig for små radioknapper og checkboxes; (2) skjermlesere leser label-teksten når brukeren navigerer til feltet.
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">08 · Middels</div>
+      <div class="q-text">Hvilket <code>type</code>-attributt får nettleseren til å validere at verdien ser ut som en e-postadresse?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>type="text"</code> + <code>required</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>type="email"</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>type="mail"</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>type="address"</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>type="email"</code> gir innebygd format-validering. Hvis nettleseren ikke støtter den, fallback-er den til <code>text</code>.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">09 · Middels</div>
+      <div class="q-text">Hva skjer hvis du glemmer <code>name</code>-attributtet på en input?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">Verdien sendes <em>ikke</em> til tjeneren. Brukeren kan fortsatt fylle ut feltet, men det havner ikke i form-dataen. Dette er den vanligste «hvorfor mangler dette feltet?»-feilen.</div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">10 · Vanskelig</div>
+      <div class="q-text">Hvilken CSS-regel styler kun input-felt der verdien <em>bryter</em> reglene (f.eks. ugyldig e-post)?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>input.error { ... }</code></li>
+        <li class="mcq-opt"><span class="opt-label">B</span> <code>input:required { ... }</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> <code>input:invalid { ... }</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>input:valid { ... }</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>C</strong>. <code>:invalid</code> matcher input/form hvis innholdet ikke validerer i henhold til <code>type</code>, <code>required</code>, <code>pattern</code>, osv.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">11 · Middels</div>
+      <div class="q-text">Hva gjør <code>pattern="[A-Za-z]{3}"</code> på en <code>&lt;input type="text"&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Tillater bare tre tegn totalt, alle typer</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Krever nøyaktig tre bokstaver (a–z eller A–Z), ingen tall eller spesialtegn</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Konverterer alle tegn til store bokstaver</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Filtrerer ut tall automatisk</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Pattern er et regulært uttrykk verdien sjekkes mot. <code>{3}</code> = nøyaktig tre, <code>[A-Za-z]</code> = bokstaver. Ingen <code>/</code> rundt mønsteret.</div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">12 · Vanskelig</div>
+      <div class="q-text">Pensum sier «du skal alltid validere på tjeneren». Hva er da poenget med klientside-validering?</div>
+      <div class="quiz-reveal">
+        <button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          Klientside-validering er for <em>brukeropplevelsen</em>: rask
+          tilbakemelding, ferre runde-turer til tjeneren, ferre åpenbare
+          feil i innsendingen. Den er <em>ikke</em> sikkerhet — den kan slås
+          av med Inspect-element eller deaktivert JS. Tjeneren må derfor
+          validere på nytt.
+        </div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
     <div class="section-badge">11 · Kapittel-eksamen</div>
     <h2>Flashcards</h2>
-    <p class="section-intro">30–50 kort.</p>
+    <p class="section-intro">
+      32 kort som dekker hele kapittelet. Bruk <kbd>&larr;</kbd> <kbd>&rarr;</kbd>
+      til å bla, klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+    </p>
+
     <div class="flashcard-deck" data-flashcards>
       <div class="flashcard-toolbar">
         <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
@@ -166,6 +689,405 @@
         <button class="fc-btn" data-fc-next>Neste &rarr;</button>
         <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
         <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Form-elementet</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilke to attributter har du <em>nesten alltid</em> på <code>&lt;form&gt;</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>action</code> (URL data sendes til) og <code>method</code> (<code>GET</code> eller <code>POST</code>).</p>
+            <div class="fc-ref">Pensum 1.9 — The form element</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">GET vs POST</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvor sendes data ved <code>method="get"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Lagt til på URL-en etter <code>?</code> som navn/verdi-par: <code>?q=tourism&amp;hl=en</code>.</p>
+            <div class="fc-ref">Pensum 1.9 / slides forms.md</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">GET vs POST</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvor sendes data ved <code>method="post"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Som en separat melding (i HTTP-bodyen) — <em>ikke</em> i URL-en.</p>
+            <div class="fc-ref">Slides forms.md — Form Method: POST</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">GET vs POST</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Du lager et søkeskjema. GET eller POST?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> POST — alltid sikrest</li>
+              <li><span class="opt-label">B</span> GET — det er en spørring/oppslag</li>
+              <li><span class="opt-label">C</span> Begge fungerer like godt</li>
+            </ul>
+            <p class="fc-correct" style="display:none;">B</p>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>B.</strong> Søk er en safe, idempotent operasjon — naturlig for GET. Bruker kan også bookmark-e og dele resultatet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">GET vs POST</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Innloggingsskjema med passord — GET eller POST?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>POST.</strong> GET ville lagt passordet i URL-en, hvor det havner i historikk, cache og serverlogger.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Submit</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva sendes til tjeneren når brukeren trykker submit?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Navn/verdi-par for hver kontroll med <code>name</code>-attributt: <code>name1=value1&amp;name2=value2</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">name-attributt</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva skjer med en input som mangler <code>name</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Verdien sendes <em>ikke</em> ved submit. Brukeren kan fylle ut feltet, men det havner ikke i form-dataen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">label</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er de to gyldige måtene å koble en label til en input?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>(1) <code>&lt;label for="id"&gt;</code> som peker på input-ens <code>id</code>. (2) Wrap label-elementet rundt input-en.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">label</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvorfor er <code>for</code>-attributtet viktig for radioknapper og checkboxes?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Brukeren kan klikke på label-teksten for å aktivere kontrollen — mye lettere å treffe enn den lille sirkelen/firkanten. Bedre tilgjengelighet for skjermlesere også.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">fieldset / legend</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva brukes <code>&lt;fieldset&gt;</code> til?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Å gruppere relaterte form-kontroller, f.eks. alle adressefelt eller en gruppe radioknapper. Beskrives med <code>&lt;legend&gt;</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er <code>type</code>-attributtet på input som maskerer tegnene som prikker?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>type="password"</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilken <code>type</code> brukes for å la brukeren laste opp en fil?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>type="file"</code>. Må kombineres med <code>method="post"</code> i form-elementet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er forskjellen på <code>type="number"</code> og <code>type="range"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>number</code>: brukeren skriver et tall (eksakt verdi viktig). <code>range</code>: en glidebryter (eksakt verdi <em>ikke</em> viktig).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva skjer hvis nettleseren ikke støtter <code>type="email"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Den fallback-er til <code>type="text"</code> — feltet vises som et vanlig tekstfelt, uten format-validering.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">checkbox vs radio</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Når bruker du radio og når bruker du checkbox?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Radio for små valg, checkbox for store</li>
+              <li><span class="opt-label">B</span> Radio = velg én av flere; checkbox = velg null/én/flere</li>
+              <li><span class="opt-label">C</span> Checkbox for tekst, radio for tall</li>
+            </ul>
+            <p class="fc-correct" style="display:none;">B</p>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>B.</strong> Radioknapper i samme gruppe (samme <code>name</code>) tillater kun ett valg. Checkboxes er uavhengige — alle, ingen eller noen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">radio</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvordan grupperer du radioknapper slik at bare én kan velges?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Gi alle samme <code>name</code>-attributt. Hver knapp har sin egen <code>value</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">select</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilket element brukes for en nedtrekksliste?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>&lt;select&gt;</code> med <code>&lt;option&gt;</code>-elementer. <code>&lt;optgroup&gt;</code> grupperer options.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">select</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva sendes hvis <code>&lt;option&gt;</code> ikke har <code>value</code>-attributt?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Tekstinnholdet til <code>&lt;option&gt;</code> brukes som verdi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">textarea</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilke tre attributter styrer størrelse og tekstbryting på <code>&lt;textarea&gt;</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>cols</code> (bredde i tegn), <code>rows</code> (synlige linjer), <code>wrap</code> (<code>soft</code> eller <code>hard</code>).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">textarea</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvor skriver du standardverdien til en <code>&lt;textarea&gt;</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Mellom åpnings- og lukketagg — <em>ikke</em> i et <code>value</code>-attributt. Innhold rendres som tekst (HTML-tagger blir ren tekst).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva gjør <code>required</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Feltet må fylles ut før skjemaet kan submit-es. Nettleseren viser en innebygd melding hvis det er tomt.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er <code>pattern</code> og hvordan skriver du verdien?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Et regulært uttrykk som verdien sjekkes mot. Skrives <em>uten</em> omsluttende <code>/</code>: <code>pattern="[A-Za-z]{3}"</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilke CSS-pseudoklasser styler valide og invalide kontroller?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>:valid</code> og <code>:invalid</code>. Matcher <code>&lt;input&gt;</code> og <code>&lt;form&gt;</code> ut fra <code>type</code>, <code>required</code>, <code>pattern</code> osv.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvorfor må du validere på tjeneren selv om du har klientside-validering?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Klientside-validering kan slås av (Inspect-element, deaktivert JS) eller omgås helt. En angriper kan sende vilkårlige data direkte. Tjeneren er den eneste som <em>må</em> stoles på.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er forskjellen på <code>placeholder</code> og <code>&lt;label&gt;</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Placeholder er et <em>hint</em> som forsvinner når brukeren skriver. Label er en permanent etikett som beskriver feltets <em>rolle</em>. Bruk begge — placeholder erstatter ikke label.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva gjør <code>autofocus</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Setter markøren automatisk i feltet når siden lastes. Bruk på det viktigste feltet (f.eks. søk på Google), <em>ikke</em> på små kontaktskjemaer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva betyr <code>tabindex="0"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Elementet er fokusbart og inngår i tab-rekkefølgen i sin naturlige posisjon (rekkefølgen i HTML-dokumentet).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hvilken <code>type</code> kan ha <code>checked</code>-attributtet?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>type="radio"</code> og <code>type="checkbox"</code>. Boolean — gjør kontrollen forhåndsvalgt.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">For hvilke <code>type</code>-verdier kan <code>multiple</code> brukes?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>email</code> (flere e-postadresser) og <code>file</code> (flere filer). Også på <code>&lt;select&gt;</code> for å velge flere alternativer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva gjør <code>accept=".jpg, .png"</code> på <code>type="file"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Filvelgeren viser bare JPG- og PNG-filer som mulige valg. Kan også ta MIME-typer (<code>image/*</code>, <code>audio/*</code>, <code>video/*</code>).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Vanlige feller</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Skjemaet ditt sender alle felt unntatt ett. Hva er den mest sannsynlige årsaken?</p>
+          </div>
+          <div class="flashcard__back">
+            <p>Feltet mangler <code>name</code>-attributt. Uten <code>name</code> havner verdien aldri i form-dataen som sendes til tjeneren.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Knapper</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva er forskjellen på <code>type="submit"</code> og <code>type="reset"</code>?</p>
+          </div>
+          <div class="flashcard__back">
+            <p><code>submit</code> sender skjemaet til <code>action</code>-URL-en. <code>reset</code> tilbakestiller alle felt til standardverdier (verdiene i HTML-en) — sender ingenting.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div></section>
