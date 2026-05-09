@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.png" type="image/png">
+<title>IT2805 — Webteknologi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="./" class="brand">IT2805</a>
+    <a href="pensum.html" class="nav-back">Pensum</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Forside · IT2805 Webteknologi">
+  <header class="front-hero">
+    <div class="container">
+      <div class="eyebrow">NTNU · IT2805 · Høst 2025</div>
+      <h1>Web<em>teknologi</em></h1>
+      <p class="lede">
+        En studieside for IT2805 — fra TCP/IP og DOM til CSS Grid, forms og
+        JavaScript-events. Alt pensum, søkbart og oppdelt i bitestørrelser.
+      </p>
+
+      <div class="front-search">
+        <svg class="front-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="site-search" placeholder="Søk i hele pensum…" autocomplete="off" disabled>
+        <div id="site-search-results"></div>
+      </div>
+
+      <div class="pill-row">
+        <span class="pill rust">12 kapitler</span>
+        <span class="pill">Lærebok + slides</span>
+        <span class="pill">Quiz · Flashcards · Søk</span>
+      </div>
+    </div>
+  </header>
+
+  <section style="border-bottom:none;padding-bottom:0;">
+    <div class="container">
+      <div class="journey-banners">
+        <a href="zero-to-hero/" class="journey-banner">
+          <div class="jb-icon">Eksamensplan</div>
+          <div class="jb-title">Fra null til klar</div>
+          <div class="jb-desc">Slik bygger du forståelsen lag på lag fra dag én til eksamensdagen.</div>
+          <div class="jb-arrow">Begynn reisen &rarr;</div>
+        </a>
+        <a href="reisen/" class="journey-banner">
+          <div class="jb-icon">Helhetsbilde</div>
+          <div class="jb-title">Reise gjennom faget</div>
+          <div class="jb-desc">Følg én case fra HTTP-forespørsel til klikkbar JavaScript-knapp.</div>
+          <div class="jb-arrow">Start reisen &rarr;</div>
+        </a>
+        <a href="pensum.html" class="journey-banner">
+          <div class="jb-icon">Forelesninger</div>
+          <div class="jb-title">Pensum og slides</div>
+          <div class="jb-desc">Mapping mellom forelesninger, slides og kapitler i læreboka.</div>
+          <div class="jb-arrow">Se oversikt &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="kapitler">
+    <div class="container">
+      <div class="section-badge">Kapitler</div>
+      <h2>Pensum delt i <em>tolv kapitler</em></h2>
+      <p class="section-intro">
+        Følg dem i rekkefølge eller hopp dit du trenger oppfriskning. Hvert kapittel
+        har samme oppbygning: helhetsbilde, dypdykk, vanlige feller, quiz og
+        kapittel-eksamen i flashcard-form.
+      </p>
+
+      <div class="chapter-grid">
+        <a href="kap1/" class="chapter-card">
+          <span class="ch-num">KAP 01</span>
+          <div class="ch-title">Web og Internett</div>
+          <div class="ch-desc">Klient/tjener, HTTP, DNS, TCP/IP og hva en nettleser faktisk gjør.</div>
+        </a>
+        <a href="kap2/" class="chapter-card">
+          <span class="ch-num">KAP 02</span>
+          <div class="ch-title">HTML — struktur og semantikk</div>
+          <div class="ch-desc">Elementer, attributter, tekst, lister, lenker, bilder, tabeller, semantiske tagger.</div>
+        </a>
+        <a href="kap3/" class="chapter-card">
+          <span class="ch-num">KAP 03</span>
+          <div class="ch-title">CSS — grunnleggende</div>
+          <div class="ch-desc">Selektorer, kaskade, arv, farger, fonter, margin, padding, pseudo-klasser.</div>
+        </a>
+        <a href="kap4/" class="chapter-card">
+          <span class="ch-num">KAP 04</span>
+          <div class="ch-title">CSS — videregående</div>
+          <div class="ch-desc">Display, document flow, overflow, mer pseudo, og hvordan boksene egentlig oppfører seg.</div>
+        </a>
+        <a href="kap5/" class="chapter-card">
+          <span class="ch-num">KAP 05</span>
+          <div class="ch-title">Layout — Flexbox og Grid</div>
+          <div class="ch-desc">1D-flexbox og 2D-grid: når brukes hva, og hvordan beskrives layout deklarativt.</div>
+        </a>
+        <a href="kap6/" class="chapter-card">
+          <span class="ch-num">KAP 06</span>
+          <div class="ch-title">Responsivt webdesign</div>
+          <div class="ch-desc">Media queries, breakpoints, mobile first og fluide enheter.</div>
+        </a>
+        <a href="kap7/" class="chapter-card">
+          <span class="ch-num">KAP 07</span>
+          <div class="ch-title">Multimedia på web</div>
+          <div class="ch-desc">Bilder, video, audio: formater, attributter og tilgjengelighet.</div>
+        </a>
+        <a href="kap8/" class="chapter-card">
+          <span class="ch-num">KAP 08</span>
+          <div class="ch-title">Forms og validering</div>
+          <div class="ch-desc">Form-elementet, input-typer, klientside-validering og god skjema-design.</div>
+        </a>
+        <a href="kap9/" class="chapter-card">
+          <span class="ch-num">KAP 09</span>
+          <div class="ch-title">JavaScript — grunnleggende</div>
+          <div class="ch-desc">Datatyper, variabler, kontrollstruktur, arrays, objekter, funksjoner og JSON.</div>
+        </a>
+        <a href="kap10/" class="chapter-card">
+          <span class="ch-num">KAP 10</span>
+          <div class="ch-title">JavaScript — videregående</div>
+          <div class="ch-desc">Scope, tid, DOM-manipulering og events i et dynamisk dokument.</div>
+        </a>
+        <a href="kap11/" class="chapter-card">
+          <span class="ch-num">KAP 11</span>
+          <div class="ch-title">XML</div>
+          <div class="ch-desc">Strukturert data, syntaksregler og hvor XML brukes på dagens web.</div>
+        </a>
+        <a href="kap12/" class="chapter-card">
+          <span class="ch-num">KAP 12</span>
+          <div class="ch-title">Canvas</div>
+          <div class="ch-desc">Tegne i nettleseren med 2D-API: koordinater, paths, bilder og animasjon.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="om">
+    <div class="container">
+      <div class="section-badge">Om siden</div>
+      <h2>Pensum og <em>kilder</em></h2>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <h3>Om emnet</h3>
+          <p>
+            IT2805 Webteknologi er et grunnleggende emne ved NTNU som dekker hvordan
+            nettsider er bygd opp av HTML, CSS og JavaScript, og hvordan de henger
+            sammen via web-arkitekturen og protokollene som binder Internett sammen.
+          </p>
+          <p>
+            Pensum er læreboka og forelesningene. Hovedkilden er
+            <a href="https://it2805.gitbook.io/curriculum/">it2805.gitbook.io/curriculum</a>,
+            supplert av slides og øvinger fra kursets BlackBoard-side.
+          </p>
+        </div>
+        <div class="info-block">
+          <h3>Pensum</h3>
+          <ul>
+            <li><a href="pensum.html">Forelesningsoversikt</a> med slides og kapittel-mapping.</li>
+            <li>Lærebok: it2805.gitbook.io/curriculum (gratis, gitbook).</li>
+            <li>Slides per emne ligger i <code>presentasjoner/</code> i prosjektroten.</li>
+            <li>Øvinger ligger i <code>oppgaver/</code> som markdown-utdrag.</li>
+            <li>Tidligere eksamener i <code>tidligere_eksamener/</code>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bidra" style="border-bottom:none;">
+    <div class="container">
+      <div class="callout-blue">
+        <div class="label">Bidra</div>
+        <p>
+          Siden lever av tilbakemelding. Finner du noe som er feil, uklart eller
+          mangler? Si fra — det er alltid noen som lurer på det samme. Kapitlene
+          fylles inn over tid; tomme seksjoner er der med vilje for å vise hva
+          som mangler å skrives.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script>
+// Front-page search — bygger samme indeks som nav-search, men med større visning
+(function () {
+  var input = document.getElementById('site-search');
+  var results = document.getElementById('site-search-results');
+  if (!input || !results) return;
+
+  var PAGES = [
+    'index.html', 'pensum.html', 'zero-to-hero/index.html', 'reisen/index.html',
+    'kap1/index.html', 'kap2/index.html', 'kap3/index.html', 'kap4/index.html',
+    'kap5/index.html', 'kap6/index.html', 'kap7/index.html', 'kap8/index.html',
+    'kap9/index.html', 'kap10/index.html', 'kap11/index.html', 'kap12/index.html'
+  ];
+
+  var fuse = null, index = [], activeIdx = -1, lastQ = '', lastM = [];
+
+  function loadFuse() {
+    return new Promise(function (resolve, reject) {
+      if (window.Fuse) return resolve(window.Fuse);
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js';
+      s.onload = function () { resolve(window.Fuse); };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  function fetchPage(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error('not ok');
+      return r.text();
+    }).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var main = doc.querySelector('main');
+      var chapter = (main && main.getAttribute('data-chapter'))
+        || (doc.querySelector('title') ? doc.querySelector('title').textContent : url);
+      var entries = [];
+      var sections = (main || doc).querySelectorAll('section[id]');
+      if (sections.length) {
+        sections.forEach(function (sec) {
+          var h = sec.querySelector('h1, h2, h3');
+          var title = h ? h.textContent.trim() : sec.id;
+          var body = sec.textContent.replace(/\s+/g, ' ').trim().slice(0, 600);
+          entries.push({ chapter: chapter, title: title, body: body, url: url + '#' + sec.id });
+        });
+      } else {
+        var t = doc.querySelector('h1');
+        entries.push({
+          chapter: chapter,
+          title: t ? t.textContent.trim() : chapter,
+          body: (main || doc.body).textContent.replace(/\s+/g, ' ').trim().slice(0, 600),
+          url: url
+        });
+      }
+      return entries;
+    }).catch(function () { return []; });
+  }
+  function escape(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]);
+    });
+  }
+  function highlight(t, q) {
+    if (!q) return escape(t);
+    var safe = escape(t);
+    var qq = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return safe.replace(new RegExp('(' + qq + ')', 'gi'), '<mark>$1</mark>');
+  }
+  function render(matches, q) {
+    if (!matches.length) {
+      results.innerHTML = '<div class="ns-result"><div class="ns-title">Ingen treff</div></div>';
+      results.classList.add('open'); return;
+    }
+    results.innerHTML = matches.slice(0, 14).map(function (m, i) {
+      var item = m.item;
+      return '<a class="ns-result' + (i === activeIdx ? ' active' : '') + '" href="' + item.url + '">'
+        + '<div class="ns-chap">' + escape(item.chapter) + '</div>'
+        + '<div class="ns-title">' + highlight(item.title, q) + '</div>'
+        + '<div class="ns-snippet">' + highlight(item.body.slice(0, 180), q) + (item.body.length > 180 ? '…' : '') + '</div>'
+        + '</a>';
+    }).join('');
+    results.classList.add('open');
+  }
+
+  Promise.all([loadFuse(), Promise.all(PAGES.map(fetchPage))]).then(function (parts) {
+    var Fuse = parts[0];
+    index = [].concat.apply([], parts[1]);
+    fuse = new Fuse(index, {
+      keys: [{ name: 'title', weight: 0.6 }, { name: 'chapter', weight: 0.2 }, { name: 'body', weight: 0.2 }],
+      includeMatches: true, threshold: 0.35, ignoreLocation: true, minMatchCharLength: 2
+    });
+    input.disabled = false; input.placeholder = 'Søk i hele pensum…';
+  }).catch(function () { input.placeholder = 'Søk utilgjengelig'; });
+
+  var t = null;
+  input.addEventListener('input', function () {
+    var q = input.value.trim();
+    activeIdx = -1;
+    if (t) clearTimeout(t);
+    if (!q) { results.classList.remove('open'); results.innerHTML = ''; return; }
+    t = setTimeout(function () {
+      if (!fuse) return;
+      lastQ = q; lastM = fuse.search(q); render(lastM, q);
+    }, 150);
+  });
+  input.addEventListener('keydown', function (e) {
+    if (!results.classList.contains('open')) return;
+    var rs = results.querySelectorAll('.ns-result');
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, rs.length - 1); render(lastM, lastQ); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, -1); render(lastM, lastQ); }
+    else if (e.key === 'Enter' && activeIdx >= 0 && rs[activeIdx]) { e.preventDefault(); window.location.href = rs[activeIdx].getAttribute('href'); }
+    else if (e.key === 'Escape') { results.classList.remove('open'); input.blur(); }
+  });
+  document.addEventListener('click', function (e) {
+    if (!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('open');
+  });
+})();
+</script>
+
+<script src="nav-search.js"></script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

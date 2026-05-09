@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2 — HTML</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 2: HTML — struktur og semantikk">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Forelesning 3–4 · Del 1</div>
+      <h1>HTML — <em>struktur og semantikk</em></h1>
+      <p class="lede">
+        Markup-språket som beskriver hva innholdet er, ikke hvordan det
+        ser ut. Elementer, attributter, og hvorfor semantikken faktisk
+        betyr noe.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4 — 1.5</span>
+        <span class="pill">Slides: basics_html.md, list.md</span>
+        <span class="pill">Forelesning 3–4</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor HTML?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Dokumentstrukturen</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Bygg en side</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor">
+    <div class="container">
+      <div class="section-badge">01 · Helhetsbilde</div>
+      <h2>Hvorfor <em>HTML</em>?</h2>
+      <div class="callout"><div class="label">Skal skrives</div>
+        <p>Motiver hvorfor markup må skille innhold fra utseende. Hovedpoeng: en lesbar HTML-side er tilgjengelig for skjermlesere, søkemotorer og fremtidige nettlesere. Kontraster med <code>div</code>-suppe.</p>
+        <p><strong>Kilde:</strong> pensum 1.4 (HTML), slides <code>presentasjoner/basics_html.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hierarki">
+    <div class="container">
+      <div class="section-badge">02 · Mental modell</div>
+      <h2>Et HTML-dokument er et <em>tre</em></h2>
+      <div class="callout"><div class="label">Skal skrives</div>
+        <p>Vis SVG av DOM-tre (html → head + body → barn). Forklar at hver tag åpner og lukker en node, og at indentering er for mennesker.</p>
+        <p><strong>Kilde:</strong> pensum 1.4.1 (Document Structure).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reisen">
+    <div class="container">
+      <div class="section-badge">03 · Reisen</div>
+      <h2>Bygg en side <em>fra bunn</em></h2>
+      <div class="callout"><div class="label">Skal skrives</div>
+        <p>Stegvis: <code>&lt;!DOCTYPE html&gt;</code> → html → head (title, meta, link) → body → headings → paragraphs → lists → links → images → tables → semantiske containere. Bruk <code>.steps</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="deler">
+    <div class="container">
+      <div class="section-badge">04 · Hovedtemaer</div>
+      <h2>De ni <em>delene</em></h2>
+      <p class="section-intro">Pensum 1.4 har ni undertema. Hvert kort beskriver hva som skal stå.</p>
+      <div class="subpage-card-grid">
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · STR</div><div class="sp-title">Document structure</div><div class="sp-desc">DOCTYPE, html, head, body. Pensum 1.4.1.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · ATT</div><div class="sp-title">Attributter</div><div class="sp-desc">Navn = "verdi", lang, id, class. Pensum 1.4.2.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TXT</div><div class="sp-title">Tekst</div><div class="sp-desc">Headings h1–h6, p, b, i, sup, sub, br, white-space. Pensum 1.4.3.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · LST</div><div class="sp-title">Lister</div><div class="sp-desc">ol, ul, li, dl. Pensum 1.4.4 + slides <code>list.md</code>.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · LNK</div><div class="sp-title">Lenker</div><div class="sp-desc">a-element, href, relative vs absolute, target. Pensum 1.4.5.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">img, src, alt, width/height. Pensum 1.4.6.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · TBL</div><div class="sp-title">Tabeller</div><div class="sp-desc">table, tr, td, th, thead, tbody. Pensum 1.4.7.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · CMT</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>&lt;!-- ... --&gt;</code>. Pensum 1.4.8.</div></div>
+        <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · SEM</div><div class="sp-title">Semantiske elementer</div><div class="sp-desc">header, nav, main, article, section, footer. Pensum 1.4.9 + 1.5.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nokkelbegreper">
+    <div class="container">
+      <div class="section-badge">05 · Begreper</div>
+      <h2>Nøkkel<em>begreper</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card"><div class="fc-key">Element</div><div class="fc-val">Definisjon — pensum 1.4.</div></div>
+        <div class="fact-card"><div class="fc-key">Tag</div><div class="fc-val">Definisjon — pensum 1.4.</div></div>
+        <div class="fact-card"><div class="fc-key">Attributt</div><div class="fc-val">Definisjon — pensum 1.4.2.</div></div>
+        <div class="fact-card"><div class="fc-key">Block vs inline</div><div class="fc-val">Definisjon — pensum 1.4.1 (Body).</div></div>
+        <div class="fact-card"><div class="fc-key">Void-element</div><div class="fc-val">Eksempler: img, br, hr.</div></div>
+        <div class="fact-card"><div class="fc-key">Semantikk</div><div class="fc-val">Hvorfor article ≠ div. Pensum 1.4.9.</div></div>
+        <div class="fact-card"><div class="fc-key">Dokumenthierarki</div><div class="fc-val">h1–h6 må følge logisk rekkefølge.</div></div>
+        <div class="fact-card"><div class="fc-key">White-space collapsing</div><div class="fc-val">Pensum 1.4.3.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="oppsummering">
+    <div class="container">
+      <div class="section-badge">06 · Oppsummering</div>
+      <h2>Hva du skal kunne <em>etter kap 2</em></h2>
+      <div class="recap-grid">
+        <span class="recap-pill">skrive et gyldig HTML-dokument fra hukommelsen</span>
+        <span class="recap-pill">bruke semantiske elementer riktig</span>
+        <span class="recap-pill">forklare attributter</span>
+        <span class="recap-pill">lage tabeller og lister</span>
+        <span class="recap-pill">koble inn stilark og bilder</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="notatmapping">
+    <div class="container">
+      <div class="section-badge">07 · Notatmapping</div>
+      <h2>Hvor <em>finner du det</em></h2>
+      <ul>
+        <li><strong>Lærebok:</strong> pensum 1.4 (HTML, alle ni delkapitler) + 1.5 (Site structure).</li>
+        <li><strong>Slides:</strong> <code>presentasjoner/basics_html.md</code>, <code>presentasjoner/list.md</code>.</li>
+        <li><strong>Øving:</strong> <code>oppgaver/basic_html.md</code>.</li>
+        <li><strong>Eksterne:</strong> MDN HTML-referanse, W3C HTML-validator.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="feller">
+    <div class="container">
+      <div class="section-badge">08 · Vanlige feller</div>
+      <h2>Vanlige <em>feller</em></h2>
+      <div class="callout-warn"><div class="label">Skal skrives</div>
+        <p>Eksempler: glemme alt-attributtet på img; bruke h-tag for å justere skriftstørrelse; blande b/strong og i/em; manglende DOCTYPE.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scenario">
+    <div class="container">
+      <div class="section-badge">09 · Eksamensscenario</div>
+      <h2>Skriv en <em>side fra spec</em></h2>
+      <div class="callout"><div class="label">Skal skrives</div>
+        <p>Eksempel: «Skriv HTML for en blogg-artikkel med tittel, ingress, to avsnitt og en bildegalleri-tabell.» Vis svaret med riktig semantikk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">10 · Test deg selv</div>
+      <h2>Helhets<em>spørsmål</em></h2>
+      <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+      <div class="callout"><div class="label">Skal fylles inn</div><p>Skriv 10–15 reveal-quiz-spørsmål med blanding av lett, middels og vanskelig.</p></div>
+    </div>
+  </section>
+
+  <section id="kapittel-eksamen">
+    <div class="container">
+      <div class="section-badge">11 · Kapittel-eksamen</div>
+      <h2>Flashcards — <em>hele pensum i kortform</em></h2>
+      <p class="section-intro">30–50 kort, blanding av begrepskort og regne-/oppgavekort.</p>
+      <div class="flashcard-deck" data-flashcards>
+        <div class="flashcard-toolbar">
+          <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+          <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+          <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+          <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+          <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

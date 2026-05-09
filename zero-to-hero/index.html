@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Fra null til klar — IT2805</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Forside</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Fra null til klar — eksamensstrategi">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Strategi · Studieplan</div>
+      <h1>Fra null til <em>klar</em></h1>
+      <p class="lede">
+        Slik bygger du forståelsen lag på lag, fra første forelesning til
+        eksamensdagen. Tre prinsipper, én rekkefølge, nok tid.
+      </p>
+    </div>
+  </header>
+
+  <section id="vekting">
+    <div class="container">
+      <div class="section-badge">01 · Vekting</div>
+      <h2>Hvor mye <em>veier hva</em></h2>
+      <p class="section-intro">
+        Tallene under er anslag basert på hvor mange forelesninger og
+        oppgaver hvert tema har — ikke fasit. Bruk dem til å prioritere, ikke
+        til å hoppe over.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num">~25 %</div>
+          <div class="stat-lbl">HTML &amp; Forms</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">~30 %</div>
+          <div class="stat-lbl">CSS &amp; Layout</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">~25 %</div>
+          <div class="stat-lbl">JavaScript</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">~10 %</div>
+          <div class="stat-lbl">Web-arkitektur</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">~10 %</div>
+          <div class="stat-lbl">XML, Canvas, multimedia</div>
+        </div>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Erstatt tallene med faktiske vekter</div>
+        <p>
+          Tallene over må kalibreres mot tidligere eksamener (i
+          <code>tidligere_eksamener/</code>). Tell oppgavetyper og juster hvis
+          en del veier mer eller mindre enn antatt.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="prinsipper">
+    <div class="container">
+      <div class="section-badge">02 · Prinsipper</div>
+      <h2>Fire prinsipper som <em>virker</em></h2>
+      <p class="section-intro">
+        Det viktigste er ikke å lese mye, men å lese riktig. Prinsippene under
+        er det vi lener oss på når vi bygger forståelse i et fag som dette.
+      </p>
+
+      <div class="principle-grid">
+        <div class="principle">
+          <div class="pr-num">01</div>
+          <div class="pr-title">Bygg, ikke memorer</div>
+          <div class="pr-body">
+            HTML, CSS og JavaScript er språk du må skrive for å forstå.
+            Lag små eksempler. Skriv en feilformatert side. Fiks den. Det
+            sitter etter en kveld; ikke etter en bok.
+          </div>
+        </div>
+        <div class="principle">
+          <div class="pr-num">02</div>
+          <div class="pr-title">Forstå rekkefølgen</div>
+          <div class="pr-body">
+            HTML først. Så CSS. Så JavaScript. Hvert lag bygger på det
+            forrige. Hopp aldri over CSS for å «komme til JavaScript» — du
+            mister forståelsen av hva DOM-en faktisk er.
+          </div>
+        </div>
+        <div class="principle">
+          <div class="pr-num">03</div>
+          <div class="pr-title">DevTools er en lærebok</div>
+          <div class="pr-body">
+            Inspect-element-fanen i nettleseren viser kaskaden, boksene
+            og hvilken regel som vant. Bruk den hver gang noe ikke ser ut som
+            forventet — det er der CSS faktisk lever.
+          </div>
+        </div>
+        <div class="principle">
+          <div class="pr-num">04</div>
+          <div class="pr-title">Skriv ut HTML for hånd</div>
+          <div class="pr-body">
+            Eksamen kan ha oppgaver der du må skrive HTML eller CSS uten
+            autocomplete. Tren på papir et par ganger — det avslører hva du
+            faktisk husker.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reise">
+    <div class="container">
+      <div class="section-badge">03 · Plan</div>
+      <h2>Stien fra <em>null til klar</em></h2>
+      <p class="section-intro">
+        Forutsatt at du følger forelesningene, er dette rekkefølgen som
+        bygger forståelsen lag på lag.
+      </p>
+
+      <ol class="path-list">
+        <li>
+          <strong>Bli komfortabel med web-arkitekturen.</strong> Du skal kunne
+          forklare hva som skjer fra du skriver inn en URL til siden vises.
+          Se <a href="../kap1/">Kap 1</a>.
+        </li>
+        <li>
+          <strong>Lær HTML godt.</strong> Skriv en flersides nettside fra
+          bunn med korrekt semantikk, lenker, bilder og tabeller. Se
+          <a href="../kap2/">Kap 2</a>.
+        </li>
+        <li>
+          <strong>Bli trygg på CSS-grunnleggende.</strong> Selektorer, kaskade,
+          arv, box-modellen. Forstå hvorfor en regel «vant». Se
+          <a href="../kap3/">Kap 3</a>.
+        </li>
+        <li>
+          <strong>Mestre layout.</strong> Document flow, display, og deretter
+          Flexbox og Grid. Se <a href="../kap4/">Kap 4</a> og
+          <a href="../kap5/">Kap 5</a>.
+        </li>
+        <li>
+          <strong>Gjør siden responsiv.</strong> Media queries, breakpoints,
+          mobile first. Se <a href="../kap6/">Kap 6</a>.
+        </li>
+        <li>
+          <strong>Legg til skjemaer.</strong> Form-elementet, input-typer,
+          klientside-validering. Se <a href="../kap8/">Kap 8</a>.
+        </li>
+        <li>
+          <strong>Lær JavaScript-grunnleggende.</strong> Datatyper, kontroll,
+          arrays, objekter, funksjoner, JSON. Se <a href="../kap9/">Kap 9</a>.
+        </li>
+        <li>
+          <strong>Manipuler DOM-en.</strong> Events, querySelector,
+          addEventListener. Lag en interaktiv side. Se
+          <a href="../kap10/">Kap 10</a>.
+        </li>
+        <li>
+          <strong>Repeter randtemaene.</strong> XML, Canvas og multimedia
+          dukker opp på eksamen, men er ikke kjernen. Se
+          <a href="../kap7/">Kap 7</a>, <a href="../kap11/">Kap 11</a>,
+          <a href="../kap12/">Kap 12</a>.
+        </li>
+        <li>
+          <strong>Test deg selv.</strong> Gå gjennom kapittel-eksamen på
+          hver kapittel-side. Hvis et flashcard ikke gir mening, gå tilbake
+          til seksjonen det henviser til.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="eksamensdagen">
+    <div class="container">
+      <div class="section-badge">04 · Eksamensdagen</div>
+      <h2>Hva du gjør <em>på dagen</em></h2>
+      <p class="section-intro">
+        Plan for selve eksamen — ikke noe magisk, bare det som faktisk hjelper.
+      </p>
+
+      <ol class="path-list">
+        <li><strong>Les hele oppgavesettet først.</strong> Du finner ut hva som er enkelt og hva du må prioritere tid på.</li>
+        <li><strong>Skriv lesbart.</strong> En linje per attributt, indenter HTML. Sensor leter etter struktur, ikke akrobatikk.</li>
+        <li><strong>Gjør de billige poengene først.</strong> Forklar-begreper-spørsmål gir poeng raskt. Spar de lange CSS-oppgavene til slutt.</li>
+        <li><strong>Sjekk taggene.</strong> Glemt en lukke-tag? Manglende quotes? Det er den vanligste feilen — bruk to minutter på å se gjennom.</li>
+      </ol>
+
+      <div class="callout-good">
+        <div class="label">Innspill velkomne</div>
+        <p>
+          Denne siden fylles ut etter hvert som vi vet mer om kalibreringen.
+          Erstatt vekt-tall, plan og prioriteringer når faktiske eksamensdata
+          er studert.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.png" type="image/png">
+<title>Pensum og forelesninger — IT2805</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="./" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Forside</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Pensum og forelesninger">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Pensum · Forelesninger · Slides</div>
+      <h1>Pensum og <em>forelesninger</em></h1>
+      <p class="lede">
+        Mapping mellom forelesninger, slides og kapitler. Hvert tema peker
+        direkte til riktig kapittel her på siden, og til kilden i pensum.
+      </p>
+      <div class="pill-row">
+        <span class="pill rust">12 kapitler</span>
+        <span class="pill">Lærebok: it2805.gitbook.io</span>
+        <span class="pill">Slides i presentasjoner/</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="kilder">
+    <div class="container">
+      <div class="section-badge">Kilder</div>
+      <h2>Hovedkildene i <em>pensum</em></h2>
+      <p>
+        Pensumboka er primærkilden. Slides utdyper enkelte tema og viser hvilken
+        vekt foreleser legger på dem. Øvinger bygger bro mellom teori og praksis.
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Lærebok</div>
+          <div class="fc-val"><a href="https://it2805.gitbook.io/curriculum/">it2805.gitbook.io/curriculum</a> — gitbook med hele pensum, kapittel 1.1 til 1.15.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Slides</div>
+          <div class="fc-val">Mappen <code>presentasjoner/</code> i prosjektroten inneholder slides per emne (intro, basics, html, css, selectors, css-props, list, forms, grid_flexbox, basic_js).</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Øvinger</div>
+          <div class="fc-val">Mappen <code>oppgaver/</code> — fire obligatoriske gruppeoppgaver, alle pass/fail.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Eksamen</div>
+          <div class="fc-val">100 % skoleeksamen. Tidligere oppgaver i <code>tidligere_eksamener/</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Foreleser</div>
+          <div class="fc-val">Kshitij Sharma · faglig ansvarlig.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Gruppeansvarlig</div>
+          <div class="fc-val">Magnus Ouren · ansvarlig for øvingene.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="forelesninger">
+    <div class="container">
+      <div class="section-badge">Forelesninger</div>
+      <h2>Slides per <em>forelesning</em></h2>
+      <p class="section-intro">
+        Hver fil i <code>presentasjoner/</code> hører til ett eller flere
+        kapitler her på siden. Pek og klikk for å hoppe til riktig kapittel.
+      </p>
+
+      <div class="subpage-card-grid">
+        <a href="kap1/" class="subpage-card">
+          <div class="sp-icon">F1 · Intro</div>
+          <div class="sp-title">Kursintro og web-arkitektur</div>
+          <div class="sp-desc"><code>presentasjoner/intro.md</code> · klient/tjener, HTTP, vurdering, oblig.</div>
+          <div class="sp-arrow">Til kap 1 &rarr;</div>
+        </a>
+        <a href="kap1/" class="subpage-card">
+          <div class="sp-icon">F2 · Basics</div>
+          <div class="sp-title">Web-grunnleggende</div>
+          <div class="sp-desc"><code>presentasjoner/basics.md</code> · DOM-intro, browseren som verktøy.</div>
+          <div class="sp-arrow">Til kap 1 &rarr;</div>
+        </a>
+        <a href="kap2/" class="subpage-card">
+          <div class="sp-icon">F3 · HTML</div>
+          <div class="sp-title">HTML grunnleggende</div>
+          <div class="sp-desc"><code>presentasjoner/basics_html.md</code> · elementer, attributter, tekst.</div>
+          <div class="sp-arrow">Til kap 2 &rarr;</div>
+        </a>
+        <a href="kap2/" class="subpage-card">
+          <div class="sp-icon">F4 · Lister</div>
+          <div class="sp-title">Lister i HTML</div>
+          <div class="sp-desc"><code>presentasjoner/list.md</code> · ol, ul, dl og lister i bredere bruk.</div>
+          <div class="sp-arrow">Til kap 2 &rarr;</div>
+        </a>
+        <a href="kap3/" class="subpage-card">
+          <div class="sp-icon">F5 · CSS</div>
+          <div class="sp-title">CSS grunnleggende</div>
+          <div class="sp-desc"><code>presentasjoner/css.md</code> · syntaks, kaskade, arv.</div>
+          <div class="sp-arrow">Til kap 3 &rarr;</div>
+        </a>
+        <a href="kap3/" class="subpage-card">
+          <div class="sp-icon">F6 · Selektorer</div>
+          <div class="sp-title">CSS-selektorer</div>
+          <div class="sp-desc"><code>presentasjoner/selectors.md</code> · type, klasse, id, kombinatorer.</div>
+          <div class="sp-arrow">Til kap 3 &rarr;</div>
+        </a>
+        <a href="kap4/" class="subpage-card">
+          <div class="sp-icon">F7 · CSS-props</div>
+          <div class="sp-title">CSS-egenskaper i dybden</div>
+          <div class="sp-desc"><code>presentasjoner/css_props.md</code> · display, overflow, document flow.</div>
+          <div class="sp-arrow">Til kap 4 &rarr;</div>
+        </a>
+        <a href="kap5/" class="subpage-card">
+          <div class="sp-icon">F8 · Layout</div>
+          <div class="sp-title">Grid og Flexbox</div>
+          <div class="sp-desc"><code>presentasjoner/grid_flebox.md</code> · 1D vs 2D-layout (også slides i exam_info.md).</div>
+          <div class="sp-arrow">Til kap 5 &rarr;</div>
+        </a>
+        <a href="kap8/" class="subpage-card">
+          <div class="sp-icon">F9 · Forms</div>
+          <div class="sp-title">Skjemaer og validering</div>
+          <div class="sp-desc"><code>presentasjoner/forms.md</code> · form-elementet, input-typer.</div>
+          <div class="sp-arrow">Til kap 8 &rarr;</div>
+        </a>
+        <a href="kap9/" class="subpage-card">
+          <div class="sp-icon">F10 · JS</div>
+          <div class="sp-title">JavaScript grunnleggende</div>
+          <div class="sp-desc"><code>presentasjoner/basic_js.md</code> · variabler, kontrollstruktur, funksjoner.</div>
+          <div class="sp-arrow">Til kap 9 &rarr;</div>
+        </a>
+        <a href="kap10/" class="subpage-card">
+          <div class="sp-icon">F11 · DOM/Events</div>
+          <div class="sp-title">DOM og Events</div>
+          <div class="sp-desc">Slides for kap 1.13 i pensum (legges inn under <code>presentasjoner/</code>).</div>
+          <div class="sp-arrow">Til kap 10 &rarr;</div>
+        </a>
+        <a href="kap6/" class="subpage-card">
+          <div class="sp-icon">F12 · Responsivt</div>
+          <div class="sp-title">Responsivt webdesign</div>
+          <div class="sp-desc">Pensum 1.10 — slides legges inn under <code>presentasjoner/</code>.</div>
+          <div class="sp-arrow">Til kap 6 &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="kapittel-mapping">
+    <div class="container">
+      <div class="section-badge">Mapping</div>
+      <h2>Lærebokas <em>kapitler</em> til denne siden</h2>
+      <p class="section-intro">
+        Pensumboka er nummerert 1.1 til 1.15. Her er hvor hvert avsnitt havner.
+      </p>
+
+      <table class="example-table">
+        <thead>
+          <tr><th>Pensum</th><th>Tema</th><th>Her på siden</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1.1 — 1.3</td><td>Introduction, web-arkitektur, dev-miljø, DOM-intro</td><td><a href="kap1/">Kap 1</a></td></tr>
+          <tr><td>1.4 — 1.5</td><td>HTML, document structure, attributter, tekst, lister, lenker, bilder, tabeller, semantikk, sitestruktur</td><td><a href="kap2/">Kap 2</a></td></tr>
+          <tr><td>1.6</td><td>CSS intro: syntaks, kaskade, arv, selektorer, farger, margin/padding, sentrering, borders, fonter, pseudo-klasser</td><td><a href="kap3/">Kap 3</a></td></tr>
+          <tr><td>1.7</td><td>CSS continued: lister, display, document flow, arv, mer pseudo, overflow</td><td><a href="kap4/">Kap 4</a></td></tr>
+          <tr><td>(slides)</td><td>Flexbox og Grid (utenom gitbook, kun slides)</td><td><a href="kap5/">Kap 5</a></td></tr>
+          <tr><td>1.10</td><td>Responsive web design — media types, features, logical operators</td><td><a href="kap6/">Kap 6</a></td></tr>
+          <tr><td>1.8</td><td>Web og multimedia — bilder, video, audio</td><td><a href="kap7/">Kap 7</a></td></tr>
+          <tr><td>1.9</td><td>Forms og validering — form-elementet, struktur, validering, skjema-design</td><td><a href="kap8/">Kap 8</a></td></tr>
+          <tr><td>1.11 — 1.12</td><td>JavaScript intro og dynamiske websider</td><td><a href="kap9/">Kap 9</a></td></tr>
+          <tr><td>1.13</td><td>JavaScript continued — arrays, scope, time, DOM, events</td><td><a href="kap10/">Kap 10</a></td></tr>
+          <tr><td>1.14</td><td>XML</td><td><a href="kap11/">Kap 11</a></td></tr>
+          <tr><td>1.15</td><td>Canvas</td><td><a href="kap12/">Kap 12</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="ovinger">
+    <div class="container">
+      <div class="section-badge">Øvinger</div>
+      <h2>Obligatoriske <em>øvinger</em></h2>
+      <p class="section-intro">
+        Fire gruppeoppgaver, alle pass/fail. Alle må bestås for å få ta eksamen.
+      </p>
+
+      <table class="example-table">
+        <thead><tr><th>#</th><th>Tema</th><th>Frist (typisk)</th><th>Dekker kap</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>HTML</td><td>uke 38</td><td><a href="kap2/">Kap 2</a></td></tr>
+          <tr><td>2</td><td>CSS</td><td>uke 40</td><td><a href="kap3/">Kap 3</a> + <a href="kap4/">4</a></td></tr>
+          <tr><td>3</td><td>Forms og responsivt</td><td>uke 43</td><td><a href="kap6/">Kap 6</a> + <a href="kap8/">8</a></td></tr>
+          <tr><td>4</td><td>JavaScript</td><td>uke 46</td><td><a href="kap9/">Kap 9</a> + <a href="kap10/">10</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="eksamen">
+    <div class="container">
+      <div class="section-badge">Eksamen</div>
+      <h2>Eksamen og <em>vurdering</em></h2>
+      <p>
+        Sluttvurdering: 100 % skoleeksamen. Alle fire øvinger må være bestått
+        for å få lov til å gå opp.
+      </p>
+      <div class="callout-blue">
+        <div class="label">Tips</div>
+        <p>
+          Tidligere eksamensoppgaver ligger i <code>tidligere_eksamener/</code>.
+          Bruk dem som kalibrering for hvor detaljert du må kunne hvert tema —
+          ikke alt har like mye vekt.
+        </p>
+      </div>
+      <p>
+        For en strategi for hvordan du bygger opp forståelsen i god tid før
+        eksamen, se <a href="zero-to-hero/">Fra null til klar</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="nav-search.js"></script>
+<script src="chat-widget.js"></script>
+</body>
+</html>

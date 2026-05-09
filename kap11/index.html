@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 11 — XML</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 11: XML">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 11 · Forelesning 13 · Del 4</div>
+      <h1>XML — <em>strukturert data</em></h1>
+      <p class="lede">
+        Et beslektet markup-språk til HTML. Strenge syntaksregler, men
+        fleksible navn — perfekt for konfigurasjon og dataoverføring.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.14</span>
+        <span class="pill">Slides: kommer</span>
+        <span class="pill">Forelesning 13</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor XML?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Skriv et XML-dokument</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>XML</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>XML deler syntaksfilosofi med HTML, men er for data, ikke utseende. Brukes i SOAP, RSS, SVG, og masse legacy-systemer. JSON tok over mye, men XML lever videre.</p>
+      <p><strong>Kilde:</strong> pensum 1.14.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>Som HTML, men <em>strengere</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Sammenlign HTML og XML side ved side: tags, attributter, hierarki. Forskjellen er at XML krever lukke-tag, case-sensitive, kvotering, og at egne tag-navn er greit.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Et <em>note-dokument</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: <code>&lt;?xml version="1.0"?&gt;</code> → root-element → barn-elementer → attributter → CDATA-blokk → XML-validering.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De viktigste <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · SYN</div><div class="sp-title">Syntaks</div><div class="sp-desc">Element, attributt, tekst, CDATA, kommentarer.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · WLF</div><div class="sp-title">Well-formed</div><div class="sp-desc">Hva er et gyldig dokument: én root, alle tags lukket, riktig nesting.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · NMS</div><div class="sp-title">Namespaces</div><div class="sp-desc">xmlns og prefiks.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · USE</div><div class="sp-title">Bruksområder</div><div class="sp-desc">SVG, RSS, SOAP, konfig — i praksis.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">XML-deklarasjon</div><div class="fc-val"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Root-element</div><div class="fc-val">Alltid nøyaktig ett.</div></div>
+      <div class="fact-card"><div class="fc-key">Well-formed</div><div class="fc-val">Følger XML-syntaks.</div></div>
+      <div class="fact-card"><div class="fc-key">Valid</div><div class="fc-val">Følger DTD/Schema.</div></div>
+      <div class="fact-card"><div class="fc-key">CDATA</div><div class="fc-val">Tekst som ikke skal parses.</div></div>
+      <div class="fact-card"><div class="fc-key">Namespace</div><div class="fc-val">Unngår tag-navn-konflikter.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 11</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">skille XML fra HTML</span>
+      <span class="recap-pill">skrive et well-formed XML</span>
+      <span class="recap-pill">bruke attributter og tekst</span>
+      <span class="recap-pill">forklare CDATA</span>
+      <span class="recap-pill">peke på bruksområder</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.14 (XML).</li>
+      <li><strong>Slides:</strong> kommer — sjekk BlackBoard.</li>
+      <li><strong>Eksterne:</strong> W3Schools — XML Tutorial.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Glemme lukke-tag (XML er strengt); bruke ulike case i åpne- og lukke-tag; manglende quotes på attributtverdier; tro at HTML er XML.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Skriv <em>XML for noen data</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Eksempel: «Skriv et XML-dokument som beskriver et bibliotek med tre bøker, hver med tittel, forfatter og utgivelsesår.»</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Hvilket dokument er well-formed? Gjenkjenne syntaksfeil.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

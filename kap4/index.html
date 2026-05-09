@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 4 — CSS videregående</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 4: CSS videregående">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 4 · Forelesning 7 · Del 2</div>
+      <h1>CSS — <em>videregående</em></h1>
+      <p class="lede">
+        Document flow, display-egenskaper og når en boks plutselig flyter
+        over kanten. Det andre laget av CSS, der layout begynner å bli
+        ekte.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.7</span>
+        <span class="pill">Slides: css_props.md</span>
+        <span class="pill">Forelesning 7</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor mer CSS?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Document flow</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Reisen gjennom layout</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>mer CSS</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Kap 3 lærte deg å fargelegge én boks. Kap 4 lærer deg hvordan boksene henger sammen — og hvorfor en kort tekst plutselig kan dytte alle de andre nedover.</p>
+      <p><strong>Kilde:</strong> pensum 1.7.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>Document <em>flow</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Forklar hvordan elementer plasseres etter hverandre i normal flow, hvordan block og inline oppfører seg, og hvordan display kan endre dette.</p>
+      <p><strong>Kilde:</strong> pensum 1.7.4 (Document flow).</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Når én boks <em>flyter over</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: hva er overflow → visible (default) → hidden → scroll → auto. Hvilke konsekvenser dette har for layout og brukeropplevelse.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De syv <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · LST</div><div class="sp-title">Styling lists</div><div class="sp-desc">list-style-type, image, position. Pensum 1.7.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · DSP</div><div class="sp-title">Block ↔ inline</div><div class="sp-desc">display: block, inline, inline-block, none. Pensum 1.7.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · HID</div><div class="sp-title">Skjule bokser</div><div class="sp-desc">display: none vs visibility: hidden. Pensum 1.7.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · FLW</div><div class="sp-title">Document flow</div><div class="sp-desc">Normal flow, float, position. Pensum 1.7.4.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ARV</div><div class="sp-title">Mer om arv</div><div class="sp-desc">inherit, initial, unset. Pensum 1.7.5.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · PSC</div><div class="sp-title">Mer pseudo-klasser</div><div class="sp-desc">:nth-child, :first-of-type. Pensum 1.7.6.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · OVF</div><div class="sp-title">Overflow</div><div class="sp-desc">visible, hidden, scroll, auto. Pensum 1.7.7.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">display</div><div class="fc-val">block, inline, inline-block, none.</div></div>
+      <div class="fact-card"><div class="fc-key">position</div><div class="fc-val">static, relative, absolute, fixed, sticky.</div></div>
+      <div class="fact-card"><div class="fc-key">float</div><div class="fc-val">left, right, none — hvordan det påvirker flow.</div></div>
+      <div class="fact-card"><div class="fc-key">overflow</div><div class="fc-val">Pensum 1.7.7.</div></div>
+      <div class="fact-card"><div class="fc-key">z-index</div><div class="fc-val">Stable order kun for posisjonerte elementer.</div></div>
+      <div class="fact-card"><div class="fc-key">visibility</div><div class="fc-val">hidden vs display: none.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 4</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">forklare normal flow</span>
+      <span class="recap-pill">velge display-verdi</span>
+      <span class="recap-pill">forklare overflow-utfall</span>
+      <span class="recap-pill">styre lister fullstendig</span>
+      <span class="recap-pill">bruke nth-child korrekt</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.7 (alle syv delkapitler).</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/css_props.md</code>.</li>
+      <li><strong>Eksterne:</strong> MDN — Visual formatting model, Block formatting context.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Eksempler: blande visibility: hidden og display: none; tro at z-index virker uten position; glemme at inline-element ikke aksepterer width/height.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Forutsi <em>render</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Gitt en HTML- og CSS-snutt, beskriv hvordan siden ser ut. Klassisk eksamensoppgave.</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder forutsi-render-spørsmål med MCQ.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

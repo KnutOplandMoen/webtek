@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 10 — JavaScript videregående: DOM og events</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 10: JavaScript videregående — DOM og events">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 10 · Forelesning 11 · Del 3</div>
+      <h1>JS — <em>DOM og events</em></h1>
+      <p class="lede">
+        Nå begynner JavaScript å gjøre noe synlig. DOM-manipulering og
+        eventlyttere er motoren bak alt interaktivt på en nettside.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.13</span>
+        <span class="pill">Slides: kommer</span>
+        <span class="pill">Forelesning 11</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor DOM/events?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Bygg en interaktiv side</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>DOM og events</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>JS får mening først når det møter siden. DOM er kontaktflaten; events er triggerne. Vis kontrast: en knapp som ikke gjør noe vs. en som åpner en modal.</p>
+      <p><strong>Kilde:</strong> pensum 1.13.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>Tre <em>handlinger</em>: lese, endre, lytte</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>JS gjør tre ting på en side: <strong>lese</strong> (querySelector, getAttribute), <strong>endre</strong> (innerHTML, classList, style), og <strong>lytte</strong> (addEventListener). Alt annet er kombinasjoner.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Lag en <em>klikkbar teller</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: querySelector → addEventListener('click') → endre tekstinnhold → lagre tall i variabel → vis i DOM. Den klassiske «counter»-historien som dekker alt sentralt.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De fem <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · ARR</div><div class="sp-title">Arrays continued</div><div class="sp-desc">map, filter, forEach, reduce. Pensum 1.13.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SCP</div><div class="sp-title">Scope</div><div class="sp-desc">global, function, block. Hoisting. Pensum 1.13.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · TIM</div><div class="sp-title">Tid</div><div class="sp-desc">setTimeout, setInterval, Date. Pensum 1.13.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · DOM</div><div class="sp-title">DOM-manipulering</div><div class="sp-desc">querySelector, createElement, appendChild, classList, style. Pensum 1.13.4.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · EVT</div><div class="sp-title">Events</div><div class="sp-desc">addEventListener, event-objektet, bubbling, preventDefault. Pensum 1.13.5.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">querySelector</div><div class="fc-val">CSS-selektor → første matchende node.</div></div>
+      <div class="fact-card"><div class="fc-key">querySelectorAll</div><div class="fc-val">CSS-selektor → NodeList av alle treff.</div></div>
+      <div class="fact-card"><div class="fc-key">addEventListener</div><div class="fc-val">Knytter en callback til en event.</div></div>
+      <div class="fact-card"><div class="fc-key">event-objektet</div><div class="fc-val">Argumentet til callbacken; har target, type, preventDefault.</div></div>
+      <div class="fact-card"><div class="fc-key">classList</div><div class="fc-val">add, remove, toggle, contains.</div></div>
+      <div class="fact-card"><div class="fc-key">innerHTML vs textContent</div><div class="fc-val">HTML vs ren tekst.</div></div>
+      <div class="fact-card"><div class="fc-key">scope</div><div class="fc-val">Hvor en variabel er synlig.</div></div>
+      <div class="fact-card"><div class="fc-key">setTimeout</div><div class="fc-val">Kjør én gang etter ms.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 10</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">finne elementer i DOM</span>
+      <span class="recap-pill">endre innhold og klasser</span>
+      <span class="recap-pill">registrere eventlyttere</span>
+      <span class="recap-pill">forklare scope og hoisting</span>
+      <span class="recap-pill">bruke setTimeout/setInterval</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.13 (alle fem delkapitler).</li>
+      <li><strong>Slides:</strong> kommer — sjekk BlackBoard etter F11.</li>
+      <li><strong>Eksterne:</strong> MDN — Document Object Model, Event reference.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Skrive script i head uten <code>defer</code> (DOM ikke klar); blande innerHTML og textContent; glemme preventDefault på form.submit; tro at <code>this</code> er det samme i arrow og vanlig funksjon.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Implementer en <em>todo-liste</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Eksempel: «Skriv JavaScript som lar brukeren legge til, hake av og fjerne todos. Gitt HTML er en input, en knapp og en ul.»</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder kode-output-MCQ-er for scope og events.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

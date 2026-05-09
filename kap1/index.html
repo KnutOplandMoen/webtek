@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 1 — Web og Internett</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 1: Web og Internett">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 1 · Forelesning 1–2 · Del 1</div>
+      <h1>Web og <em>Internett</em></h1>
+      <p class="lede">
+        Hva skjer egentlig mellom det øyeblikket du skriver inn en URL og
+        siden vises? Klient/tjener, HTTP, DNS og TCP/IP — fundamentet alle
+        andre kapitler bygger på.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.1 — 1.3</span>
+        <span class="pill">Slides: intro.md, basics.md</span>
+        <span class="pill">Forelesning 1–2</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor web-arkitektur?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Helhetsbildet</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Reise gjennom kapittelet</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor">
+    <div class="container">
+      <div class="section-badge">01 · Helhetsbilde</div>
+      <h2>Hvorfor <em>web-arkitektur</em>?</h2>
+      <div class="callout">
+        <div class="label">Skal skrives</div>
+        <p>
+          Motiver hvorfor en student må kunne web-arkitektur før hun begynner
+          med HTML. Hovedpoeng: alt annet i pensum kjører på toppen av denne
+          arkitekturen — uten å forstå klient/tjener gir det lite mening at en
+          stilfil hentes separat fra HTML-en.
+        </p>
+        <p><strong>Kilde:</strong> pensum 1.1 (Introduction), 1.1.1 (Web architecture); slides <code>presentasjoner/intro.md</code> linje 36–110.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hierarki">
+    <div class="container">
+      <div class="section-badge">02 · Mental modell</div>
+      <h2>Klient, <em>tjener</em>, og laget mellom</h2>
+      <div class="callout">
+        <div class="label">Skal skrives</div>
+        <p>
+          En SVG-figur som viser klient (nettleseren) til venstre, tjener til
+          høyre, og pakkene som flytter seg over Internett. Forklare LAN vs
+          WAN, og hva «skyen» faktisk er.
+        </p>
+        <p><strong>Kilde:</strong> pensum 1.1.1 (Server, Client, Cloud, Network).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reisen">
+    <div class="container">
+      <div class="section-badge">03 · Rekkefølgen</div>
+      <h2>Reisen fra <em>URL til side</em></h2>
+      <div class="callout">
+        <div class="label">Skal skrives</div>
+        <p>
+          Stegvis: bruker skriver inn URL → DNS-oppslag → TCP-handshake →
+          HTTP-request → server svarer → nettleser parser → DOM bygges →
+          CSS/JS hentes → side render-es. Bruk en <code>.steps</code>-liste.
+          Lenker til <a href="../reisen/">Reisen</a> for fullversjonen.
+        </p>
+        <p><strong>Kilde:</strong> pensum 1.1.1 og 1.3 (DOM); slides <code>intro.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="deler">
+    <div class="container">
+      <div class="section-badge">04 · Hovedtemaer</div>
+      <h2>De fire <em>byggesteinene</em></h2>
+      <p class="section-intro">Kapittel 1 har fire deler. Hver kan utdypes som egen underside hvis det blir for mye.</p>
+      <div class="subpage-card-grid">
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">A · WEB</div>
+          <div class="sp-title">Web-arkitektur</div>
+          <div class="sp-desc">Klient, tjener, sky, nettverk.<br><strong>Kilde:</strong> pensum 1.1.1.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">B · NET</div>
+          <div class="sp-title">Internett og protokoller</div>
+          <div class="sp-desc">TCP/IP-lagene, HTTP, ruting, ARPANET-historien.<br><strong>Kilde:</strong> pensum 1.1.2.</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">C · DNS</div>
+          <div class="sp-title">Domener og DNS</div>
+          <div class="sp-desc">Top-level domains, DNS-oppslag, IP vs navn.<br><strong>Kilde:</strong> pensum 1.1.2 (Domains and DNS).</div>
+        </div>
+        <div class="subpage-card" style="cursor:default;">
+          <div class="sp-icon">D · DOM</div>
+          <div class="sp-title">DOM som tre</div>
+          <div class="sp-desc">Hva DOM er på det konseptuelle nivået — manipulasjonen kommer i kap 10.<br><strong>Kilde:</strong> pensum 1.3.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nokkelbegreper">
+    <div class="container">
+      <div class="section-badge">05 · Begreper</div>
+      <h2>Nøkkel<em>begreper</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card"><div class="fc-key">Klient</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
+        <div class="fact-card"><div class="fc-key">Tjener</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
+        <div class="fact-card"><div class="fc-key">HTTP</div><div class="fc-val">Definisjon her — pensum 1.1.1 + 1.1.2.</div></div>
+        <div class="fact-card"><div class="fc-key">TCP/IP</div><div class="fc-val">De fire lagene — pensum 1.1.2.</div></div>
+        <div class="fact-card"><div class="fc-key">DNS</div><div class="fc-val">Definisjon her — pensum 1.1.2.</div></div>
+        <div class="fact-card"><div class="fc-key">URL</div><div class="fc-val">Definisjon her.</div></div>
+        <div class="fact-card"><div class="fc-key">LAN / WAN</div><div class="fc-val">Definisjon her — pensum 1.1.1.</div></div>
+        <div class="fact-card"><div class="fc-key">DOM</div><div class="fc-val">Definisjon her — pensum 1.3.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="oppsummering">
+    <div class="container">
+      <div class="section-badge">06 · Oppsummering</div>
+      <h2>Hva du skal kunne <em>etter kap 1</em></h2>
+      <div class="recap-grid">
+        <span class="recap-pill">forklare klient/tjener</span>
+        <span class="recap-pill">tegne TCP/IP-lagene</span>
+        <span class="recap-pill">forklare DNS-oppslag</span>
+        <span class="recap-pill">tolke en URL</span>
+        <span class="recap-pill">peke ut DOM-treet i et HTML-dokument</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="notatmapping">
+    <div class="container">
+      <div class="section-badge">07 · Notatmapping</div>
+      <h2>Hvor <em>finner du det</em></h2>
+      <ul>
+        <li><strong>Lærebok:</strong> pensum 1.1, 1.1.1, 1.1.2, 1.2, 1.3 — fra «Introduction» til og med «Document Object Model».</li>
+        <li><strong>Slides:</strong> <code>presentasjoner/intro.md</code> (kursintro + arkitektur), <code>presentasjoner/basics.md</code>.</li>
+        <li><strong>Eksterne ressurser:</strong> MDN — DOM intro; Wikipedia — TCP/IP og DNS for dypere lesing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="feller">
+    <div class="container">
+      <div class="section-badge">08 · Vanlige feller</div>
+      <h2>Vanlige <em>feller</em></h2>
+      <div class="callout-warn">
+        <div class="label">Skal skrives</div>
+        <p>
+          Liste minst tre konkrete misforståelser, for eksempel:
+          (1) «Internett = web» — det er ikke samme;
+          (2) blanding av HTTP og HTML;
+          (3) tro at DNS-server lagrer hele Internett.
+          Hver felle skal forklares med hva som faktisk gjelder.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scenario">
+    <div class="container">
+      <div class="section-badge">09 · Eksamensscenario</div>
+      <h2>Én oppgave, <em>steg for steg</em></h2>
+      <div class="callout">
+        <div class="label">Skal skrives</div>
+        <p>
+          Plukk en typisk oppgave fra <code>tidligere_eksamener/</code> som
+          dekker kapittelet (for eksempel «Forklar hva som skjer når en
+          bruker skriver <code>www.ntnu.no</code> i adressefeltet»). Vis
+          hvordan du strukturerer svaret og hvilke begreper som må nevnes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">10 · Test deg selv</div>
+      <h2>Helhets<em>spørsmål</em></h2>
+      <p class="section-intro">10–15 spørsmål som dekker hele kapittelet. Fylles inn etter at seksjonene over er skrevet.</p>
+
+      <div class="quiz" data-quiz>
+        <div class="q-label">Eksempel · Lett</div>
+        <div class="q-text">Hva er forskjellen på en klient og en tjener?</div>
+        <div class="quiz-reveal">
+          <button class="reveal-btn">Se svar</button>
+          <div class="answer">Tjeneren tilbyr ressurser, klienten ber om dem. Skal utdypes når seksjonen skrives.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="label">Skal fylles inn</div>
+        <p>Ti spørsmål til mangler: tre lette, fem middels og to vanskelige.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="kapittel-eksamen">
+    <div class="container">
+      <div class="section-badge">11 · Kapittel-eksamen</div>
+      <h2>Flashcards — <em>hele pensum i kortform</em></h2>
+      <p class="section-intro">
+        Når kapittelet er ferdig fylt ut, legg inn 30–50 kort her: blanding
+        av begrepskort og regne-/oppgavekort. Bruk <kbd>←</kbd> <kbd>→</kbd>
+        til å bla, klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
+      </p>
+      <div class="flashcard-deck" data-flashcards>
+        <div class="flashcard-toolbar">
+          <button class="fc-btn" data-fc-prev aria-label="Forrige kort">&larr; Forrige</button>
+          <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+          <button class="fc-btn" data-fc-next aria-label="Neste kort">Neste &rarr;</button>
+          <button class="fc-btn fc-btn--alt" data-fc-shuffle aria-label="Shuffle">Shuffle</button>
+          <button class="fc-btn fc-btn--alt" data-fc-reset aria-label="Reset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

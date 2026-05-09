@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 5 — Layout: Flexbox og Grid</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 5: Flexbox og Grid">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 5 · Forelesning 8 · Del 2</div>
+      <h1>Layout — <em>Flexbox og Grid</em></h1>
+      <p class="lede">
+        To moderne CSS-systemer som erstattet float-hacks. Flexbox tenker
+        i én dimensjon, Grid i to. Her lærer du når du bruker hva.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: slides (utenom gitbook)</span>
+        <span class="pill">Slides: grid_flebox.md, exam_info.md</span>
+        <span class="pill">Forelesning 8</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor moderne layout?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">1D vs 2D</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Bygg et layout</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>Flexbox og Grid</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Før Flexbox/Grid brukte folk float, position og tabeller for layout. Det var skjørt og uforutsigbart. Vis kontrasten med en konkret «center vertical»-oppgave før og etter.</p>
+      <p><strong>Kilde:</strong> slides <code>presentasjoner/grid_flebox.md</code> + <code>presentasjoner/exam_info.md</code> linje 1–90.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>1D <em>versus</em> 2D</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>SVG-figur som viser flexbox (én rad eller én kolonne) versus grid (rader OG kolonner samtidig). Forklar main axis og cross axis for flex; rows og columns for grid.</p>
+      <p><strong>Kilde:</strong> slides <code>exam_info.md</code> linje 36–60.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Bygg en <em>side-layout</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: page-grid (header, sidebar, main, footer) i Grid → kort-rad i Flexbox → meny i Flexbox → galleriet i Grid. Vis at du nesten alltid bruker begge sammen.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De to <em>systemene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · FLEX</div><div class="sp-title">Flexbox</div><div class="sp-desc">display: flex, flex-direction, justify-content, align-items, flex-wrap, flex-grow/shrink/basis. Slides linje 19–47.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · GRID</div><div class="sp-title">Grid</div><div class="sp-desc">display: grid, grid-template-columns/rows, grid-area, grid-gap, justify/align-items. Slides linje 48–90.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Main axis</div><div class="fc-val">Flex-aksen som bestemmes av flex-direction.</div></div>
+      <div class="fact-card"><div class="fc-key">Cross axis</div><div class="fc-val">Aksen vinkelrett på main.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid line</div><div class="fc-val">De numbered linjene mellom celler.</div></div>
+      <div class="fact-card"><div class="fc-key">Grid track</div><div class="fc-val">Mellomrom mellom to linjer (kolonne eller rad).</div></div>
+      <div class="fact-card"><div class="fc-key">Grid area</div><div class="fc-val">Rektangulært område dekket av flere celler.</div></div>
+      <div class="fact-card"><div class="fc-key">fr-enheten</div><div class="fc-val">Fraksjon av tilgjengelig plass i Grid.</div></div>
+      <div class="fact-card"><div class="fc-key">justify-content</div><div class="fc-val">Plassering langs main axis (flex) / inline-axen (grid).</div></div>
+      <div class="fact-card"><div class="fc-key">align-items</div><div class="fc-val">Plassering på cross axis.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 5</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">velge mellom flex og grid</span>
+      <span class="recap-pill">forklare main vs cross axis</span>
+      <span class="recap-pill">skrive grid-template-columns</span>
+      <span class="recap-pill">bruke fr-enheten</span>
+      <span class="recap-pill">flex-grow/shrink/basis</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> Flexbox/Grid er <em>ikke</em> i gitbook-pensum, men er pensum via slides.</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/grid_flebox.md</code> (placeholder) og <code>presentasjoner/exam_info.md</code> (innholder faktisk Flexbox/Grid-slidene tross misvisende navn).</li>
+      <li><strong>Eksterne:</strong> CSS Tricks — A Complete Guide to Flexbox; A Complete Guide to Grid.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Eksempler: bruke flex til 2D-layout som blir vrient; glemme at justify- og align- bytter mening mellom flex og grid avhengig av direction; ikke vite at grid-template-areas krever quotes.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Skriv <em>grid-template</em> til skissen</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Gitt en visuell skisse av en sidelayout, skriv CSS-en som realiserer den med Grid. Klassisk eksamensoppgave.</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder «velg riktig grid-template-columns»-MCQ.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort. Mange skriv-CSS-til-skisse-kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 12 — Canvas</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 12: Canvas">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 12 · Forelesning 13 · Del 4</div>
+      <h1>Canvas — <em>tegn i nettleseren</em></h1>
+      <p class="lede">
+        Et HTML-element der du tegner pixler med JavaScript. Spill,
+        diagrammer, bildebehandling — alt som ikke kan uttrykkes som
+        DOM-elementer.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.15</span>
+        <span class="pill">Slides: kommer</span>
+        <span class="pill">Forelesning 13</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor canvas?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Tegn et rektangel</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>canvas</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>DOM er bra for tekst og knapper, men ikke for å tegne. Canvas gir deg en pixel-buffer du kan fylle med JavaScript — perfekt for visualiseringer, spill og dynamiske bilder.</p>
+      <p><strong>Kilde:</strong> pensum 1.15.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>En <em>tegneflate</em> i HTML</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>SVG-figur som viser canvas-koordinatsystemet: (0,0) øverst til venstre, x øker mot høyre, y øker nedover. Forklar at canvas er bitmap (rasteret «brennes inn»), ulikt SVG som er vektor.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Fra <em>tom canvas</em> til animasjon</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: <code>&lt;canvas&gt;</code>-element → getContext('2d') → fillRect → strokeRect → arc → bilde → enkel animasjon med requestAnimationFrame.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De viktigste <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · CTX</div><div class="sp-title">Context</div><div class="sp-desc">getContext('2d') — alle tegnefunksjoner ligger her.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SHP</div><div class="sp-title">Former</div><div class="sp-desc">fillRect, strokeRect, arc, beginPath, moveTo, lineTo.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · STY</div><div class="sp-title">Stiler</div><div class="sp-desc">fillStyle, strokeStyle, lineWidth, font.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">drawImage med Image-objekt.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ANI</div><div class="sp-title">Animasjon</div><div class="sp-desc">requestAnimationFrame, clearRect, oppdater og tegn igjen.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">2D context</div><div class="fc-val">Objektet med tegnefunksjoner.</div></div>
+      <div class="fact-card"><div class="fc-key">Koordinatsystem</div><div class="fc-val">(0,0) er øverst til venstre.</div></div>
+      <div class="fact-card"><div class="fc-key">Path</div><div class="fc-val">beginPath → moveTo/lineTo/arc → closePath/stroke/fill.</div></div>
+      <div class="fact-card"><div class="fc-key">fillStyle vs strokeStyle</div><div class="fc-val">Fyll vs ramme.</div></div>
+      <div class="fact-card"><div class="fc-key">clearRect</div><div class="fc-val">Slett rektangulært område.</div></div>
+      <div class="fact-card"><div class="fc-key">requestAnimationFrame</div><div class="fc-val">Synkron med skjermens refresh.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 12</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">opprette canvas og hente context</span>
+      <span class="recap-pill">tegne grunnformer</span>
+      <span class="recap-pill">forklare path-objekter</span>
+      <span class="recap-pill">enkel animasjon</span>
+      <span class="recap-pill">forskjell canvas vs SVG</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.15 (Canvas).</li>
+      <li><strong>Slides:</strong> kommer — sjekk BlackBoard.</li>
+      <li><strong>Eksterne:</strong> MDN — Canvas API tutorial.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Glemme å sette width/height som attributter (CSS strekker pixler); tegne uten beginPath; ikke vite at fillRect tegner uten path; bruke setInterval i stedet for requestAnimationFrame.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Tegn et <em>søylediagram</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Eksempel: «Gitt et array med fem tall, tegn et søylediagram på et 400×200-canvas.»</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>«Hva tegner denne koden?»-spørsmål er ofte gode her.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

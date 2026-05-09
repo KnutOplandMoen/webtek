@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 7 — Multimedia på web</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 7: Multimedia">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 7 · Forelesning 11 · Del 2</div>
+      <h1>Multimedia på <em>web</em></h1>
+      <p class="lede">
+        Bilder, video og audio — formater, attributter, og hvordan du
+        sørger for at innholdet virker både med fiber og dårlig nett.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.8</span>
+        <span class="pill">Slides: kommer</span>
+        <span class="pill">Forelesning 11</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor multimedia?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Bygg et galleri</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>multimedia</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Tekst er ikke nok — bilder, video og audio er forventet. Men de er også store filer, så valg av format og attributter betyr noe.</p>
+      <p><strong>Kilde:</strong> pensum 1.8.</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>Tre <em>medietyper</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Bilde (statisk), video (bilde + tid + lyd), audio (bare lyd). Hvert har sitt HTML-element, sine attributter og sine egne formatter.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Lag et <em>galleri</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis: img med alt → figure med caption → picture med flere srcset → video med fallback-tekst → audio med controls.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De tre <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · IMG</div><div class="sp-title">Bilder</div><div class="sp-desc">img, alt, srcset, sizes, picture-element. Formater: JPG, PNG, SVG, WebP. Pensum 1.8.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · VID</div><div class="sp-title">Video</div><div class="sp-desc">video-element, source, controls, autoplay, muted. MP4 vs WebM. Pensum 1.8.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · AUD</div><div class="sp-title">Audio</div><div class="sp-desc">audio-element, controls, loop. MP3 vs Ogg. Pensum 1.8.3.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Raster vs vektor</div><div class="fc-val">PNG/JPG vs SVG.</div></div>
+      <div class="fact-card"><div class="fc-key">alt-attributt</div><div class="fc-val">Tilgjengelighet og fallback.</div></div>
+      <div class="fact-card"><div class="fc-key">srcset</div><div class="fc-val">Velg riktig oppløsning per skjerm.</div></div>
+      <div class="fact-card"><div class="fc-key">controls</div><div class="fc-val">Standard avspillingskontroller.</div></div>
+      <div class="fact-card"><div class="fc-key">poster</div><div class="fc-val">Bilde vist før video starter.</div></div>
+      <div class="fact-card"><div class="fc-key">autoplay + muted</div><div class="fc-val">Browsere blokkerer autoplay med lyd.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 7</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">velge bildeformat</span>
+      <span class="recap-pill">skrive video-element med fallback</span>
+      <span class="recap-pill">bruke alt riktig</span>
+      <span class="recap-pill">forklare srcset</span>
+      <span class="recap-pill">audio-element</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.8 (Web and multimedia).</li>
+      <li><strong>Slides:</strong> ikke i <code>presentasjoner/</code> ennå — sjekk BlackBoard.</li>
+      <li><strong>Eksterne:</strong> MDN — img/video/audio elementer.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Glemme alt; bruke kjempestore JPG-er; tro at autoplay alltid virker; ikke bruke source-elementer for fallback i video.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Bygd <em>et bildegalleri</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Eksempel: «Skriv HTML for et bildegalleri med tre bilder, hvert med tilhørende beskrivelse og høyoppløselig versjon for retina.»</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Velg-format-MCQ er nyttig her.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards</h2>
+    <p class="section-intro">30–50 kort.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

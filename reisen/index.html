@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Reise gjennom faget — IT2805</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Forside</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Reise gjennom webteknologi">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Helhet · Sammenheng</div>
+      <h1>Reise gjennom <em>faget</em></h1>
+      <p class="lede">
+        Følg én konkret historie: en student åpner nettleseren, skriver inn
+        en URL, og en interaktiv side svarer tilbake. Hva skjer mellom de to
+        klikkene?
+      </p>
+    </div>
+  </header>
+
+  <section style="padding: 48px 0;">
+    <div class="container wide">
+      <div class="reisen-layout">
+
+        <aside class="reisen-nav">
+          <ol id="reisen-steps">
+            <li data-target="steg1"><a href="#steg1">01 · Klikket</a></li>
+            <li data-target="steg2"><a href="#steg2">02 · DNS og IP</a></li>
+            <li data-target="steg3"><a href="#steg3">03 · HTTP-forespørsel</a></li>
+            <li data-target="steg4"><a href="#steg4">04 · Tjeneren svarer</a></li>
+            <li data-target="steg5"><a href="#steg5">05 · HTML mottas</a></li>
+            <li data-target="steg6"><a href="#steg6">06 · DOM bygges</a></li>
+            <li data-target="steg7"><a href="#steg7">07 · CSS legges på</a></li>
+            <li data-target="steg8"><a href="#steg8">08 · JavaScript kjøres</a></li>
+            <li data-target="steg9"><a href="#steg9">09 · Brukeren klikker</a></li>
+            <li data-target="steg10"><a href="#steg10">10 · Hele bildet</a></li>
+          </ol>
+        </aside>
+
+        <div class="reisen-content">
+
+          <section data-step="1" id="steg1">
+            <div class="section-badge">01</div>
+            <h2>Studenten <em>klikker</em></h2>
+            <p class="dropcap">
+              Hva skal skrives her: hva er en URL, hva er forskjellen på
+              <code>https://</code> og en filsti, hvorfor er adressefeltet
+              både input og output. Pek til <a href="../kap1/">Kap 1</a>.
+            </p>
+            <div class="callout">
+              <div class="label">Skal fylles inn</div>
+              <p>
+                Beskriv hva nettleseren bestemmer seg for å gjøre når en URL
+                trykkes — protokoll, vert, sti. Bruk én konkret URL som case.
+              </p>
+            </div>
+          </section>
+
+          <section data-step="2" id="steg2">
+            <div class="section-badge">02</div>
+            <h2>DNS oversetter <em>navnet</em></h2>
+            <p>
+              Hva skal skrives her: hvordan en domene-navn oppløses til en
+              IP-adresse, hva en DNS-server er, og hvorfor systemet er
+              hierarkisk. Kilde: pensum 1.1.2 (DNS) og slides
+              <code>presentasjoner/intro.md</code>.
+            </p>
+          </section>
+
+          <section data-step="3" id="steg3">
+            <div class="section-badge">03</div>
+            <h2>Klienten sender <em>HTTP</em></h2>
+            <p>
+              Hva skal skrives her: HTTP request line, headers, og at TCP/IP
+              ligger under. Pek til <a href="../kap1/#http">Kap 1 · HTTP</a>.
+            </p>
+          </section>
+
+          <section data-step="4" id="steg4">
+            <div class="section-badge">04</div>
+            <h2>Tjeneren <em>svarer</em></h2>
+            <p>
+              Hva skal skrives her: status-kode, response headers, og selve
+              HTML-en som body. Pek til pensum 1.1.1 (Web architecture).
+            </p>
+          </section>
+
+          <section data-step="5" id="steg5">
+            <div class="section-badge">05</div>
+            <h2>HTML mottas <em>som tekst</em></h2>
+            <p>
+              Hva skal skrives her: HTML er bare tekst i en bestemt syntaks.
+              Lenker, bilder og scripts er referanser som hentes etterpå.
+              Pek til <a href="../kap2/">Kap 2</a>.
+            </p>
+          </section>
+
+          <section data-step="6" id="steg6">
+            <div class="section-badge">06</div>
+            <h2>DOM-en <em>bygges</em></h2>
+            <p>
+              Hva skal skrives her: hvordan parseren lager et tre av noder fra
+              HTML-strengen. Pek til pensum 1.3 (DOM).
+            </p>
+          </section>
+
+          <section data-step="7" id="steg7">
+            <div class="section-badge">07</div>
+            <h2>CSS <em>legges på</em></h2>
+            <p>
+              Hva skal skrives her: stilark hentes, parses, og hver node får
+              tildelt verdier basert på selektorer + kaskade + arv. Pek til
+              <a href="../kap3/">Kap 3</a>.
+            </p>
+          </section>
+
+          <section data-step="8" id="steg8">
+            <div class="section-badge">08</div>
+            <h2>JavaScript <em>kjøres</em></h2>
+            <p>
+              Hva skal skrives her: script-tag-er hentes og evalueres. Globale
+              variabler, eventlyttere registreres. Pek til
+              <a href="../kap9/">Kap 9</a>.
+            </p>
+          </section>
+
+          <section data-step="9" id="steg9">
+            <div class="section-badge">09</div>
+            <h2>Brukeren <em>klikker</em></h2>
+            <p>
+              Hva skal skrives her: et klikk fyrer av en event som JavaScript
+              har lyttet på. DOM endres, og siden re-render-er. Pek til
+              <a href="../kap10/">Kap 10</a>.
+            </p>
+          </section>
+
+          <section data-step="10" id="steg10">
+            <div class="section-badge">10</div>
+            <h2>Hele <em>bildet</em></h2>
+            <p>
+              Hva skal skrives her: oppsummering av kjeden — fra URL til
+              interaktiv side, og hvordan kapitlene bygger på hverandre.
+            </p>
+            <div class="callout-blue">
+              <div class="label">Til slutt</div>
+              <p>
+                Reisen er ment som ramme rundt hele pensum. Når du har lest
+                alle kapitlene, kom tilbake hit og se om historien gir mer
+                mening — det er testen på at det henger sammen.
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="progress-rail"><div class="progress-fill" id="progress-fill"></div></div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var navItems = document.querySelectorAll('.reisen-nav li');
+  var sections = document.querySelectorAll('.reisen-content section[data-step]');
+  var fill = document.getElementById('progress-fill');
+
+  function setActive(id) {
+    navItems.forEach(function (li) {
+      if (li.getAttribute('data-target') === id) li.classList.add('active');
+      else li.classList.remove('active');
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          setActive(e.target.id);
+          var step = parseInt(e.target.getAttribute('data-step'), 10);
+          var pct = (step / sections.length) * 100;
+          if (fill) fill.style.height = pct + '%';
+        }
+      });
+    }, { rootMargin: '-30% 0px -55% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

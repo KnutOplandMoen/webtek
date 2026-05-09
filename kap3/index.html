@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 3 — CSS grunnleggende</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Alle kapitler</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3: CSS grunnleggende">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Forelesning 5–6 · Del 2</div>
+      <h1>CSS — <em>presentasjonens språk</em></h1>
+      <p class="lede">
+        Hvordan tre regler kan kjempe om samme element, hvem som vinner,
+        og hvorfor arv ikke alltid gjør det du tror. Selektorer, kaskade
+        og box-modellen.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.6</span>
+        <span class="pill">Slides: css.md, selectors.md</span>
+        <span class="pill">Forelesning 5–6</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor CSS?</a></li>
+        <li><span class="toc-num">02</span><a href="#hierarki">Mental modell: kaskaden</a></li>
+        <li><span class="toc-num">03</span><a href="#reisen">Stil din første side</a></li>
+        <li><span class="toc-num">04</span><a href="#deler">Hovedtemaer</a></li>
+        <li><span class="toc-num">05</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">06</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">07</span><a href="#notatmapping">Notatmapping</a></li>
+        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">09</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">10</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">11</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Helhetsbilde</div>
+    <h2>Hvorfor <em>CSS</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Motiver hvorfor presentasjon skilles fra struktur. Hovedpoeng: én HTML, mange stiler — lettere vedlikehold, raskere lasting, bedre tilgjengelighet.</p>
+      <p><strong>Kilde:</strong> pensum 1.6.1 (Understanding CSS).</p>
+    </div>
+  </div></section>
+
+  <section id="hierarki"><div class="container">
+    <div class="section-badge">02 · Mental modell</div>
+    <h2>Kaskaden — hvem <em>vinner</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Animert SVG som viser tre regler som matcher samme element. Steg 1: matcher. Steg 2: spesifisitet. Steg 3: kilde-rekkefølge. Steg 4: vinneren får verdien.</p>
+      <p><strong>Kilde:</strong> pensum 1.6.4 (Cascade), 1.6.5 (Inheritance), slides <code>css.md</code>.</p>
+    </div>
+  </div></section>
+
+  <section id="reisen"><div class="container">
+    <div class="section-badge">03 · Reisen</div>
+    <h2>Fra naken side til <em>stylet</em></h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Stegvis liste: link inline-stylesheet → typografi → farger → margin/padding → sentrering → borders → pseudo-klasser. Bruk <code>.steps</code>.</p>
+    </div>
+  </div></section>
+
+  <section id="deler"><div class="container">
+    <div class="section-badge">04 · Hovedtemaer</div>
+    <h2>De tolv <em>delene</em></h2>
+    <div class="subpage-card-grid">
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">A · UND</div><div class="sp-title">Forstå CSS</div><div class="sp-desc">Hva CSS er konseptuelt. Pensum 1.6.1.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">B · SYN</div><div class="sp-title">Syntaks</div><div class="sp-desc">selektor { property: value; }. Pensum 1.6.2.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">C · KMM</div><div class="sp-title">Kommentarer</div><div class="sp-desc"><code>/* … */</code>. Pensum 1.6.3.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">D · KAS</div><div class="sp-title">Kaskaden</div><div class="sp-desc">Spesifisitet, opprinnelse, rekkefølge. Pensum 1.6.4.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">E · ARV</div><div class="sp-title">Arv</div><div class="sp-desc">Hvilke egenskaper arves, hvilke ikke. Pensum 1.6.5.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">F · SEL</div><div class="sp-title">Selektorer</div><div class="sp-desc">Type, klasse, id, attributt, descendant. Pensum 1.6.6 + slides <code>selectors.md</code>.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">G · CLR</div><div class="sp-title">Farger</div><div class="sp-desc">Navn, hex, rgb, rgba, hsl. Pensum 1.6.7.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">H · BOX</div><div class="sp-title">Margin og padding</div><div class="sp-desc">Box-modellen. Pensum 1.6.8.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">I · CTR</div><div class="sp-title">Sentrering</div><div class="sp-desc">margin: auto og text-align. Pensum 1.6.9.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">J · BDR</div><div class="sp-title">Borders</div><div class="sp-desc">border-width, style, color, radius. Pensum 1.6.10.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">K · FNT</div><div class="sp-title">Tekst og fonter</div><div class="sp-desc">font-family, size, weight, line-height. Pensum 1.6.11.</div></div>
+      <div class="subpage-card" style="cursor:default;"><div class="sp-icon">L · PSC</div><div class="sp-title">Pseudo-klasser</div><div class="sp-desc">:hover, :active, :focus. Pensum 1.6.12.</div></div>
+    </div>
+  </div></section>
+
+  <section id="nokkelbegreper"><div class="container">
+    <div class="section-badge">05 · Begreper</div>
+    <h2>Nøkkel<em>begreper</em></h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Selektor</div><div class="fc-val">Definisjon. Pensum 1.6.6.</div></div>
+      <div class="fact-card"><div class="fc-key">Spesifisitet</div><div class="fc-val">Tellesystem (a,b,c,d). Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Kaskade</div><div class="fc-val">Pensum 1.6.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Arv</div><div class="fc-val">Pensum 1.6.5.</div></div>
+      <div class="fact-card"><div class="fc-key">Box-modellen</div><div class="fc-val">content + padding + border + margin.</div></div>
+      <div class="fact-card"><div class="fc-key">Pseudo-klasse</div><div class="fc-val">Pensum 1.6.12.</div></div>
+      <div class="fact-card"><div class="fc-key">!important</div><div class="fc-val">Bruk og misbruk.</div></div>
+      <div class="fact-card"><div class="fc-key">Inline / internal / external</div><div class="fc-val">Tre måter å koble CSS.</div></div>
+    </div>
+  </div></section>
+
+  <section id="oppsummering"><div class="container">
+    <div class="section-badge">06 · Oppsummering</div>
+    <h2>Hva du skal kunne <em>etter kap 3</em></h2>
+    <div class="recap-grid">
+      <span class="recap-pill">skrive selektorer for komplekse mønstre</span>
+      <span class="recap-pill">forklare hvilken regel som vinner</span>
+      <span class="recap-pill">tegne box-modellen</span>
+      <span class="recap-pill">styre fonter og farger</span>
+      <span class="recap-pill">bruke pseudo-klasser</span>
+    </div>
+  </div></section>
+
+  <section id="notatmapping"><div class="container">
+    <div class="section-badge">07 · Notatmapping</div>
+    <h2>Hvor <em>finner du det</em></h2>
+    <ul>
+      <li><strong>Lærebok:</strong> pensum 1.6 (alle 12 delkapitler).</li>
+      <li><strong>Slides:</strong> <code>presentasjoner/css.md</code>, <code>presentasjoner/selectors.md</code>.</li>
+      <li><strong>Eksterne:</strong> MDN — CSS Cascade and Inheritance, W3C CSS-validator.</li>
+    </ul>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">08 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Skal skrives</div>
+      <p>Eksempler: tro at id alltid vinner over klasse uansett (jo, men forklar hvorfor); blande margin og padding; glemme at width regner ut fra content-box som default; misbruk av <code>!important</code>.</p>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">09 · Eksamensscenario</div>
+    <h2>Hvilken <em>regel vinner</em>?</h2>
+    <div class="callout"><div class="label">Skal skrives</div>
+      <p>Klassisk eksamensoppgave: gitt fire CSS-regler og et HTML-fragment, regn ut spesifisitet og pek på vinneren. Vis utregningen.</p>
+    </div>
+  </div></section>
+
+  <section id="quiz"><div class="container">
+    <div class="section-badge">10 · Test deg selv</div>
+    <h2>Helhets<em>spørsmål</em></h2>
+    <p class="section-intro">10–15 spørsmål — fylles inn senere.</p>
+    <div class="callout"><div class="label">Skal fylles inn</div><p>Inkluder MCQ-er for spesifisitet — det gir tette differensieringspoeng.</p></div>
+  </div></section>
+
+  <section id="kapittel-eksamen"><div class="container">
+    <div class="section-badge">11 · Kapittel-eksamen</div>
+    <h2>Flashcards — <em>hele pensum i kortform</em></h2>
+    <p class="section-intro">30–50 kort. Inkluder mange spesifisitets-utregninger.</p>
+    <div class="flashcard-deck" data-flashcards>
+      <div class="flashcard-toolbar">
+        <button class="fc-btn" data-fc-prev>&larr; Forrige</button>
+        <span class="fc-counter"><span data-fc-current>1</span> / <span data-fc-total>0</span></span>
+        <button class="fc-btn" data-fc-next>Neste &rarr;</button>
+        <button class="fc-btn fc-btn--alt" data-fc-shuffle>Shuffle</button>
+        <button class="fc-btn fc-btn--alt" data-fc-reset>Reset</button>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../quiz.js"></script>
+<script src="../flashcards.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>
