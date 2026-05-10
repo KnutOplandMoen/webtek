@@ -43,6 +43,47 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 4 <span class="ef-prio high">Høy prioritet</span></div>
+        <h3 class="ef-title">display og visibility er fast langsvarsoppgave</h3>
+        <p style="margin-top:0;">
+          Forskjellen mellom <code>display:none</code>, <code>display:inline</code>,
+          <code>display:block</code> og <code>visibility:hidden</code> har vært
+          langsvarsoppgave på 2 av 3 sett (4–6 %). Padding-spørsmål dukker
+          også opp som MCQ to ganger. I tillegg får du ofte en kort
+          posisjoneringsoppgave (relative vs absolute).
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne</h4>
+            <ul>
+              <li><strong>display</strong>: none (fjernet, ingen plass), inline (i tekstflyt), block (full bredde), inline-block</li>
+              <li><strong>visibility:hidden</strong> — usynlig MEN beholder plassen (dette er fellen)</li>
+              <li><strong>padding</strong> = mellomrom mellom border og innhold (har vært MCQ to ganger)</li>
+              <li><strong>position</strong>: static (default), relative (fra normalpos), absolute (fra forelder), fixed (viewport)</li>
+              <li><strong>Skrive CSS</strong> for "20px ned, 30px inn" eller absolutt fra HTML-roten</li>
+              <li><strong>z-index</strong> styrer stable-rekkefølge (krever position ≠ static)</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li>float-baserte layouter — moderne pensum bruker Flexbox/Grid</li>
+              <li>clear-property og clearfix — ikke i eksamen</li>
+              <li>overflow-detaljer (auto vs scroll vs hidden) — kun i passering</li>
+              <li>Avanserte pseudo-klasser (<code>:not()</code>, <code>:nth-of-type</code>)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Sannsynlighet 67 % for display-langsvar (2/3) · Forventet vekt 8–12 % · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">

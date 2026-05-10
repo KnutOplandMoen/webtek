@@ -41,6 +41,49 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 10 <span class="ef-prio high">Høy prioritet</span></div>
+        <h3 class="ef-title">Event propagation/bubbling er forventet langsvarsoppgave</h3>
+        <p style="margin-top:0;">
+          DOM og events er stort: 2 av 3 sett har en stor langsvarsoppgave
+          om event propagation og bubbling (10 %), og 1/3 har en kode-oppgave
+          med mouse/focus-handlers (10 %). I tillegg dukker forskjellen
+          mellom <code>getElementById</code> og <code>getElementsByX</code>
+          opp som langsvar.
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne</h4>
+            <ul>
+              <li><strong>Tre faser</strong>: capturing (ned fra window) → target → bubbling (opp til root)</li>
+              <li><strong>addEventListener</strong>: tredje arg <code>true</code> = capture, <code>false</code> (default) = bubble</li>
+              <li><strong>stopPropagation()</strong> stopper videre forplantning, <strong>preventDefault()</strong> blokkerer default-oppførsel</li>
+              <li><strong>DOM-tilgang</strong>: forskjellen mellom <code>getElementById</code> (én), <code>getElementsByClassName</code>/<code>TagName</code>/<code>Name</code> (HTMLCollection), <code>querySelector(All)</code></li>
+              <li><strong>Event-typer</strong>: <code>click</code>, <code>mouseover/mouseout</code>, <code>focus/blur</code>, <code>submit</code>, <code>keydown</code></li>
+              <li><strong>Endre stil/innhold</strong>: <code>el.style.color</code>, <code>el.innerHTML</code>, <code>el.value</code></li>
+              <li><strong>Eksempel for bubbling</strong>: nestede divs, klikk på indre, listener på ytre</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li>Custom events og <code>dispatchEvent</code></li>
+              <li>Event delegation som mønster (godt å vite, ikke testet)</li>
+              <li>Skjemaers <code>FormData</code>-API</li>
+              <li>Touch-events og pointer-events</li>
+              <li>Avansert DOM-traversering (<code>parentNode.children</code>, <code>nextSibling</code>)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Sannsynlighet 67 % event-langsvar (2/3) · Forventet vekt 12–20 % · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">

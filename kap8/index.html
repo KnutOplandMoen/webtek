@@ -41,6 +41,47 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 8 <span class="ef-prio high">Høy prioritet</span></div>
+        <h3 class="ef-title">POST/GET er én av tre nesten-garantier — pluss store kode-oppgaver</h3>
+        <p style="margin-top:0;">
+          Forms-kapittelet leverer flere store oppgaver: POST vs GET dukker
+          opp i alle 3 sett, og 2 av 3 sett har en stor kode-oppgave der du
+          skal skrive et HTML-skjema + JS som validerer eller regner ut.
+          Denne delen er blant de mest poengrike.
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne</h4>
+            <ul>
+              <li><strong>POST vs GET</strong> — minst tre forskjeller (URL-synlighet, idempotens, størrelse, caching, sikkerhet)</li>
+              <li><strong>Form-skjelett</strong>: <code>&lt;form action method&gt;</code> + <code>&lt;input type name id&gt;</code> + submit-knapp</li>
+              <li><strong>Input-typer</strong>: text, number, password, email, checkbox, radio, submit, button</li>
+              <li><strong>JS-validering</strong>: lese verdier med <code>document.getElementById("x").value</code>, sjekke med regex / <code>parseInt</code></li>
+              <li><strong>Validerings-mønstre</strong>: alder &gt; 18, navn uten siffer (<code>/\d/</code>), passord med stor + spesial + tall</li>
+              <li><strong>Vise feil i alert</strong>: <code>alert("feilmelding"); return false;</code></li>
+              <li><strong>Kalkulator-form-mønster</strong>: to inputs + 2 knapper med <code>onclick</code> + <code>&lt;span id="result"&gt;</code> for output</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li><code>fieldset</code>, <code>legend</code>, <code>label</code> — bra praksis, ikke testet</li>
+              <li>HTML5-validering (<code>required</code>, <code>pattern</code>, <code>min/max</code>) — eksamen forventer JS-validering</li>
+              <li>multipart/form-data og fil-opplasting</li>
+              <li>Server-side-håndtering (det er backend-kurs)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Sannsynlighet 100 % POST/GET (3/3) + 67 % validering (2/3) · Forventet vekt 14–22 % · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">

@@ -42,6 +42,50 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 12 <span class="ef-prio high">Høyeste prioritet</span></div>
+        <h3 class="ef-title">Canvas-tegning på alle 3 sett — 10 % per gang</h3>
+        <p style="margin-top:0;">
+          Dette er det <em>viktigste</em> enkelt-kapittelet i hele pensum
+          for eksamen. Hvert reelle sett har en Canvas-oppgave verdt 10 %.
+          Du får alltid skjelett-HTML, så det eneste du trenger å skrive
+          er JavaScript-en som tegner figuren. Tren oppskriften til den sitter
+          i fingrene.
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne i søvne</h4>
+            <ul>
+              <li><strong>Hente canvas + kontekst</strong>: <code>document.getElementById("myCanvas").getContext("2d")</code></li>
+              <li><strong>Linjer</strong>: <code>beginPath()</code> → <code>moveTo(x,y)</code> → <code>lineTo(x,y)</code> → <code>stroke()</code></li>
+              <li><strong>Rektangel</strong>: <code>fillRect(x,y,w,h)</code> + <code>strokeRect(x,y,w,h)</code></li>
+              <li><strong>Sirkel/bue</strong>: <code>arc(x, y, r, 0, 2*Math.PI)</code></li>
+              <li><strong>Tekst</strong>: <code>ctx.font = "16px Arial"</code> + <code>fillText("hei", x, y)</code></li>
+              <li><strong>Farger</strong>: <code>strokeStyle</code> / <code>fillStyle</code> settes <em>før</em> du tegner</li>
+              <li><strong>Linjebredde</strong>: <code>lineWidth = 4</code></li>
+              <li><strong>Strategi</strong>: skissér figuren med koordinater først (ruter på papir), så skriv kode systematisk</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li>Bezier-kurver (<code>quadraticCurveTo</code>, <code>bezierCurveTo</code>)</li>
+              <li>Bilde-tegning (<code>drawImage</code>) — har ikke kommet</li>
+              <li>Animasjon med <code>requestAnimationFrame</code></li>
+              <li>Pixel-manipulasjon (<code>getImageData</code>, <code>putImageData</code>)</li>
+              <li>Save/restore + transformations (translate, rotate, scale)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Sannsynlighet 100 % (3/3 sett) · Forventet vekt fast 10 % · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">

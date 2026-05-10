@@ -41,6 +41,51 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 9 <span class="ef-prio high">Høy prioritet</span></div>
+        <h3 class="ef-title">Kodelesing + Christmas-funksjon = sikre poeng</h3>
+        <p style="margin-top:0;">
+          JS-grunnlag dukker opp i hvert sett: kodelesings-MCQ-er,
+          variable trace-oppgaver, og — på 2 av 3 sett — den karakteristiske
+          funksjonen som regner dager til neste jul. I tillegg er klassiske
+          feller (string + tall, array.length, prompt() returnerer string)
+          sikre småpoeng.
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne</h4>
+            <ul>
+              <li><strong>Type-coercion</strong>: <code>5 + "9"</code> = "59", <code>5 - "9"</code> = -4, <code>prompt()</code> returnerer string</li>
+              <li><strong>Array-fakta</strong>: <code>arr[100]=x</code> setter length til 101, sparse arrays</li>
+              <li><strong>Array-metoder</strong>: <code>push/pop/shift/unshift</code>, <code>slice</code>, <code>splice</code>, <code>indexOf</code></li>
+              <li><strong>String-metoder</strong>: <code>substring(s,e)</code>, <code>slice</code>, <code>charAt</code>, <code>length</code></li>
+              <li><strong>Date til jul</strong>: <code>new Date()</code>, <code>new Date(year, 11, 25)</code> (måned 0-indeksert!), differanse i ms / (1000·60·60·24)</li>
+              <li><strong>Math</strong>: <code>floor/ceil/round</code> med eksempler</li>
+              <li><strong>Loops</strong>: <code>for</code>, <code>while</code>, <code>for...in</code> — kunne skrive løkker som teller eller manipulerer array</li>
+              <li><strong>Funksjoner</strong>: definere, kalle, returnere — basis for alle kode-oppgaver</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li>BigInt og tall-presisjons-detaljer</li>
+              <li>Math-konstanter (LN2, SQRT2, LOG2E osv.)</li>
+              <li>String <code>padStart/padEnd/repeat/trimStart</code></li>
+              <li>Date i UTC/ISO-formater og timezones</li>
+              <li>Object-konstruktører (<code>function Teacher(...)</code>) og <code>this</code></li>
+              <li>Closures, IIFE, arrow-funksjoner i dybden</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Forventet vekt 18–25 % via MCQ + trace + funksjon · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">

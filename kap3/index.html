@@ -42,6 +42,47 @@
     </div>
   </header>
 
+  <section style="padding: 32px 0 24px; border-bottom: none;">
+    <div class="container">
+      <div class="exam-focus">
+        <div class="ef-label">Eksamensfokus · Kap 3 <span class="ef-prio high">Høy prioritet</span></div>
+        <h3 class="ef-title">CSS-selektorer er nesten garantert kode-oppgave</h3>
+        <p style="margin-top:0;">
+          Hvert eksamenssett har en stor selektor-oppgave (8–10 %): du får
+          et HTML-tre og må skrive CSS som treffer spesifikke elementer.
+          I tillegg dukker forklarings-spørsmål om <em>specificity</em> og
+          stilstrategier opp jevnlig. Dette er det mest poengrike CSS-kapittelet.
+        </p>
+        <div class="ef-grid">
+          <div class="ef-block must">
+            <h4>Må kunne</h4>
+            <ul>
+              <li><strong>Selektor-typer</strong>: descendant (<code>div p</code>), child (<code>div&gt;p</code>), adjacent (<code>div+p</code>), klasse, id, attributt</li>
+              <li><strong>Pseudo-klasser</strong>: <code>:hover</code>, <code>:first-child</code>, <code>:nth-child(n)</code></li>
+              <li><strong>Pseudo-elementer</strong>: <code>::first-letter</code>, <code>::first-line</code></li>
+              <li><strong>Specificity-regler</strong>: id (100) &gt; class (10) &gt; element (1), <code>!important</code> overstyrer</li>
+              <li><strong>External / Internal / Inline CSS</strong> — når brukes hva (langsvar 6 %)</li>
+              <li><strong>Box-model rekkefølge</strong>: margin → border → padding → content (utenfra inn)</li>
+              <li><strong>border-width</strong> 4 verdier = top right bottom left</li>
+            </ul>
+          </div>
+          <div class="ef-block skip">
+            <h4>Kan nedprioriteres</h4>
+            <ul>
+              <li>Fonter, font-fallbacks, web-fonts — testes ikke direkte</li>
+              <li>Detaljerte fargemodeller (HSL, CMYK)</li>
+              <li>CSS-variabler (custom properties) — ikke eksamenstoff</li>
+              <li>Animations / transitions — ikke testet</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ef-meta">
+          Forventet vekt 15–20 % på tvers av MCQ + selektor-kode · Se hele <a href="../eksamen/">eksamensanalysen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav class="chapter-toc">
     <div class="container">
       <ol class="chapter-toc-list">
