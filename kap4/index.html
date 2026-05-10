@@ -317,6 +317,30 @@ ul.bilde-bullets {
       <code>inside</code> flytter den inn i boksen.
     </p>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.1</div>
+      <div class="q-text">Hvilken egenskap brukes for å bytte ut bullet-en med et bilde?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>list-style-type: image</code></li>
+        <li class="mcq-opt" data-correct="0"><code>bullet-image</code></li>
+        <li class="mcq-opt" data-correct="1"><code>list-style-image: url("…")</code></li>
+        <li class="mcq-opt" data-correct="0"><code>list-image-source</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.1: <code>list-style-image</code> tar verdien <code>url("…")</code> og kan brukes på regler for <code>ul</code> og <code>li</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.1</div>
+      <div class="q-text">Hvilken verdi er <em>ikke</em> en gyldig <code>list-style-type</code> for en <code>&lt;ol&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>decimal-leading-zero</code></li>
+        <li class="mcq-opt" data-correct="0"><code>upper-roman</code></li>
+        <li class="mcq-opt" data-correct="1"><code>square</code></li>
+        <li class="mcq-opt" data-correct="0"><code>lower-alpha</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>square</code> er en bullet-form for <code>&lt;ul&gt;</code>. <code>&lt;ol&gt;</code> bruker numeriske/alfabetiske verdier.</div>
+    </div>
+
     <h3>1.7.2 — Bytte mellom inline og block</h3>
     <div class="code-result two-col">
       <div class="pane">
@@ -348,6 +372,18 @@ li.coming-soon {
       så hvem som helst kan se innholdet via «vis kilde»).
     </p>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.2</div>
+      <div class="q-text">Hvilket sett er de fire gyldige verdiene for <code>display</code> i pensum 1.7.2?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>flex</code>, <code>grid</code>, <code>block</code>, <code>none</code></li>
+        <li class="mcq-opt" data-correct="1"><code>inline</code>, <code>block</code>, <code>inline-block</code>, <code>none</code></li>
+        <li class="mcq-opt" data-correct="0"><code>visible</code>, <code>hidden</code>, <code>block</code>, <code>inline</code></li>
+        <li class="mcq-opt" data-correct="0"><code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.2 lister nettopp disse fire. Pass på: <code>flex</code>/<code>grid</code> er ikke en del av dette pensumkapittelet.</div>
+    </div>
+
     <h3>1.7.3 — Skjule, men beholde plassen</h3>
     <div class="compare-grid">
       <div class="compare-cell">
@@ -364,6 +400,18 @@ li.coming-soon {
           det ikke var der i det hele tatt.
         </p>
       </div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.3</div>
+      <div class="q-text">Du setter <code>visibility: hidden</code> på en boks. Hva skjer i layouten?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Boksen forsvinner helt — naboene flytter seg opp i plassen.</li>
+        <li class="mcq-opt" data-correct="1">Boksen blir usynlig, men plassen står tom der den skulle vært.</li>
+        <li class="mcq-opt" data-correct="0">Boksen fjernes også fra HTML-kildekoden.</li>
+        <li class="mcq-opt" data-correct="0">Bare tekstinnholdet skjules — bakgrunn og border vises fortsatt.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.3: «a blank space will appear in its place». Bruk <code>display: none</code> hvis du ikke vil ha tomt felt.</div>
     </div>
 
     <h3>1.7.4 — Document flow: posisjonering</h3>
@@ -398,6 +446,18 @@ li.coming-soon {
 }</code></pre>
     </div>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.4</div>
+      <div class="q-text">Hva skjer med <em>naboene</em> når et element settes til <code>position: relative</code> og flyttes med <code>left: 100px</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">De flyttes også 100px til høyre.</li>
+        <li class="mcq-opt" data-correct="0">De forsvinner og kommer tilbake når du fjerner regelen.</li>
+        <li class="mcq-opt" data-correct="1">De blir stående der de var — bare boksen selv flyttes.</li>
+        <li class="mcq-opt" data-correct="0">De legger seg oppå det flyttede elementet.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.4: «This does not affect the position of surrounding elements; they stay in the position they would be in in normal flow.»</div>
+    </div>
+
     <div class="def-box">
       <div class="def-label">position: absolute</div>
       <p>
@@ -412,6 +472,18 @@ li.coming-soon {
   left: 500px;
   width: 250px;
 }</code></pre>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.4</div>
+      <div class="q-text">Hva er referansen som <code>position: absolute</code> plasserer elementet i forhold til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Nettleservinduet (viewport).</li>
+        <li class="mcq-opt" data-correct="0">Body-elementet, alltid.</li>
+        <li class="mcq-opt" data-correct="1">Sitt <em>containing element</em> — den direkte block-level-foreldren.</li>
+        <li class="mcq-opt" data-correct="0">Det forrige søsken-elementet.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.4: «This positions the element in relation to its containing element.» <code>fixed</code> er varianten som bruker nettleservinduet i stedet.</div>
     </div>
 
     <div class="def-box">
@@ -463,6 +535,18 @@ li.coming-soon {
         <li><code>both</code> — verken venstre eller høyre.</li>
         <li><code>none</code> — kan berøres på begge sider.</li>
       </ul>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.4</div>
+      <div class="q-text">Du har flere bokser med <code>float: left</code>, og en av dem skal starte på en helt ren linje under alle de andre. Hvilken regel bruker du?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>float: none</code></li>
+        <li class="mcq-opt" data-correct="0"><code>position: absolute</code></li>
+        <li class="mcq-opt" data-correct="1"><code>clear: both</code> (eller <code>clear: left</code> hvis du bare bryr deg om venstre)</li>
+        <li class="mcq-opt" data-correct="0"><code>display: block</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>clear</code> sier at boksen ikke skal ha noe element ved siden av seg på den oppgitte siden — derfor må den hoppe ned forbi alle floats.</div>
     </div>
 
     <div class="def-box">
@@ -517,6 +601,18 @@ h1 {
       <code>p</code>-en arver svart fra <code>body</code>.
     </p>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.5</div>
+      <div class="q-text"><code>body</code> har <code>color: black</code>. <code>p.intro</code> har <code>color: #FAA21B</code>. En vanlig <code>&lt;p&gt;</code> uten klasse får hvilken farge?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Oransje (<code>#FAA21B</code>) — fordi <code>.intro</code> er mer spesifikk.</li>
+        <li class="mcq-opt" data-correct="1">Svart — den arver fra <code>body</code> fordi den ikke selv definerer <code>color</code>.</li>
+        <li class="mcq-opt" data-correct="0">Standard nettleserfarge — arv gjelder ikke for <code>color</code>.</li>
+        <li class="mcq-opt" data-correct="0">Ingen farge — teksten blir usynlig.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.5: «An element only inherits properties if the element itself does not define that property.» <code>.intro</code> påvirker bare <code>p</code>-er med klassen <code>intro</code>.</div>
+    </div>
+
     <h3>1.7.6 — Mer pseudo-klasser</h3>
     <p>Syntaks fra forrige kapittel gjelder fortsatt:</p>
     <pre><code>selector:pseudo-class {
@@ -556,6 +652,18 @@ h1 {
       <li><code>span:nth-child(-n+3)</code> — matcher hvis elementet er blant de tre første og er <code>span</code>.</li>
     </ul>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hva matcher <code>span:nth-child(-n+3)</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">De tre siste <code>span</code>-elementene i parent.</li>
+        <li class="mcq-opt" data-correct="1">Et element som er blant de tre første children av sin parent <em>og</em> er en <code>span</code>.</li>
+        <li class="mcq-opt" data-correct="0">Hvert tredje <code>span</code>-element.</li>
+        <li class="mcq-opt" data-correct="0">Bare det tredje <code>span</code>-elementet i parent.</li>
+      </ul>
+      <div class="mcq-feedback">Når <code>n</code> er 0, 1, 2, … gir <code>-n+3</code> 3, 2, 1 — altså posisjon 1, 2, 3. Og selektoren krever at elementet er en <code>span</code>.</div>
+    </div>
+
     <h4><code>:last-child</code></h4>
     <p>Representerer det <em>siste</em> child-elementet av sin parent.</p>
     <pre><code>li:last-child {
@@ -571,6 +679,18 @@ h1 {
   property: value;
 }</code></pre>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hva matcher <code>:required</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;input&gt;</code>-elementer i en form.</li>
+        <li class="mcq-opt" data-correct="0">Inputs som er fylt ut korrekt.</li>
+        <li class="mcq-opt" data-correct="1"><code>&lt;input&gt;</code>-elementer som har <code>required</code>-attributtet satt.</li>
+        <li class="mcq-opt" data-correct="0">Kun forms som ikke har sendt inn data.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.6: «represents any &lt;input&gt; element that has the required attribute set on it.» Brukes ofte for å markere obligatoriske felt.</div>
+    </div>
+
     <h4><code>:focus</code></h4>
     <p>
       Brukes når et element har fått fokus — enten ved at brukeren har
@@ -579,6 +699,18 @@ h1 {
     <pre><code>input:focus {
   property: value;
 }</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hvilket utsagn beskriver <code>:focus</code> riktig?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Matcher bare når brukeren hover-er med musa.</li>
+        <li class="mcq-opt" data-correct="1">Matcher når et element har fått fokus — via mus eller tastaturnavigasjon.</li>
+        <li class="mcq-opt" data-correct="0">Matcher input som har <code>required</code>-attributtet.</li>
+        <li class="mcq-opt" data-correct="0">Virker bare på <code>&lt;a&gt;</code>-elementer.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.6: «applied when an element has received focus, either from the user selecting it with the use of a keyboard or by activating with the mouse».</div>
+    </div>
 
     <h4><code>:checked</code></h4>
     <p>
@@ -602,6 +734,18 @@ input[type="checkbox"]:checked { color: green; }
 /* bare option */
 option:checked { color: green; }</code></pre>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hvilke tre elementtyper kan <code>:checked</code> matche?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;input&gt;</code>-typer.</li>
+        <li class="mcq-opt" data-correct="0"><code>&lt;input type="text"&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>.</li>
+        <li class="mcq-opt" data-correct="1">Radio (<code>&lt;input type="radio"&gt;</code>), checkbox (<code>&lt;input type="checkbox"&gt;</code>) og <code>&lt;option&gt;</code> i en <code>&lt;select&gt;</code>.</li>
+        <li class="mcq-opt" data-correct="0">Bare <code>&lt;input type="checkbox"&gt;</code>.</li>
+      </ul>
+      <div class="mcq-feedback"><code>:checked</code> handler om «toggled på»-tilstand — bare disse tre kan være avkrysset/valgt.</div>
+    </div>
+
     <h4><code>:enabled</code> og <code>:disabled</code></h4>
     <p>
       <code>:enabled</code> matcher elementer som kan aktiveres (klikkes,
@@ -615,6 +759,18 @@ option:checked { color: green; }</code></pre>
 input[type="text"]:disabled {
   background: #ccc;
 }</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hva er forskjellen på <code>:enabled</code> og <code>:checked</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ingen — de er aliaser.</li>
+        <li class="mcq-opt" data-correct="1"><code>:enabled</code> matcher elementer som <em>kan</em> aktiveres/få fokus; <code>:checked</code> matcher radio/checkbox/option som er avkrysset.</li>
+        <li class="mcq-opt" data-correct="0"><code>:enabled</code> virker bare på knapper, <code>:checked</code> bare på input.</li>
+        <li class="mcq-opt" data-correct="0"><code>:enabled</code> krever <code>required</code>, <code>:checked</code> ikke.</li>
+      </ul>
+      <div class="mcq-feedback"><code>:enabled</code> handler om aktiv tilstand (motsatt: <code>:disabled</code>); <code>:checked</code> handler om valgt/på-tilstand.</div>
+    </div>
 
     <h4><code>:valid</code> og <code>:invalid</code></h4>
     <p>
@@ -652,6 +808,18 @@ input:valid {
 :lang(fr) &gt; q { quotes: '« ' ' »'; }
 :lang(de) &gt; q { quotes: '»' '«' '\2039' '\203A'; }</code></pre>
 
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.6</div>
+      <div class="q-text">Hvor henter <code>:lang()</code> språk-informasjonen fra?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Kun fra brukerens nettleserspråk.</li>
+        <li class="mcq-opt" data-correct="0">Fra <code>charset</code>-deklarasjonen i <code>&lt;head&gt;</code>.</li>
+        <li class="mcq-opt" data-correct="1">Fra <code>lang</code>-attributtet, <code>&lt;meta&gt;</code>-elementet og eventuelt protokoll-headere.</li>
+        <li class="mcq-opt" data-correct="0">Fra et eget <code>:lang</code>-attributt på elementet.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.6: «the language is determined by a combination of the lang attribute, the &lt;meta&gt; element, and possibly by information from the protocol (such as HTTP headers).»</div>
+    </div>
+
     <h3>1.7.7 — Overflow</h3>
     <p>
       <code>overflow</code> bestemmer hva som skjer når innholdet er større
@@ -675,6 +843,19 @@ overflow: scroll;
 
 /* La nettleseren bestemme */
 overflow: auto;</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.7.7</div>
+      <div class="q-text">Hva er <em>default</em>-verdien for <code>overflow</code>, og hva betyr den?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>auto</code> — nettleseren legger til scrollbar når det trengs.</li>
+        <li class="mcq-opt" data-correct="0"><code>hidden</code> — innholdet klippes uten scrollbar.</li>
+        <li class="mcq-opt" data-correct="1"><code>visible</code> — innholdet klippes ikke; det kan rendres utenfor content-boksen.</li>
+        <li class="mcq-opt" data-correct="0"><code>scroll</code> — det er alltid scrollbar.</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.7.7: «visible: Default value. Content is not clipped, it may be rendered outside the content box.»</div>
+    </div>
+
     <div class="callout-warn">
       <div class="label">Forutsetning</div>
       <p>
