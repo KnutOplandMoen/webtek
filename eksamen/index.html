@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Eksamensforberedelse — IT2805</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* Side-spesifikke utvidelser, alle ankret i fargene fra style.css */
+  .topic-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 0.92rem; margin: 1.2em 0; background: var(--paper-dark); border: 1px solid var(--line-soft); }
+  .topic-table th, .topic-table td { padding: 10px 12px; border: 1px solid var(--line-soft); text-align: left; vertical-align: top; }
+  .topic-table th { background: var(--paper-darker); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); }
+  .topic-table td.center { text-align: center; }
+  .topic-table .freq { font-family: var(--mono); font-weight: 700; }
+  .topic-table tr.tier-1 { background: rgba(31, 78, 121, 0.10); }
+  .topic-table tr.tier-2 { background: rgba(198, 138, 31, 0.10); }
+  .topic-table tr.tier-3 { background: rgba(61, 107, 58, 0.08); }
+  .badge-pill { display: inline-block; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 10px; margin-right: 4px; }
+  .badge-must { background: var(--rust); color: var(--paper); }
+  .badge-likely { background: var(--ochre); color: var(--paper); }
+  .badge-low { background: var(--ink-ghost); color: var(--paper); }
+  .badge-skip { background: var(--ink-faded); color: var(--paper); }
+
+  .priority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 1.4em 0; }
+  .priority-card { background: var(--paper-dark); border: 1px solid var(--line-soft); border-radius: 6px; padding: 18px 20px; border-left: 5px solid var(--rust); }
+  .priority-card.must { border-left-color: var(--rust); }
+  .priority-card.likely { border-left-color: var(--ochre); }
+  .priority-card.low { border-left-color: var(--ink-ghost); }
+  .priority-card.skip { border-left-color: var(--ink-faded); opacity: 0.85; }
+  .priority-card .pc-label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .priority-card.must .pc-label { color: var(--rust); }
+  .priority-card.likely .pc-label { color: var(--ochre); }
+  .priority-card.low .pc-label { color: var(--ink-faded); }
+  .priority-card.skip .pc-label { color: var(--ink-faded); }
+  .priority-card .pc-title { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; margin-bottom: 6px; }
+  .priority-card .pc-body { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-soft); line-height: 1.55; }
+  .priority-card ul { margin: 6px 0 0; padding-left: 18px; }
+  .priority-card li { font-family: var(--serif); font-size: 0.93rem; margin-bottom: 3px; }
+
+  .heat-bar { display: inline-block; width: 60px; height: 8px; background: var(--paper-darker); border-radius: 4px; overflow: hidden; vertical-align: middle; margin-left: 6px; }
+  .heat-bar > span { display: block; height: 100%; background: var(--rust); }
+
+  .cheat-cols { columns: 2; column-gap: 24px; margin: 1.2em 0; }
+  .cheat-cols > div { break-inside: avoid; background: var(--paper-dark); border: 1px solid var(--line-soft); border-radius: 5px; padding: 12px 14px; margin-bottom: 12px; }
+  .cheat-cols h4 { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rust); margin: 0 0 8px; }
+  .cheat-cols code, .cheat-cols pre { font-family: var(--mono); font-size: 0.78rem; background: var(--paper); padding: 1px 4px; border-radius: 2px; }
+  .cheat-cols pre { padding: 8px 10px; overflow-x: auto; line-height: 1.45; }
+  .cheat-cols ul { margin: 4px 0 0; padding-left: 18px; }
+  .cheat-cols li { font-family: var(--serif); font-size: 0.88rem; line-height: 1.45; margin-bottom: 2px; }
+
+  @media (max-width: 720px) { .cheat-cols { columns: 1; } }
+
+  .question-list { list-style: none; padding: 0; margin: 1em 0; }
+  .question-list li { background: var(--paper-dark); border: 1px solid var(--line-soft); border-radius: 4px; padding: 12px 14px; margin-bottom: 8px; font-family: var(--serif); font-size: 0.95rem; }
+  .question-list .qmeta { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 8px; }
+
+  .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 1.2em 0; }
+  .timeline > div { background: var(--paper-dark); border: 1px solid var(--line-soft); border-left: 4px solid var(--rust); border-radius: 0 4px 4px 0; padding: 12px 14px; }
+  .timeline .tl-time { font-family: var(--mono); font-size: 0.72rem; color: var(--rust); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .timeline .tl-task { font-family: var(--serif); font-size: 0.92rem; color: var(--ink-soft); line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Forside</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Eksamensforberedelse — analyse av tidligere eksamener">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Eksamen · Analyse · A4-juksark</div>
+      <h1>Eksamens<em>forberedelse</em></h1>
+      <p class="lede">
+        Analyse av fire tidligere eksamenssett mappet mot pensum: hva som kommer
+        igjen og igjen, hva som kan nedprioriteres, og en plan for det
+        tosidige A4-arket du har lov til å ta med inn.
+      </p>
+      <div class="pill-row">
+        <span class="pill rust">4 eksamenssett analysert</span>
+        <span class="pill">Pensum 1.1–1.15</span>
+        <span class="pill">A4 dobbeltsidig tillatt</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="oppsummering">
+    <div class="container">
+      <div class="section-badge">01 · Hovedfunn</div>
+      <h2>De viktigste <em>funnene</em></h2>
+      <p class="section-intro">
+        Det er sterke gjentakelser på tvers av sett. Tre temaer dukker opp i
+        tre eller fire av de fire reelle eksamenssettene, og fire–fem ekstra
+        går igjen i to. Resten av pensum testes via enklige flervalg.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">100 %</div><div class="stat-lbl">Canvas-oppgave i alle 3 reelle sett</div></div>
+        <div class="stat-box"><div class="stat-num">~30 %</div><div class="stat-lbl">MCQ — flervalg (Section A)</div></div>
+        <div class="stat-box"><div class="stat-num">~30 %</div><div class="stat-lbl">Forklaringsspørsmål (Section B)</div></div>
+        <div class="stat-box"><div class="stat-num">~40 %</div><div class="stat-lbl">Kodeoppgaver (Section C)</div></div>
+        <div class="stat-box"><div class="stat-num">~10 %</div><div class="stat-lbl">av poeng er Canvas alene</div></div>
+      </div>
+
+      <div class="callout-blue">
+        <div class="label">Strukturen er stabil</div>
+        <p>
+          Alle de reelle eksamenssettene følger samme tre-deling: én bolk
+          flervalg (10 oppgaver à 2–3 %), én bolk korttekstforklaring
+          (4–5 oppgaver à 4–10 %), og én bolk kode (5 oppgaver à 5–10 %).
+          Tidsfordelingen din kan baseres på at flervalg er raskt, og at
+          kodeoppgavene tar lengst.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hva-kommer">
+    <div class="container">
+      <div class="section-badge">02 · Hva som mest sannsynlig kommer</div>
+      <h2>Tre <em>nesten-garantier</em></h2>
+      <p class="section-intro">
+        Disse temaene har dukket opp i nesten alle reelle eksamenssett vi har.
+        Du kan ikke vite hva som spørres, men du kan vite at <em>noe</em> innen
+        disse områdene kommer.
+      </p>
+
+      <div class="priority-grid">
+        <div class="priority-card must">
+          <div class="pc-label">Kommer 3/3 sett · 10 %</div>
+          <div class="pc-title">Canvas-tegning med 2D API</div>
+          <div class="pc-body">
+            Du blir bedt om å tegne en figur (linjer, rektangler, sirkler,
+            tekst) i et <code>&lt;canvas&gt;</code>. Får alltid skjelett-HTML.
+            <strong>Tren på</strong> <code>getContext("2d")</code>,
+            <code>moveTo / lineTo / stroke</code>, <code>fillRect</code>,
+            <code>arc</code>, <code>strokeText</code>.
+            Se <a href="../kap12/">Kap 12</a>.
+          </div>
+        </div>
+        <div class="priority-card must">
+          <div class="pc-label">Kommer 3/3 sett · 6–8 %</div>
+          <div class="pc-title">TCP/IP-lagene + protokoller</div>
+          <div class="pc-body">
+            Enten som matching-MCQ (lag ↔ protokoll) eller som langsvar
+            (forklar lagene + nevn protokoller per lag). Lær <strong>fire
+            lag</strong>: Application (HTTP, FTP, SMTP, DNS), Transport
+            (TCP, UDP), Network (IP), Physical/Link (WiFi, Ethernet).
+            Se <a href="../kap1/">Kap 1</a>.
+          </div>
+        </div>
+        <div class="priority-card must">
+          <div class="pc-label">Kommer 3/3 sett · 4–6 %</div>
+          <div class="pc-title">POST vs GET (form-data)</div>
+          <div class="pc-body">
+            Fast langsvarsoppgave eller MCQ. Forklar synlighet i URL,
+            størrelsesgrense, idempotens, caching, bruk for sensitive data.
+            Skriv minst tre punkter — det er hva sensorene leter etter.
+            Se <a href="../kap8/">Kap 8</a>.
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.6em;">Sterk tier 2 — har vært på 2/3 sett</h3>
+
+      <div class="priority-grid">
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 6–10 %</div>
+          <div class="pc-title">Event propagation &amp; bubbling</div>
+          <div class="pc-body">
+            Forklar capturing-, target- og bubbling-fasen. Bruk eksempel med
+            nestede divs og <code>addEventListener(..., useCapture)</code>.
+            <code>stopPropagation()</code> bør med. Se <a href="../kap10/">Kap 10</a>.
+          </div>
+        </div>
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 6–10 %</div>
+          <div class="pc-title">CSS-selektorer på gitt HTML-tre</div>
+          <div class="pc-body">
+            Du får et HTML-utdrag og blir bedt om å skrive selektorer som
+            treffer spesifikke elementer (descendant, child, hover,
+            first-letter, nth-child, sibling). Tren konkret på <code>div p</code>,
+            <code>div &gt; p</code>, <code>p::first-letter</code>,
+            <code>p:hover</code>, <code>ul + p</code>.
+            Se <a href="../kap3/">Kap 3</a>, <a href="../kap4/">Kap 4</a>.
+          </div>
+        </div>
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 7–8 %</div>
+          <div class="pc-title">Christmas-/dato-funksjon i JS</div>
+          <div class="pc-body">
+            «Skriv en funksjon som regner dager til neste jul.» Krever
+            <code>new Date()</code>, månedsindeks 0–11, dagsdifferanse via
+            millisekunder. Variant: sjekk om resultatet er primtall.
+            Se <a href="../kap9/">Kap 9</a>.
+          </div>
+        </div>
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 8–10 %</div>
+          <div class="pc-title">Form med JS-validering</div>
+          <div class="pc-body">
+            Skriv et HTML-skjema og en JS-funksjon som validerer
+            (positive tall, regex på passord, alder ≥ 18, ingen tall i navn).
+            Vis feil i <code>alert()</code>. Se <a href="../kap8/">Kap 8</a>.
+          </div>
+        </div>
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 6 %</div>
+          <div class="pc-title">display: block / inline / none / visibility:hidden</div>
+          <div class="pc-body">
+            Forklar forskjellene. Pek særlig på at <code>visibility:hidden</code>
+            beholder plassen, <code>display:none</code> tar den ikke. Se
+            <a href="../kap4/">Kap 4</a>.
+          </div>
+        </div>
+        <div class="priority-card likely">
+          <div class="pc-label">2/3 sett · 4–6 %</div>
+          <div class="pc-title">JS-kodelesing (output av snutt)</div>
+          <div class="pc-body">
+            «Hva skriver dette ut?» Klassiske feller: <code>5 + "9"</code> = "59",
+            <code>arr[100] = x</code> gjør length til 101, <code>substring(2,4)</code>
+            = "al" for "Scaler", array som muteres av <code>pop()/unshift()</code>.
+            Se <a href="../kap9/">Kap 9</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="frekvenstabell">
+    <div class="container">
+      <div class="section-badge">03 · Frekvenstabell</div>
+      <h2>Tema mot <em>kapittel og forekomst</em></h2>
+      <p class="section-intro">
+        Hvert tema er talt opp på tvers av de fire reelle settene
+        (ex2, ex3, ex4 og ex5 i <code>tidligere_eksamener/</code>). Merk at
+        ex3 og ex4 er identiske sett (samme «round 2»-eksamen), så frekvens-
+        kolonnen viser <em>antall unike sett</em> tema dukket opp i (maks 3).
+      </p>
+
+      <table class="topic-table">
+        <thead>
+          <tr>
+            <th>Tema</th>
+            <th>Kapittel</th>
+            <th class="center">Sett</th>
+            <th>Type oppgave</th>
+            <th>Prioritet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tier-1"><td>Canvas 2D-tegning</td><td><a href="../kap12/">Kap 12</a></td><td class="center freq">3/3</td><td>Kode 10 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-1"><td>TCP/IP-lag &amp; protokoller</td><td><a href="../kap1/">Kap 1</a></td><td class="center freq">3/3</td><td>MCQ-match / Langsvar 6–8 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-1"><td>POST vs GET</td><td><a href="../kap8/">Kap 8</a></td><td class="center freq">3/3</td><td>Langsvar 4–6 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-1"><td>JS kodelesing/output</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">3/3</td><td>MCQ 3 % / Trace</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-1"><td>CSS-selektorer på gitt DOM</td><td><a href="../kap3/">Kap 3</a>, <a href="../kap4/">Kap 4</a></td><td class="center freq">3/3</td><td>Kode 8–10 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+
+          <tr class="tier-2"><td>Form-validering med JS</td><td><a href="../kap8/">Kap 8</a></td><td class="center freq">2/3</td><td>Kode 9–10 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>Christmas/dato-funksjon i JS</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">2/3</td><td>Kode 7–8 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>Event propagation &amp; bubbling</td><td><a href="../kap10/">Kap 10</a></td><td class="center freq">2/3</td><td>Langsvar 10 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>display: none / inline / block / visibility</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">2/3</td><td>Langsvar 4–6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>JS-form: kalkulator (mult/div, sum)</td><td><a href="../kap8/">Kap 8</a>, <a href="../kap9/">Kap 9</a></td><td class="center freq">2/3</td><td>Kode 8–9 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>Box model (margin/border/padding-rekkefølge)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">2/3</td><td>MCQ 2–3 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>Padding (mellom border og innhold)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">2/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>HTML5 APIs / multimedia plug-ins</td><td><a href="../kap7/">Kap 7</a></td><td class="center freq">2/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>Array-metoder (push/pop/unshift/shift, length)</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">2/3</td><td>MCQ-trace 3 % / Trace 4 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-2"><td>String-metoder (substring, slice, charAt)</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">2/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+
+          <tr class="tier-3"><td>z-index (stacking)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>float (tekst rundt bilde)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>tabell-bredde 100 %</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>class- vs ID-attributt</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>document.write / console.log / alert</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>4 DOM get-metoder (forskjell)</td><td><a href="../kap10/">Kap 10</a></td><td class="center freq">1/3</td><td>Langsvar 8 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>Armstrong-tall (algoritme i JS)</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>Kode 5 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>Mouse/Focus event handlers</td><td><a href="../kap10/">Kap 10</a></td><td class="center freq">1/3</td><td>Kode 10 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>HREF anchor-symbol (#)</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>Heading-nivåer (h1–h6)</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>«no-underline» på lenker (text-decoration:none)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>!important</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>position default (static)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>SVG = XML-format</td><td><a href="../kap11/">Kap 11</a>, <a href="../kap7/">Kap 7</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>XML-regler (root, lower-case)</td><td><a href="../kap11/">Kap 11</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>border-width 4-verdier (top/right/bottom/left)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>Math.floor / Math.ceil / Math.round</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
+          <tr class="tier-3"><td>prompt() returnerer string (string + 1 = "181")</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-3"><td>Relative URLs (../, ./)</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>External / Internal / Inline CSS</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>CSS specificity (forklaring)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>HTML-tabell skrevet for hånd</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>Kode 5 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>position: relative vs absolute (skriv CSS)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>Kode 4 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+          <tr class="tier-3"><td>Variable trace (tracing av kodebit)</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>Langsvar 8 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-family:var(--mono);font-size:0.78rem;color:var(--ink-faded);margin-top:0.6em;">
+        <span class="badge-pill badge-must">Må kunne</span> = svært høy sannsynlighet og/eller mange poeng &nbsp;
+        <span class="badge-pill badge-likely">Trolig</span> = forventet, øv hvis du har tid &nbsp;
+        <span class="badge-pill badge-low">Lav</span> = småpoeng-MCQ, dekkes av jukseark
+      </p>
+    </div>
+  </section>
+
+  <section id="kan-nedprioriteres">
+    <div class="container">
+      <div class="section-badge">04 · Nedprioritering</div>
+      <h2>Hva du <em>kan slappe av med</em></h2>
+      <p class="section-intro">
+        Disse delene av pensum har tynn historikk i eksamensarkivet. De er
+        ikke null sjanse — alt i pensum er fritt vilt — men de gir lite
+        avkastning per studietime. Skum gjennom slides, ha noen stikkord på
+        A4-arket, ikke skriv dem på minnet.
+      </p>
+
+      <div class="priority-grid">
+        <div class="priority-card low">
+          <div class="pc-label">Lav prioritet</div>
+          <div class="pc-title">Flexbox &amp; CSS Grid (komplekse layouts)</div>
+          <div class="pc-body">
+            Stor del av pensum (<a href="../kap5/">Kap 5</a>) men ingen av de
+            fire eksamenssettene har spurt om en hel Flexbox/Grid-layout.
+            Forstå <em>når</em> du bruker hva og kjenn igjen syntaksen — ikke
+            terp egne layouts utenat. Hold notater på A4.
+          </div>
+        </div>
+        <div class="priority-card low">
+          <div class="pc-label">Lav prioritet</div>
+          <div class="pc-title">Responsivt design / media queries</div>
+          <div class="pc-body">
+            <a href="../kap6/">Kap 6</a> er ikke representert i ex2–ex5.
+            Kunne en MCQ om <code>@media (max-width: …)</code> dukke opp?
+            Ja. Skriv to-tre linjer på arket, gå videre.
+          </div>
+        </div>
+        <div class="priority-card low">
+          <div class="pc-label">Lav prioritet</div>
+          <div class="pc-title">XML i dybden (DTD, XPath, XSLT)</div>
+          <div class="pc-body">
+            <a href="../kap11/">Kap 11</a>. Kun grunnregler er testet
+            (root-element, lower-case). Ingen XPath/XSLT i settene. Ha
+            grunnreglene på arket.
+          </div>
+        </div>
+        <div class="priority-card low">
+          <div class="pc-label">Lav prioritet</div>
+          <div class="pc-title">Multimedia &amp; HTML5-API i dybden</div>
+          <div class="pc-body">
+            <a href="../kap7/">Kap 7</a>. Bare én MCQ-type spørsmål
+            («HTML5 viser multimedia uten plug-ins»). Du trenger ikke memorere
+            video-formater eller geolocation-API.
+          </div>
+        </div>
+        <div class="priority-card low">
+          <div class="pc-label">Lav prioritet</div>
+          <div class="pc-title">Avanserte JS-objekt-mønstre</div>
+          <div class="pc-body">
+            Object-konstruktører, prototyper, <code>this</code>-binding,
+            closures. Pensum nevner det, men ingen oppgave i settene tester det
+            direkte. Forstå <code>let teacher = {…}</code> + dot-notasjon, ikke
+            mer.
+          </div>
+        </div>
+        <div class="priority-card skip">
+          <div class="pc-label">Kan hoppes over</div>
+          <div class="pc-title">BigInt, Math-konstanter (LN2, SQRT2 osv.)</div>
+          <div class="pc-body">
+            I notatene, ikke i en eneste oppgave. Ikke poeng å lære utenat.
+          </div>
+        </div>
+        <div class="priority-card skip">
+          <div class="pc-label">Kan hoppes over</div>
+          <div class="pc-title">Date-formatering med UTC, ISO 8601-strenger</div>
+          <div class="pc-body">
+            Du trenger <code>new Date()</code>, <code>getMonth()</code>,
+            <code>getTime()</code> for jul-oppgaven. Resten av Date-APIet er
+            ikke testet.
+          </div>
+        </div>
+        <div class="priority-card skip">
+          <div class="pc-label">Kan hoppes over</div>
+          <div class="pc-title">String-padStart / padEnd / repeat / trim-varianter</div>
+          <div class="pc-body">
+            Ingen av disse har dukket opp. Slice/substring/charAt holder for
+            de testene som finnes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="a4-jukseark">
+    <div class="container">
+      <div class="section-badge">05 · A4-arket</div>
+      <h2>Plan for det <em>tosidige A4-arket</em></h2>
+      <p class="section-intro">
+        Du har lov til å ha med ett dobbeltsidig A4-ark. Det er begrenset
+        plass — så bruk det på <strong>fakta du fort glemmer</strong>, ikke
+        forklaringer du kan skrive selv. Forklarende svar (POST/GET, TCP/IP)
+        må komme fra hodet uansett.
+      </p>
+
+      <h3>Side 1 — HTML &amp; CSS-referanse</h3>
+      <div class="cheat-cols">
+        <div>
+          <h4>CSS Selektorer</h4>
+          <pre>div p          /* desc */
+div &gt; p        /* child */
+div + p        /* adj sib */
+div ~ p        /* gen sib */
+.foo           /* class */
+#bar           /* id */
+[type="x"]     /* attr */
+:hover :focus  /* state */
+:nth-child(2n) /* pos */
+::first-letter /* pseudo */
+::first-line</pre>
+        </div>
+        <div>
+          <h4>CSS Specificity</h4>
+          <ul>
+            <li>inline = 1000</li>
+            <li>id = 100</li>
+            <li>class/attr/pseudo-class = 10</li>
+            <li>element/pseudo-element = 1</li>
+            <li><code>!important</code> overstyrer alt</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Box-model (utenfra inn)</h4>
+          <pre>margin → border → padding → content</pre>
+          <ul>
+            <li><code>border-width: 10 5 20 1</code> = top right bottom left</li>
+            <li><code>padding</code> = mellom border &amp; innhold</li>
+            <li><code>margin</code> = mellom elementer</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Display/Visibility</h4>
+          <ul>
+            <li><code>display:none</code> — fjernet, ingen plass</li>
+            <li><code>visibility:hidden</code> — usynlig, plassen står</li>
+            <li><code>display:block</code> — full bredde, ny linje</li>
+            <li><code>display:inline</code> — i tekstflyt, ingen w/h</li>
+            <li><code>display:inline-block</code> — beholder w/h, samme linje</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Position</h4>
+          <ul>
+            <li><strong>static</strong> (default) — normal flyt</li>
+            <li><strong>relative</strong> — flyttes fra normalpos</li>
+            <li><strong>absolute</strong> — relativ til nærmeste posisjonerte forelder</li>
+            <li><strong>fixed</strong> — relativ til viewport</li>
+            <li><strong>sticky</strong> — relative til scroll passerer</li>
+            <li><code>z-index</code> styrer stable-rekkefølge</li>
+          </ul>
+        </div>
+        <div>
+          <h4>HTML-struktur (huskeliste)</h4>
+          <pre>&lt;form action="x" method="POST"&gt;
+ &lt;input type="text" name="n"
+        id="n" required&gt;
+ &lt;input type="submit"&gt;
+&lt;/form&gt;
+
+&lt;a href="#anchor"&gt;hopp&lt;/a&gt;
+&lt;a href="../sti/fil.html"&gt;</pre>
+        </div>
+        <div>
+          <h4>Relative URLs</h4>
+          <ul>
+            <li><code>./</code> = denne mappen</li>
+            <li><code>../</code> = ett nivå opp</li>
+            <li><code>../../</code> = to nivå opp</li>
+            <li><code>/</code> som start = fra root</li>
+          </ul>
+        </div>
+        <div>
+          <h4>POST vs GET (cheat)</h4>
+          <ul>
+            <li>GET: data i URL, idempotent, cache-bar, &lt; 2K</li>
+            <li>POST: data i body, ikke idempotent, ikke cachet, ubegrenset</li>
+            <li>POST for sensitive/store data</li>
+          </ul>
+        </div>
+        <div>
+          <h4>TCP/IP-lag → protokoll</h4>
+          <ul>
+            <li>Application: HTTP, HTTPS, FTP, SMTP, DNS</li>
+            <li>Transport: TCP, UDP</li>
+            <li>Network: IP, ICMP</li>
+            <li>Physical/Link: WiFi, Ethernet</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Side 2 — JavaScript &amp; Canvas</h3>
+      <div class="cheat-cols">
+        <div>
+          <h4>String &amp; Array</h4>
+          <pre>"abcde".substring(2,4) // "cd"
+"abcde".slice(-3,-1)   // "cd"
+"abcde".charAt(2)      // "c"
+[1,2,3].push(4)        // [1,2,3,4]
+arr.pop() / shift() / unshift(x)
+arr[100]=x // length=101
+arr.splice(i, n, ...)
+arr.indexOf(x)
+arr.includes(x)
+arr.sort() / reverse()</pre>
+        </div>
+        <div>
+          <h4>JS-feller</h4>
+          <ul>
+            <li><code>5 + "9"</code> = "59" (string)</li>
+            <li><code>5 - "9"</code> = -4 (tall)</li>
+            <li><code>prompt()</code> returnerer string</li>
+            <li><code>arr[100]=x</code> → length = 101</li>
+            <li><code>==</code> coerce, <code>===</code> streng</li>
+            <li><code>typeof null</code> = "object"</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Date-jul-mal</h4>
+          <pre>let now = new Date();
+let yr = now.getFullYear()+1;
+let xmas = new Date(yr,11,25);
+let ms = xmas - now;
+let days = Math.ceil(
+  ms/(1000*60*60*24));</pre>
+        </div>
+        <div>
+          <h4>Validering-mal</h4>
+          <pre>function v(){
+ let a = document.getElementById("a").value;
+ if(/\d/.test(a)){alert("ingen tall"); return false;}
+ if(a.length&lt;1){alert("tom"); return false;}
+ return true;
+}
+&lt;input onsubmit="return v()"&gt;</pre>
+        </div>
+        <div>
+          <h4>Regex-mønstre</h4>
+          <ul>
+            <li><code>/\d/</code> — siffer</li>
+            <li><code>/[A-Z]/</code> — stor bokstav</li>
+            <li><code>/[!@#$%^&amp;*]/</code> — spesial</li>
+            <li><code>/^.{8,}$/</code> — min 8 tegn</li>
+          </ul>
+        </div>
+        <div>
+          <h4>DOM &amp; events</h4>
+          <pre>document.getElementById("x")
+document.getElementsByClassName("c")
+document.getElementsByTagName("p")
+document.querySelector("div p")
+document.querySelectorAll("li")
+
+el.addEventListener("click",fn)
+el.addEventListener("click",fn,true) // capture
+e.stopPropagation()
+e.preventDefault()</pre>
+        </div>
+        <div>
+          <h4>Event-fasene (for forklaring)</h4>
+          <ul>
+            <li>1. Capturing — fra window ned</li>
+            <li>2. Target — på selve element</li>
+            <li>3. Bubbling — opp til root</li>
+            <li>3rd arg <code>true</code> → capture</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Canvas-skjelett</h4>
+          <pre>let c = document.getElementById("myCanvas");
+let ctx = c.getContext("2d");
+
+// linje
+ctx.beginPath();
+ctx.moveTo(20,20);
+ctx.lineTo(180,20);
+ctx.stroke();
+
+// rect
+ctx.fillStyle = "blue";
+ctx.fillRect(50,50,80,40);
+ctx.strokeRect(50,50,80,40);
+
+// sirkel
+ctx.beginPath();
+ctx.arc(100,80,30,0,2*Math.PI);
+ctx.stroke();
+
+// tekst
+ctx.font = "16px Arial";
+ctx.fillText("hei",100,100);</pre>
+        </div>
+        <div>
+          <h4>Canvas-oppskrift</h4>
+          <ul>
+            <li><strong>1.</strong> Hent <code>canvas</code> + <code>getContext("2d")</code></li>
+            <li><strong>2.</strong> <code>beginPath()</code> før hver figur</li>
+            <li><strong>3.</strong> <code>moveTo</code> + <code>lineTo</code> for linjer</li>
+            <li><strong>4.</strong> <code>stroke()</code> for kontur, <code>fill()</code> for fyll</li>
+            <li><strong>5.</strong> Sett farger med <code>strokeStyle</code> / <code>fillStyle</code> <em>før</em> du tegner</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Math &amp; tall</h4>
+          <ul>
+            <li><code>Math.floor(3.8) = 3</code></li>
+            <li><code>Math.ceil(3.2) = 4</code></li>
+            <li><code>Math.round(3.5) = 4</code></li>
+            <li><code>Math.random()</code> 0–1</li>
+            <li><code>Math.PI</code>, <code>Math.pow(x,n)</code></li>
+            <li><code>parseInt(s)</code>, <code>parseFloat(s)</code>, <code>Number(s)</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Strategiråd</div>
+        <p>
+          Skriv arket i hånd hvis du har tid — det øker huskefaktoren betydelig.
+          Skriv små, ikke trang. Lag tydelige overskrifter du finner igjen
+          under tidspress. Innfør egne fargekoder (rød = fakta du alltid
+          glemmer, blå = oppskrift, grønn = eksempel-output).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="prøveeksamen">
+    <div class="container">
+      <div class="section-badge">06 · Test deg selv</div>
+      <h2>Spørsmål du <em>må kunne svare på</em></h2>
+      <p class="section-intro">
+        Hvis du svarer trygt på disse uten å åpne notatene, dekker du
+        ~70 % av poengmassen i et typisk sett. Bygget direkte fra mønstrene
+        i ex2–ex5.
+      </p>
+
+      <ol class="question-list">
+        <li><span class="qmeta">JS · 5 %</span> Skriv en funksjon som regner antall dager til neste jul (ikke i år) og varsler i en alert-boks.</li>
+        <li><span class="qmeta">JS · 8 %</span> Skriv et HTML-skjema med to tekstfelt og to knapper («Multipliser» og «Divider»). Skriv to JS-funksjoner som leser feltene, regner ut, og skriver resultatet inn i et <code>&lt;span id="result"&gt;</code>.</li>
+        <li><span class="qmeta">Canvas · 10 %</span> Tegn en sirkel, et rektangel og en tekst-streng inni et 400×120 canvas. Du må hente canvasen, hente 2D-kontekst, og bruke <code>arc</code>, <code>fillRect</code>, <code>fillText</code>.</li>
+        <li><span class="qmeta">CSS · 10 %</span> Gitt et HTML-tre med nested div, p og ul: skriv selektor som (a) gjør alle p inni en gitt div røde + bold, (b) gir grå bakgrunn til første-grandchild p, (c) flytter alle grandchild-p 20px til høyre.</li>
+        <li><span class="qmeta">Forklar · 6 %</span> Hva er forskjellen mellom POST og GET når du sender form-data?</li>
+        <li><span class="qmeta">Forklar · 8 %</span> Forklar TCP/IP-lagene og gi to protokoll-eksempler per lag.</li>
+        <li><span class="qmeta">Forklar · 6 %</span> Forklar forskjellen mellom <code>display:none</code>, <code>display:inline</code>, <code>display:block</code> og <code>visibility:hidden</code>.</li>
+        <li><span class="qmeta">Forklar · 10 %</span> Hva er event propagation og event bubbling? Bruk eksempel.</li>
+        <li><span class="qmeta">Forklar · 6 %</span> Forklar CSS specificity. Gi eksempel der id slår class.</li>
+        <li><span class="qmeta">JS · 9 %</span> Skriv en form med Fornavn, Etternavn, Alder og Passord. Valider: alder ≥ 18, navnefelt uten tall, passord ≥ 1 stor + 1 spesialtegn + 1 tall. Vis feil i alert.</li>
+        <li><span class="qmeta">MCQ-trace · 3 %</span> Hva blir output: <code>"Scaler".substring(2,4)</code>?</li>
+        <li><span class="qmeta">MCQ-trace · 3 %</span> Hva blir output: <code>let a=5+"9"; document.write(a);</code>?</li>
+        <li><span class="qmeta">MCQ-trace · 4 %</span> <code>let book=[1,2,3,4,5,6,7,8]; book[10]=10; document.write(book.length);</code> Hva er output?</li>
+        <li><span class="qmeta">MCQ · 2 %</span> Hva er default-verdien for <code>position</code>-property?</li>
+        <li><span class="qmeta">MCQ · 2 %</span> Hva regner <code>Math.floor(3.8)</code> til?</li>
+        <li><span class="qmeta">MCQ · 2 %</span> Hva blir alert: <code>let age=prompt("Alder?"); alert(age+1);</code> hvis bruker skriver 18?</li>
+      </ol>
+
+      <div class="callout-good">
+        <div class="label">Selvtest-rytme</div>
+        <p>
+          Sett en timer på 30 minutter. Lukk denne siden. Svar på de 16
+          spørsmålene over på papir. Sjekk fasit. Marker hva du bommet på —
+          det går rett på A4-arket.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dagen">
+    <div class="container">
+      <div class="section-badge">07 · Eksamensdagen</div>
+      <h2>Tidsplan på <em>en 4-timers eksamen</em></h2>
+      <p class="section-intro">
+        Standard skoleeksamen på IT2805 er 4 timer (240 min). Her er en
+        anbefaling som matcher poengvektingen — ~3 minutter per prosentpoeng,
+        med god buffer for kodeoppgavene og avslutning.
+      </p>
+
+      <div class="timeline">
+        <div>
+          <div class="tl-time">0–5 min</div>
+          <div class="tl-task">Les hele oppgavesettet. Marker hva du tror er enkelt og hva som blir tidstyver.</div>
+        </div>
+        <div>
+          <div class="tl-time">5–35 min</div>
+          <div class="tl-task">Section A — flervalg. Skal gå raskt. Bruk arket for fakta-MCQ. Hopp over &amp; tilbake hvis usikker.</div>
+        </div>
+        <div>
+          <div class="tl-time">35–105 min</div>
+          <div class="tl-task">Section B — forklaringer. Gjør de billige først (TCP/IP, POST/GET, display). Skriv kort &amp; strukturert.</div>
+        </div>
+        <div>
+          <div class="tl-time">105–210 min</div>
+          <div class="tl-task">Section C — kode. Start med selektor-oppgaven (rask), deretter kalkulator-form, så Christmas/validering, til slutt Canvas.</div>
+        </div>
+        <div>
+          <div class="tl-time">210–230 min</div>
+          <div class="tl-task">Gå tilbake til hoppede MCQ. Sjekk om du har lukket alle HTML-tagger, satt anførselstegn, glemt <code>;</code>.</div>
+        </div>
+        <div>
+          <div class="tl-time">230–240 min</div>
+          <div class="tl-task">Korrektur. Les gjennom de lange forklaringene én siste gang — sensor leter etter struktur og nøkkelord.</div>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-cell good">
+          <div class="label">Gjør dette</div>
+          <ul>
+            <li>Skriv kode lesbart, indenter HTML.</li>
+            <li>Bruk kommentarer for å vise intensjon — sensor gir delpoeng for tankegang.</li>
+            <li>Lukk alle tagger og anførselstegn. Det er den vanligste poengtapsfella.</li>
+            <li>Hvis du står fast: skriv noe, skip og kom tilbake. Ikke la én oppgave stjele 30 min.</li>
+            <li>Bruk kommentarer som <code>// regner dager til jul</code> — det gir delpoeng selv ved feil i koden.</li>
+          </ul>
+        </div>
+        <div class="compare-cell bad">
+          <div class="label">Unngå dette</div>
+          <ul>
+            <li>Ikke bruk for mye tid på en MCQ — 3 % er ikke verdt 10 minutter.</li>
+            <li>Ikke begynn med Canvas først; den er den lengste oppgaven.</li>
+            <li>Ikke skriv <code>document.write</code> innenfor <code>onclick</code> — det overskriver hele siden.</li>
+            <li>Ikke lever et tomt skjema — spør deg selv om du har skrevet <em>noe</em> for hver oppgave.</li>
+            <li>Ikke skriv «alt det du kan» om et tema — sensor bedømmer presisjon, ikke mengde.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="metode">
+    <div class="container">
+      <div class="section-badge">08 · Metode</div>
+      <h2>Hvordan denne <em>analysen er gjort</em></h2>
+      <p>
+        Alle de fire reelle eksamenssettene i <code>tidligere_eksamener/</code>
+        (ex2.md, ex3.md, ex4.md, ex5.md) ble lest og hver oppgave klassifisert
+        til ett eller flere kapitler i pensum. Ex3 og ex4 viste seg å være
+        identiske kopier av samme «round 2»-eksamen — frekvenstellingen tar
+        høyde for det og rapporterer maks 3 unike sett. Ex1.md er
+        kursnotater i JavaScript, ikke et reelt eksamenssett, så den brukes
+        kun som hint om hva foreleser legger vekt på i undervisningen.
+      </p>
+      <p>
+        Prioritetsklassene er bestemt av tre faktorer: hvor mange sett tema
+        dukker opp i, hvor mange poeng oppgaven ga, og hvor mange minutters
+        forberedelse som kreves for å beherske den. Tier 1 dekker ~50 % av
+        poengmassen. Tier 1 + Tier 2 dekker ~80 %.
+      </p>
+
+      <div class="callout-blue">
+        <div class="label">Forbehold</div>
+        <p>
+          Fire sett er et lite utvalg, og foreleser <em>kan</em> hoppe ut av
+          mønsteret. Bruk derfor analysen som en <strong>prioriteringshjelp</strong>,
+          ikke en filtreringsmaskin. Alt i pensum kan teknisk sett komme — du
+          øker odds, du fjerner ikke risiko.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>
