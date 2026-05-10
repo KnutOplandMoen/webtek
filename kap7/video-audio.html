@@ -139,9 +139,24 @@
 
       <p>
         Et <code>&lt;video&gt;</code>-element trenger som minimum en
-        kilde og <code>controls</code> for å være brukbart. I tillegg
-        finnes ett attributt som er <em>spesifikt</em> for video:
-        <code>poster</code>.
+        kilde og <code>controls</code> for å være brukbart. Den
+        enkleste formen er ett <code>src</code>-attributt rett på
+        elementet:
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Minste lovlige video</div>
+          <pre>&lt;video src="media/intro.mp4" controls&gt;&lt;/video&gt;</pre>
+        </div>
+      </div>
+
+      <p>
+        Vil du tilby flere formater (slik at flere nettlesere kan spille
+        av), bruker du <code>&lt;source&gt;</code>-elementer i stedet
+        for <code>src</code>. I tillegg finnes ett attributt som er
+        <em>spesifikt</em> for video: <code>poster</code>. Bredde og
+        høyde fungerer som på <code>&lt;img&gt;</code>.
       </p>
 
       <div class="fact-grid">
@@ -210,8 +225,16 @@
         <code>autoplay</code>, <code>loop</code>, <code>muted</code>),
         samme <code>&lt;source&gt;</code>-mønster, samme fallback-tekst.
         Det er <em>ingen <code>poster</code></em> &mdash; det er ikke
-        noe bilde å vise.
+        noe bilde å vise. Den enkleste formen er igjen ett
+        <code>src</code>-attributt:
       </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Minste lovlige audio</div>
+          <pre>&lt;audio src="media/jingle.mp3" controls&gt;&lt;/audio&gt;</pre>
+        </div>
+      </div>
 
       <div class="code-result">
         <div class="pane">

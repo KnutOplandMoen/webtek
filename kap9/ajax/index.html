@@ -228,7 +228,12 @@ request.send();</code></pre>
       <div class="fact-card"><div class="fc-key">403 Forbidden</div><div class="fc-val">Du er identifisert, men har ikke lov.</div></div>
       <div class="fact-card"><div class="fc-key">404 Not Found</div><div class="fc-val">Tjeneren fant ikke ressursen.</div></div>
       <div class="fact-card"><div class="fc-key">500 Internal Server Error</div><div class="fc-val">Tjeneren krasjet — ikke din feil.</div></div>
+      <div class="fact-card"><div class="fc-key">502 Bad Gateway</div><div class="fc-val">En proxy/gateway fikk ugyldig svar fra en annen server lengre bak.</div></div>
+      <div class="fact-card"><div class="fc-key">503 Service Unavailable</div><div class="fc-val">Tjeneren er midlertidig nede eller overbelastet — prøv igjen senere.</div></div>
     </div>
+    <p style="margin-top:1em;font-size:0.9em;color:var(--ink-soft);">
+      Pensum lenker til <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">MDNs fulle liste</a> for alle statuskoder.
+    </p>
 
     <div class="callout-blue"><div class="label">Lær gruppene</div>
       <p>2xx = suksess. 3xx = redirect. 4xx = klientens feil. 5xx = tjenerens feil. Hvis du husker gruppen, kan du resonnere deg fram til hva en spesifikk kode betyr.</p>

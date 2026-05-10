@@ -36,7 +36,7 @@
       </p>
       <div class="pill-row">
         <span class="pill">1.6.10 Borders</span>
-        <span class="pill">border · border-radius</span>
+        <span class="pill">border-style · border-color · border-width</span>
       </div>
     </div>
   </header>
@@ -154,12 +154,15 @@
   </div></section>
 
   <section id="radius"><div class="container">
-    <div class="section-badge">04 · Avrunding</div>
+    <div class="section-badge">04 · Avrunding (utenfor pensum)</div>
     <h2>Avrundete <em>hjørner</em></h2>
     <p>
       Egenskapen <code>border-radius</code> avrunder hjørnene på boksen.
-      Verdien kan være piksler, prosent eller andre lengder. Pensum nevner
-      den som måten å lage runde knapper, kort og avatarer på.
+      Verdien kan være piksler, prosent eller andre lengder.
+      <strong>Pensum 1.6.10 dekker ikke <code>border-radius</code></strong>
+      — det er bare <code>border-style</code>, <code>border-color</code>
+      og <code>border-width</code> (med tilhørende side-suffikser) som
+      hører til pensum. Avrunding tar vi med fordi du ser den overalt.
     </p>
 
 <pre><code>.knapp { border-radius: 4px; }

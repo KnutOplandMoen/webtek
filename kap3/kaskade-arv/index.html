@@ -219,11 +219,15 @@
       barn-element. Det er <strong>arv</strong> i praksis.
     </p>
     <p>
-      Pensum 1.6.5 deler egenskapene i to grupper:
+      Pensum 1.6.5 navngir <code>color</code> og <code>font-family</code>
+      som typiske eksempler på arvbare egenskaper, og <code>border</code>
+      som eksempel på en egenskap som <em>ikke</em> arves. I praksis
+      følger andre tekstrelaterte egenskaper samme mønster, og andre
+      boks-relaterte egenskaper det motsatte:
     </p>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">Arves automatisk</div><div class="fc-val"><code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>, <code>visibility</code> — typisk tekstrelaterte egenskaper.</div></div>
-      <div class="fact-card"><div class="fc-key">Arves <em>ikke</em></div><div class="fc-val"><code>border</code>, <code>margin</code>, <code>padding</code>, <code>background</code>, <code>width</code>, <code>height</code> — boks-relaterte egenskaper.</div></div>
+      <div class="fact-card"><div class="fc-key">Arves <span class="fc-pensum">eksempler i pensum</span></div><div class="fc-val">Pensum: <code>color</code>, <code>font-family</code>. I praksis også andre tekst-egenskaper som <code>font-size</code>, <code>line-height</code>, <code>text-align</code>, <code>visibility</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Arves <em>ikke</em> <span class="fc-pensum">eksempler i pensum</span></div><div class="fc-val">Pensum: <code>border</code>. I praksis også andre boks-egenskaper som <code>margin</code>, <code>padding</code>, <code>background</code>, <code>width</code>, <code>height</code>.</div></div>
     </div>
     <p>
       Du kan tvinge arv selv med verdien <code>inherit</code>:

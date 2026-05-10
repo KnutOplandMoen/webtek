@@ -151,7 +151,7 @@ farger[farger.length - 1];  // "blå" (siste element)</code></pre>
         <li class="mcq-opt" data-correct="1"><code>undefined</code></li>
         <li class="mcq-opt" data-correct="0"><code>RangeError</code></li>
       </ul>
-      <div class="mcq-feedback"><code>a.length</code> er 3. <code>a[3]</code> finnes ikke (gyldige indekser er 0–2), så det returneres <code>undefined</code> — ingen feil.</div>
+      <div class="mcq-feedback"><code>a.length</code> er 3, og gyldige indekser er 0–2. <strong>Merk:</strong> pensum 1.11.8 påstår at indeks utenfor området «would give an error» — det er feil i pensum. JavaScript returnerer faktisk <code>undefined</code> uten å kaste exception. Ingen vanlig nettleser eller Node-versjon kaster <code>RangeError</code> her.</div>
     </div>
 
     <div class="quiz mcq" data-quiz>

@@ -144,13 +144,15 @@
       <li>Numeriske: <code>100, 200, …, 900</code> — der 100 er superlett og 900 er superblack. Hvilke som faktisk virker avhenger av fonten.</li>
     </ul>
     <p>
-      <code>font-size</code> styrer størrelsen. Pensum nevner flere enheter:
+      <code>font-size</code> styrer størrelsen. Pensum 1.6.11 anbefaler
+      å starte med <code>px</code>; <code>em</code>, <code>rem</code> og
+      <code>%</code> er ikke pensum, men du møter dem i praksis:
     </p>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key"><code>px</code></div><div class="fc-val">Piksler — fast størrelse, uavhengig av brukerens nettleserinnstillinger.</div></div>
-      <div class="fact-card"><div class="fc-key"><code>em</code></div><div class="fc-val">Relativ til foreldrelementets font-size. <code>1.5em</code> = 1.5× forelderens.</div></div>
-      <div class="fact-card"><div class="fc-key"><code>rem</code></div><div class="fc-val">Relativ til <em>rot</em>-elementet (<code>html</code>). Gir mer forutsigbar skalering.</div></div>
-      <div class="fact-card"><div class="fc-key"><code>%</code></div><div class="fc-val">Relativ til forelder, akkurat som <code>em</code>.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>px</code> <span class="fc-pensum">pensum</span></div><div class="fc-val">Piksler — fast størrelse, uavhengig av brukerens nettleserinnstillinger. Pensum sier eksplisitt: «It is easiest to start out with px».</div></div>
+      <div class="fact-card"><div class="fc-key"><code>em</code> <span class="fc-pensum">utenfor</span></div><div class="fc-val">Relativ til foreldrelementets font-size. <code>1.5em</code> = 1.5× forelderens.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>rem</code> <span class="fc-pensum">utenfor</span></div><div class="fc-val">Relativ til <em>rot</em>-elementet (<code>html</code>). Gir mer forutsigbar skalering.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>%</code> <span class="fc-pensum">utenfor</span></div><div class="fc-val">Relativ til forelder, akkurat som <code>em</code>.</div></div>
     </div>
 
     <div class="quiz mcq" data-quiz>
@@ -224,12 +226,15 @@
     <div class="section-badge">05 · Lesbarhet</div>
     <h2><em>Lesbarhet</em> og tilgjengelighet</h2>
     <p>
-      Pensum 1.6.11 påpeker tre ting som påvirker lesbarheten direkte:
+      Pensum 1.6.11 fokuserer på kontrast (særlig kombinasjonen mørk
+      grå tekst på off-white bakgrunn) og linjehøyde, og lenker til
+      Smashing Magazine og fonts.com for fordypning. Disse tre
+      faktorene henger sammen for lesbarheten:
     </p>
     <ol class="steps">
-      <li><strong>Kontrast</strong> mellom tekst og bakgrunn — særlig viktig for synshemmede.</li>
-      <li><strong>Linjelengde</strong> — for lange linjer er slitsomme. Idealet er 50–75 tegn per linje.</li>
-      <li><strong>Linjehøyde</strong> — for lite gir tett tekst, for mye løsriver linjene fra hverandre.</li>
+      <li><strong>Kontrast</strong> mellom tekst og bakgrunn — særlig viktig for synshemmede. Pensum tipser om mørk grå på off-white framfor ren svart på hvit.</li>
+      <li><strong>Linjelengde</strong> — for lange linjer er slitsomme. En vanlig tommelfingerregel (utenfor pensum) er 50–75 tegn per linje.</li>
+      <li><strong>Linjehøyde</strong> — for lite gir tett tekst, for mye løsriver linjene fra hverandre. Pensum: øk vekt og linjehøyde når du har lys tekst på mørk bakgrunn.</li>
     </ol>
     <div class="callout">
       <div class="label">Praktisk konsekvens</div>
