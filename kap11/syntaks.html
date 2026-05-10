@@ -152,9 +152,70 @@
     </div>
   </section>
 
+  <section id="attributter">
+    <div class="container">
+      <div class="section-badge">04 · Attributter</div>
+      <h2>Attributter på <em>elementer</em></h2>
+      <p>
+        Som i HTML kan XML-elementer ha <strong>attributter</strong> i
+        åpningstaggen — <code>navn="verdi"</code>, separert med
+        likhetstegn, og <strong>verdien må stå i anførselstegn</strong>
+        (enkle eller doble — bare vær konsekvent). Pensum nevner at en
+        tag kan inneholde en eller flere attributter ved siden av
+        innholdet mellom åpne- og lukke-tag.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Attributter på person</div>
+          <pre>&lt;person id="1" role="instructor"&gt;
+  &lt;name&gt;Name Nameson&lt;/name&gt;
+  &lt;height&gt;173&lt;/height&gt;
+&lt;/person&gt;</pre>
+        </div>
+      </div>
+      <div class="callout-warn">
+        <div class="label">Verdiene må være i hermetegn</div>
+        <p>
+          <code>&lt;person id=1&gt;</code> er ikke well-formed. Det må
+          være <code>id="1"</code> eller <code>id='1'</code>. Husk
+          også at reserverte tegn (<code>&amp;</code>, <code>&lt;</code>,
+          <code>"</code>) inni en attributt-verdi må erstattes med
+          entiteter — akkurat som i tekstinnhold.
+        </p>
+      </div>
+      <div class="callout-blue">
+        <div class="label">Element eller attributt?</div>
+        <p>
+          Skal data ligge som <em>element</em> (<code>&lt;age&gt;23&lt;/age&gt;</code>)
+          eller som <em>attributt</em> (<code>&lt;person age="23"&gt;</code>)?
+          Pensum gir ingen hard regel — typisk legges metadata
+          (identifikatorer, type, status) som attributt, mens selve
+          dataene står som elementer slik at de kan utvides senere.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="udefinerte">
+    <div class="container">
+      <div class="section-badge">05 · Udefinerte tagger</div>
+      <h2>Du finner opp <em>taggene selv</em></h2>
+      <p>
+        XML-parseren har <em>ingen</em> innebygd liste over lovlige
+        tagger — du som forfatter velger taggnavnene selv (det er det
+        «extensible» betyr). Likevel sier pensum at
+        <strong>et dokument med en udefinert tag er ugyldig</strong>
+        hvis det skal valideres mot et skjema som mangler den. Vil du
+        ha kontroll på hva som regnes som lovlige tagger, må du knytte
+        dokumentet til en DTD eller XML Schema (mer om det i
+        <a href="validering.html">validering</a>).
+      </p>
+    </div>
+  </section>
+
   <section id="entities">
     <div class="container">
-      <div class="section-badge">04 · Entity references</div>
+      <div class="section-badge">06 · Entity references</div>
       <h2>Fem reserverte <em>tegn</em></h2>
       <p>
         Hvis tekstinnholdet ditt skal inneholde <code>&lt;</code> eller
@@ -188,7 +249,7 @@
 
   <section id="kommentarer">
     <div class="container">
-      <div class="section-badge">05 · Kommentarer</div>
+      <div class="section-badge">07 · Kommentarer</div>
       <h2>Som i <em>HTML</em></h2>
       <p>
         Kommentarer i XML har akkurat samme syntaks som i HTML:
@@ -209,7 +270,7 @@
 
   <section id="komplett">
     <div class="container">
-      <div class="section-badge">06 · Sett sammen</div>
+      <div class="section-badge">08 · Sett sammen</div>
       <h2>Et komplett <em>well-formed</em> dokument</h2>
       <p>Alt over i ett eksempel:</p>
       <div class="code-result">
@@ -218,12 +279,12 @@
           <pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;!-- En liste over personer --&gt;
 &lt;persons&gt;
-  &lt;person&gt;
+  &lt;person id="1" role="instructor"&gt;
     &lt;name&gt;Name Nameson&lt;/name&gt;
     &lt;height&gt;173&lt;/height&gt;
     &lt;age&gt;23&lt;/age&gt;
   &lt;/person&gt;
-  &lt;person&gt;
+  &lt;person id="2"&gt;
     &lt;name&gt;Tom &amp;amp; Jerry&lt;/name&gt;
     &lt;height&gt;181&lt;/height&gt;
     &lt;age&gt;25&lt;/age&gt;
@@ -234,14 +295,15 @@
       <p>
         Sjekkliste for well-formed: prolog først, ett root-element, alle
         tagger lukket i riktig rekkefølge, samme case på åpne/lukke-tag,
-        og reserverte tegn erstattet med entiteter.
+        attributt-verdier i hermetegn, og reserverte tegn erstattet med
+        entiteter.
       </p>
     </div>
   </section>
 
   <section id="quiz">
     <div class="container">
-      <div class="section-badge">07 · Test deg selv</div>
+      <div class="section-badge">09 · Test deg selv</div>
       <h2>Multiple <em>choice</em></h2>
 
       <div class="quiz mcq">

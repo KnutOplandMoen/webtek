@@ -580,6 +580,16 @@ section:last-of-type { border-bottom: none; }
   margin-bottom: 4px;
 }
 .fc-val { font-family: var(--serif); font-size: 0.98rem; line-height: 1.5; }
+.fc-pensum {
+  font-family: var(--serif);
+  font-size: 0.62rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  font-weight: normal;
+  margin-left: 6px;
+  opacity: 0.75;
+}
 
 /* ---------- COMPARE GRID ---------- */
 

@@ -105,6 +105,19 @@
       </ul>
       <div class="mcq-feedback">Bakgrunnen dekker content og padding. Margin er <em>utenfor</em> boksen og er alltid gjennomsiktig.</div>
     </div>
+
+    <div class="callout-blue">
+      <div class="label">Innhold-størrelse</div>
+      <p>
+        Pensum nevner at når <code>box-sizing</code> er satt til standard,
+        styrer egenskapene <code>width</code>, <code>min-width</code>,
+        <code>max-width</code>, <code>height</code>,
+        <code>min-height</code> og <code>max-height</code> størrelsen på
+        <em>content</em>-laget — ikke hele boksen inkludert padding og
+        border. Setter du ingen av dem, vil boksen tilpasse seg innholdet
+        sitt.
+      </p>
+    </div>
   </div></section>
 
   <section id="padding"><div class="container">
@@ -154,8 +167,8 @@
 section { margin: 32px 0; }</code></pre>
 
     <div class="callout">
-      <div class="label">Spesielt: margin collapse</div>
-      <p>Når to vertikale marger møtes (f.eks. <code>margin-bottom</code> på et avsnitt og <code>margin-top</code> på det neste), «kollapser» de til den største av de to. Pensum nevner dette kort, men det er greit å være obs på når et tilsynelatende stort mellomrom plutselig blir mindre enn forventet.</p>
+      <div class="label">Utenfor pensum: margin collapse</div>
+      <p>Når to vertikale marger møtes (f.eks. <code>margin-bottom</code> på et avsnitt og <code>margin-top</code> på det neste), «kollapser» de til den største av de to. Pensum 1.6.8 nevner ikke dette eksplisitt, men det er greit å være obs på når et tilsynelatende stort mellomrom plutselig blir mindre enn forventet.</p>
     </div>
 
     <div class="quiz mcq" data-quiz>
