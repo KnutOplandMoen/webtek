@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.12 — Dynamiske nettsider (Ajax) · Kap 9</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 9</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 9 · 1.12 Dynamiske nettsider (Ajax)">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 9 · Underkapittel 1.12</div>
+      <h1>Dynamiske nettsider — <em>Ajax</em></h1>
+      <p class="lede">
+        Hvordan henter JavaScript data fra en server uten å laste hele siden
+        på nytt? Svaret er <code>XMLHttpRequest</code> — nøkkelen til Ajax,
+        og fundamentet under alt av moderne webapper.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.12 Dynamic websites</span>
+        <span class="pill">XMLHttpRequest</span>
+        <span class="pill">HTTP-metoder</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor Ajax?</a></li>
+        <li><span class="toc-num">02</span><a href="#oppskrift">XMLHttpRequest steg for steg</a></li>
+        <li><span class="toc-num">03</span><a href="#metoder">HTTP-metoder</a></li>
+        <li><span class="toc-num">04</span><a href="#status">Statuskoder</a></li>
+        <li><span class="toc-num">05</span><a href="#sameorigin">Same-origin og JSONP</a></li>
+        <li><span class="toc-num">06</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Pensum 1.12</div>
+    <h2>Hvorfor <em>Ajax</em>?</h2>
+    <p>
+      Tradisjonelt sendte nettleseren en ny <em>request</em> hver gang du klikket på en lenke
+      eller submitterte et skjema. Hele siden ble lastet på nytt — selv om
+      bare en liten del trengte å oppdateres.
+    </p>
+    <p>
+      <strong>Ajax</strong> (Asynchronous JavaScript and XML) er teknikken der
+      JavaScript sender en HTTP-request <em>i bakgrunnen</em> og oppdaterer
+      bare den biten av siden som trenger ny data. Brukeren ser ingen
+      «full reload». Dette er det som lar deg trykke «like» på et innlegg uten
+      at hele Facebook flikker, eller skrive en chat-melding uten at meldings­listen
+      hoppes til toppen.
+    </p>
+    <p>
+      Verktøyet pensum bruker er <code>XMLHttpRequest</code> — det innebygde
+      JS-API-et for å sende HTTP-requests. (Moderne kode bruker også <code>fetch</code>,
+      men <code>XMLHttpRequest</code> er det pensum vil at du kan.)
+    </p>
+
+    <div class="callout-blue"><div class="label">Kjerneidé</div>
+      <p>Statisk side = en HTML-fil per request. Dynamisk side = JS oppdaterer DOM-en med data hentet i bakgrunnen via Ajax.</p>
+    </div>
+  </div></section>
+
+  <section id="oppskrift"><div class="container">
+    <div class="section-badge">02 · Pensum 1.12</div>
+    <h2><code>XMLHttpRequest</code> — <em>steg for steg</em></h2>
+    <p>En typisk Ajax-call består av fire steg:</p>
+
+<pre><code>// 1. Lag en ny request-instans
+const request = new XMLHttpRequest();
+
+// 2. Fortell hva slags request det er
+request.open('GET', '/newsfeed', true);
+
+// 3. Bestem hva som skjer når svaret kommer
+request.onload = function() {
+  if (request.status === 200) {
+    console.log(request.responseText);
+  } else {
+    console.log("Feilet: " + request.status);
+  }
+};
+
+// 4. Send requesten
+request.send();</code></pre>
+
+    <h3>Argumentene til <code>open()</code></h3>
+    <ol class="steps">
+      <li><strong>HTTP-metode</strong> — <code>'GET'</code>, <code>'POST'</code>, <code>'PUT'</code> eller <code>'DELETE'</code>.</li>
+      <li><strong>URL</strong> — pekeren til ressursen.</li>
+      <li><strong>Asynkron-flagg</strong> — <code>true</code> = asynkront (anbefalt). <code>false</code> = synkront, blokkerer hele UI-en til svaret kommer.</li>
+    </ol>
+
+    <h3>Hva får du tilbake</h3>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">request.status</div>
+        <div class="fc-val">HTTP-statuskoden — <code>200</code>, <code>404</code>, <code>500</code> osv.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">request.responseText</div>
+        <div class="fc-val">Selve dataen tjeneren sendte, som tekststreng.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">request.onload</div>
+        <div class="fc-val">Funksjonen som kjøres når svaret er klart.</div>
+      </div>
+    </div>
+
+    <p>Hvis serveren svarte med JSON, parser du teksten:</p>
+
+<pre><code>request.onload = function() {
+  if (request.status === 200) {
+    const data = JSON.parse(request.responseText);
+    console.log(data.tittel);
+  }
+};</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">I <code>request.open('GET', url, true)</code>, hva betyr det tredje argumentet (<code>true</code>)?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">At cache skal brukes</li>
+        <li class="mcq-opt" data-correct="1">At requesten skal være asynkron</li>
+        <li class="mcq-opt" data-correct="0">At svaret skal parses som JSON</li>
+        <li class="mcq-opt" data-correct="0">At cookies skal sendes med</li>
+      </ul>
+      <div class="mcq-feedback">Async-flagget. <code>true</code> = ikke-blokkerende (varsel via <code>onload</code>). <code>false</code> = blokkerer UI-en til svaret kommer.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hvilken egenskap inneholder selve dataen tjeneren returnerte?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>request.status</code></li>
+        <li class="mcq-opt" data-correct="1"><code>request.responseText</code></li>
+        <li class="mcq-opt" data-correct="0"><code>request.data</code></li>
+        <li class="mcq-opt" data-correct="0"><code>request.body</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>responseText</code> = data som streng. <code>status</code> = bare statuskoden (200, 404, …).</div>
+    </div>
+  </div></section>
+
+  <section id="metoder"><div class="container">
+    <div class="section-badge">03 · Pensum 1.12</div>
+    <h2>HTTP-<em>metoder</em></h2>
+    <p>Det første argumentet til <code>open()</code> bestemmer <em>hva</em> du vil gjøre med ressursen:</p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">GET</div>
+        <div class="fc-val">Hent data. Brukes til å lese, ikke til å endre. Ingen body.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">POST</div>
+        <div class="fc-val">Opprett ny ressurs. Data sendes i body — typisk skjema-data eller JSON.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">PUT</div>
+        <div class="fc-val">Oppdater eksisterende ressurs.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">DELETE</div>
+        <div class="fc-val">Slett ressurs.</div>
+      </div>
+    </div>
+
+    <div class="callout"><div class="label">Konvensjon vs hard regel</div>
+      <p>Tjeneren kan teknisk svare på en GET som om det var en POST — men <em>konvensjonen</em> er at GET skal være «trygg» og uten sideeffekter. Følger du konvensjonen vet andre utviklere hva koden din gjør.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hvilken HTTP-metode brukes typisk når man <em>henter</em> data?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1">GET</li>
+        <li class="mcq-opt" data-correct="0">POST</li>
+        <li class="mcq-opt" data-correct="0">PUT</li>
+        <li class="mcq-opt" data-correct="0">DELETE</li>
+      </ul>
+      <div class="mcq-feedback">GET = lese. POST = opprette. PUT = oppdatere. DELETE = slette.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Du skal sende inn et nytt blogg-innlegg. Hvilken metode passer best?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">GET</li>
+        <li class="mcq-opt" data-correct="1">POST</li>
+        <li class="mcq-opt" data-correct="0">PUT</li>
+        <li class="mcq-opt" data-correct="0">DELETE</li>
+      </ul>
+      <div class="mcq-feedback">POST brukes til å opprette ny data. PUT brukes hvis du oppdaterer et innlegg som finnes fra før.</div>
+    </div>
+  </div></section>
+
+  <section id="status"><div class="container">
+    <div class="section-badge">04 · Pensum 1.12</div>
+    <h2>Status<em>koder</em></h2>
+    <p>Statuskoden forteller <em>hvordan det gikk</em>. Pensum vil at du kan disse:</p>
+
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">200 OK</div><div class="fc-val">Alt gikk bra — du kan lese <code>responseText</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">400 Bad Request</div><div class="fc-val">Klienten sendte noe ugyldig — sjekk syntaksen i requesten.</div></div>
+      <div class="fact-card"><div class="fc-key">401 Unauthorized</div><div class="fc-val">Du må autentisere deg for å få tilgang.</div></div>
+      <div class="fact-card"><div class="fc-key">403 Forbidden</div><div class="fc-val">Du er identifisert, men har ikke lov.</div></div>
+      <div class="fact-card"><div class="fc-key">404 Not Found</div><div class="fc-val">Tjeneren fant ikke ressursen.</div></div>
+      <div class="fact-card"><div class="fc-key">500 Internal Server Error</div><div class="fc-val">Tjeneren krasjet — ikke din feil.</div></div>
+    </div>
+
+    <div class="callout-blue"><div class="label">Lær gruppene</div>
+      <p>2xx = suksess. 3xx = redirect. 4xx = klientens feil. 5xx = tjenerens feil. Hvis du husker gruppen, kan du resonnere deg fram til hva en spesifikk kode betyr.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hva betyr statuskoden <strong>404</strong>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">OK</li>
+        <li class="mcq-opt" data-correct="0">Bad Request</li>
+        <li class="mcq-opt" data-correct="1">Not Found</li>
+        <li class="mcq-opt" data-correct="0">Internal Server Error</li>
+      </ul>
+      <div class="mcq-feedback">404 = tjeneren fant ikke ressursen. 500 = tjener-feil. 200 = OK.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hvilken gruppe statuskoder indikerer <em>en feil hos klienten</em>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">2xx</li>
+        <li class="mcq-opt" data-correct="0">3xx</li>
+        <li class="mcq-opt" data-correct="1">4xx</li>
+        <li class="mcq-opt" data-correct="0">5xx</li>
+      </ul>
+      <div class="mcq-feedback">4xx = klientens feil (404, 401, 403). 5xx = tjenerens feil (500). 2xx = suksess.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Du sender en POST og får tilbake <code>500</code>. Hvem skal du klage til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Sjekk koden din — det er din feil</li>
+        <li class="mcq-opt" data-correct="1">Tjeneren krasjet — det er på serversiden</li>
+        <li class="mcq-opt" data-correct="0">Ressursen finnes ikke</li>
+        <li class="mcq-opt" data-correct="0">Du er ikke autentisert</li>
+      </ul>
+      <div class="mcq-feedback">5xx er tjenerens feil. Med 500 har serveren krasjet på et vis den ikke vet hvordan håndteres.</div>
+    </div>
+  </div></section>
+
+  <section id="sameorigin"><div class="container">
+    <div class="section-badge">05 · Pensum 1.12</div>
+    <h2>Same-origin policy og <em>JSONP</em></h2>
+    <p>
+      Av sikkerhetshensyn lar nettleseren som standard <em>ikke</em> et script
+      på <code>nrk.no</code> sende en <code>XMLHttpRequest</code> til
+      <code>vg.no</code>. Det kalles <strong>same-origin policy</strong>:
+      requesten må gå til samme «origin» (samme protokoll, host og port).
+    </p>
+    <p>
+      Hadde policy-en ikke vært der, kunne et ondsinnet script på en
+      tilfeldig side ha lest cookien din fra <code>nettbank.no</code>.
+    </p>
+
+    <h3>JSONP — en gammel omveier</h3>
+    <p>
+      Mens <code>XMLHttpRequest</code> blokkeres på tvers av domener, gjør
+      <em>ikke</em> <code>&lt;script src="…"&gt;</code> det. Du kan altså laste
+      JavaScript fra hvilket som helst domene. <strong>JSONP</strong> (JSON with
+      Padding) utnytter dette: tjeneren returnerer JSON pakket inn i et
+      JavaScript-funksjonskall som scriptet ditt allerede har definert.
+    </p>
+    <p>
+      Moderne kode bruker <strong>CORS</strong> (Cross-Origin Resource Sharing)
+      i stedet — det er en mekanisme der serveren eksplisitt tillater
+      cross-origin-requests via spesielle headers. Pensum nevner JSONP som
+      <em>tidligere</em> løsning.
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hva er Same-origin policy?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">En regel for at HTML-filer må ha samme navn som CSS-filer</li>
+        <li class="mcq-opt" data-correct="1">En sikkerhetsbegrensning som hindrer JS-requests på tvers av domener</li>
+        <li class="mcq-opt" data-correct="0">En regel om at alle requests må være GET</li>
+        <li class="mcq-opt" data-correct="0">En policy fra serveren om hvilke språk som er tillatt</li>
+      </ul>
+      <div class="mcq-feedback">Same-origin policy hindrer scripts fra ett domene i å sende <code>XMLHttpRequest</code> til andre domener — en sentral sikkerhetsmekanisme i nettleseren.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.12</div>
+      <div class="q-text">Hva er <em>hovedinnsikten</em> bak JSONP?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">JSON er raskere enn XML</li>
+        <li class="mcq-opt" data-correct="1"><code>&lt;script src&gt;</code> blokkeres ikke av same-origin policy</li>
+        <li class="mcq-opt" data-correct="0">Tjeneren kan oppgi sitt eget passord</li>
+        <li class="mcq-opt" data-correct="0">JSONP er kryptert</li>
+      </ul>
+      <div class="mcq-feedback">JSONP utnytter at <code>&lt;script&gt;</code>-tags <em>kan</em> hente JS fra andre domener — det stoppes ikke av same-origin slik <code>XMLHttpRequest</code> gjør.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">06 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong>Glemme <code>send()</code>:</strong> requesten avfyres faktisk når du kaller <code>request.send()</code>. Uten den skjer ingenting.</li>
+        <li><strong>Synkron request (<code>false</code>):</strong> blokkerer hele UI-en til svaret kommer. Bruk <code>true</code> og <code>onload</code>-callback.</li>
+        <li><strong>Lese <code>responseText</code> før <code>onload</code>:</strong> dataen er ikke ankommet ennå — du får tom streng eller eldre data.</li>
+        <li><strong>Glemme å sjekke <code>request.status</code>:</strong> hvis svaret er 404 eller 500, er <code>responseText</code> sannsynligvis ubrukelig.</li>
+        <li><strong>Cross-origin:</strong> request mot annet domene blokkeres med mindre serveren har CORS-headers. Du får en feil i konsollen, ikke et svar.</li>
+        <li><strong>Glemme å parse JSON:</strong> <code>responseText</code> er en <em>streng</em> selv om innholdet er JSON. Du må kjøre <code>JSON.parse()</code> selv.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">07 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er <em>poenget</em> med Ajax?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Å kryptere data i transit</li>
+        <li class="mcq-opt" data-correct="1">Å hente data fra server uten å laste hele siden på nytt</li>
+        <li class="mcq-opt" data-correct="0">Å erstatte HTML med JavaScript</li>
+        <li class="mcq-opt" data-correct="0">Å kjøre kode på serveren</li>
+      </ul>
+      <div class="mcq-feedback">Ajax = asynkrone requests fra JS i bakgrunnen. Siden kan oppdatere deler av seg selv uten en full reload.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er den riktige rekkefølgen for å sende en GET-request?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>send() → open() → onload</code></li>
+        <li class="mcq-opt" data-correct="1"><code>new XMLHttpRequest() → open() → onload = … → send()</code></li>
+        <li class="mcq-opt" data-correct="0"><code>open() → send() → new XMLHttpRequest()</code></li>
+        <li class="mcq-opt" data-correct="0"><code>onload = … → send() → open()</code></li>
+      </ul>
+      <div class="mcq-feedback">Lag instans, kall <code>open()</code>, sett <code>onload</code>-handler, kall til slutt <code>send()</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Skriv en funksjon <code>hentNyheter()</code> som henter <code>/news</code> og logger svaret. Hva må <em>være med</em> i kjernen?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>fetch('/news')</code></li>
+        <li class="mcq-opt" data-correct="1"><code>new XMLHttpRequest()</code>, <code>open('GET', '/news', true)</code>, <code>onload</code>, <code>send()</code></li>
+        <li class="mcq-opt" data-correct="0"><code>document.querySelector('/news')</code></li>
+        <li class="mcq-opt" data-correct="0"><code>JSON.parse('/news')</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensum bruker <code>XMLHttpRequest</code> — selv om <code>fetch</code> er moderne praksis, er det den gamle som testes i kapittelet.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../" class="subpage-card">
+        <div class="sp-icon">TILBAKE · Kapittel 9</div>
+        <div class="sp-title">Tilbake til kapitteloversikten</div>
+        <div class="sp-desc">Du har nå vært gjennom alle 5 underdelene av kap 9. Test deg selv med flashcards og helhets-quiz.</div>
+        <div class="sp-arrow">Til oversikten &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

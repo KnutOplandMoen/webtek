@@ -208,153 +208,46 @@
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>De fire <em>delene</em></h2>
-    <p class="section-intro">Pensum 1.9 deler seg naturlig i fire deler. Hver av dem dekker en del av eksamen.</p>
+    <h2>Tre <em>undersider</em></h2>
+    <p class="section-intro">
+      Pensum 1.9 deler seg i fire deler. Vi har slått sammen de to korte
+      (1.9.1 + 1.9.4) til én side — de tre undersidene under dekker hele
+      pensum med eksempler, attributt-tabell og MCQ.
+    </p>
 
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;">
+      <a class="subpage-card" href="form-elementet.html">
         <div class="sp-icon">A · ELT</div>
-        <div class="sp-title">Form-elementet</div>
+        <div class="sp-title">Form-elementet og skjemadesign</div>
         <div class="sp-desc">
-          <code>&lt;form&gt;</code> med <code>action</code> og <code>method</code>.
-          GET vs POST. Hva som skjer når submit trykkes.<br>
-          <strong>Kilde:</strong> pensum 1.9 (The form element).
+          <code>&lt;form&gt;</code>, <code>action</code>, <code>method</code>,
+          GET vs POST, og fire designattributter (<code>autofocus</code>,
+          <code>disabled</code>, <code>value</code>, <code>tabindex</code>).<br>
+          <strong>Pensum:</strong> 1.9.1 + 1.9.4.
         </div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
+      </a>
+      <a class="subpage-card" href="struktur.html">
         <div class="sp-icon">B · STR</div>
         <div class="sp-title">Form-struktur</div>
         <div class="sp-desc">
           <code>fieldset</code>, <code>legend</code>, <code>label</code>,
-          <code>input</code>, <code>textarea</code>, <code>select</code>,
-          <code>output</code>.<br>
-          <strong>Kilde:</strong> pensum 1.9 (Form structure).
+          <code>output</code>, alle input-typer, alle attributter med
+          eksempler, <code>textarea</code>, <code>select</code>.<br>
+          <strong>Pensum:</strong> 1.9.2.
         </div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
+      </a>
+      <a class="subpage-card" href="validering.html">
         <div class="sp-icon">C · VAL</div>
         <div class="sp-title">Validering</div>
         <div class="sp-desc">
-          <code>required</code>, <code>pattern</code>, <code>min</code>/<code>max</code>,
-          riktig <code>type</code>. CSS <code>:valid</code>/<code>:invalid</code>.<br>
-          <strong>Kilde:</strong> pensum 1.9 (Form validation).
+          <code>required</code>, <code>pattern</code>,
+          <code>min</code>/<code>max</code>/<code>step</code>, riktig
+          <code>type</code>. CSS <code>:valid</code>/<code>:invalid</code>.
+          Hvorfor server-validering uansett.<br>
+          <strong>Pensum:</strong> 1.9.3.
         </div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">D · DSG</div>
-        <div class="sp-title">Skjema-design</div>
-        <div class="sp-desc">
-          <code>autofocus</code>, <code>disabled</code>, <code>value</code>,
-          <code>tabindex</code>. Tips for effektive skjemaer.<br>
-          <strong>Kilde:</strong> pensum 1.9 (How to design a form).
-        </div>
-      </div>
+      </a>
     </div>
-
-    <h3 style="margin-top: 2.4em;">A · Form-elementet — GET vs POST</h3>
-    <p>
-      <code>method</code>-attributtet bestemmer hvordan data sendes:
-      som tekst i URL-en (GET), eller som en separat melding i request-body
-      (POST). Valget påvirker både synlighet, sikkerhet og bruksområde.
-    </p>
-
-    <div class="compare-grid">
-      <div class="compare-cell good">
-        <div class="label">GET</div>
-        <p>
-          Data legges på URL-en etter <code>?</code> som
-          <code>?navn=Per&amp;alder=20</code>. Kan caches, kan bookmarkes,
-          kan deles, blir liggende i browser-historikken. Brukes til
-          <em>oppslag</em> og <em>søk</em> — ikke sensitive data.
-        </p>
-      </div>
-      <div class="compare-cell bad">
-        <div class="label">POST</div>
-        <p>
-          Data sendes som en separat melding (i request-body), ikke i URL-en.
-          Brukes for sensitive data (passord, betalinger) og når
-          interaksjonen <em>endrer</em> noe på tjeneren. IE har maks
-          URL-lengde på 2048 tegn, så bruk POST også for store mengder data.
-        </p>
-      </div>
-    </div>
-
-    <h3 style="margin-top: 2.4em;">B · Form-struktur — input-typer</h3>
-    <p>
-      <code>&lt;input&gt;</code> er det viktigste elementet i et skjema.
-      <code>type</code>-attributtet avgjør hvordan kontrollen ser ut og
-      oppfører seg. Hvis nettleseren ikke støtter en gitt
-      <code>type</code>-verdi, fallback-er den til <code>text</code>.
-    </p>
-
-    <div class="fact-grid">
-      <div class="fact-card">
-        <div class="fc-key">Tekstfelt på én linje</div>
-        <div class="fc-val"><code>text</code>, <code>email</code>, <code>password</code>, <code>search</code>, <code>tel</code>, <code>url</code></div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key">Uten tekstinput</div>
-        <div class="fc-val"><code>checkbox</code>, <code>radio</code>, <code>file</code>, <code>number</code>, <code>range</code></div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key">Tid og dato</div>
-        <div class="fc-val"><code>date</code>, <code>time</code></div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key">Knapper</div>
-        <div class="fc-val"><code>button</code>, <code>reset</code>, <code>submit</code>, <code>image</code></div>
-      </div>
-    </div>
-
-    <h3 style="margin-top: 2.4em;">C · Validering med HTML5</h3>
-    <p>
-      Du skal alltid validere på tjeneren også, men klientside-validering
-      gir brukeren rask tilbakemelding og fanger åpenbare feil før
-      innsending. HTML5 har validering bakt inn — du trenger ikke skrive
-      JavaScript for grunnleggende sjekker.
-    </p>
-
-    <div class="code-result two-col">
-      <div class="pane">
-        <div class="pane-label">HTML</div>
-        <pre>&lt;form&gt;
-  &lt;label for="email"&gt;E-post:&lt;/label&gt;
-  &lt;input type="email" id="email"
-         name="email" required&gt;
-  &lt;button&gt;Submit&lt;/button&gt;
-&lt;/form&gt;</pre>
-      </div>
-      <div class="pane">
-        <div class="pane-label">CSS</div>
-        <pre>input:invalid {
-  border: 1px solid red;
-}
-input:valid {
-  border: 1px solid green;
-}</pre>
-      </div>
-    </div>
-
-    <p>
-      <code>required</code> hindrer innsending hvis feltet er tomt — brukeren
-      får en innebygd melding fra nettleseren. <code>type="email"</code>
-      sjekker formatet. <code>pattern</code> tar et regulært uttrykk.
-      <code>min</code>, <code>max</code> og <code>maxlength</code> begrenser
-      verdier.
-    </p>
-
-    <h3 style="margin-top: 2.4em;">D · Designe et skjema</h3>
-    <p>
-      Målet er at brukeren skal fullføre raskt og uten forvirring. Pensum
-      trekker frem fire attributter du kan styre brukeropplevelsen med:
-    </p>
-
-    <ul>
-      <li><code>autofocus</code> — markøren går automatisk til feltet når siden lastes. Bruk på det viktigste feltet på siden (f.eks. søkefelt på Google), <em>ikke</em> på et lite kontaktskjema nederst.</li>
-      <li><code>disabled</code> — gjør feltet uklikkbart. Brukes når feltet ikke skal fylles ut før noe annet er gjort. Må fjernes med JavaScript.</li>
-      <li><code>value</code> — forhåndsutfylt verdi. Kan hjelpe brukeren (f.eks. by basert på lokasjon), men brukere overser ofte ferdigutfylte verdier.</li>
-      <li><code>tabindex</code> — styrer tab-rekkefølgen. Negativ verdi = utenfor tab-flyt. <code>0</code> = naturlig posisjon. Positiv verdi = manuell rekkefølge.</li>
-    </ul>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
