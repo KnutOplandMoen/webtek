@@ -371,6 +371,15 @@ li.coming-soon {
       seg som om elementet ikke fantes (men det ligger fortsatt i kildekoden,
       så hvem som helst kan se innholdet via «vis kilde»).
     </p>
+    <div class="callout-warn">
+      <div class="label">Viktig fra pensum</div>
+      <p>
+        «If you use this property, it is important to note that
+        <strong>inline elements are not supposed to create block-level
+        elements</strong>.» Du kan bytte <code>display</code> teknisk, men
+        å gjøre et inline-element til block bryter HTML-strukturens forventning.
+      </p>
+    </div>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">MCQ · 1.7.2</div>
@@ -401,6 +410,35 @@ li.coming-soon {
         </p>
       </div>
     </div>
+    <div class="code-result two-col">
+      <div class="pane">
+        <div class="pane-label">HTML</div>
+        <pre><code>&lt;ul&gt;
+  &lt;li&gt;Home&lt;/li&gt;
+  &lt;li&gt;Products&lt;/li&gt;
+  &lt;li class="coming-soon"&gt;Services&lt;/li&gt;
+  &lt;li&gt;About&lt;/li&gt;
+  &lt;li&gt;Contact&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-label">CSS</div>
+        <pre><code>li {
+  display: inline;
+  margin-right: 10px;
+}
+li.coming-soon {
+  visibility: hidden;
+}</code></pre>
+      </div>
+    </div>
+    <p>
+      Pensum 1.7.3 bruker akkurat samme HTML som 1.7.2 — bare CSS-en endres
+      fra <code>display: none</code> til <code>visibility: hidden</code>.
+      Resultatet: «Services» blir borte, men plassen står tom mellom «Products»
+      og «About». Innholdet er fortsatt synlig i kildekoden, akkurat som med
+      <code>display: none</code>.
+    </p>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">MCQ · 1.7.3</div>
@@ -428,6 +466,22 @@ li.coming-soon {
         forrige. Selv om bokser har plass til å sitte side om side, gjør de
         det ikke. Du trenger ingen regel for dette, men du <em>kan</em> skrive
         det eksplisitt: <code>position: static;</code>.
+      </p>
+      <pre><code>body {
+  width: 750px;
+}
+h1 {
+  background-color: #EFEFEF;
+  padding: 10px;
+}
+p {
+  width: 450px;
+}</code></pre>
+      <p>
+        I pensum-eksempelet strekker <code>h1</code> seg over hele bredden
+        (ingen <code>width</code>), mens <code>p</code>-ene er begrenset til
+        450px. Likevel stables de — det viser at normal flow lar block-elementer
+        starte på ny linje selv når det er plass ved siden av.
       </p>
     </div>
 
@@ -496,9 +550,21 @@ li.coming-soon {
   position: fixed;
   top: 0px;
   left: 0px;
+  padding: 10px;
+  margin: 0px;
   width: 100%;
   background-color: #efefef;
+}
+.top {
+  margin-top: 100px;
 }</code></pre>
+      <p>
+        Husk: <code>&lt;p&gt;</code>-elementene er fortsatt i normal flow og
+        ignorerer plassen <code>&lt;h1&gt;</code> ville hatt. Derfor brukes
+        <code>margin-top: 100px</code> på første <code>&lt;p&gt;</code> for å
+        dytte den under den fikserte tittelen — uten denne ville teksten
+        forsvunnet bak h1-en.
+      </p>
     </div>
 
     <div class="def-box">
@@ -535,6 +601,21 @@ li.coming-soon {
         <li><code>both</code> — verken venstre eller høyre.</li>
         <li><code>none</code> — kan berøres på begge sider.</li>
       </ul>
+      <pre><code>p {
+  width: 230px;
+  float: left;
+  margin: 5px;
+  padding: 5px;
+}
+.clear {
+  clear: left;
+}</code></pre>
+      <p>
+        I pensum-eksempelet er det <em>fjerde</em> <code>&lt;p&gt;</code>-en
+        som får <code>class="clear"</code>. Den dyttes ned til ingen
+        flytende element berører venstre side, slik at den starter på en ny
+        rad helt til venstre.
+      </p>
     </div>
 
     <div class="quiz mcq" data-quiz>
@@ -558,6 +639,14 @@ li.coming-soon {
         jo nærmere fronten. <code>z-index: 10</code> ligger over
         <code>z-index: 5</code>.
       </p>
+      <pre><code>.foran {
+  position: absolute;
+  z-index: 10;   /* over .bak */
+}
+.bak {
+  position: absolute;
+  z-index: 5;    /* under .foran */
+}</code></pre>
     </div>
 
     <h3>1.7.5 — Inheritance, gjenbesøkt</h3>
