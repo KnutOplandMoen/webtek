@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 11.1 — XML-syntaks</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 11</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 11.1: XML-syntaks">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 11 · Underkapittel A · Pensum 1.14</div>
+      <h1>Syntaks &amp; <em>well-formed</em></h1>
+      <p class="lede">
+        Hvordan et XML-dokument er bygget opp: prologen først, ett root-element,
+        riktig nesting, samme bokstav-case, entity references for reserverte
+        tegn, og kommentarer.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.14</span>
+        <span class="pill">Forelesning 13</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="prolog">
+    <div class="container">
+      <div class="section-badge">01 · Prolog</div>
+      <h2>XML-<em>deklarasjonen</em></h2>
+      <p>
+        Et XML-dokument kan starte med en <strong>prolog</strong> — også kalt
+        XML-deklarasjon. Den er <em>valgfri</em>, men hvis den brukes må den
+        stå først i dokumentet, før alt annet (ingen tegn, ikke engang
+        whitespace, foran).
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Standard-deklarasjon</div>
+          <pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</pre>
+        </div>
+      </div>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">version</div>
+          <div class="fc-val">XML-versjonen — typisk <code>"1.0"</code>. Det finnes også 1.1 men brukes sjelden.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">encoding</div>
+          <div class="fc-val">Tegnkoding — <code>"UTF-8"</code> er default og dekker norske tegn. Andre eksempler: <code>"UTF-16"</code>, <code>"ISO-8859-1"</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">standalone</div>
+          <div class="fc-val"><code>"yes"</code> = dokumentet står på egne bein. <code>"no"</code> = trenger info fra eksterne kilder, f.eks. ekstern DTD.</div>
+        </div>
+      </div>
+      <div class="callout-warn">
+        <div class="label">Pass på</div>
+        <p>
+          Prologen har <strong>spørsmålstegn</strong> (<code>&lt;?xml … ?&gt;</code>),
+          ikke vanlige vinkelparenteser. Dette er en <em>processing instruction</em>,
+          ikke et element. Den lukkes ikke separat.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="root">
+    <div class="container">
+      <div class="section-badge">02 · Root-element</div>
+      <h2>Nøyaktig <em>ett root</em></h2>
+      <p>
+        Etter prologen kommer dokumentets innhold. Det må omsluttes av
+        <strong>nøyaktig ett</strong> root-element — forelderen til alle
+        andre elementer. Hvis du har flere objekter på topp-nivå må du
+        pakke dem i et felles root.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Feil — to root</div>
+          <pre>&lt;person&gt;…&lt;/person&gt;
+&lt;person&gt;…&lt;/person&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Riktig — ett root</div>
+          <pre>&lt;persons&gt;
+  &lt;person&gt;…&lt;/person&gt;
+  &lt;person&gt;…&lt;/person&gt;
+&lt;/persons&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Tagg-navnene velger du selv — XML er «extensible». Velg navn som
+        beskriver dataene (<code>&lt;person&gt;</code>,
+        <code>&lt;height&gt;</code>) i stedet for visning.
+      </p>
+    </div>
+  </section>
+
+  <section id="nesting">
+    <div class="container">
+      <div class="section-badge">03 · Nesting og case</div>
+      <h2>Lukk i riktig <em>rekkefølge</em></h2>
+      <p>
+        Et element som åpnes inni et annet, må <strong>lukkes før</strong>
+        forelderen lukkes. Krysset nesting bryter strukturen og dokumentet
+        er ikke <em>well-formed</em>.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Feil nesting</div>
+          <pre>&lt;a&gt;&lt;b&gt;X&lt;/a&gt;&lt;/b&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Riktig nesting</div>
+          <pre>&lt;a&gt;&lt;b&gt;X&lt;/b&gt;&lt;/a&gt;</pre>
+        </div>
+      </div>
+      <p>
+        XML er også <strong>case-sensitivt</strong> —
+        <code>&lt;Name&gt;</code> og <code>&lt;name&gt;</code> regnes som
+        forskjellige tagger. Åpne- og lukke-tag må ha samme bokstav-case
+        helt eksakt.
+      </p>
+      <div class="callout-warn">
+        <div class="label">HTML er ikke XML</div>
+        <p>
+          HTML godtar manglende lukke-tag (<code>&lt;br&gt;</code>) og
+          blanding av case. XML godtar ingen av delene. Det finnes ingen
+          «void»-elementer i XML — alt skal lukkes, enten med
+          <code>&lt;/tag&gt;</code> eller med selv-lukking
+          <code>&lt;tag/&gt;</code> for tomme elementer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="entities">
+    <div class="container">
+      <div class="section-badge">04 · Entity references</div>
+      <h2>Fem reserverte <em>tegn</em></h2>
+      <p>
+        Hvis tekstinnholdet ditt skal inneholde <code>&lt;</code> eller
+        <code>&amp;</code>, vil parseren tro at en ny tag begynner — eller
+        en entitet — og dokumentet er ikke well-formed. Bruk
+        <strong>entity references</strong> i stedet:
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card"><div class="fc-key">&lt;</div><div class="fc-val"><code>&amp;lt;</code> — less than</div></div>
+        <div class="fact-card"><div class="fc-key">&gt;</div><div class="fc-val"><code>&amp;gt;</code> — greater than</div></div>
+        <div class="fact-card"><div class="fc-key">&amp;</div><div class="fc-val"><code>&amp;amp;</code> — ampersand</div></div>
+        <div class="fact-card"><div class="fc-key">'</div><div class="fc-val"><code>&amp;apos;</code> — apostrophe</div></div>
+        <div class="fact-card"><div class="fc-key">"</div><div class="fc-val"><code>&amp;quot;</code> — quote</div></div>
+      </div>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Feil — rått &amp;</div>
+          <pre>&lt;text&gt;Tom &amp; Jerry&lt;/text&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Riktig</div>
+          <pre>&lt;text&gt;Tom &amp;amp; Jerry&lt;/text&gt;</pre>
+        </div>
+      </div>
+      <p>
+        <code>&amp;</code> er det vanligste tegnet å glemme — selv inni
+        URL-er må <code>&amp;</code> erstattes med <code>&amp;amp;</code>.
+      </p>
+    </div>
+  </section>
+
+  <section id="kommentarer">
+    <div class="container">
+      <div class="section-badge">05 · Kommentarer</div>
+      <h2>Som i <em>HTML</em></h2>
+      <p>
+        Kommentarer i XML har akkurat samme syntaks som i HTML:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">XML-kommentar</div>
+          <pre>&lt;!-- Personen er kursleder --&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Innholdet ignoreres av parseren. Bruk kommentarer for å forklare
+        struktur, eller midlertidig deaktivere et element under utvikling
+        uten å slette det.
+      </p>
+    </div>
+  </section>
+
+  <section id="komplett">
+    <div class="container">
+      <div class="section-badge">06 · Sett sammen</div>
+      <h2>Et komplett <em>well-formed</em> dokument</h2>
+      <p>Alt over i ett eksempel:</p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">persons.xml</div>
+          <pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;!-- En liste over personer --&gt;
+&lt;persons&gt;
+  &lt;person&gt;
+    &lt;name&gt;Name Nameson&lt;/name&gt;
+    &lt;height&gt;173&lt;/height&gt;
+    &lt;age&gt;23&lt;/age&gt;
+  &lt;/person&gt;
+  &lt;person&gt;
+    &lt;name&gt;Tom &amp;amp; Jerry&lt;/name&gt;
+    &lt;height&gt;181&lt;/height&gt;
+    &lt;age&gt;25&lt;/age&gt;
+  &lt;/person&gt;
+&lt;/persons&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Sjekkliste for well-formed: prolog først, ett root-element, alle
+        tagger lukket i riktig rekkefølge, samme case på åpne/lukke-tag,
+        og reserverte tegn erstattet med entiteter.
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">07 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvor må XML-deklarasjonen plasseres hvis den brukes?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Først i dokumentet — før alt annet</li>
+          <li class="mcq-opt" data-correct="0">Rett etter root-elementet</li>
+          <li class="mcq-opt" data-correct="0">Hvor som helst i prologen</li>
+          <li class="mcq-opt" data-correct="0">Helt nederst, etter dataene</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: deklarasjonen er valgfri, men hvis den brukes må den være det aller første i dokumentet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva er default-encoding for XML?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">ASCII</li>
+          <li class="mcq-opt" data-correct="1">UTF-8</li>
+          <li class="mcq-opt" data-correct="0">UTF-16</li>
+          <li class="mcq-opt" data-correct="0">ISO-8859-1</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: UTF-8 er default. Det dekker norske tegn og er det vanligste valget.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Lett</div>
+        <div class="q-text">Hvor mange root-elementer kan et XML-dokument ha?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Ingen — root er valgfritt</li>
+          <li class="mcq-opt" data-correct="1">Nøyaktig ett</li>
+          <li class="mcq-opt" data-correct="0">Maks tre</li>
+          <li class="mcq-opt" data-correct="0">Ubegrenset</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: nøyaktig ett root-element. Flere objekter på topp-nivå må pakkes i et felles root.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvilken snutt er well-formed?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;a&gt;&lt;b&gt;X&lt;/a&gt;&lt;/b&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;a&gt;&lt;b&gt;X&lt;/b&gt;&lt;/a&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;A&gt;&lt;b&gt;X&lt;/B&gt;&lt;/a&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;a&gt;X&lt;a&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Riktig nesting krever at barnet lukkes før forelderen — og samme case på åpne/lukke-tag.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Er <code>&lt;Person&gt;Per&lt;/person&gt;</code> well-formed?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Ja — XML godtar liten/stor bokstav om hverandre</li>
+          <li class="mcq-opt" data-correct="1">Nei — XML er case-sensitivt, åpne- og lukke-tag matcher ikke</li>
+          <li class="mcq-opt" data-correct="0">Ja — så lenge taggen er lukket</li>
+          <li class="mcq-opt" data-correct="0">Avhenger av encoding</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: <code>&lt;Person&gt;</code> og <code>&lt;person&gt;</code> regnes som forskjellige tagger.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hvilken entitet erstatter <code>&amp;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&amp;and;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&amp;ampersand;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&amp;amp;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&amp;&amp;;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: <code>&amp;amp;</code> erstatter ampersand. Glemmer du dette i URL-er bryter dokumentet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Middels</div>
+        <div class="q-text">Hvor mange pre-definerte entity references finnes i XML?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Tre</li>
+          <li class="mcq-opt" data-correct="0">Fire</li>
+          <li class="mcq-opt" data-correct="1">Fem</li>
+          <li class="mcq-opt" data-correct="0">Seks</li>
+        </ul>
+        <div class="mcq-feedback">Fem: <code>&amp;lt;</code> <code>&amp;gt;</code> <code>&amp;amp;</code> <code>&amp;apos;</code> <code>&amp;quot;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Middels</div>
+        <div class="q-text">Hva betyr <code>standalone="no"</code> i prologen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Dokumentet kan ikke åpnes alene</li>
+          <li class="mcq-opt" data-correct="0">Det er ingen prolog</li>
+          <li class="mcq-opt" data-correct="1">Dokumentet er avhengig av info fra eksterne kilder, f.eks. ekstern DTD</li>
+          <li class="mcq-opt" data-correct="0">Det må valideres mot et XSD</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: <code>standalone="yes"</code> = står på egne bein. <code>"no"</code> = henter info utenfra.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">9 · Vanskelig</div>
+        <div class="q-text">Hvorfor må <code>&lt;</code> erstattes inni elementinnhold?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">For å spare plass</li>
+          <li class="mcq-opt" data-correct="1">Parseren tolker <code>&lt;</code> som starten på en ny tag — uten erstatning blir det parse-feil</li>
+          <li class="mcq-opt" data-correct="0">Fordi UTF-8 ikke støtter tegnet</li>
+          <li class="mcq-opt" data-correct="0">For å unngå XSS</li>
+        </ul>
+        <div class="mcq-feedback">XML-parseren bruker <code>&lt;</code> som tag-starter. Rått inni tekst gir feil — bruk <code>&amp;lt;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">10 · Vanskelig</div>
+        <div class="q-text">Hva er forskjellen mellom et tomt element i HTML (<code>&lt;br&gt;</code>) og i XML?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Ingen forskjell</li>
+          <li class="mcq-opt" data-correct="1">XML krever lukking — enten <code>&lt;br&gt;&lt;/br&gt;</code> eller <code>&lt;br/&gt;</code>. HTML godtar bare <code>&lt;br&gt;</code></li>
+          <li class="mcq-opt" data-correct="0">XML har ingen tomme elementer</li>
+          <li class="mcq-opt" data-correct="0">HTML krever lukking, XML gjør ikke</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: alt skal lukkes i XML. Tomme elementer kan selv-lukkes med skråstrek før <code>&gt;</code>.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 11.2 — DTD &amp; XSD</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 11</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 11.2: Validering — DTD &amp; XSD">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 11 · Underkapittel B · Pensum 1.14</div>
+      <h1>Validering &mdash; <em>DTD &amp; XSD</em></h1>
+      <p class="lede">
+        Well-formed handler om syntaks. <strong>Valid</strong> betyr at
+        dokumentet i tillegg følger en grammatikk — DTD eller XSD — som
+        beskriver hvilke elementer som er lov og hvordan de kan
+        kombineres.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.14</span>
+        <span class="pill">Forelesning 13</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hvorfor">
+    <div class="container">
+      <div class="section-badge">01 · Hvorfor validere?</div>
+      <h2>Well-formed vs <em>valid</em></h2>
+      <p>
+        Et well-formed dokument følger XML-syntaksen. Men ingenting hindrer
+        deg i å lage <code>&lt;person&gt;</code> uten <code>name</code>, eller
+        å plassere <code>&lt;height&gt;</code> direkte under root. Hvis
+        dataene skal sendes mellom systemer trenger begge sider å vite
+        nøyaktig hvilken struktur som er gyldig.
+      </p>
+      <p>
+        En <strong>grammatikk</strong> beskriver dette presist. XML har to
+        slike språk: <strong>DTD</strong> (eldre, kompakt) og
+        <strong>XSD</strong> (moderne, mer kraftig).
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Well-formed</div>
+          <div class="fc-val">Følger XML-syntaks: alt lukket, riktig nøstet, ett root, samme case.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Valid</div>
+          <div class="fc-val">Well-formed <em>og</em> følger en DTD eller XSD som beskriver lovlig struktur.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dtd">
+    <div class="container">
+      <div class="section-badge">02 · DTD</div>
+      <h2>Document Type <em>Definition</em></h2>
+      <p>
+        DTD er det eldste validerings-språket for XML. Det plasseres i
+        prologen — etter XML-deklarasjonen og før selve dokumentet — og
+        bruker en kompakt egen-syntaks (ikke XML).
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Inline DTD</div>
+          <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE person [
+  &lt;!ELEMENT person (name, height, age)&gt;
+  &lt;!ELEMENT name (#PCDATA)&gt;
+  &lt;!ELEMENT height (#PCDATA)&gt;
+  &lt;!ELEMENT age (#PCDATA)&gt;
+]&gt;
+&lt;person&gt;
+  &lt;name&gt;Name Nameson&lt;/name&gt;
+  &lt;height&gt;173&lt;/height&gt;
+  &lt;age&gt;23&lt;/age&gt;
+&lt;/person&gt;</pre>
+        </div>
+      </div>
+      <p>Hver linje i DOCTYPE-blokken sier noe konkret:</p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key"><code>&lt;!DOCTYPE person [ … ]&gt;</code></div>
+          <div class="fc-val">Erklærer at root er <code>person</code> og åpner DTD-blokken.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key"><code>&lt;!ELEMENT person (name, height, age)&gt;</code></div>
+          <div class="fc-val"><code>person</code> må inneholde nøyaktig disse tre barna, i denne rekkefølgen.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key"><code>&lt;!ELEMENT name (#PCDATA)&gt;</code></div>
+          <div class="fc-val"><code>name</code> inneholder tekst som parses som XML.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pcdata-cdata">
+    <div class="container">
+      <div class="section-badge">03 · PCDATA og CDATA</div>
+      <h2>To slags <em>tekst</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">PCDATA</div>
+          <div class="fc-val">«Parsed Character Data» — tekst som parseren <em>tolker</em> som XML. Markup inni leses, så <code>&lt;</code> og <code>&amp;</code> må ha entiteter.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">CDATA</div>
+          <div class="fc-val">«Character Data» — tekst som <em>ikke</em> parses. Alt regnes som ren tekst, så markup blir ignorert. Bra for kodeeksempler i XML.</div>
+        </div>
+      </div>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">CDATA-seksjon</div>
+          <pre>&lt;script&gt;
+  &lt;![CDATA[
+    if (a &lt; b &amp;&amp; b &lt; c) { … }
+  ]]&gt;
+&lt;/script&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Inni <code>&lt;![CDATA[ … ]]&gt;</code> kan du skrive
+        <code>&lt;</code> og <code>&amp;</code> rått — parseren rører dem
+        ikke. Nyttig når du skal lagre kode, regulære uttrykk eller annet
+        som ellers ville krevd en haug entity references.
+      </p>
+    </div>
+  </section>
+
+  <section id="xsd">
+    <div class="container">
+      <div class="section-badge">04 · XSD</div>
+      <h2>XML Schema <em>Definition</em></h2>
+      <p>
+        XSD er et nyere alternativ til DTD. Det viktigste skillet:
+        <strong>XSD er selv skrevet i XML-syntaks</strong>. Det betyr at
+        samme parser leser både skjemaet og dokumentet — og at XSD kan
+        utvides og valideres på samme måte som annen XML.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">person.xsd (utdrag)</div>
+          <pre>&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="person"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="name" type="xs:string"/&gt;
+        &lt;xs:element name="height" type="xs:int"/&gt;
+        &lt;xs:element name="age" type="xs:int"/&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+        </div>
+      </div>
+      <p>
+        XSD støtter rikere typer enn DTD — du kan kreve at
+        <code>height</code> faktisk er et heltall, ikke bare «tekst».
+        DTD kan ikke uttrykke det.
+      </p>
+    </div>
+  </section>
+
+  <section id="typer">
+    <div class="container">
+      <div class="section-badge">05 · XSD-typer</div>
+      <h2>Tre typer du må <em>kunne</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Simple type</div>
+          <div class="fc-val">Element med kun tekstinnhold. Pre-definerte: <code>xs:int</code>, <code>xs:string</code>, <code>xs:boolean</code>, <code>xs:date</code>, <code>xs:decimal</code> &hellip;</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Complex type</div>
+          <div class="fc-val">Container for andre elementer. Bygger hierarki — f.eks. <code>person</code> som inneholder <code>name</code>, <code>height</code>, <code>age</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Global type</div>
+          <div class="fc-val">Definisjon på topp-nivå som gjenbrukes flere steder. Endring (f.eks. å legge til <code>postcode</code>) gjøres bare ett sted.</div>
+        </div>
+      </div>
+      <div class="callout-good">
+        <div class="label">Hvorfor global type?</div>
+        <p>
+          Sett at både <code>customer</code> og <code>employee</code> har
+          en adresse. Definer <code>addressType</code> én gang som global
+          complex type, og refererer <code>type="addressType"</code> begge
+          steder. Skal du endre adresse-strukturen senere, gjør du det
+          ett sted.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dtd-vs-xsd">
+    <div class="container">
+      <div class="section-badge">06 · DTD vs XSD</div>
+      <h2>Når <em>hva</em>?</h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">DTD</div>
+          <div class="fc-val">Kompakt, eldre, egen syntaks. Kan ikke uttrykke datatyper — alt er tekst. Inline i prologen eller ekstern fil.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">XSD</div>
+          <div class="fc-val">Mer ordrik, men selv XML. Støtter datatyper (int, date &hellip;), namespaces, og gjenbruk. Lever som egen <code>.xsd</code>-fil.</div>
+        </div>
+      </div>
+      <p>
+        I praksis brukes XSD oftest i nye systemer. DTD lever videre i
+        eldre standarder (f.eks. en del HTML- og dokumentformat-arv).
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">07 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hva står DTD for?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Data Transfer Description</li>
+          <li class="mcq-opt" data-correct="1">Document Type Definition</li>
+          <li class="mcq-opt" data-correct="0">Default Tag Definition</li>
+          <li class="mcq-opt" data-correct="0">Direct Type Description</li>
+        </ul>
+        <div class="mcq-feedback">DTD = Document Type Definition.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva står XSD for?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">XML Standard Document</li>
+          <li class="mcq-opt" data-correct="0">Extended Schema Description</li>
+          <li class="mcq-opt" data-correct="1">XML Schema Definition</li>
+          <li class="mcq-opt" data-correct="0">XML Strict Data</li>
+        </ul>
+        <div class="mcq-feedback">XSD = XML Schema Definition.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Lett</div>
+        <div class="q-text">Hva er forskjellen på <em>well-formed</em> og <em>valid</em>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Synonymer — samme ting</li>
+          <li class="mcq-opt" data-correct="1">Well-formed = riktig syntaks. Valid = well-formed <em>og</em> følger en DTD/XSD</li>
+          <li class="mcq-opt" data-correct="0">Valid betyr at dokumentet er stylet med CSS</li>
+          <li class="mcq-opt" data-correct="0">Well-formed gjelder bare for XSD</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: well-formed handler om syntaks; valid krever i tillegg at dokumentet følger en grammatikk.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvor i dokumentet plasseres en inline DTD?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Etter root-elementet</li>
+          <li class="mcq-opt" data-correct="1">I prologen, etter XML-deklarasjonen og før dokumentets innhold</li>
+          <li class="mcq-opt" data-correct="0">Inni root-elementet</li>
+          <li class="mcq-opt" data-correct="0">I en egen <code>&lt;dtd&gt;</code>-tag</li>
+        </ul>
+        <div class="mcq-feedback">DTD ligger i prologen, mellom <code>&lt;?xml … ?&gt;</code> og selve elementene.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Hva betyr PCDATA?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Pre-Compiled Data Attribute</li>
+          <li class="mcq-opt" data-correct="1">Parsed Character Data — tekst som parses som XML</li>
+          <li class="mcq-opt" data-correct="0">Public Character Data</li>
+          <li class="mcq-opt" data-correct="0">Plain Char Data — som CDATA</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: PCDATA er tekst som parseren tolker som markup. Trenger entity references for <code>&lt;</code> og <code>&amp;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hva er hovedforskjellen mellom PCDATA og CDATA?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">PCDATA parses som XML; CDATA behandles som ren tekst og parses ikke</li>
+          <li class="mcq-opt" data-correct="0">PCDATA er tekst, CDATA er tall</li>
+          <li class="mcq-opt" data-correct="0">CDATA brukes bare i XSD</li>
+          <li class="mcq-opt" data-correct="0">Ingen forskjell — bare ulike navn</li>
+        </ul>
+        <div class="mcq-feedback">Inni CDATA kan du ha rå <code>&lt;</code> og <code>&amp;</code> uten entiteter — parseren rører ikke innholdet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Middels</div>
+        <div class="q-text">Hva er en <em>simple type</em> i XSD?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Et element med ett enkelt barn</li>
+          <li class="mcq-opt" data-correct="1">Et element med kun tekstinnhold, f.eks. <code>xs:int</code> eller <code>xs:string</code></li>
+          <li class="mcq-opt" data-correct="0">En type som ikke kan gjenbrukes</li>
+          <li class="mcq-opt" data-correct="0">En forenklet DTD-erklæring</li>
+        </ul>
+        <div class="mcq-feedback">Simple type = bare tekst. Pre-definerte typer inkluderer <code>xs:int</code>, <code>xs:boolean</code>, <code>xs:string</code>, <code>xs:date</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Middels</div>
+        <div class="q-text">Hva er en <em>complex type</em>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">En type som er vanskelig å forstå</li>
+          <li class="mcq-opt" data-correct="1">En container for andre elementer — bygger hierarki</li>
+          <li class="mcq-opt" data-correct="0">En type med flere encoding-alternativer</li>
+          <li class="mcq-opt" data-correct="0">En type som krever ekstern DTD</li>
+        </ul>
+        <div class="mcq-feedback">Complex type pakker andre elementer (simple eller complex) til et hierarki — f.eks. <code>person</code> som har <code>name</code>, <code>height</code>, <code>age</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">9 · Vanskelig</div>
+        <div class="q-text">Hvorfor velge XSD framfor DTD i et nytt prosjekt?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">XSD er kortere å skrive</li>
+          <li class="mcq-opt" data-correct="1">XSD støtter datatyper (int, date &hellip;), er selv XML, og kan gjenbrukes med global types</li>
+          <li class="mcq-opt" data-correct="0">DTD er ikke støttet i moderne nettlesere</li>
+          <li class="mcq-opt" data-correct="0">XSD krever ikke prolog</li>
+        </ul>
+        <div class="mcq-feedback">DTD kan bare beskrive struktur, ikke datatyper. XSD gir både typer, gjenbruk og leses av samme parser som dokumentet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">10 · Vanskelig</div>
+        <div class="q-text">Hvilken DTD-linje krever at <code>person</code> har <code>name</code>, <code>height</code>, <code>age</code> i den rekkefølgen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;!ELEMENT person [name | height | age]&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;!ELEMENT person (name, height, age)&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;!ELEMENT person {name, height, age}&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;!ELEMENT person = name + height + age&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">DTD bruker komma-separert liste i parentes for sekvens. <code>|</code> ville betydd «én av».</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">11 · Vanskelig</div>
+        <div class="q-text">Du skal lagre et JS-snippet med <code>if (a &lt; b)</code> inni XML uten å bruke <code>&amp;lt;</code>. Hva gjør du?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Bytter til JSON</li>
+          <li class="mcq-opt" data-correct="0">Setter <code>standalone="yes"</code></li>
+          <li class="mcq-opt" data-correct="1">Pakker innholdet i en CDATA-seksjon: <code>&lt;![CDATA[ if (a &lt; b) ]]&gt;</code></li>
+          <li class="mcq-opt" data-correct="0">Bruker en simple type</li>
+        </ul>
+        <div class="mcq-feedback">CDATA er nettopp for slike tilfeller — innholdet parses ikke, så markup-tegn kan stå rått.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.6 — Bilder</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.6: Bilder">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel F · Pensum 1.4.6</div>
+      <h1>Bilder — <em>img</em>-elementet</h1>
+      <p class="lede">
+        <code>&lt;img&gt;</code> med <code>src</code> og
+        <code>alt</code>, hvorfor du bør sette
+        <code>width</code>/<code>height</code>, og når du velger
+        JPEG, PNG, GIF eller SVG.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.6</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="grunnlaget">
+    <div class="container">
+      <div class="section-badge">01 · Grunnlaget</div>
+      <h2>img er et <em>void-element</em></h2>
+      <p>
+        Bilder kobles inn med <code>&lt;img&gt;</code>-taggen.
+        Stien til bildefilen settes via <code>src</code>-attributtet.
+        <code>&lt;img&gt;</code> er et <strong>void-element</strong>
+        — det har ikke innhold og trenger ikke lukketag.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Filhierarki</div>
+          <pre>products/
+  starblaster.html
+images/
+  starblaster.jpg
+index.html</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Fra starblaster.html</div>
+          <pre>&lt;img src="../images/starblaster.jpg"&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Som standard vises bildet i sin originale bredde og høyde.
+        Som <code>&lt;img&gt;</code> er et inline-element, plasseres
+        det på samme linje som omkringliggende tekst.
+      </p>
+    </div>
+  </section>
+
+  <section id="attributter">
+    <div class="container">
+      <div class="section-badge">02 · Attributter</div>
+      <h2>De viktigste <em>attributtene</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">src</div>
+          <div class="fc-val">Stien til bildefilen — relativ eller absolutt URL.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">alt</div>
+          <div class="fc-val">Tekstbeskrivelse av bildets innhold. Brukes av skjermlesere, søkemotorer, og når bildet ikke kan lastes. Skal beskrive bildet konkret — ikke skrive «bilde».</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">width / height</div>
+          <div class="fc-val">Visningsstørrelsen til bildet. Endrer ikke filstørrelsen i kilobytes.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">title</div>
+          <div class="fc-val">Tilleggsinformasjon — vises av de fleste nettlesere som tooltip når brukeren hovrer.</div>
+        </div>
+      </div>
+
+      <div class="callout-good">
+        <div class="label">Hvorfor sette width/height?</div>
+        <p>
+          Bilder lastes ofte saktere enn HTML-en. Når nettleseren
+          vet bildets størrelse, kan den reservere riktig plass og
+          rendre resten av siden uten å «hoppe» når bildet til
+          slutt kommer på plass.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="bilder-som-lenker">
+    <div class="container">
+      <div class="section-badge">03 · Bilder som lenker</div>
+      <h2>Et <em>klikkbart</em> bilde</h2>
+      <p>
+        Du kan bruke et bilde som lenke ved å plassere
+        <code>&lt;img&gt;</code> mellom <code>&lt;a&gt;</code>- og
+        <code>&lt;/a&gt;</code>-taggene:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Bilde som lenke</div>
+          <pre>&lt;a href="products/starblaster.html"&gt;
+  &lt;img src="images/starblaster.jpg" alt="Starblaster-modellen"&gt;
+&lt;/a&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formater">
+    <div class="container">
+      <div class="section-badge">04 · Bildeformater</div>
+      <h2>JPEG, PNG, GIF, <em>SVG</em></h2>
+      <p>
+        Først to begreper du må kjenne om komprimering:
+      </p>
+      <ul>
+        <li><strong>Lossless</strong> — bildet gjøres mindre, men kvaliteten påvirkes ikke.</li>
+        <li><strong>Lossy</strong> — bildet gjøres (enda) mindre, men kvaliteten reduseres. Lagres bildet på nytt og på nytt, blir det progressivt verre.</li>
+      </ul>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">JPEG (.jpg)</div>
+          <div class="fc-val">Lossy. Best for fotografier og bilder med gradienter. Dårlig for logoer og strektegninger med store ensfargede flater.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">PNG</div>
+          <div class="fc-val">Lossless. Best for illustrasjoner, logoer og bilder med transparente områder. Filene blir store for fotografier — bruk JPEG der.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">GIF</div>
+          <div class="fc-val">Begrenset fargepalett. Egner seg best til enkle animasjoner eller korte videosnutter uten lyd. Filene vokser fort.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">SVG</div>
+          <div class="fc-val">Vektorformat — bildet beskrives matematisk og kan skaleres uendelig uten kvalitetstap. Best for logoer og diagrammer. Ikke for fotografier.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="label">Tre tommelfingerregler</div>
+        <ol>
+          <li><strong>Riktig format</strong> — JPG/PNG/GIF/SVG dekker det meste, men feil valg gir uskarpe bilder eller treg lasting.</li>
+          <li><strong>Riktig størrelse</strong> — lagre bildet i samme bredde/høyde som det skal vises på sida. For lite gir uskarpt; for stort gir treg lasting.</li>
+          <li><strong>Mål i piksler</strong> — skjermer er pikselbaserte; ikke i centimeter.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilket attributt setter stien til bildefilen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>href</code></li>
+          <li class="mcq-opt" data-correct="1"><code>src</code></li>
+          <li class="mcq-opt" data-correct="0"><code>path</code></li>
+          <li class="mcq-opt" data-correct="0"><code>file</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: <code>src</code> = source, peker på bildefilen.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva er <code>alt</code>-attributtet til for?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Alternativ bildefil hvis hovedfilen mangler</li>
+          <li class="mcq-opt" data-correct="1">Tekstbeskrivelse for skjermlesere og søkemotorer</li>
+          <li class="mcq-opt" data-correct="0">Alternativ stylesheet</li>
+          <li class="mcq-opt" data-correct="0">Endrer bildet til alternativ versjon ved hover</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: <code>alt</code> beskriver innholdet for de som ikke kan se bildet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Du skal lagre et fotografi til en blogg. Hvilket format passer best?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">JPEG</li>
+          <li class="mcq-opt" data-correct="0">PNG</li>
+          <li class="mcq-opt" data-correct="0">GIF</li>
+          <li class="mcq-opt" data-correct="0">SVG</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: «JPEG ... is the most common file format for showing images, and for photos and images with much details.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Du har en logo som skal vises i mange forskjellige størrelser. Hvilket format er best?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">JPEG</li>
+          <li class="mcq-opt" data-correct="0">PNG</li>
+          <li class="mcq-opt" data-correct="0">GIF</li>
+          <li class="mcq-opt" data-correct="1">SVG</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: SVG er vektor og kan skaleres uendelig uten kvalitetstap.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Du setter <code>width="200"</code> på et 4 MB-bilde. Hvor mye reduseres filstørrelsen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Til ca 200 KB</li>
+          <li class="mcq-opt" data-correct="0">Halveres</li>
+          <li class="mcq-opt" data-correct="1">Filstørrelsen endres ikke — bare visningsstørrelsen</li>
+          <li class="mcq-opt" data-correct="0">Til 0 KB</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: «even if you resize your image using the width and height attributes, the file will have the same size measured in kilobytes and megabytes.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Hvorfor er det lurt å sette <code>width</code> og <code>height</code> selv når bildet allerede har en størrelse?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">For å gjøre filen mindre</li>
+          <li class="mcq-opt" data-correct="1">Slik at nettleseren kan reservere plass og slippe layout-hopping</li>
+          <li class="mcq-opt" data-correct="0">For å skjule bildet under lasting</li>
+          <li class="mcq-opt" data-correct="0">For å øke bildekvaliteten</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: med width/height kan nettleseren rendre resten av siden uten å vente på bildet.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Vanskelig</div>
+        <div class="q-text">Hva betyr «lossless» komprimering?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Bildet er gratis</li>
+          <li class="mcq-opt" data-correct="0">Det fungerer offline</li>
+          <li class="mcq-opt" data-correct="1">Filen blir mindre uten kvalitetstap</li>
+          <li class="mcq-opt" data-correct="0">Filen blir mindre, men kvaliteten reduseres</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.6: lossless = mindre fil, kvaliteten påvirkes ikke. Lossy = mindre fil, men kvaliteten reduseres.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

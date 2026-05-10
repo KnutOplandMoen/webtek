@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.5 — Lenker</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.5: Lenker">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel E · Pensum 1.4.5</div>
+      <h1>Lenker — det <em>klikkbare</em> webet</h1>
+      <p class="lede">
+        <code>&lt;a&gt;</code>-elementet med <code>href</code>:
+        absolutt vs relativ URL, fragment-lenker, åpning i ny fane,
+        og <code>mailto:</code>.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.5</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="anker">
+    <div class="container">
+      <div class="section-badge">01 · Anker-elementet</div>
+      <h2>Lenker starter med <code>&lt;a&gt;</code></h2>
+      <p>
+        Du lager en lenke med <code>&lt;a&gt;</code>-elementet. Alt
+        mellom åpnings- og lukketaggen blir klikkbart — også bilder.
+        Hvor lenken peker, settes med <code>href</code>-attributtet.
+        Verdien er en <strong>URL</strong> (Uniform Resource Locator).
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Vanlig lenke</div>
+          <pre>&lt;a href="http://it2805.github.com"&gt;IT2805&lt;/a&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="absolutt-relativ">
+    <div class="container">
+      <div class="section-badge">02 · Absolutt vs relativ</div>
+      <h2>To måter å peke på en <em>ressurs</em></h2>
+      <p>
+        En <strong>absolutt URL</strong> er hele adressen, inkludert
+        protokoll: <code>http://it2805.github.com</code>. Brukes når
+        du lenker til et annet nettsted.
+      </p>
+      <p>
+        En <strong>relativ URL</strong> er adressen i forhold til
+        der du lenker fra. Brukes innen ditt eget nettsted — du
+        slipper å hardkode domenet, og lenkene fungerer også når du
+        utvikler lokalt.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Filhierarki</div>
+          <pre>products/
+  starblaster.html
+index.html</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Fra index.html til starblaster.html</div>
+          <pre>&lt;a href="products/starblaster.html"&gt;Starblaster&lt;/a&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Fra starblaster.html til index.html</div>
+          <pre>&lt;a href="../index.html"&gt;Home&lt;/a&gt;</pre>
+        </div>
+      </div>
+
+      <p>
+        <code>../</code> betyr «én mappe opp». Skal du to mapper
+        opp, skriv <code>../../</code>. URL-en må være eksakt — om
+        du staver feil, finner ikke nettleseren ressursen.
+      </p>
+    </div>
+  </section>
+
+  <section id="fragment">
+    <div class="container">
+      <div class="section-badge">03 · Fragment-lenker</div>
+      <h2>Lenke til et <em>punkt på siden</em></h2>
+      <p>
+        Du kan lenke til en bestemt overskrift eller seksjon på
+        samme side ved å gi målet en unik <code>id</code> og lenke
+        til <code>#id</code>.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Lenke + mål</div>
+          <pre>&lt;a href="#summary"&gt;Summary&lt;/a&gt;
+...
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Fragment kan også kombineres med en absolutt URL — da
+        scroller nettleseren rett til riktig sted på en annen side:
+        <code>&lt;a href="http://it2805.github.com/html#specificpart"&gt;</code>
+      </p>
+      <div class="callout-warn">
+        <div class="label">Regler for id-en</div>
+        <p>
+          Verdien må starte med en bokstav eller understrek (ikke et
+          tall), og hver <code>id</code> må være unik på siden.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="target">
+    <div class="container">
+      <div class="section-badge">04 · target og mailto</div>
+      <h2>Ny fane og <em>e-postlenker</em></h2>
+      <p>
+        Vil du at lenken skal åpnes i en ny fane, bruk
+        <code>target="_blank"</code>:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Åpne i ny fane</div>
+          <pre>&lt;a href="http://it2805.github.com" target="_blank"&gt;NTNU&lt;/a&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Pensum sier: «only open links in a new tab when you have
+        to, and when it is meaningful to do so». Typisk
+        bruksområde er lenker som peker bort fra ditt nettsted og
+        du vil at brukeren skal komme tilbake.
+      </p>
+      <p>
+        For å åpne brukerens e-postklient og pre-fylle mottaker,
+        bruk <code>mailto:</code> som verdi for <code>href</code>:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">E-postlenke</div>
+          <pre>&lt;a href="mailto:example@email.com"&gt;Email example&lt;/a&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilket attributt forteller hvor en lenke skal gå?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>src</code></li>
+          <li class="mcq-opt" data-correct="0"><code>link</code></li>
+          <li class="mcq-opt" data-correct="1"><code>href</code></li>
+          <li class="mcq-opt" data-correct="0"><code>url</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: <code>href</code> på <code>&lt;a&gt;</code> setter mål-URL.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Middels</div>
+        <div class="q-text">Du står i <code>products/starblaster.html</code> og vil lenke til <code>index.html</code> i rotmappa. Hva skriver du?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>href="index.html"</code></li>
+          <li class="mcq-opt" data-correct="0"><code>href="/index.html"</code></li>
+          <li class="mcq-opt" data-correct="1"><code>href="../index.html"</code></li>
+          <li class="mcq-opt" data-correct="0"><code>href="./index.html"</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: <code>../</code> betyr én mappe opp.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hvordan lenker du til en overskrift med <code>id="summary"</code> på samme side?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1"><code>&lt;a href="#summary"&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;a href="@summary"&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;a href="summary"&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;a href="?summary"&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: fragment-lenker bruker <code>#</code> foran <code>id</code>-verdien.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hva gjør <code>target="_blank"</code> på en lenke?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Tømmer fanen før lasting</li>
+          <li class="mcq-opt" data-correct="1">Åpner lenken i en ny fane</li>
+          <li class="mcq-opt" data-correct="0">Forhåndslaster siden</li>
+          <li class="mcq-opt" data-correct="0">Sletter cachen</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: <code>target="_blank"</code> åpner lenken i ny fane.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Når bør du bruke absolutt URL i stedet for relativ URL?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Alltid — relative URL-er er utdatert</li>
+          <li class="mcq-opt" data-correct="0">Aldri — bruk relative selv på eksterne lenker</li>
+          <li class="mcq-opt" data-correct="1">Når du lenker til en annen nettside (annet domene)</li>
+          <li class="mcq-opt" data-correct="0">Når lenken er over 100 tegn</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: absolutt URL brukes når du lenker til andre nettsteder; relativ er bedre innen ditt eget for lokal utvikling.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Hvilken av disse <code>id</code>-verdiene er ulovlig som lenkemål?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>id="contact"</code></li>
+          <li class="mcq-opt" data-correct="0"><code>id="_top"</code></li>
+          <li class="mcq-opt" data-correct="1"><code>id="3rd-section"</code></li>
+          <li class="mcq-opt" data-correct="0"><code>id="section3"</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: <code>id</code> må starte med bokstav eller understrek (ikke tall).</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

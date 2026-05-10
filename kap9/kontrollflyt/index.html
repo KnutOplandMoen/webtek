@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.11.7–1.11.10 — Kontrollflyt · Kap 9</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 9</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 9 · 1.11.7–1.11.10 Kontrollflyt og samlinger">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 9 · Underkapittel 1.11.7 – 1.11.10</div>
+      <h1>Kontrollflyt — <em>velg, samle, gjenta</em></h1>
+      <p class="lede">
+        Hvordan styrer vi <em>hva</em> som skjer (if/else), hvordan
+        organiserer vi flere verdier sammen (arrays, objekter), og hvordan
+        gjentar vi noe mange ganger (loops)?
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.11.7 Control structures</span>
+        <span class="pill">1.11.8 Arrays</span>
+        <span class="pill">1.11.9 Objects</span>
+        <span class="pill">1.11.10 Loops</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#if">if / else if / else</a></li>
+        <li><span class="toc-num">02</span><a href="#arrays">Arrays</a></li>
+        <li><span class="toc-num">03</span><a href="#objekter">Objekter</a></li>
+        <li><span class="toc-num">04</span><a href="#for">for-loop</a></li>
+        <li><span class="toc-num">05</span><a href="#while">while-loop</a></li>
+        <li><span class="toc-num">06</span><a href="#break">break / continue</a></li>
+        <li><span class="toc-num">07</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">08</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="if"><div class="container">
+    <div class="section-badge">01 · Pensum 1.11.7</div>
+    <h2><code>if</code>, <code>else if</code>, <code>else</code></h2>
+    <p>
+      Kontrollstruktur betyr «kode som velger hvilken vei programmet skal gå».
+      Det vanligste verktøyet er <code>if</code>-blokken. Den evaluerer
+      uttrykket i parentesen — hvis det er <code>true</code> kjøres koden
+      i krøllparentesene; ellers hoppes den over.
+    </p>
+
+<pre><code>const alder = 17;
+
+if (alder &gt;= 18) {
+  console.log("Voksen");
+} else if (alder &gt;= 13) {
+  console.log("Tenåring");
+} else {
+  console.log("Barn");
+}
+// "Tenåring"</code></pre>
+
+    <p>Reglene for kjeden er enkle:</p>
+    <ul>
+      <li>Den <strong>første</strong> betingelsen som er <code>true</code> kjører — resten hoppes over.</li>
+      <li><code>else if</code> er valgfritt og kan repeteres mange ganger.</li>
+      <li><code>else</code> er valgfri «catch-all» som kjøres bare hvis ingen andre var <code>true</code>.</li>
+    </ul>
+
+    <div class="callout-blue"><div class="label">Truthy / falsy</div>
+      <p>JS har «sannhets-aktige» og «falske-aktige» verdier. Disse evalueres som <code>false</code> i en <code>if</code>-test:
+      <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Alt annet er <code>true</code>.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.7</div>
+      <div class="q-text">Hva logges? <code>if (0) { console.log("a"); } else { console.log("b"); }</code></div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>"a"</code></li>
+        <li class="mcq-opt" data-correct="1"><code>"b"</code></li>
+        <li class="mcq-opt" data-correct="0">Begge</li>
+        <li class="mcq-opt" data-correct="0">Ingen</li>
+      </ul>
+      <div class="mcq-feedback"><code>0</code> er falsy, så <code>if</code>-blokken hoppes over og <code>else</code> kjøres.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.7</div>
+      <div class="q-text">I en lang <code>if / else if</code>-kjede, hva skjer hvis <em>flere</em> betingelser er <code>true</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle blokkene som matcher kjøres</li>
+        <li class="mcq-opt" data-correct="1">Kun den første som matcher kjøres</li>
+        <li class="mcq-opt" data-correct="0">Kun den siste som matcher kjøres</li>
+        <li class="mcq-opt" data-correct="0">Det blir SyntaxError</li>
+      </ul>
+      <div class="mcq-feedback">Kjeden evalueres ovenfra. Den første <code>true</code>-grenen kjører; resten hoppes over.</div>
+    </div>
+  </div></section>
+
+  <section id="arrays"><div class="container">
+    <div class="section-badge">02 · Pensum 1.11.8</div>
+    <h2><em>Arrays</em> — ordnet liste</h2>
+    <p>
+      En array er en ordnet samling av verdier. Den deklareres med firkantparenteser, og hvert element har en <strong>indeks</strong> som starter på <code>0</code>:
+    </p>
+
+<pre><code>const farger = ["rød", "grønn", "blå"];
+
+farger[0];        // "rød"
+farger[2];        // "blå"
+farger.length;    // 3
+farger[farger.length - 1];  // "blå" (siste element)</code></pre>
+
+    <h3>De viktigste metodene</h3>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">.length</div><div class="fc-val">Antall elementer.</div></div>
+      <div class="fact-card"><div class="fc-key">.push(x)</div><div class="fc-val">Legg <code>x</code> til slutten.</div></div>
+      <div class="fact-card"><div class="fc-key">.pop()</div><div class="fc-val">Fjern og returner siste element.</div></div>
+      <div class="fact-card"><div class="fc-key">arr[i] = x</div><div class="fc-val">Endre verdi på indeks <code>i</code>.</div></div>
+    </div>
+
+    <div class="callout-warn"><div class="label">Indeks fra 0</div>
+      <p>Et array med <code>n</code> elementer har indeksene <code>0</code> til <code>n - 1</code>. Det betyr at <code>arr[arr.length]</code> er <em>én utenfor</em> arrayen og gir <code>undefined</code>.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.8</div>
+      <div class="q-text">Gitt <code>const a = [10, 20, 30]</code>. Hva returnerer <code>a[a.length]</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>30</code></li>
+        <li class="mcq-opt" data-correct="0"><code>10</code></li>
+        <li class="mcq-opt" data-correct="1"><code>undefined</code></li>
+        <li class="mcq-opt" data-correct="0"><code>RangeError</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>a.length</code> er 3. <code>a[3]</code> finnes ikke (gyldige indekser er 0–2), så det returneres <code>undefined</code> — ingen feil.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.8</div>
+      <div class="q-text">Hva gjør <code>arr.push(5)</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Setter første element til 5</li>
+        <li class="mcq-opt" data-correct="1">Legger 5 til som siste element</li>
+        <li class="mcq-opt" data-correct="0">Fjerner det siste elementet</li>
+        <li class="mcq-opt" data-correct="0">Sjekker om 5 finnes i arrayet</li>
+      </ul>
+      <div class="mcq-feedback"><code>.push()</code> legger til på slutten og returnerer ny lengde. Motsvaret er <code>.pop()</code>.</div>
+    </div>
+  </div></section>
+
+  <section id="objekter"><div class="container">
+    <div class="section-badge">03 · Pensum 1.11.9</div>
+    <h2><em>Objekter</em> — nøkkel-verdi-par</h2>
+    <p>
+      Et objekt grupperer relatert data. I motsetning til en array er det ikke
+      ordnet etter posisjon, men etter <strong>nøkkel</strong>:
+    </p>
+
+<pre><code>const person = {
+  navn: "Anna",
+  alder: 22,
+  student: true
+};
+
+person.navn;          // "Anna" (dot-notasjon)
+person["alder"];      // 22     (bracket-notasjon)
+person.epost;         // undefined (property fins ikke)
+
+// Legg til ny property:
+person.epost = "anna@example.com";
+
+// Endre eksisterende:
+person.alder = 23;</code></pre>
+
+    <h3>Dot vs bracket</h3>
+    <ul>
+      <li><strong>Dot:</strong> <code>obj.navn</code> — kortere, men nøkkelen må være et gyldig identifier-navn.</li>
+      <li><strong>Bracket:</strong> <code>obj["navn"]</code> — fungerer alltid, og lar deg bruke variabler som nøkkel: <code>obj[key]</code>.</li>
+    </ul>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.9</div>
+      <div class="q-text">Hvordan legger man til en ny property på et objekt?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Bruke <code>obj.add("nyKey", verdi)</code></li>
+        <li class="mcq-opt" data-correct="1">Bare tilordne den: <code>obj.nyKey = verdi</code></li>
+        <li class="mcq-opt" data-correct="0">Bruke <code>obj.push({ nyKey: verdi })</code></li>
+        <li class="mcq-opt" data-correct="0">Det går ikke etter at objektet er deklarert</li>
+      </ul>
+      <div class="mcq-feedback">Tilordning oppretter property om den ikke fins fra før. Det fungerer også på <code>const</code>-objekter (referansen er låst, ikke innholdet).</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.9</div>
+      <div class="q-text">Når må du bruke <em>bracket</em>-notasjon framfor dot?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Når property-en er en string</li>
+        <li class="mcq-opt" data-correct="1">Når nøkkelen er i en variabel, eller har spesialtegn/mellomrom</li>
+        <li class="mcq-opt" data-correct="0">Når objektet er stort</li>
+        <li class="mcq-opt" data-correct="0">Når man henter siste property</li>
+      </ul>
+      <div class="mcq-feedback">Dot krever et statisk, gyldig identifier-navn. Bracket lar deg bruke en variabel (<code>obj[key]</code>) eller en streng som ikke er gyldig som identifier (<code>obj["full navn"]</code>).</div>
+    </div>
+  </div></section>
+
+  <section id="for"><div class="container">
+    <div class="section-badge">04 · Pensum 1.11.10</div>
+    <h2><code>for</code>-loop</h2>
+    <p>
+      Når du <em>vet på forhånd</em> hvor mange iterasjoner du trenger,
+      bruker du en for-loop. Parentesen har tre deler skilt med semikolon:
+    </p>
+
+<pre><code>for (let i = 0; i &lt; 5; i++) {
+  console.log(i);
+}
+// 0, 1, 2, 3, 4</code></pre>
+
+    <ol class="steps">
+      <li><strong>Initialisering:</strong> <code>let i = 0</code> — kjøres én gang, før loopen starter.</li>
+      <li><strong>Betingelse:</strong> <code>i &lt; 5</code> — sjekkes før hver iterasjon. Loopen kjører så lenge dette er <code>true</code>.</li>
+      <li><strong>Oppdatering:</strong> <code>i++</code> — kjøres etter hver iterasjon.</li>
+    </ol>
+
+    <h3>Iterere gjennom et array</h3>
+<pre><code>const navn = ["Anna", "Bo", "Cecilie"];
+for (let i = 0; i &lt; navn.length; i++) {
+  console.log(navn[i]);
+}</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.10</div>
+      <div class="q-text">Hva er korrekt loop-grense for å iterere gjennom hele en array?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>i &lt;= arr.length</code></li>
+        <li class="mcq-opt" data-correct="1"><code>i &lt; arr.length</code></li>
+        <li class="mcq-opt" data-correct="0"><code>i &lt; arr.length + 1</code></li>
+        <li class="mcq-opt" data-correct="0"><code>i &lt;= arr.length - 1</code> er feil</li>
+      </ul>
+      <div class="mcq-feedback">Indeks går fra <code>0</code> til <code>length - 1</code>. <code>i &lt; arr.length</code> stopper riktig. <code>i &lt;= arr.length</code> går én for langt og gir <code>undefined</code> i siste iterasjon.</div>
+    </div>
+  </div></section>
+
+  <section id="while"><div class="container">
+    <div class="section-badge">04 · Pensum 1.11.10</div>
+    <h2><code>while</code>-loop</h2>
+    <p>
+      Når du <em>ikke vet</em> hvor mange iterasjoner som trengs, men har en
+      betingelse som skal holde, bruker du en while-loop:
+    </p>
+
+<pre><code>let svar = "";
+while (svar === "") {
+  svar = prompt("Hva heter du?");
+}</code></pre>
+
+    <p>
+      Loopen kjører så lenge betingelsen er <code>true</code>. Hvis betingelsen
+      <em>aldri</em> blir <code>false</code> får du en uendelig loop — typisk
+      bug. Pass på at noe inni loopen endrer det betingelsen sjekker.
+    </p>
+
+    <div class="callout-warn"><div class="label">Uendelig loop</div>
+      <p>Skriver du <code>while (true) { … }</code> uten <code>break</code> inni, kjører loopen evig og fryser nettleseren. Bruk <code>break</code> hvis du må avslutte basert på en hendelse inni.</p>
+    </div>
+  </div></section>
+
+  <section id="break"><div class="container">
+    <div class="section-badge">06 · Pensum 1.11.10</div>
+    <h2><code>break</code> og <code>continue</code></h2>
+    <p>Inni en loop kan du styre flyten med to nøkkelord:</p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">break</div>
+        <div class="fc-val">Avbryter <em>hele</em> loopen umiddelbart. Hopper rett til linjen etter loopen.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">continue</div>
+        <div class="fc-val">Hopper over resten av <em>én</em> iterasjon og går videre til neste.</div>
+      </div>
+    </div>
+
+<pre><code>for (let i = 0; i &lt; 10; i++) {
+  if (i === 5) break;       // stopper helt når i er 5
+  if (i % 2 === 0) continue; // hopper over partall
+  console.log(i);
+}
+// 1, 3</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.10</div>
+      <div class="q-text">Hva er forskjellen på <code>break</code> og <code>continue</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ingen — de gjør det samme</li>
+        <li class="mcq-opt" data-correct="1"><code>break</code> avbryter hele loopen, <code>continue</code> hopper over én iterasjon</li>
+        <li class="mcq-opt" data-correct="0"><code>continue</code> avbryter hele loopen, <code>break</code> hopper over én iterasjon</li>
+        <li class="mcq-opt" data-correct="0"><code>break</code> finnes bare i <code>switch</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>break</code> = ut av loopen helt. <code>continue</code> = hopp til neste iterasjon, men loopen fortsetter.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">07 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong>Off-by-one:</strong> <code>i &lt;= arr.length</code> går én for langt. Skal være <code>i &lt; arr.length</code>.</li>
+        <li><strong>Endre array under iterasjon:</strong> <code>.push()</code> i en loop som leser <code>arr.length</code> kan gi uendelig loop.</li>
+        <li><strong>Lese property som ikke fins:</strong> gir <code>undefined</code>, ikke feil. Bruk <code>if (obj.x !== undefined)</code> hvis du må sjekke.</li>
+        <li><strong>Glemme oppdatering i while:</strong> hvis variabelen i betingelsen aldri endres, blir loopen uendelig.</li>
+        <li><strong>Bruke <code>=</code> i stedet for <code>===</code> i <code>if</code>:</strong> <code>if (x = 5)</code> tilordner og er alltid <code>true</code>. Skal være <code>if (x === 5)</code>.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">08 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er det <em>siste elementet</em> i <code>[10, 20, 30]</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>arr[3]</code></li>
+        <li class="mcq-opt" data-correct="1"><code>arr[arr.length - 1]</code></li>
+        <li class="mcq-opt" data-correct="0"><code>arr.length</code></li>
+        <li class="mcq-opt" data-correct="0"><code>arr.last</code></li>
+      </ul>
+      <div class="mcq-feedback">Indeksering starter på 0, så siste element ligger på <code>length - 1</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Når er en for-loop riktig valg framfor while?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Når man har et objekt</li>
+        <li class="mcq-opt" data-correct="1">Når man vet antall iterasjoner på forhånd</li>
+        <li class="mcq-opt" data-correct="0">Når man ikke vet antall iterasjoner</li>
+        <li class="mcq-opt" data-correct="0">Når man trenger <code>break</code></li>
+      </ul>
+      <div class="mcq-feedback">For-loop = kjent antall (f.eks. iterere gjennom array). While-loop = ukjent antall (f.eks. vente på input).</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken syntaks <em>oppretter</em> en property <code>by</code> med verdien <code>"Oslo"</code> på et eksisterende objekt <code>p</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>p.add("by", "Oslo")</code></li>
+        <li class="mcq-opt" data-correct="0"><code>p.push({by: "Oslo"})</code></li>
+        <li class="mcq-opt" data-correct="1"><code>p.by = "Oslo"</code></li>
+        <li class="mcq-opt" data-correct="0"><code>p["by"]: "Oslo"</code></li>
+      </ul>
+      <div class="mcq-feedback">Bare tilordne. Property opprettes om den ikke finnes. <code>p["by"] = "Oslo"</code> fungerer også.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../funksjoner-og-json/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.11.11 – 1.11.12</div>
+        <div class="sp-title">Funksjoner og JSON</div>
+        <div class="sp-desc">Pakk gjentagende kode inn i et navn — og lær JSON-formatet for å sende data.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.8–1.6.9 — Boks-modellen og sentrering · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.8–1.6.9 Boks-modellen og sentrering">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.8 – 1.6.9</div>
+      <h1>Boks-modellen og <em>sentrering</em></h1>
+      <p class="lede">
+        Hvert HTML-element er en boks med fire lag: innhold, padding, border
+        og margin. Forstår du lagene, kan du både gi luft inni elementet,
+        skille bokser fra hverandre, og sentrere hele oppsettet
+        horisontalt med <code>margin: auto</code>.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.8 Margin and padding</span>
+        <span class="pill">1.6.9 Center elements</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#modellen">Boks-modellen</a></li>
+        <li><span class="toc-num">02</span><a href="#padding">Padding</a></li>
+        <li><span class="toc-num">03</span><a href="#margin">Margin</a></li>
+        <li><span class="toc-num">04</span><a href="#shorthand">Shorthand</a></li>
+        <li><span class="toc-num">05</span><a href="#sentrering">Sentrering</a></li>
+        <li><span class="toc-num">06</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="modellen"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.8</div>
+    <h2>De fire <em>lagene</em></h2>
+    <p>
+      Boks-modellen er den viktigste mentale modellen i hele kapittel 3.
+      Fra innerst til ytterst:
+    </p>
+    <ol class="steps">
+      <li><strong>Content</strong> — selve innholdet (tekst, bilde).</li>
+      <li><strong>Padding</strong> — luft mellom innholdet og rammen. Bakgrunnen til elementet strekker seg ut til padding-kanten.</li>
+      <li><strong>Border</strong> — selve rammen rundt boksen.</li>
+      <li><strong>Margin</strong> — luft <em>utenfor</em> rammen, som skiller boksen fra naboene. Margin er alltid gjennomsiktig.</li>
+    </ol>
+
+<pre><code>┌─────────────────────────────────┐  ← margin (utenfor)
+│  ┌──────────────────────────┐   │
+│  │     border (rammen)      │   │
+│  │  ┌────────────────────┐  │   │
+│  │  │     padding        │  │   │
+│  │  │  ┌──────────────┐  │  │   │
+│  │  │  │   content    │  │  │   │
+│  │  │  └──────────────┘  │  │   │
+│  │  └────────────────────┘  │   │
+│  └──────────────────────────┘   │
+└─────────────────────────────────┘</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.8</div>
+      <div class="q-text">Hva er rekkefølgen på lagene i boks-modellen, fra innerst til ytterst?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Margin → padding → content → border</li>
+        <li class="mcq-opt" data-correct="1">Content → padding → border → margin</li>
+        <li class="mcq-opt" data-correct="0">Border → margin → padding → content</li>
+        <li class="mcq-opt" data-correct="0">Padding → content → margin → border</li>
+      </ul>
+      <div class="mcq-feedback">Innholdet er innerst, så luft (padding), så ramme (border), og helt ytterst luften som skiller naboene (margin).</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.8</div>
+      <div class="q-text">Hvor strekker bakgrunnsfargen til en boks seg?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Bare innenfor content</li>
+        <li class="mcq-opt" data-correct="1">Til og med padding (men ikke margin)</li>
+        <li class="mcq-opt" data-correct="0">Til og med margin</li>
+        <li class="mcq-opt" data-correct="0">Bare utenfor border</li>
+      </ul>
+      <div class="mcq-feedback">Bakgrunnen dekker content og padding. Margin er <em>utenfor</em> boksen og er alltid gjennomsiktig.</div>
+    </div>
+  </div></section>
+
+  <section id="padding"><div class="container">
+    <div class="section-badge">02 · Padding</div>
+    <h2><em>Padding</em> — luft inni boksen</h2>
+    <p>
+      Padding er rommet mellom innholdet og rammen. Du bruker det når
+      teksten din ligger «klemt opp» mot kanten av elementet.
+    </p>
+
+<pre><code>.kort {
+  padding-top: 16px;
+  padding-right: 20px;
+  padding-bottom: 16px;
+  padding-left: 20px;
+}</code></pre>
+
+    <p>
+      Eller med shorthand:
+    </p>
+
+<pre><code>.kort { padding: 16px 20px; }   /* topp/bunn 16, venstre/høyre 20 */</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.8</div>
+      <div class="q-text">Hva styrer <code>padding</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Avstanden mellom boksen og naboene</li>
+        <li class="mcq-opt" data-correct="1">Avstanden mellom innholdet og rammen</li>
+        <li class="mcq-opt" data-correct="0">Tykkelsen på rammen</li>
+        <li class="mcq-opt" data-correct="0">Bredden på elementet</li>
+      </ul>
+      <div class="mcq-feedback">Padding = innvendig luft. Margin = utvendig luft.</div>
+    </div>
+  </div></section>
+
+  <section id="margin"><div class="container">
+    <div class="section-badge">03 · Margin</div>
+    <h2><em>Margin</em> — luft mellom bokser</h2>
+    <p>
+      Margin er rommet <em>utenfor</em> rammen — det skiller boksen fra
+      andre bokser. Som regel det første du bruker for å gi avstand mellom
+      avsnitt eller seksjoner.
+    </p>
+
+<pre><code>p { margin-bottom: 1em; }
+section { margin: 32px 0; }</code></pre>
+
+    <div class="callout">
+      <div class="label">Spesielt: margin collapse</div>
+      <p>Når to vertikale marger møtes (f.eks. <code>margin-bottom</code> på et avsnitt og <code>margin-top</code> på det neste), «kollapser» de til den største av de to. Pensum nevner dette kort, men det er greit å være obs på når et tilsynelatende stort mellomrom plutselig blir mindre enn forventet.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.8</div>
+      <div class="q-text">Hva er forskjellen på <code>margin</code> og <code>padding</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">De gjør det samme</li>
+        <li class="mcq-opt" data-correct="1">Padding er innvendig luft (mellom innhold og ramme), margin er utvendig (mellom ramme og naboer)</li>
+        <li class="mcq-opt" data-correct="0">Padding er for tekst, margin er for bilder</li>
+        <li class="mcq-opt" data-correct="0">Margin støttes ikke i moderne nettlesere</li>
+      </ul>
+      <div class="mcq-feedback">Padding er <em>inni</em> rammen. Margin er <em>utenfor</em> rammen.</div>
+    </div>
+  </div></section>
+
+  <section id="shorthand"><div class="container">
+    <div class="section-badge">04 · Shorthand</div>
+    <h2>Shorthand — én linje, <em>fire sider</em></h2>
+    <p>
+      Både <code>margin</code> og <code>padding</code> har shorthand. Antall
+      verdier bestemmer hvilke sider som settes:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">1 verdi</div><div class="fc-val"><code>padding: 10px;</code> — alle fire sider får 10px.</div></div>
+      <div class="fact-card"><div class="fc-key">2 verdier</div><div class="fc-val"><code>padding: 10px 20px;</code> — topp/bunn 10, venstre/høyre 20.</div></div>
+      <div class="fact-card"><div class="fc-key">3 verdier</div><div class="fc-val"><code>padding: 10px 20px 30px;</code> — topp 10, sider 20, bunn 30.</div></div>
+      <div class="fact-card"><div class="fc-key">4 verdier</div><div class="fc-val"><code>padding: 10px 20px 30px 40px;</code> — topp, høyre, bunn, venstre. (Klokkeretningen fra topp.)</div></div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.8</div>
+      <div class="q-text"><code>margin: 10px 20px 30px 40px;</code> — hva blir <em>høyre</em> margin?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">10px</li>
+        <li class="mcq-opt" data-correct="1">20px</li>
+        <li class="mcq-opt" data-correct="0">30px</li>
+        <li class="mcq-opt" data-correct="0">40px</li>
+      </ul>
+      <div class="mcq-feedback">Rekkefølgen er klokkeretningen fra toppen: topp (10), høyre (20), bunn (30), venstre (40).</div>
+    </div>
+  </div></section>
+
+  <section id="sentrering"><div class="container">
+    <div class="section-badge">05 · Pensum 1.6.9</div>
+    <h2><em>Sentrer</em> et element</h2>
+    <p>
+      For å sentrere en boks horisontalt i nettleservinduet (eller i
+      foreldrelementet) trengs to ting:
+    </p>
+    <ol class="steps">
+      <li>Boksen må ha en <strong>bredde mindre enn 100 %</strong> — f.eks. <code>width: 600px;</code> eller <code>width: 80%;</code>. En full-bredde-boks kan ikke sentreres horisontalt fordi det ikke er noe rom å fordele.</li>
+      <li><code>margin-left: auto;</code> og <code>margin-right: auto;</code> (eller <code>margin: 0 auto;</code>). Verdien <code>auto</code> gjør at nettleseren fordeler resterende plass likt på begge sider.</li>
+    </ol>
+
+<pre><code>.kort {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  /* eller kortere: margin: 0 auto; */
+}</code></pre>
+
+    <div class="callout-warn">
+      <div class="label">Pensum-poeng</div>
+      <p><code>margin: auto</code> sentrerer kun <strong>horisontalt</strong> for blokk-elementer. Det sentrerer <em>ikke</em> tekst inni elementet — for det trenger du <code>text-align: center;</code>.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.9</div>
+      <div class="q-text">Hva skal til for å sentrere et blokk-element horisontalt med margin?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>text-align: center</code> på elementet</li>
+        <li class="mcq-opt" data-correct="0"><code>position: center</code></li>
+        <li class="mcq-opt" data-correct="1">En bredde mindre enn 100 %, og <code>margin-left: auto; margin-right: auto;</code></li>
+        <li class="mcq-opt" data-correct="0">Det går ikke uten flexbox</li>
+      </ul>
+      <div class="mcq-feedback">Bredde + auto-margin på begge sider. Uten en bredde mindre enn forelder, har <code>auto</code> ingenting å fordele.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.9</div>
+      <div class="q-text">Hva sentrerer <code>text-align: center</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Selve elementet i nettleservinduet</li>
+        <li class="mcq-opt" data-correct="1">Innholdet (tekst og inline-elementer) inni elementet</li>
+        <li class="mcq-opt" data-correct="0">Marger på begge sider</li>
+        <li class="mcq-opt" data-correct="0">Border-stilen</li>
+      </ul>
+      <div class="mcq-feedback"><code>text-align</code> styrer <em>innholdet</em> — ikke selve boksen. Lett å forveksle med <code>margin: auto</code>.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">06 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ul>
+        <li><strong>Forveksle <code>margin</code> og <code>padding</code>.</strong> Hvis bakgrunnsfargen «smitter» til naboen, har du sannsynligvis brukt padding der du ville hatt margin.</li>
+        <li><strong>Glemmer <code>width</code> ved sentrering.</strong> <code>margin: 0 auto</code> alene gjør ingenting hvis elementet allerede er 100 % bredt.</li>
+        <li><strong>Bruke <code>text-align: center</code> på et bilde og lure på hvorfor det ikke virker.</strong> Bilder er inline, så det <em>fungerer</em> hvis du setter <code>text-align: center</code> på <em>foreldrelementet</em>. Eller: gjør bildet til blokk og bruk <code>margin: 0 auto</code>.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">07 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva betyr <code>padding: 12px;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1">12 piksler padding på alle fire sider</li>
+        <li class="mcq-opt" data-correct="0">12 piksler padding bare på toppen</li>
+        <li class="mcq-opt" data-correct="0">12 piksler margin</li>
+        <li class="mcq-opt" data-correct="0">Det er ugyldig — du må oppgi alle fire</li>
+      </ul>
+      <div class="mcq-feedback">Med én verdi gjelder den alle fire sider — det er hele poenget med shorthand.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken egenskap skiller en boks fra naboboksene sine?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>padding</code></li>
+        <li class="mcq-opt" data-correct="1"><code>margin</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border-radius</code></li>
+        <li class="mcq-opt" data-correct="0"><code>line-height</code></li>
+      </ul>
+      <div class="mcq-feedback">Margin er det ytterste laget — luften mellom denne boksen og naboene.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../borders/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.10</div>
+        <div class="sp-title">Borders</div>
+        <div class="sp-desc">Tegn rammer rundt bokser. Width, style, color — og shorthand.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

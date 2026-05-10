@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.1–1.6.3 — Forstå CSS · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.1–1.6.3 Forstå CSS">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.1 – 1.6.3</div>
+      <h1>Forstå CSS — <em>boksen, regelen og kommentaren</em></h1>
+      <p class="lede">
+        Før vi lærer enkelt-egenskapene må vi ha tre ting på plass: hva CSS
+        <em>er</em>, hvordan en regel er bygd opp, og hvordan vi kommenterer
+        for å notere oss eller skru av regler midlertidig.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.1 Understanding CSS</span>
+        <span class="pill">1.6.2 Syntax</span>
+        <span class="pill">1.6.3 Comments</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hva">Hva er CSS?</a></li>
+        <li><span class="toc-num">02</span><a href="#boks">Boks-tankegangen</a></li>
+        <li><span class="toc-num">03</span><a href="#syntaks">Anatomien til en regel</a></li>
+        <li><span class="toc-num">04</span><a href="#kommentar">Kommentarer</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hva"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.1</div>
+    <h2>Hva er <em>CSS</em>?</h2>
+    <p>
+      CSS står for <strong>Cascading Style Sheets</strong>. Mens HTML beskriver
+      <em>hva</em> innholdet er (overskrift, avsnitt, lenke), beskriver CSS
+      <em>hvordan</em> det skal se ut (farge, font, marg, kant). Pensum 1.6.1
+      kaller dette skillet mellom <em>struktur</em> og <em>presentasjon</em>.
+    </p>
+    <p>
+      Et stilark er en samling regler. Når reglene står i en egen
+      <code>.css</code>-fil kan flere HTML-sider dele samme stil — endrer du
+      én linje i stilarket, oppdateres utseendet på hele nettstedet samtidig.
+      Det er det <em>Don't Repeat Yourself</em> (DRY) handler om.
+    </p>
+    <div class="callout-blue">
+      <div class="label">Kjerneidé</div>
+      <p>HTML = struktur. CSS = utseende. Skillet gjør at du kan endre
+      designet uten å røre innholdet, og at flere sider deler en og samme stil.</p>
+    </div>
+  </div></section>
+
+  <section id="boks"><div class="container">
+    <div class="section-badge">02 · Pensum 1.6.1</div>
+    <h2>Hvert element bor i en <em>boks</em></h2>
+    <p>
+      Pensum bruker en enkel mental modell: rundt hvert HTML-element ligger en
+      usynlig <strong>boks</strong>. CSS-reglene bestemmer både hvordan boksen
+      ser ut (bakgrunn, ramme, plass) og hvordan innholdet i den ser ut
+      (font, farge, justering).
+    </p>
+    <p>
+      Det er denne boksen vi siden i kapittelet skal styre med
+      <code>padding</code>, <code>border</code> og <code>margin</code>. For nå
+      er det nok å huske at <strong>alt</strong> har en boks — også
+      tekst-elementer som <code>&lt;p&gt;</code> og <code>&lt;span&gt;</code>.
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.1</div>
+      <div class="q-text">Hva står CSS for?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Centralized Style System</li>
+        <li class="mcq-opt" data-correct="1">Cascading Style Sheets</li>
+        <li class="mcq-opt" data-correct="0">Common Styling Syntax</li>
+        <li class="mcq-opt" data-correct="0">Coded Sheet Structure</li>
+      </ul>
+      <div class="mcq-feedback">Cascading Style Sheets — «kaskade» fordi flere regler kan treffe samme element, og en gitt rekkefølge bestemmer hvilken som vinner.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.1</div>
+      <div class="q-text">Hva er den primære oppgaven til CSS?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Definere strukturen i et HTML-dokument</li>
+        <li class="mcq-opt" data-correct="0">Lagre data fra et skjema</li>
+        <li class="mcq-opt" data-correct="1">Bestemme utseendet til HTML-elementer</li>
+        <li class="mcq-opt" data-correct="0">Sende forespørsler til en server</li>
+      </ul>
+      <div class="mcq-feedback">CSS styrer <em>presentasjonen</em>. Strukturen er HTML, dynamikken er JavaScript, datalagring skjer på serveren.</div>
+    </div>
+  </div></section>
+
+  <section id="syntaks"><div class="container">
+    <div class="section-badge">03 · Pensum 1.6.2</div>
+    <h2>Anatomien til en <em>regel</em></h2>
+    <p>
+      En CSS-regel består av tre deler: <strong>selektor</strong>,
+      <strong>egenskap</strong> og <strong>verdi</strong>. Selektoren peker
+      ut hvilket element regelen gjelder for. Egenskap + verdi sier hva som
+      skal endres. Sammen kalles egenskap-og-verdi-paret en
+      <em>erklæring</em> (declaration).
+    </p>
+
+<pre><code>p {
+  color: blue;
+  font-size: 18px;
+}</code></pre>
+
+    <ul>
+      <li><strong>Selektor:</strong> <code>p</code> — peker ut alle <code>&lt;p&gt;</code>-elementer.</li>
+      <li><strong>Erklæringsblokk:</strong> alt mellom <code>{</code> og <code>}</code>.</li>
+      <li><strong>Erklæring:</strong> <code>color: blue;</code> er én erklæring. Vi har to her.</li>
+      <li><strong>Egenskap:</strong> <code>color</code>. <strong>Verdi:</strong> <code>blue</code>.</li>
+      <li><strong>Skilletegn:</strong> kolon mellom egenskap og verdi, semikolon etter hver erklæring.</li>
+    </ul>
+
+    <div class="callout">
+      <div class="label">Pensum-detalj</div>
+      <p>Det aller siste semikolonet i en blokk er teknisk sett valgfritt, men pensum (og god stil) sier: skriv det alltid. Da slipper du å glemme det neste gang du legger til en erklæring.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.2</div>
+      <div class="q-text">Hva kalles paret <code>color: blue</code> i en CSS-regel?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">En selektor</li>
+        <li class="mcq-opt" data-correct="1">En erklæring (declaration)</li>
+        <li class="mcq-opt" data-correct="0">En kommentar</li>
+        <li class="mcq-opt" data-correct="0">Et stilark</li>
+      </ul>
+      <div class="mcq-feedback">Egenskap + verdi = erklæring. Alle erklæringer mellom <code>{</code> og <code>}</code> kalles en erklæringsblokk.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.2</div>
+      <div class="q-text">Hvilket tegn skiller egenskap og verdi i en erklæring?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Likhetstegn <code>=</code></li>
+        <li class="mcq-opt" data-correct="0">Semikolon <code>;</code></li>
+        <li class="mcq-opt" data-correct="1">Kolon <code>:</code></li>
+        <li class="mcq-opt" data-correct="0">Pipe <code>|</code></li>
+      </ul>
+      <div class="mcq-feedback">Kolon skiller egenskap og verdi. Semikolon avslutter hele erklæringen.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.2</div>
+      <div class="q-text">Hvilken av disse linjene er <em>syntaktisk korrekt</em> som CSS-regel?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>p = color: blue;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>p { color = blue; }</code></li>
+        <li class="mcq-opt" data-correct="1"><code>p { color: blue; }</code></li>
+        <li class="mcq-opt" data-correct="0"><code>color(p): blue;</code></li>
+      </ul>
+      <div class="mcq-feedback">Selektor først, deretter erklæringsblokk i krøllparenteser. Kolon, ikke likhetstegn, mellom egenskap og verdi.</div>
+    </div>
+  </div></section>
+
+  <section id="kommentar"><div class="container">
+    <div class="section-badge">04 · Pensum 1.6.3</div>
+    <h2>Kommentarer i <em>CSS</em></h2>
+    <p>
+      Kommentarer skrives mellom <code>/*</code> og <code>*/</code> og kan
+      dekke én eller flere linjer. Nettleseren ignorerer alt som står inni.
+      Pensum nevner to typiske bruksområder:
+    </p>
+    <ol class="steps">
+      <li><strong>Forklare</strong> hvorfor en regel er som den er, særlig hvis verdien ikke er åpenbar (f.eks. en magisk piksel-verdi som matcher en bestemt designspec).</li>
+      <li><strong>Skru av regler midlertidig</strong> uten å slette dem — nyttig når du eksperimenterer eller debugger.</li>
+    </ol>
+
+<pre><code>/* Hovedfargen — matcher logoen */
+h1 {
+  color: #1f4e79;
+}
+
+/* Skrudd av mens vi tester nytt design
+.kort {
+  border: 1px solid red;
+}
+*/</code></pre>
+
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <p>I motsetning til mange programmeringsspråk har CSS <strong>ingen</strong> én-linje-kommentar (<code>//</code> finnes <em>ikke</em> i ren CSS — den hører til i preprosessorer som SCSS).</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.3</div>
+      <div class="q-text">Hvordan skriver du en kommentar i CSS?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>// dette er en kommentar</code></li>
+        <li class="mcq-opt" data-correct="0"><code># dette er en kommentar</code></li>
+        <li class="mcq-opt" data-correct="1"><code>/* dette er en kommentar */</code></li>
+        <li class="mcq-opt" data-correct="0"><code>&lt;!-- dette er en kommentar --&gt;</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>/* … */</code> er den eneste kommentar-syntaksen i ren CSS. <code>&lt;!-- --&gt;</code> hører til HTML, og <code>//</code> finnes kun i preprosessorer som SCSS.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.3</div>
+      <div class="q-text">Hva skjer hvis du omslutter en hel CSS-regel med <code>/*</code> og <code>*/</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Regelen får høyere prioritet</li>
+        <li class="mcq-opt" data-correct="1">Regelen blir ignorert (skrudd av)</li>
+        <li class="mcq-opt" data-correct="0">Regelen kjøres bare i utviklerverktøy</li>
+        <li class="mcq-opt" data-correct="0">Regelen blir konvertert til HTML-kommentar</li>
+      </ul>
+      <div class="mcq-feedback">Alt mellom <code>/*</code> og <code>*/</code> er en kommentar — nettleseren leser den ikke som CSS. En vanlig debug-teknikk.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">05 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ul>
+        <li><strong>Glemmer semikolon.</strong> Hver erklæring må avsluttes med <code>;</code> — uten det «smitter» nettleseren neste linje sammen med den forrige og misforstår.</li>
+        <li><strong>Bruker <code>=</code> i stedet for <code>:</code>.</strong> Klassisk feil hvis du kommer fra et språk der <code>=</code> er tilordning. CSS bruker <em>kolon</em>.</li>
+        <li><strong>Skriver HTML-kommentar i CSS.</strong> <code>&lt;!-- … --&gt;</code> virker ikke i et stilark — bare <code>/* … */</code>.</li>
+        <li><strong>Tror linjeskift erstatter semikolon.</strong> Det gjør det ikke. Linjeskift er bare for menneskets lesbarhet.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er hovedforskjellen på HTML og CSS i tankemodellen pensum bruker?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1">HTML beskriver struktur, CSS beskriver utseende</li>
+        <li class="mcq-opt" data-correct="0">HTML kjøres i nettleseren, CSS kjøres på serveren</li>
+        <li class="mcq-opt" data-correct="0">HTML er for små sider, CSS er for store sider</li>
+        <li class="mcq-opt" data-correct="0">HTML laster raskere enn CSS</li>
+      </ul>
+      <div class="mcq-feedback">«HTML = hva, CSS = hvordan.» Begge tolkes av nettleseren — server/klient-skillet er ikke relevant her.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken av disse er en gyldig erklæringsblokk?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>{ color: red; font-size: 16px }</code> (uten selektor)</li>
+        <li class="mcq-opt" data-correct="1"><code>h1 { color: red; font-size: 16px; }</code></li>
+        <li class="mcq-opt" data-correct="0"><code>h1: color = red; font-size = 16px;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>h1 [color: red, font-size: 16px]</code></li>
+      </ul>
+      <div class="mcq-feedback">En komplett regel = selektor + krøllparenteser + erklæringer separert med semikolon.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er en typisk grunn til å legge regler i en ekstern <code>.css</code>-fil framfor i <code>&lt;style&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ekstern CSS støtter flere egenskaper</li>
+        <li class="mcq-opt" data-correct="1">Flere HTML-sider kan dele samme stil — DRY</li>
+        <li class="mcq-opt" data-correct="0">Inline-CSS finnes ikke</li>
+        <li class="mcq-opt" data-correct="0">Ekstern CSS har høyere presedens enn inline</li>
+      </ul>
+      <div class="mcq-feedback">DRY: én fil med stiler kan deles på tvers av sider. Inline-stil har faktisk <em>høyere</em> presedens enn ekstern, ikke lavere.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../kaskade-arv/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.4 – 1.6.5</div>
+        <div class="sp-title">Kaskaden og arv</div>
+        <div class="sp-desc">Hvilken regel vinner når flere treffer? Og hva arves automatisk fra forelder til barn?</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

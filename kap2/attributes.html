@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.2 — Attributter</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.2: Attributter">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel B · Pensum 1.4.2</div>
+      <h1>Attri<em>butter</em></h1>
+      <p class="lede">
+        Ekstra informasjon om elementet — skrevet som
+        <code>navn="verdi"</code> inni åpningstaggen. Hjelper både
+        nettlesere, skjermlesere og søkemotorer å forstå innholdet.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.2</span>
+        <span class="pill">Forelesning 3</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hva">
+    <div class="container">
+      <div class="section-badge">01 · Hva</div>
+      <h2>Hva er et <em>attributt</em>?</h2>
+      <p>
+        Et attributt gir tilleggsinformasjon om innholdet i et element.
+        Det skrives inni <strong>åpningstaggen</strong>, og består av
+        et <strong>navn</strong> og en <strong>verdi</strong> separert
+        med likhetstegn. Verdien står i anførselstegn.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Eksempel</div>
+          <pre>&lt;p lang="no"&gt;Et element med norsk tekst&lt;/p&gt;</pre>
+        </div>
+      </div>
+
+      <p>
+        I eksempelet over forteller attributtet <code>lang</code> at
+        avsnittet er på norsk. Verdien <code>"no"</code> er
+        språkkoden. Slike attributter gjør det lettere for
+        nettleseren å rendre korrekt, hjelper skjermlesere å lese på
+        riktig språk, og hjelper søkemotorer å forstå hva siden
+        handler om.
+      </p>
+    </div>
+  </section>
+
+  <section id="vanlige">
+    <div class="container">
+      <div class="section-badge">02 · Vanlige</div>
+      <h2>Attributter du møter <em>hele tiden</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">lang</div>
+          <div class="fc-val">Språk for elementet (eller hele dokumentet, satt på <code>&lt;html&gt;</code>). Verdier som <code>no</code>, <code>en</code>, <code>nb</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">id</div>
+          <div class="fc-val">Unik identifikator for elementet på siden. Brukes til fragment-lenker (<code>#id</code>) og som krok for CSS/JS.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">class</div>
+          <div class="fc-val">Klassifiserer elementet. Flere elementer kan ha samme klasse, og ett element kan ha flere klasser (mellomromsskilt).</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">href</div>
+          <div class="fc-val">Brukes på <code>&lt;a&gt;</code> og <code>&lt;link&gt;</code>. Verdien er en URL.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">src</div>
+          <div class="fc-val">Brukes på <code>&lt;img&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>. Verdien er en URL til ressursen.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">alt</div>
+          <div class="fc-val">Tekstbeskrivelse av et bilde. Brukes av skjermlesere, søkemotorer, og når bildet ikke kan vises.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="id-regler">
+    <div class="container">
+      <div class="section-badge">03 · Regler for id</div>
+      <h2><code>id</code> — to <em>regler</em> du må huske</h2>
+      <ol>
+        <li>
+          <strong>Verdien må starte med en bokstav eller understrek</strong>
+          — ikke et tall eller annet tegn. Lovlig:
+          <code>id="summary"</code>, <code>id="_intro"</code>.
+          Ulovlig: <code>id="1summary"</code>.
+        </li>
+        <li>
+          <strong>Hver <code>id</code>-verdi må være unik på siden.</strong>
+          To elementer kan ikke dele samme <code>id</code>. Trenger
+          du å gruppere flere elementer, bruk <code>class</code>.
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">04 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvor i et element skrives attributter?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">I åpningstaggen</li>
+          <li class="mcq-opt" data-correct="0">I lukketaggen</li>
+          <li class="mcq-opt" data-correct="0">Mellom åpnings- og lukketaggen</li>
+          <li class="mcq-opt" data-correct="0">På en egen linje før elementet</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.2: «Attributes appear inside the opening tag.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva forteller <code>lang="no"</code> på et element?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">At elementet er en lang tekst</li>
+          <li class="mcq-opt" data-correct="1">At innholdet er på norsk</li>
+          <li class="mcq-opt" data-correct="0">At elementet skal vises i et annet språk</li>
+          <li class="mcq-opt" data-correct="0">At elementet er fra Norge</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.2: <code>lang</code> indikerer språk; <code>"no"</code> betyr norsk.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hvilken av disse <code>id</code>-verdiene er <em>ulovlig</em>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>summary</code></li>
+          <li class="mcq-opt" data-correct="0"><code>_intro</code></li>
+          <li class="mcq-opt" data-correct="1"><code>1section</code></li>
+          <li class="mcq-opt" data-correct="0"><code>section1</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.5: <code>id</code> må starte med bokstav eller understrek (ikke et tall).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Du vil gruppere fem ulike elementer slik at de styles likt. Hva bruker du?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Gi alle samme <code>id</code></li>
+          <li class="mcq-opt" data-correct="1">Gi alle samme <code>class</code></li>
+          <li class="mcq-opt" data-correct="0">Gi alle samme <code>name</code></li>
+          <li class="mcq-opt" data-correct="0">Gi alle samme <code>group</code></li>
+        </ul>
+        <div class="mcq-feedback"><code>id</code> må være unik. Til gruppering for styling brukes <code>class</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Hvorfor hjelper riktige attributter både skjermlesere og søkemotorer?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De øker hastigheten på siden</li>
+          <li class="mcq-opt" data-correct="1">De gir maskiner ekstra kontekst om hva innholdet betyr</li>
+          <li class="mcq-opt" data-correct="0">De er pålagt av WCAG</li>
+          <li class="mcq-opt" data-correct="0">De endrer stylingen av elementet</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.2: attributter «makes it easier for browsers to render the elements correctly, also it helps screen readers and those trying to make sense of your markup, e.g. search engines.»</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

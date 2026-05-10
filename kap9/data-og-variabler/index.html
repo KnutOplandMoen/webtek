@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.11.3–1.11.6 — Data og variabler · Kap 9</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 9</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 9 · 1.11.3–1.11.6 Data og variabler">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 9 · Underkapittel 1.11.3 – 1.11.6</div>
+      <h1>Data og <em>variabler</em></h1>
+      <p class="lede">
+        Hva slags verdier kan JavaScript jobbe med, hvordan sammenligner vi
+        dem, og hvordan gir vi dem et navn vi kan bruke senere? Pluss den
+        evige forskjellen på <code>undefined</code> og <code>null</code>.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.11.3 Data types</span>
+        <span class="pill">1.11.4 Logical operators</span>
+        <span class="pill">1.11.5 Variables &amp; constants</span>
+        <span class="pill">1.11.6 When something doesn't exist</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#datatyper">Datatyper</a></li>
+        <li><span class="toc-num">02</span><a href="#operatorer">Logiske operatorer</a></li>
+        <li><span class="toc-num">03</span><a href="#variabler">var, let, const</a></li>
+        <li><span class="toc-num">04</span><a href="#strict">"use strict"</a></li>
+        <li><span class="toc-num">05</span><a href="#null">undefined vs null</a></li>
+        <li><span class="toc-num">06</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="datatyper"><div class="container">
+    <div class="section-badge">01 · Pensum 1.11.3</div>
+    <h2>De tre <em>grunnleggende</em> datatypene</h2>
+    <p>
+      JavaScript kjenner mange typer, men pensum 1.11.3 trekker fram tre du
+      møter hele tiden:
+    </p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">String</div>
+        <div class="fc-val">Tekst i fnutter — <code>"Hei"</code> eller <code>'Hei'</code>. Begge fungerer; vær konsistent.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Number</div>
+        <div class="fc-val">Alle tall. <code>3</code>, <code>3.14</code>, <code>-7</code>. Ingen forskjell på heltall og desimaltall i JS.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">Boolean</div>
+        <div class="fc-val"><code>true</code> eller <code>false</code>. Brukes i tester og logiske uttrykk.</div>
+      </div>
+    </div>
+
+    <h3>Strings — konkatenering</h3>
+    <p>
+      <code>+</code>-operatoren slår strings sammen <em>som de er</em> — du må
+      selv legge inn mellomrom hvis du vil ha det:
+    </p>
+<pre><code>const navn = "Anna";
+console.log("Hei " + navn + "!"); // Hei Anna!</code></pre>
+
+    <h3>Numbers — spesielle verdier</h3>
+    <ul>
+      <li><code>NaN</code> («Not a Number») — returneres ved umulige beregninger som <code>0/0</code> eller <code>Number("abc")</code>. Pussig nok er <code>typeof NaN === "number"</code>.</li>
+      <li><code>Infinity</code> — større enn alle vanlige tall. <code>Infinity + 1</code> er fortsatt <code>Infinity</code>.</li>
+      <li><code>%</code> (modulo) — resten etter heltallsdivisjon. <code>7 % 5</code> er <code>2</code>.</li>
+    </ul>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.3</div>
+      <div class="q-text">Hva er resultatet av <code>"3" + 4</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>7</code></li>
+        <li class="mcq-opt" data-correct="1"><code>"34"</code></li>
+        <li class="mcq-opt" data-correct="0"><code>NaN</code></li>
+        <li class="mcq-opt" data-correct="0"><code>SyntaxError</code></li>
+      </ul>
+      <div class="mcq-feedback">Når én av operandene er en string, gjør <code>+</code> konkatenering — tallet 4 konverteres til <code>"4"</code> og slås sammen til <code>"34"</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.3</div>
+      <div class="q-text">Hva returnerer <code>10 % 3</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>3.33</code></li>
+        <li class="mcq-opt" data-correct="0"><code>3</code></li>
+        <li class="mcq-opt" data-correct="1"><code>1</code></li>
+        <li class="mcq-opt" data-correct="0"><code>0</code></li>
+      </ul>
+      <div class="mcq-feedback">Modulo gir resten etter heltallsdivisjon. <code>10 / 3 = 3 rest 1</code>.</div>
+    </div>
+  </div></section>
+
+  <section id="operatorer"><div class="container">
+    <div class="section-badge">02 · Pensum 1.11.4</div>
+    <h2>Logiske <em>operatorer</em></h2>
+    <p>Operatorer brukes til å sammenligne og kombinere verdier. Pensum 1.11.4 deler dem i tre grupper:</p>
+
+    <h3>Sammenlikning</h3>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">&lt; &lt;= &gt; &gt;=</div><div class="fc-val">Mindre/større enn (eventuelt eller lik).</div></div>
+      <div class="fact-card"><div class="fc-key">==</div><div class="fc-val">Likhet med <em>type-koersjon</em>: <code>"5" == 5</code> er <code>true</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">===</div><div class="fc-val">Streng likhet — verdi <em>og</em> type må stemme: <code>"5" === 5</code> er <code>false</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">!=</div><div class="fc-val">Ulikhet med type-koersjon.</div></div>
+      <div class="fact-card"><div class="fc-key">!==</div><div class="fc-val">Streng ulikhet — verdi eller type skiller.</div></div>
+    </div>
+
+    <div class="callout-blue"><div class="label">Tommelfingerregel</div>
+      <p>Bruk <code>===</code> som standard. Bruk <code>==</code> bare hvis du <em>aktivt</em> vil at JS skal konvertere typer for deg.</p>
+    </div>
+
+    <h3>Logiske kombinasjoner</h3>
+    <ul>
+      <li><strong><code>&amp;&amp;</code> (AND):</strong> begge sider må være <code>true</code>.</li>
+      <li><strong><code>||</code> (OR):</strong> minst én side må være <code>true</code>.</li>
+      <li><strong><code>!</code> (NOT):</strong> negerer en boolean. <code>!true</code> blir <code>false</code>.</li>
+    </ul>
+
+<pre><code>const alder = 22;
+const harBillett = true;
+
+if (alder &gt;= 18 &amp;&amp; harBillett) {
+  console.log("Velkommen inn");
+}</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.4</div>
+      <div class="q-text">Hva returnerer <code>0 == false</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><code>true</code></li>
+        <li class="mcq-opt" data-correct="0"><code>false</code></li>
+        <li class="mcq-opt" data-correct="0"><code>NaN</code></li>
+        <li class="mcq-opt" data-correct="0"><code>TypeError</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>==</code> gjør type-koersjon: <code>false</code> blir til <code>0</code>, så <code>0 == 0</code> er <code>true</code>. <code>0 === false</code> ville vært <code>false</code> (ulik type).</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.4</div>
+      <div class="q-text">Hva returnerer <code>(true || false) &amp;&amp; !true</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>true</code></li>
+        <li class="mcq-opt" data-correct="1"><code>false</code></li>
+        <li class="mcq-opt" data-correct="0"><code>undefined</code></li>
+        <li class="mcq-opt" data-correct="0"><code>SyntaxError</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>(true || false)</code> er <code>true</code>. <code>!true</code> er <code>false</code>. <code>true &amp;&amp; false</code> er <code>false</code>.</div>
+    </div>
+  </div></section>
+
+  <section id="variabler"><div class="container">
+    <div class="section-badge">03 · Pensum 1.11.5</div>
+    <h2><code>var</code>, <code>let</code> og <code>const</code></h2>
+    <p>
+      En <strong>variabel</strong> er et navn vi gir en verdi så vi kan
+      bruke den senere. JavaScript har tre nøkkelord for å lage variabler —
+      og de oppfører seg ulikt.
+    </p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">var</div>
+        <div class="fc-val">Funksjons-scopet. Kan re-deklareres. Den «gamle» måten — fra før ES6.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">let</div>
+        <div class="fc-val">Block-scopet (mellom <code>{}</code>). Kan re-tilordnes, men ikke re-deklareres i samme blokk. Innført i ES6.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">const</div>
+        <div class="fc-val">Block-scopet. <em>Kan ikke re-tilordnes</em>. Innført i ES6.</div>
+      </div>
+    </div>
+
+<pre><code>var a = 1;       // funksjons-scopet
+let b = 2;       // block-scopet, kan re-tilordnes
+const c = 3;     // block-scopet, kan ikke re-tilordnes
+
+b = 20;          // OK
+c = 30;          // TypeError: Assignment to constant variable</code></pre>
+
+    <div class="callout-warn"><div class="label">Misforståelse</div>
+      <p><code>const</code> betyr at <em>referansen</em> ikke kan re-tilordnes — ikke at innholdet er låst.
+      En <code>const</code>-array kan fortsatt endres med <code>.push()</code>:
+      <code>const liste = [1,2]; liste.push(3);</code> er gyldig — men <code>liste = []</code> ville feilet.</p>
+    </div>
+
+    <h3>Navngivningsregler</h3>
+    <ul>
+      <li>Ikke et reservert keyword (som <code>if</code> eller <code>return</code>).</li>
+      <li>Ingen mellomrom.</li>
+      <li>Tall er tillatt, men ikke som første tegn.</li>
+      <li>Av punktuasjon er kun <code>$</code> og <code>_</code> tillatt.</li>
+      <li>Konvensjon: <strong>camelCase</strong> — <code>myAge</code>, <code>userName</code>.</li>
+    </ul>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.5</div>
+      <div class="q-text">Hvilket nøkkelord er <em>blokk-scopet</em> og kan ikke re-tilordnes?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>var</code></li>
+        <li class="mcq-opt" data-correct="0"><code>let</code></li>
+        <li class="mcq-opt" data-correct="1"><code>const</code></li>
+        <li class="mcq-opt" data-correct="0"><code>final</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>const</code> = blokk-scopet, ikke re-tilordnes. <code>let</code> er blokk-scopet men <em>kan</em> re-tilordnes. <code>final</code> finnes ikke i JS.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.5</div>
+      <div class="q-text">Hva skjer med <code>const liste = [1, 2]; liste.push(3);</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1">Det er gyldig — listen blir <code>[1, 2, 3]</code></li>
+        <li class="mcq-opt" data-correct="0">Det gir TypeError fordi <code>liste</code> er <code>const</code></li>
+        <li class="mcq-opt" data-correct="0">Det gir SyntaxError</li>
+        <li class="mcq-opt" data-correct="0"><code>.push</code> finnes ikke på <code>const</code>-arrays</li>
+      </ul>
+      <div class="mcq-feedback"><code>const</code> låser <em>referansen</em>, ikke innholdet. Du kan endre objektet/arrayet, men ikke peke <code>liste</code> til noe nytt.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.5</div>
+      <div class="q-text">Hvilket variabelnavn er <em>ugyldig</em>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>my_age</code></li>
+        <li class="mcq-opt" data-correct="0"><code>$value</code></li>
+        <li class="mcq-opt" data-correct="0"><code>name2</code></li>
+        <li class="mcq-opt" data-correct="1"><code>2name</code></li>
+      </ul>
+      <div class="mcq-feedback">Variabelnavn kan ikke <em>begynne</em> med et tall. <code>$</code> og <code>_</code> er tillatt; bokstaver og tall etter første tegn er greit.</div>
+    </div>
+  </div></section>
+
+  <section id="strict"><div class="container">
+    <div class="section-badge">04 · Pensum 1.11.5</div>
+    <h2><code>"use strict"</code> — <em>streng modus</em></h2>
+    <p>
+      Skriver du <code>"use strict";</code> øverst i et script (eller øverst i
+      en funksjon) aktiverer du streng modus. Det fanger flere tabber tidlig:
+    </p>
+    <ul>
+      <li>U-deklarerte variabler (uten <code>var</code>/<code>let</code>/<code>const</code>) blir <em>feil</em> i stedet for global variabel.</li>
+      <li>Re-deklarering i samme blokk gir feil.</li>
+      <li>Visse «silent» feil blir kastet som unntak.</li>
+    </ul>
+
+<pre><code>"use strict";
+
+x = 5;  // ReferenceError: x er ikke deklarert
+
+let x = 5; // OK</code></pre>
+
+    <div class="callout"><div class="label">Hvorfor</div>
+      <p>Uten streng modus blir <code>x = 5</code> automatisk en global variabel. Det er nesten alltid feil — og bugger som er vanskelige å spore. Streng modus tvinger deg til å være tydelig.</p>
+    </div>
+  </div></section>
+
+  <section id="null"><div class="container">
+    <div class="section-badge">05 · Pensum 1.11.6</div>
+    <h2>Når noe <em>ikke fins</em></h2>
+    <p>JavaScript har to verdier som representerer «ingenting» — og forskjellen er viktig.</p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key">undefined</div>
+        <div class="fc-val">«Det er ikke satt». Variabel deklarert men ikke tildelt verdi. Eller en property som ikke fins på et objekt.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key">null</div>
+        <div class="fc-val">«Det er bevisst tomt». Programmereren har eksplisitt satt verdien til ingenting.</div>
+      </div>
+    </div>
+
+<pre><code>let a;             // a er undefined (ikke tildelt)
+let b = null;      // b er bevisst tom
+
+const obj = { navn: "Anna" };
+obj.alder;         // undefined (property fins ikke)
+
+typeof undefined;  // "undefined"
+typeof null;       // "object"   ← klassisk egenart i språket
+
+undefined == null;   // true
+undefined === null;  // false (ulik type)</code></pre>
+
+    <div class="callout-warn"><div class="label">Egenart</div>
+      <p><code>typeof null === "object"</code> er en gammel feil i språket som aldri ble fikset. Sjekk for <code>null</code> eksplisitt med <code>x === null</code>.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.6</div>
+      <div class="q-text">Hva returnerer <code>typeof null</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>"null"</code></li>
+        <li class="mcq-opt" data-correct="0"><code>"undefined"</code></li>
+        <li class="mcq-opt" data-correct="1"><code>"object"</code></li>
+        <li class="mcq-opt" data-correct="0"><code>"boolean"</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>typeof null</code> er <code>"object"</code> — en kjent egenart i JS.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.6</div>
+      <div class="q-text">Gitt <code>const p = { navn: "Anna" }</code>, hva returnerer <code>p.alder</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>null</code></li>
+        <li class="mcq-opt" data-correct="1"><code>undefined</code></li>
+        <li class="mcq-opt" data-correct="0"><code>ReferenceError</code></li>
+        <li class="mcq-opt" data-correct="0"><code>0</code></li>
+      </ul>
+      <div class="mcq-feedback">Lesing av en property som ikke fins gir <code>undefined</code> — ingen feil. <code>null</code> brukes bare når noen <em>aktivt</em> har satt det.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">06 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code> men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> som standard.</li>
+        <li><strong>Tro at <code>const</code> betyr immutable:</strong> arrays og objekter kan fortsatt endres innenfra.</li>
+        <li><strong>Glemme <code>let</code>/<code>const</code> uten <code>"use strict"</code>:</strong> variabelen blir global og kan kollidere med annet.</li>
+        <li><strong>Sjekke for <code>null</code> med <code>typeof</code>:</strong> det er <code>"object"</code>, ikke <code>"null"</code>. Bruk <code>x === null</code>.</li>
+        <li><strong>Variabel-navn med bindestrek:</strong> <code>my-age</code> er ikke gyldig — JS tolker <code>-</code> som minus.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">07 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er forskjellen på <code>==</code> og <code>===</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ingen forskjell — begge er likhet</li>
+        <li class="mcq-opt" data-correct="1"><code>===</code> krever lik type i tillegg til lik verdi</li>
+        <li class="mcq-opt" data-correct="0"><code>==</code> brukes bare for tall</li>
+        <li class="mcq-opt" data-correct="0"><code>===</code> brukes bare for objekter</li>
+      </ul>
+      <div class="mcq-feedback"><code>==</code> gjør type-koersjon, <code>===</code> krever streng likhet.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken kombinasjon stemmer?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>var</code> = blokk-scopet, <code>let</code> = funksjons-scopet</li>
+        <li class="mcq-opt" data-correct="1"><code>var</code> = funksjons-scopet, <code>let</code> = blokk-scopet</li>
+        <li class="mcq-opt" data-correct="0"><code>const</code> = global-scopet, <code>let</code> = funksjons-scopet</li>
+        <li class="mcq-opt" data-correct="0">Alle tre er global-scopet</li>
+      </ul>
+      <div class="mcq-feedback"><code>var</code> følger funksjonen, <code>let</code> og <code>const</code> følger nærmeste blokk <code>{ }</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er forskjellen på <code>undefined</code> og <code>null</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ingen — de er identiske</li>
+        <li class="mcq-opt" data-correct="1"><code>undefined</code> = ikke satt; <code>null</code> = bevisst tom</li>
+        <li class="mcq-opt" data-correct="0"><code>null</code> kan ikke brukes i variabler</li>
+        <li class="mcq-opt" data-correct="0"><code>undefined</code> finnes bare i ES6+</li>
+      </ul>
+      <div class="mcq-feedback"><code>undefined</code> er JS sin standard for «verdien er ikke satt». <code>null</code> er programmerens måte å si «her skal det stå ingenting».</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../kontrollflyt/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.11.7 – 1.11.10</div>
+        <div class="sp-title">Kontrollflyt og samlinger</div>
+        <div class="sp-desc">if/else, arrays, objekter og loops — alt som styrer hva som skjer og hvor mange ganger.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

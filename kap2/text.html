@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.3 — Tekst</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.3: Tekst">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel C · Pensum 1.4.3</div>
+      <h1>Tekst<em>elementer</em></h1>
+      <p class="lede">
+        Overskrifter, avsnitt, fet/kursiv, hevet/senket skrift,
+        linjeskift og hvorfor flere mellomrom blir til ett.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.3</span>
+        <span class="pill">Forelesning 3</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="overskrifter">
+    <div class="container">
+      <div class="section-badge">01 · Overskrifter</div>
+      <h2>Seks <em>nivåer</em></h2>
+      <p>
+        HTML har seks overskriftsnivåer:
+        <code>&lt;h1&gt;</code> til <code>&lt;h6&gt;</code>.
+        <code>&lt;h1&gt;</code> er viktigst og brukes på sidens
+        hovedtittel — typisk én gang per side.
+        <code>&lt;h6&gt;</code> er minst viktig.
+      </p>
+      <p>
+        Hvert nivå har en <strong>semantisk betydning</strong>: en
+        <code>&lt;h2&gt;</code> er en underseksjon av
+        <code>&lt;h1&gt;</code>, en <code>&lt;h3&gt;</code> en
+        underseksjon av <code>&lt;h2&gt;</code>, og så videre.
+        Maskiner som søkemotorer og skjermlesere kan automatisk
+        bygge en innholdsfortegnelse fra denne strukturen.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Logisk hierarki</div>
+          <pre>&lt;h1&gt;IT2805&lt;/h1&gt;
+  &lt;h2&gt;Introduction&lt;/h2&gt;
+  &lt;h2&gt;HTML&lt;/h2&gt;
+    &lt;h3&gt;Document structure&lt;/h3&gt;
+      &lt;h4&gt;Html&lt;/h4&gt;
+      &lt;h4&gt;Head&lt;/h4&gt;
+    &lt;h3&gt;Attributes&lt;/h3&gt;
+  &lt;h2&gt;Site structure&lt;/h2&gt;</pre>
+        </div>
+      </div>
+      <div class="callout-warn">
+        <div class="label">Ikke hopp nivåer</div>
+        <p>
+          Pensum 1.4.3: «Don&apos;t use lower level headings to
+          decrease font size, use CSS&apos; <code>font-size</code>
+          property instead.» Bruk overskrifts-nivåene logisk — vil
+          du ha mindre tekst, bruk CSS.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="avsnitt">
+    <div class="container">
+      <div class="section-badge">02 · Avsnitt</div>
+      <h2>Para<em>graf</em></h2>
+      <p>
+        Et avsnitt skrives mellom <code>&lt;p&gt;</code> og
+        <code>&lt;/p&gt;</code>. <code>&lt;p&gt;</code> er et
+        blokkelement og starter alltid på ny linje. Hvert
+        tekstavsnitt skal stå i sin egen <code>&lt;p&gt;</code>.
+      </p>
+    </div>
+  </section>
+
+  <section id="markup">
+    <div class="container">
+      <div class="section-badge">03 · Spesiell markup</div>
+      <h2>Fet, kursiv, hevet, <em>senket</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">&lt;b&gt;</div>
+          <div class="fc-val">Visuelt fet tekst — uten semantisk betydning. Bruk for å fremheve søkeord eller stikkord, ikke for å markere noe som «viktig».</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;i&gt;</div>
+          <div class="fc-val">Visuelt kursiv tekst — uten semantisk betydning. Brukes for navn, fremmedord eller liknende.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;sup&gt;</div>
+          <div class="fc-val">Hevet skrift (superscript). Bruk for eksponenter, fotnotehenvisninger osv.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;sub&gt;</div>
+          <div class="fc-val">Senket skrift (subscript). Bruk for kjemiske formler, indekser osv.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;br&gt;</div>
+          <div class="fc-val">Et «mykt» linjeskift inni samme avsnitt. Void-element — ingen lukketag.</div>
+        </div>
+      </div>
+      <p>
+        <code>&lt;b&gt;</code> og <code>&lt;i&gt;</code> har visuelt
+        samme effekt som <code>&lt;strong&gt;</code> og
+        <code>&lt;em&gt;</code> — men de to siste bærer
+        <strong>semantikk</strong>. Skjermlesere kan endre stemme
+        eller trykk basert på <code>&lt;strong&gt;</code> og
+        <code>&lt;em&gt;</code>. Mer om dette i underkapittel om
+        semantiske elementer.
+      </p>
+    </div>
+  </section>
+
+  <section id="whitespace">
+    <div class="container">
+      <div class="section-badge">04 · White-space</div>
+      <h2>White-space <em>collapsing</em></h2>
+      <p>
+        I HTML slås flere mellomrom og linjeskift sammen til
+        <strong>ett</strong> mellomrom når siden rendres. Det betyr
+        at du kan innrykke kilden så mye du vil — det påvirker ikke
+        visningen.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Kilde</div>
+          <pre>&lt;p&gt;De     hvite        mellom-
+rommene    skremmer    meg     ikke&lt;/p&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Rendret</div>
+          <pre>De hvite mellom- rommene skremmer meg ikke</pre>
+        </div>
+      </div>
+      <p>
+        Vil du ha et reelt linjeskift inni samme avsnitt, bruk
+        <code>&lt;br&gt;</code>. Vil du ha mellomrom mellom to
+        avsnitt, bruk to <code>&lt;p&gt;</code>-elementer.
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvor mange overskriftsnivåer finnes i HTML?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Tre (h1, h2, h3)</li>
+          <li class="mcq-opt" data-correct="0">Fire</li>
+          <li class="mcq-opt" data-correct="1">Seks (h1 til h6)</li>
+          <li class="mcq-opt" data-correct="0">Ubegrenset</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: seks nivåer, fra <code>&lt;h1&gt;</code> (viktigst) til <code>&lt;h6&gt;</code> (minst).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hvilken tag bruker du for et linjeskift inni samme avsnitt?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;newline&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;br&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;n&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;p&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: <code>&lt;br&gt;</code> gir et soft line break inni samme avsnitt — ingen lukketag.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hva skjer med flere mellomrom på rad i HTML-kilden?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">De slås sammen til ett mellomrom ved render</li>
+          <li class="mcq-opt" data-correct="0">De vises som de er</li>
+          <li class="mcq-opt" data-correct="0">De fjernes helt</li>
+          <li class="mcq-opt" data-correct="0">De gir feilmelding</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: «In HTML, we have white space collapsing» — flere mellomrom blir behandlet som ett.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvor mange <code>&lt;h1&gt;</code> bør du ha per side ifølge pensum 1.4.3?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Så mange du vil</li>
+          <li class="mcq-opt" data-correct="1">Én — for sidens hovedtittel</li>
+          <li class="mcq-opt" data-correct="0">Maks tre</li>
+          <li class="mcq-opt" data-correct="0">Ingen — bruk h2 i stedet</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: «Only use one <code>&lt;h1&gt;</code> tag per page. By convention it is used to display the page title.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Du vil at en tekst skal se mindre ut enn andre overskrifter på siden. Hva er riktig?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Bruk <code>&lt;h6&gt;</code> uansett hvor i hierarkiet du er</li>
+          <li class="mcq-opt" data-correct="0">Hopp over <code>&lt;h2&gt;</code>-<code>&lt;h5&gt;</code> for å få effekten</li>
+          <li class="mcq-opt" data-correct="1">Bruk riktig nivå semantisk og endre størrelsen med CSS <code>font-size</code></li>
+          <li class="mcq-opt" data-correct="0">Pakk teksten inn i <code>&lt;small&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: bruk overskriftsnivå semantisk; visuell størrelse styres med CSS.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Du skriver «vann» og vil ha «H<sub>2</sub>O». Hvilken tag bruker du for «2»?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;sup&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;sub&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;small&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;low&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.3: <code>&lt;sub&gt;</code> for senket skrift (subscript) — passer for kjemiske formler. <code>&lt;sup&gt;</code> er for hevet (eks. eksponenter).</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

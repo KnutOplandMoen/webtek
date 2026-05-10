@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.8 — Kommentarer og semantikk</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.8: Kommentarer og semantiske elementer">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel H + I · Pensum 1.4.8 og 1.4.9</div>
+      <h1>Kommentarer og <em>semantikk</em></h1>
+      <p class="lede">
+        Kommentarer for menneskene som leser koden, og semantiske
+        elementer for både mennesker og maskiner som leser
+        markeringen. <code>&lt;div&gt;</code> er nødløsningen — bruk
+        de meningsbærende taggene først.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.8 + 1.4.9</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="kommentarer">
+    <div class="container">
+      <div class="section-badge">01 · Kommentarer</div>
+      <h2>Kommentarer for <em>mennesker</em></h2>
+      <p>
+        En HTML-kommentar skrives mellom <code>&lt;!--</code> og
+        <code>--&gt;</code>. Innholdet rendres ikke i nettleseren —
+        det er kun til hjelp for de som leser koden.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Kommentar</div>
+          <pre>&lt;!-- Lenke til it2805.github.com --&gt;
+&lt;a href="http://it2805.github.com"&gt;IT2805&lt;/a&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Pensum nevner to typiske bruksområder:
+      </p>
+      <ul>
+        <li>
+          <strong>Forklare hva som skjer</strong> i koden, slik at
+          andre (og du selv om noen uker) lett skjønner intensjonen.
+        </li>
+        <li>
+          <strong>Markere lukketagger</strong> i nøstede strukturer
+          slik at det er lett å se hva som hører sammen:
+          <code>&lt;/div&gt; &lt;!-- /header --&gt;</code>.
+        </li>
+      </ul>
+      <p>
+        Kommentarer er også nyttige for å midlertidig
+        <em>kommentere ut</em> kode du vil se effekten av å fjerne,
+        uten å slette den.
+      </p>
+
+      <div class="callout-warn">
+        <div class="label">div er ikke semantisk</div>
+        <p>
+          <code>&lt;div&gt;</code> er ikke en semantisk tagg — den
+          representerer ingenting i seg selv, og brukes kun til å
+          gruppere elementer (typisk for styling med CSS). Bruk den
+          <strong>kun når ingen semantisk container passer</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="semantikk-hvorfor">
+    <div class="container">
+      <div class="section-badge">02 · Hvorfor semantikk</div>
+      <h2>Hvorfor <em>semantiske</em> elementer?</h2>
+      <p>
+        Semantiske elementer ble innført i HTML5 nettopp fordi
+        søkemotorer, skjermlesere og andre maskiner skulle kunne
+        <em>resonnere om innholdet</em>. En
+        <code>&lt;article&gt;</code> sier at dette er en
+        selvstendig artikkel; en <code>&lt;nav&gt;</code> sier at
+        dette er navigasjon.
+      </p>
+      <p>
+        Pensum 1.4.9 oppfordrer deg til å «strive to use these
+        elements, rather than divs that bear no semantic meaning».
+        Tenk semantikk først, <code>&lt;div&gt;</code> sist.
+      </p>
+    </div>
+  </section>
+
+  <section id="layout-elementer">
+    <div class="container">
+      <div class="section-badge">03 · Layout</div>
+      <h2>Layout-elementer</h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">&lt;header&gt;</div>
+          <div class="fc-val">Innledende eller navigerende innhold — typisk hovedoverskrift, logo, søk, hovedmeny. Må ligge inni <code>&lt;body&gt;</code>. Ikke forveksles med <code>&lt;head&gt;</code>!</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;footer&gt;</div>
+          <div class="fc-val">Bunntekst for nærmeste seksjon — typisk kontaktinfo, lenker til viktige undersider. Kan stå nederst i body eller nederst i en <code>&lt;section&gt;</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;nav&gt;</div>
+          <div class="fc-val">En blokk med navigasjonslenker. Kun for <em>store</em> navigasjonsblokker — typisk hovedmenyen. Lenker i bunntekst trenger ikke være inni <code>&lt;nav&gt;</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;section&gt;</div>
+          <div class="fc-val">Tematisk gruppering av innhold, typisk med en overskrift. Skal logisk dukke opp i dokumentets disposisjon. Ikke som generisk container — bruk <code>&lt;div&gt;</code> da.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;article&gt;</div>
+          <div class="fc-val">Selvstendig innhold som kan distribueres uavhengig — blogginnlegg, nyhetsartikkel, forum-post. Hver <code>&lt;article&gt;</code> bør ha en egen overskrift.</div>
+        </div>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Typisk dokumentstruktur</div>
+          <pre>&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Min blogg&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/"&gt;Hjem&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/om"&gt;Om&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;article&gt;
+    &lt;h2&gt;Første tur til Lofoten&lt;/h2&gt;
+    &lt;p&gt;Vi gikk over Reinebringen i sol og motvind.&lt;/p&gt;
+  &lt;/article&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2026&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="figure">
+    <div class="container">
+      <div class="section-badge">04 · Figur og bildetekst</div>
+      <h2>figure og <em>figcaption</em></h2>
+      <p>
+        <code>&lt;figure&gt;</code> grupperer selvstendig innhold —
+        typisk et bilde, en illustrasjon eller et diagram — som
+        refereres som en enhet. <code>&lt;figcaption&gt;</code> er
+        en valgfri bildetekst som plasseres som første eller siste
+        barn av <code>&lt;figure&gt;</code>.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Figur med bildetekst</div>
+          <pre>&lt;figure&gt;
+  &lt;img src="logo.png" alt="IT2805 logo"&gt;
+  &lt;figcaption&gt;Fig. 1: Web technologies logo&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="strong-em">
+    <div class="container">
+      <div class="section-badge">05 · strong og em</div>
+      <h2>Semantisk fremheving</h2>
+      <p>
+        Visuelt ser <code>&lt;strong&gt;</code> ut som
+        <code>&lt;b&gt;</code>, og <code>&lt;em&gt;</code> ser ut
+        som <code>&lt;i&gt;</code>. Forskjellen er semantikken:
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">&lt;strong&gt;</div>
+          <div class="fc-val">Innholdet er <em>viktig</em>. Skjermlesere kan endre stemme/trykk for å markere det.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;em&gt;</div>
+          <div class="fc-val">Emphasis — endrer subtilt meningen i setningen. «Jeg <em>tror</em> jeg er …» ≠ «<em>Jeg</em> tror jeg er …»</div>
+        </div>
+      </div>
+      <div class="callout-good">
+        <div class="label">Tommelfingerregel</div>
+        <p>
+          Bruk <code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code>
+          når du faktisk mener at noe er viktig eller emfatisk.
+          Bruk <code>&lt;b&gt;</code>/<code>&lt;i&gt;</code> kun
+          for visuell fremheving uten semantisk vekt (stikkord,
+          fremmedord, navn osv.).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quotes">
+    <div class="container">
+      <div class="section-badge">06 · Sitater</div>
+      <h2>blockquote, q, <em>address</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">&lt;blockquote&gt;</div>
+          <div class="fc-val">Lange sitater som tar et helt avsnitt eller mer. Bruk <code>&lt;p&gt;</code> inni. Nettleseren rykker innholdet inn — ikke bruk det bare for innrykk; bruk CSS til det.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;q&gt;</div>
+          <div class="fc-val">Korte sitater som står inni et avsnitt. Nettleseren legger automatisk på anførselstegn.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">cite</div>
+          <div class="fc-val">Attributt på begge — verdien er en URL til kilden.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;address&gt;</div>
+          <div class="fc-val">Kontaktopplysninger til forfatteren — fysisk adresse, navn, telefon eller e-post. Ofte brukt med <code>&lt;article&gt;</code>.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">07 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hva er syntaksen for en HTML-kommentar?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>// kommentar</code></li>
+          <li class="mcq-opt" data-correct="0"><code>/* kommentar */</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;!-- kommentar --&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code># kommentar</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.8: kommentarer i HTML omsluttes av <code>&lt;!--</code> og <code>--&gt;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva er forskjellen på <code>&lt;header&gt;</code> og <code>&lt;head&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De er det samme — bare ulike navn</li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;head&gt;</code> er metadata (ikke synlig); <code>&lt;header&gt;</code> er topp-seksjon i body (synlig)</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;header&gt;</code> er for h1, <code>&lt;head&gt;</code> for h2-h6</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;header&gt;</code> er foreldet</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9 advarer eksplisitt mot å forveksle dem. <code>&lt;header&gt;</code> ligger i <code>&lt;body&gt;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Når bør du bruke <code>&lt;article&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Som rotelement for hele siden</li>
+          <li class="mcq-opt" data-correct="0">For all tekst på siden</li>
+          <li class="mcq-opt" data-correct="1">For selvstendig innhold som kan distribueres uavhengig (blogginnlegg, nyhetsartikkel)</li>
+          <li class="mcq-opt" data-correct="0">Kun for skole-oppgaver</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: «a self-contained composition ... intended to be independently distributable or reusable.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvilken tommelfingerregel skiller <code>&lt;section&gt;</code> fra <code>&lt;div&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De er identiske</li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;section&gt;</code> skal logisk dukke opp i dokumentets disposisjon (med egen overskrift)</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;section&gt;</code> kan ikke ha barn</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;div&gt;</code> kan kun stå inni <code>&lt;body&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: «do not use the section element as a generic container, use the div element instead.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Når er det riktig å bruke <code>&lt;nav&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Rundt enhver lenke på siden</li>
+          <li class="mcq-opt" data-correct="1">Rundt store navigasjonsblokker (typisk hovedmenyen)</li>
+          <li class="mcq-opt" data-correct="0">Kun rundt lenker i bunnteksten</li>
+          <li class="mcq-opt" data-correct="0">Bare for ekstern navigasjon (lenker ut av siden)</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: «only intended for major blocks of navigation. Links in the footer e.g. does not need to be encapsulated in the <code>&lt;nav&gt;</code> element.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Hva er hovedforskjellen på <code>&lt;b&gt;</code> og <code>&lt;strong&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De er identiske</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;b&gt;</code> bruker fet font, <code>&lt;strong&gt;</code> bruker kursiv</li>
+          <li class="mcq-opt" data-correct="1">Begge ser like ut, men <code>&lt;strong&gt;</code> bærer semantisk «viktig» som leses av skjermlesere</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;strong&gt;</code> er foreldet i HTML5</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: <code>&lt;strong&gt;</code> har semantisk betydning, <code>&lt;b&gt;</code> er kun visuell.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Vanskelig</div>
+        <div class="q-text">Hvilken tag bruker du for et lengre sitat som tar et helt avsnitt?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;q&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;blockquote&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;cite&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;quote&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: <code>&lt;blockquote&gt;</code> for lange sitater (helt avsnitt). <code>&lt;q&gt;</code> for korte inni en setning.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Vanskelig</div>
+        <div class="q-text">Hva er <code>&lt;figcaption&gt;</code> til for, og hvor må den plasseres?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Bildetekst — kan stå hvor som helst på siden</li>
+          <li class="mcq-opt" data-correct="1">Bildetekst i en <code>&lt;figure&gt;</code> — som første eller siste barn av <code>&lt;figure&gt;</code></li>
+          <li class="mcq-opt" data-correct="0">Erstatter <code>alt</code>-attributtet</li>
+          <li class="mcq-opt" data-correct="0">Brukes kun ved video, ikke bilder</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.9: <code>&lt;figcaption&gt;</code> er valgfri bildetekst, plassert som første eller siste barn av <code>&lt;figure&gt;</code>.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

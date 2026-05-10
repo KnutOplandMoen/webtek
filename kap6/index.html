@@ -154,12 +154,29 @@
     </div>
     <p>
       De fleste sider vises på skjerm, så det er ikke alltid nødvendig å
-      eksplisitt skrive <code>screen</code>. Men når noen stiler vil ødelegge
-      utskrift (f.eks. en navbar du ikke vil ha med på papir) er det greit å
-      avgrense med media type:
+      eksplisitt skrive <code>screen</code>, men når en stil <em>kun</em> skal
+      gjelde for skjerm kan du avgrense slik:
+    </p>
+<pre><code>@media screen {
+  body {
+    background-color: #FFFFFF;
+  }
+}</code></pre>
+    <p>
+      Når noen stiler vil ødelegge utskrift (f.eks. en navbar du ikke vil ha
+      med på papir) bruker du <code>print</code>:
     </p>
 <pre><code>@media print {
   #nav-area { display: none; }
+}</code></pre>
+    <p>
+      Bruker du <code>all</code> gjelder stilen både på skjerm og print —
+      effektivt det samme som å droppe media type:
+    </p>
+<pre><code>@media all {
+  body {
+    font-size: 22px;
+  }
 }</code></pre>
 
     <h3>B · Media features <span style="color:var(--ink-faded);font-weight:400;">(1.10.2)</span></h3>
@@ -178,8 +195,14 @@
 /* Bredde høyst */
 @media (max-width: 1200px) { /* … */ }
 
-/* Høyde, samme prinsipp */
+/* Eksakt høyde */
+@media (height: 300px) { /* … */ }
+
+/* Høyde minst */
 @media (min-height: 600px) { /* … */ }
+
+/* Høyde høyst */
+@media (max-height: 800px) { /* … */ }
 
 /* Print, høy oppløsning */
 @media print and (min-resolution: 300dpi) { /* … */ }

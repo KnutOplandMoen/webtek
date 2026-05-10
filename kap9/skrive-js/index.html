@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.11.1–1.11.2 — Skrive JS · Kap 9</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 9</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 9 · 1.11.1–1.11.2 Skrive JS">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 9 · Underkapittel 1.11.1 – 1.11.2</div>
+      <h1>Skrive JavaScript — <em>hvor, hvordan, kommentarer</em></h1>
+      <p class="lede">
+        Før vi rører språket selv: hvor scriptet bor i HTML-en, hvorfor
+        rekkefølgen av nettleseren betyr noe, og hvordan vi noterer oss
+        eller skrur av kode med kommentarer.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.11.1 How and where to write JS</span>
+        <span class="pill">1.11.2 Comments</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvor">Hvor scriptet bor</a></li>
+        <li><span class="toc-num">02</span><a href="#dom-rekkefolge">DOM-rekkefølgen</a></li>
+        <li><span class="toc-num">03</span><a href="#tre-losninger">Tre løsninger</a></li>
+        <li><span class="toc-num">04</span><a href="#kommentarer">Kommentarer</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvor"><div class="container">
+    <div class="section-badge">01 · Pensum 1.11.1</div>
+    <h2>Hvor skriver du <em>JavaScript</em>?</h2>
+    <p>
+      Det er to måter å plassere JS i et HTML-dokument: <strong>inline</strong>
+      eller <strong>eksternt</strong>. Begge varianter bruker en
+      <code>&lt;script&gt;</code>-tag, og begge kan stå i <code>&lt;head&gt;</code>
+      eller i <code>&lt;body&gt;</code>.
+    </p>
+
+    <h3>Inline (embedded)</h3>
+    <p>Koden står direkte inni <code>&lt;script&gt;</code>-tagen:</p>
+<pre><code>&lt;script&gt;
+  console.log("Hei fra scriptet");
+&lt;/script&gt;</code></pre>
+
+    <h3>Eksternt</h3>
+    <p>
+      Koden ligger i en egen <code>.js</code>-fil, og HTML-en peker til den
+      med <code>src</code>-attributten:
+    </p>
+<pre><code>&lt;script src="path/to/script.js"&gt;&lt;/script&gt;</code></pre>
+    <p>
+      Når koden er ekstern slipper du å gjenta den på hver side — flere
+      HTML-filer kan dele samme <code>.js</code>-fil. Det er samme DRY-tanke
+      som med ekstern CSS.
+    </p>
+
+    <div class="callout-blue"><div class="label">Kjerneidé</div>
+      <p>Inline = koden er <em>i</em> HTML-en. Ekstern = koden er <em>ved siden av</em>
+      HTML-en. Velg ekstern når koden vokser eller skal deles av flere sider.</p>
+    </div>
+  </div></section>
+
+  <section id="dom-rekkefolge"><div class="container">
+    <div class="section-badge">02 · Pensum 1.11.1</div>
+    <h2>Nettleseren leser <em>ovenfra og ned</em></h2>
+    <p>
+      Når nettleseren leser HTML-dokumentet, går den linje for linje fra topp
+      til bunn. Når den treffer en <code>&lt;script&gt;</code>-tag,
+      <strong>stopper</strong> den og kjører JavaScript-koden umiddelbart.
+      Først når scriptet er ferdig fortsetter den med resten av HTML-en.
+    </p>
+    <p>
+      Det betyr at JavaScript bare kan «se» de HTML-elementene som er rendret
+      <em>før</em> scriptet kjøres. Hvis et script i <code>&lt;head&gt;</code>
+      prøver å hente et <code>&lt;p&gt;</code>-element fra <code>&lt;body&gt;</code>,
+      finnes elementet ikke ennå.
+    </p>
+    <p style="font-style:italic; color:var(--ink-faded); text-align:center; font-size:1.1em;">
+      «You can't yell at a baby before it is born.»
+    </p>
+    <div class="callout"><div class="label">Mental modell</div>
+      <p>Tenk på HTML som en oppskrift som leses ovenfra. JS er notater i margen — de gjelder bare det som er bakt så langt. Du kan ikke notere om kaken før den er i ovnen.</p>
+    </div>
+  </div></section>
+
+  <section id="tre-losninger"><div class="container">
+    <div class="section-badge">03 · Pensum 1.11.1</div>
+    <h2>Tre måter å unngå <em>fødselsproblemet</em></h2>
+    <p>Hvis scriptet ditt skal røre HTML-elementer, har du tre standardvalg:</p>
+
+    <ol class="steps">
+      <li>
+        <strong>Legg <code>&lt;script&gt;</code> nederst i <code>&lt;body&gt;</code>.</strong>
+        Når scriptet kjøres er hele DOM-en allerede rendret. Enkelt og pålitelig.
+      </li>
+      <li>
+        <strong>Pakk inn i <code>window.onload</code>.</strong>
+        Funksjonen kjøres først når hele siden (inkludert bilder) er ferdig
+        lastet. Da spiller plasseringen av scriptet ingen rolle.
+<pre><code>window.onload = function() {
+  // Kjøres etter at DOM-en er ferdig
+  document.querySelector("h1").style.color = "red";
+};</code></pre>
+      </li>
+      <li>
+        <strong>Skill ut i en ekstern fil.</strong>
+        Filen lastes etter at HTML-en er parset hvis du legger
+        <code>&lt;script src="…"&gt;</code> nederst i <code>&lt;body&gt;</code>.
+      </li>
+    </ol>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.1</div>
+      <div class="q-text">Hva skjer hvis et script i <code>&lt;head&gt;</code> prøver å hente et element som først er rendret nederst i <code>&lt;body&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Nettleseren venter automatisk til elementet finnes</li>
+        <li class="mcq-opt" data-correct="1">Scriptet får <code>null</code> tilbake — elementet finnes ikke ennå</li>
+        <li class="mcq-opt" data-correct="0">HTML-rendring stopper for alltid</li>
+        <li class="mcq-opt" data-correct="0">Scriptet kjøres på nytt automatisk</li>
+      </ul>
+      <div class="mcq-feedback">DOM-en bygges ovenfra og ned. Når scriptet i <code>&lt;head&gt;</code> kjøres, er <code>&lt;body&gt;</code> ikke parset enda — så elementet eksisterer ikke. Løsning: flytt scriptet, bruk <code>window.onload</code>, eller bruk ekstern fil.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.1</div>
+      <div class="q-text">Hva er hovedfordelen med å lagre JS i en egen fil?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Filen kjøres raskere</li>
+        <li class="mcq-opt" data-correct="1">Flere HTML-sider kan dele samme kode (DRY)</li>
+        <li class="mcq-opt" data-correct="0">Eksterne filer er nødvendig for at JS skal virke</li>
+        <li class="mcq-opt" data-correct="0">Eksterne filer trenger ikke <code>&lt;script&gt;</code>-tag</li>
+      </ul>
+      <div class="mcq-feedback">DRY — Don't Repeat Yourself. Det blir også lettere å vedlikeholde, og editorer kan gi bedre syntax-highlighting og hint på rene <code>.js</code>-filer.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.1</div>
+      <div class="q-text">Hva gjør <code>window.onload = function() { … };</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Sletter alt på siden</li>
+        <li class="mcq-opt" data-correct="1">Kjører funksjonen først når hele DOM-en er rendret</li>
+        <li class="mcq-opt" data-correct="0">Kjører funksjonen før HTML-en er parset</li>
+        <li class="mcq-opt" data-correct="0">Lager en ny side i nettleseren</li>
+      </ul>
+      <div class="mcq-feedback"><code>window.onload</code> er en hendelse som fyrer når dokumentet er ferdig lastet. Da er alle elementer trygt tilgjengelige.</div>
+    </div>
+  </div></section>
+
+  <section id="kommentarer"><div class="container">
+    <div class="section-badge">04 · Pensum 1.11.2</div>
+    <h2>Kommentarer i <em>JavaScript</em></h2>
+    <p>JavaScript har <strong>to</strong> kommentar-syntakser:</p>
+
+    <ul>
+      <li><strong>Linjekommentar:</strong> alt etter <code>//</code> til linjeslutt ignoreres.</li>
+      <li><strong>Blokkommentar:</strong> alt mellom <code>/*</code> og <code>*/</code> ignoreres — kan strekke seg over flere linjer.</li>
+    </ul>
+
+<pre><code>// Dette er en linjekommentar
+let a = 5; // kan også stå på slutten av en linje
+
+/* Dette er en blokk-kommentar.
+   Den kan dekke flere linjer
+   uten å gjentas. */
+let b = 10;</code></pre>
+
+    <p>Bruk dem til to ting:</p>
+    <ol class="steps">
+      <li><strong>Forklare hvorfor</strong> — særlig hvis koden gjør noe som ikke er åpenbart for en leser.</li>
+      <li><strong>Skru av kode midlertidig</strong> — når du eksperimenterer eller debugger.</li>
+    </ol>
+
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <p>I motsetning til CSS (som bare har <code>/* … */</code>) og HTML (som bare har <code>&lt;!-- … --&gt;</code>), har JavaScript begge to. Men ikke bland kommentar-syntakser på tvers av språk — <code>//</code> i en CSS-fil er ikke en kommentar, det er en feil.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.2</div>
+      <div class="q-text">Hvilken syntaks er <em>ikke</em> en gyldig JavaScript-kommentar?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>// kommentar</code></li>
+        <li class="mcq-opt" data-correct="0"><code>/* kommentar */</code></li>
+        <li class="mcq-opt" data-correct="1"><code>&lt;!-- kommentar --&gt;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>/* multi-<br>linje */</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>&lt;!-- … --&gt;</code> er HTML-syntaks. JavaScript bruker <code>//</code> og <code>/* … */</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.2</div>
+      <div class="q-text">Hva skjer med koden mellom <code>/*</code> og <code>*/</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Den kjøres bare i utviklerverktøy</li>
+        <li class="mcq-opt" data-correct="1">Den ignoreres helt av JavaScript-tolkeren</li>
+        <li class="mcq-opt" data-correct="0">Den kjøres dobbelt</li>
+        <li class="mcq-opt" data-correct="0">Den loggføres til konsollen</li>
+      </ul>
+      <div class="mcq-feedback">Tolkeren hopper over kommentarer. Det er derfor du kan «kommentere ut» kode for å skru den av uten å slette den.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">05 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn"><div class="label">Pass på</div>
+      <ul>
+        <li><strong>Script i <code>&lt;head&gt;</code> uten <code>window.onload</code>:</strong> elementet eksisterer ikke ennå når scriptet kjøres.</li>
+        <li><strong>Glemmer <code>&lt;/script&gt;</code>:</strong> resten av HTML-en blir tolket som JavaScript fram til endetagen kommer.</li>
+        <li><strong>Bruker både <code>src</code> og inline-kode i samme tag:</strong> innholdet ignoreres når <code>src</code> er satt — <em>kun</em> den eksterne filen kjøres.</li>
+        <li><strong>Glemmer å lukke en <code>/* …</code>-blokk:</strong> resten av filen blir kommentar.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvor i HTML-strukturen plasseres et script <em>tradisjonelt</em> for å unngå at det refererer udeklarerte elementer?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Øverst i <code>&lt;head&gt;</code></li>
+        <li class="mcq-opt" data-correct="0">Inni <code>&lt;title&gt;</code></li>
+        <li class="mcq-opt" data-correct="1">Nederst i <code>&lt;body&gt;</code></li>
+        <li class="mcq-opt" data-correct="0">Utenfor <code>&lt;html&gt;</code></li>
+      </ul>
+      <div class="mcq-feedback">Når scriptet ligger sist, er hele DOM-en parset og elementene finnes. Alternativet er <code>window.onload</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilket kodeutklipp er <em>syntaktisk gyldig</em> JavaScript?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code># Dette er en kommentar</code></li>
+        <li class="mcq-opt" data-correct="1"><code>// Dette er en kommentar</code></li>
+        <li class="mcq-opt" data-correct="0"><code>-- Dette er en kommentar</code></li>
+        <li class="mcq-opt" data-correct="0"><code>REM Dette er en kommentar</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>//</code> for én linje, <code>/* */</code> for blokk. <code>#</code>, <code>--</code> og <code>REM</code> hører til andre språk (Python/Bash, SQL, BASIC).</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../data-og-variabler/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.11.3 – 1.11.6</div>
+        <div class="sp-title">Datatyper og variabler</div>
+        <div class="sp-desc">String, number, boolean, operatorer, var/let/const, undefined vs null.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

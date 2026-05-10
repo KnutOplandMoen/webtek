@@ -6,8 +6,10 @@
   if (!input || !results) return;
 
   var here = window.location.pathname;
-  var inSub = /\/(kap\d+|reisen|zero-to-hero|repetisjon)\//.test(here);
-  var prefix = inSub ? '../' : '';
+  // Count directory depth from site root, handling both clean URLs and *.html paths
+  var dirPath = here.replace(/[^\/]*$/, '');
+  var depthSegs = dirPath.split('/').filter(Boolean);
+  var prefix = depthSegs.map(function () { return '../'; }).join('');
 
   // All searchable HTML pages (relative to site root)
   var PAGES = [
@@ -18,6 +20,14 @@
     'kap1/index.html',
     'kap2/index.html',
     'kap3/index.html',
+    'kap3/forsta-css/index.html',
+    'kap3/kaskade-arv/index.html',
+    'kap3/selektorer/index.html',
+    'kap3/farger/index.html',
+    'kap3/boks-modellen/index.html',
+    'kap3/borders/index.html',
+    'kap3/fonter/index.html',
+    'kap3/pseudo-klasser/index.html',
     'kap4/index.html',
     'kap5/index.html',
     'kap6/index.html',
@@ -26,6 +36,9 @@
     'kap9/index.html',
     'kap10/index.html',
     'kap11/index.html',
+    'kap11/syntaks.html',
+    'kap11/validering.html',
+    'kap11/visning.html',
     'kap12/index.html'
   ];
 

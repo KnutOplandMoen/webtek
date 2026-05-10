@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 7.2 — Video og audio</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 7</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 7.2: Video og audio">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 7 · Underkapittel B · Pensum 1.8</div>
+      <h1>Video <em>og audio</em></h1>
+      <p class="lede">
+        <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>
+        følger samme grunnmønster: et element med
+        <code>controls</code>, eventuelt flere <code>&lt;source&gt;</code>
+        for formatfallback, og fallback-tekst inni for nettlesere som
+        ikke støtter elementet i det hele tatt.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.8</span>
+        <span class="pill">Forelesning 11</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hva">
+    <div class="container">
+      <div class="section-badge">01 · Hva</div>
+      <h2>Samme <em>grunnmønster</em></h2>
+      <p>
+        I motsetning til <code>&lt;img&gt;</code> er
+        <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>
+        <strong>vanlige elementer</strong> &mdash; med start- og
+        slutt-tagg. Det betyr at du kan ha innhold inni dem. Det
+        innholdet er <em>fallback</em>: tekst (eller andre elementer)
+        som vises hvis nettleseren ikke støtter selve elementet.
+      </p>
+      <p>
+        Begge elementene kan peke på fila enten direkte med
+        <code>src</code>, eller bruke ett eller flere
+        <code>&lt;source&gt;</code>-elementer inni for å tilby flere
+        formater.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Mønster</div>
+          <pre>&lt;video controls&gt;
+  &lt;source src="..." type="..."&gt;
+  &lt;source src="..." type="..."&gt;
+  &lt;p&gt;Fallback-tekst&lt;/p&gt;
+&lt;/video&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="felles">
+    <div class="container">
+      <div class="section-badge">02 · Felles attributter</div>
+      <h2>Fire attributter du <em>må</em> kjenne</h2>
+      <p class="section-intro">
+        Disse fire er felles mellom <code>&lt;video&gt;</code> og
+        <code>&lt;audio&gt;</code>, og oppfører seg likt på begge.
+        Alle er <em>boolske</em> &mdash; de er enten til stede eller
+        ikke (ingen verdi trengs).
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">controls</div>
+          <div class="fc-val">
+            Viser avspillingskontrollene (play, pause, volum, scrubber).
+            <strong>Uten <code>controls</code> kan brukeren verken spille
+            eller pause</strong> &mdash; mediet er da praktisk talt
+            ubrukelig (med mindre du har koblet på egen JS).
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">autoplay</div>
+          <div class="fc-val">
+            Starter avspillingen så snart nettleseren har data nok
+            &mdash; uten å vente på at hele fila er lastet. (Mange
+            nettlesere blokkerer autoplay med lyd; bruk
+            <code>muted</code> sammen for å sikre avspilling.)
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">loop</div>
+          <div class="fc-val">
+            Når mediet når slutten, spoles det tilbake til starten og
+            spilles igjen.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">muted</div>
+          <div class="fc-val">
+            Setter standard lydnivå til lydløst. Brukeren kan likevel
+            slå på lyden via kontrollene.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-blue">
+        <div class="label">Boolsk attributt</div>
+        <p>
+          Et boolsk attributt har ingen verdi. Det holder å skrive
+          navnet i åpningstaggen: <code>&lt;video controls autoplay
+          muted&gt;</code>. Hvis attributtet ikke er der, oppfører
+          mediet seg som om det er av.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="video">
+    <div class="container">
+      <div class="section-badge">03 · Video</div>
+      <h2><code>&lt;video&gt;</code> i <em>praksis</em></h2>
+
+      <p>
+        Et <code>&lt;video&gt;</code>-element trenger som minimum en
+        kilde og <code>controls</code> for å være brukbart. I tillegg
+        finnes ett attributt som er <em>spesifikt</em> for video:
+        <code>poster</code>.
+      </p>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">poster</div>
+          <div class="fc-val">
+            En URL til et bilde som vises før brukeren starter eller
+            spoler videoen. Hvis attributtet ikke er der, vises
+            <em>første frame</em> av videoen i stedet (som ofte er svart
+            eller uinteressant).
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">width / height</div>
+          <div class="fc-val">
+            Bør settes til samme dimensjoner som videofila slik at
+            videoen ikke skaleres opp eller ned i nettleseren.
+          </div>
+        </div>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Komplett video</div>
+          <pre>&lt;video controls poster="images/forhandsvisning.jpg"
+       width="640" height="360"&gt;
+  &lt;source src="media/intro.mp4"  type="video/mp4"&gt;
+  &lt;source src="media/intro.webm" type="video/webm"&gt;
+  &lt;p&gt;Nettleseren din st&oslash;tter ikke HTML5-video.&lt;/p&gt;
+&lt;/video&gt;</pre>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2em;">Videoformater og nettleserstøtte</h3>
+      <p>
+        Pensum 1.8 viser en oversikt fra februar 2016. Konklusjonen er
+        at <strong>MP4 er det formatet med bredest støtte</strong>
+        &mdash; alle de oppførte nettleserne klarer MP4. WebM og Ogg
+        støttes ikke av Internet Explorer eller Safari.
+      </p>
+
+      <table class="example-table">
+        <thead>
+          <tr><th>Nettleser</th><th>MP4</th><th>WebM</th><th>Ogg</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Internet Explorer</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+          <tr><td>Chrome</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Firefox</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Safari</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+          <tr><td>Opera</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Microsoft Edge</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="audio">
+    <div class="container">
+      <div class="section-badge">04 · Audio</div>
+      <h2><code>&lt;audio&gt;</code> i <em>praksis</em></h2>
+      <p>
+        <code>&lt;audio&gt;</code> oppfører seg som
+        <code>&lt;video&gt;</code> &mdash; bare uten visuell
+        komponent. Samme felles attributter (<code>controls</code>,
+        <code>autoplay</code>, <code>loop</code>, <code>muted</code>),
+        samme <code>&lt;source&gt;</code>-mønster, samme fallback-tekst.
+        Det er <em>ingen <code>poster</code></em> &mdash; det er ikke
+        noe bilde å vise.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Komplett audio</div>
+          <pre>&lt;audio controls&gt;
+  &lt;source src="media/podkast.mp3" type="audio/mp3"&gt;
+  &lt;source src="media/podkast.ogg" type="audio/ogg"&gt;
+  &lt;p&gt;Nettleseren din st&oslash;tter ikke HTML5-audio.&lt;/p&gt;
+&lt;/audio&gt;</pre>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2em;">Lydformater og nettleserstøtte</h3>
+      <p>
+        <strong>MP3 er formatet med bredest støtte</strong> &mdash;
+        alle de oppførte nettleserne klarer MP3. Ogg støttes ikke av
+        Internet Explorer, Safari eller Edge. Hvis du bare har Ogg,
+        vil disse tre brukergruppene ikke kunne spille av lyden.
+      </p>
+
+      <table class="example-table">
+        <thead>
+          <tr><th>Nettleser</th><th>MP3</th><th>Wav</th><th>Ogg</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Internet Explorer</td><td>Ja</td><td>Nei</td><td>Nei</td></tr>
+          <tr><td>Chrome</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Firefox</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Safari</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+          <tr><td>Opera</td><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+          <tr><td>Microsoft Edge</td><td>Ja</td><td>Ja</td><td>Nei</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="source">
+    <div class="container">
+      <div class="section-badge">05 · &lt;source&gt; og fallback</div>
+      <h2>To <em>nivåer</em> av fallback</h2>
+      <p>
+        <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code> har
+        en innebygget tredelt strategi for å takle uensartet
+        nettleserstøtte:
+      </p>
+
+      <ol>
+        <li>
+          <strong>Flere <code>&lt;source&gt;</code>-elementer.</strong>
+          Nettleseren går gjennom dem ovenfra og ned, og bruker den
+          første kilden den klarer å spille av. Det betyr at du
+          erstatter <code>src</code>-attributtet på selve elementet
+          med ett eller flere <code>&lt;source&gt;</code> inni.
+        </li>
+        <li>
+          <strong>Fallback-innhold inni elementet.</strong> Hvis
+          nettleseren ikke støtter <em>selve elementet</em>
+          (<code>&lt;video&gt;</code> eller <code>&lt;audio&gt;</code>)
+          i det hele tatt, vises tekstinnholdet i stedet. Dette skjer
+          ikke når nettleseren støtter elementet, men ikke noen av
+          formatene &mdash; da blir det rett og slett ingenting.
+        </li>
+        <li>
+          <strong><code>type</code>-attributtet på <code>&lt;source&gt;</code>.</strong>
+          Forteller nettleseren hva slags format kilden er, slik at den
+          kan hoppe over kilder den vet at den ikke støtter uten å
+          måtte laste fila først.
+        </li>
+      </ol>
+
+      <div class="callout">
+        <div class="label">Anbefalt strategi fra pensum</div>
+        <p>
+          For video: tilby <strong>MP4 + WebM</strong> (eller Ogg).
+          MP4 dekker alle nettlesere, og WebM/Ogg er backup hvis MP4
+          en dag skulle bli mindre populært. For audio:
+          <strong>MP3</strong> alene er nok for alle nettleserne i
+          pensum-tabellen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">06 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilket attributt gjør avspillingskontrollene synlige på <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>play</code></li>
+          <li class="mcq-opt" data-correct="0"><code>show</code></li>
+          <li class="mcq-opt" data-correct="1"><code>controls</code></li>
+          <li class="mcq-opt" data-correct="0"><code>display</code></li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>controls</code> er et boolsk attributt &mdash; uten det
+          kan brukeren verken spille eller pause.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva skjer hvis du utelater <code>controls</code> på <code>&lt;video&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Videoen starter automatisk</li>
+          <li class="mcq-opt" data-correct="1">Brukeren har ingen knapper for å spille eller pause</li>
+          <li class="mcq-opt" data-correct="0">Videoen blir automatisk lydløs</li>
+          <li class="mcq-opt" data-correct="0">Videoen vises som en miniatyr</li>
+        </ul>
+        <div class="mcq-feedback">
+          Uten <code>controls</code> er det ingen kontroller i det
+          hele tatt. Brukeren kan ikke styre avspillingen.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Lett</div>
+        <div class="q-text">Hva gjør <code>autoplay</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Spoler videoen tilbake til start når den er ferdig</li>
+          <li class="mcq-opt" data-correct="1">Starter avspillingen så snart nettleseren har data nok</li>
+          <li class="mcq-opt" data-correct="0">Setter lydnivået til lydløst</li>
+          <li class="mcq-opt" data-correct="0">Viser en forhåndsvisning</li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>autoplay</code> er boolsk og starter mediet uten å
+          vente på at hele fila er lastet.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Lett</div>
+        <div class="q-text">Hva gjør <code>loop</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Setter avspillingshastigheten</li>
+          <li class="mcq-opt" data-correct="0">Bytter mellom flere kilder</li>
+          <li class="mcq-opt" data-correct="1">Spoler tilbake til start når mediet når slutten</li>
+          <li class="mcq-opt" data-correct="0">Spiller flere klipp etter hverandre</li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>loop</code> = uendelig repetisjon. Boolsk attributt.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Hva er hovedformålet med flere <code>&lt;source&gt;</code>-elementer inni <code>&lt;video&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Definere bildet som vises før videoen starter</li>
+          <li class="mcq-opt" data-correct="0">Sette undertekst på videoen</li>
+          <li class="mcq-opt" data-correct="1">Tilby alternative formater så nettleseren kan velge ett den støtter</li>
+          <li class="mcq-opt" data-correct="0">Erstatte HTML5 i gamle nettlesere</li>
+        </ul>
+        <div class="mcq-feedback">
+          Ikke alle nettlesere støtter alle formater. Nettleseren tar
+          første <code>&lt;source&gt;</code> den klarer å spille av.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hva gjør <code>poster</code>-attributtet?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Plasserer videoen øverst på siden</li>
+          <li class="mcq-opt" data-correct="0">Setter en overskrift over videoen</li>
+          <li class="mcq-opt" data-correct="1">Viser et bilde før brukeren starter eller spoler videoen</li>
+          <li class="mcq-opt" data-correct="0">Setter undertekst</li>
+        </ul>
+        <div class="mcq-feedback">
+          Hvis attributtet mangler, vises første frame av videoen
+          (ofte svart eller uinteressant).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Middels</div>
+        <div class="q-text">Hva er hensikten med teksten inni <code>&lt;video&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Den vises som undertekst</li>
+          <li class="mcq-opt" data-correct="0">Den vises i stedet for kontrollene</li>
+          <li class="mcq-opt" data-correct="1">Det er fallback-innhold som vises hvis nettleseren ikke støtter <code>&lt;video&gt;</code></li>
+          <li class="mcq-opt" data-correct="0">Den brukes til SEO</li>
+        </ul>
+        <div class="mcq-feedback">
+          Pensum 1.8 (Video). Fallback-teksten vises kun hvis
+          elementet selv ikke er støttet.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Middels</div>
+        <div class="q-text">Hvilke attributter (utenom <code>src</code> og <code>controls</code>) er felles mellom <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>poster</code>, <code>autoplay</code>, <code>loop</code></li>
+          <li class="mcq-opt" data-correct="1"><code>autoplay</code>, <code>loop</code>, <code>muted</code></li>
+          <li class="mcq-opt" data-correct="0"><code>autoplay</code>, <code>poster</code>, <code>muted</code></li>
+          <li class="mcq-opt" data-correct="0"><code>loop</code>, <code>poster</code>, <code>volume</code></li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>poster</code> finnes bare på <code>&lt;video&gt;</code>
+          &mdash; det er ikke noe bilde å vise på lyd.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">9 · Middels</div>
+        <div class="q-text">Ifølge pensum-tabellen, hvilket videoformat har <em>bredest</em> nettleserstøtte?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">WebM</li>
+          <li class="mcq-opt" data-correct="1">MP4</li>
+          <li class="mcq-opt" data-correct="0">Ogg</li>
+          <li class="mcq-opt" data-correct="0">AVI</li>
+        </ul>
+        <div class="mcq-feedback">
+          MP4 har «Ja» på alle nettleserne i pensum-tabellen
+          (IE, Chrome, Firefox, Safari, Opera, Edge).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">10 · Vanskelig</div>
+        <div class="q-text">I hvilke nettlesere er Ogg-audio <em>ikke</em> støttet ifølge pensum-tabellen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Chrome, Firefox, Opera</li>
+          <li class="mcq-opt" data-correct="0">Bare Internet Explorer</li>
+          <li class="mcq-opt" data-correct="1">Internet Explorer, Safari, Microsoft Edge</li>
+          <li class="mcq-opt" data-correct="0">Bare Safari</li>
+        </ul>
+        <div class="mcq-feedback">
+          Hvis du bare har Ogg, vil verken IE, Safari eller Edge
+          klare å spille av. Tilby MP3 i tillegg.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">11 · Vanskelig</div>
+        <div class="q-text">Hvorfor holder det å bruke MP3 alene for lydklipp som skal fungere i Chrome, Firefox, Safari og Edge?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">MP3 er det eneste lossless-formatet</li>
+          <li class="mcq-opt" data-correct="1">Pensum-tabellen viser at MP3 er støttet i samtlige nettlesere</li>
+          <li class="mcq-opt" data-correct="0">MP3 har høyest lydkvalitet</li>
+          <li class="mcq-opt" data-correct="0">MP3 lastes raskere enn Ogg og Wav</li>
+        </ul>
+        <div class="mcq-feedback">
+          MP3 har «Ja» hos IE, Chrome, Firefox, Safari, Opera og Edge
+          ifølge pensum 1.8 (Audio).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">12 · Vanskelig</div>
+        <div class="q-text">Hvorfor er <code>type</code>-attributtet på <code>&lt;source&gt;</code> nyttig?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Det er obligatorisk i HTML5</li>
+          <li class="mcq-opt" data-correct="0">Det erstatter <code>src</code></li>
+          <li class="mcq-opt" data-correct="1">Det forteller nettleseren hva slags format kilden er, så den kan hoppe over formater den ikke støtter uten å laste fila</li>
+          <li class="mcq-opt" data-correct="0">Det styrer rekkefølgen kildene prøves i</li>
+        </ul>
+        <div class="mcq-feedback">
+          Rekkefølgen styres av plasseringen i HTML-en.
+          <code>type</code> er en optimalisering &mdash; nettleseren
+          slipper å starte nedlasting av et format den vet at den
+          ikke kan spille av.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="feller">
+    <div class="container">
+      <div class="section-badge">07 · Feller</div>
+      <h2>Vanlige <em>feller</em></h2>
+
+      <div class="callout-warn">
+        <div class="label">Glemmer <code>controls</code></div>
+        <p>
+          Da kan brukeren verken spille eller pause &mdash; mediet er
+          praktisk talt ubrukelig. Husk: det vises ingen knapper i det
+          hele tatt uten dette attributtet.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Bare ett format</div>
+        <p>
+          Uten flere <code>&lt;source&gt;</code> kan en nettleser uten
+          støtte for det formatet ikke spille av noe. For video: tilby
+          minst <strong>MP4 + WebM</strong>. For audio: <strong>MP3</strong>
+          dekker alle nettlesere ifølge pensum-tabellen.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Glemmer fallback-tekst</div>
+        <p>
+          Tekst inni <code>&lt;video&gt;</code> og
+          <code>&lt;audio&gt;</code> vises kun når nettleseren ikke
+          støtter elementet i det hele tatt. Uten den får brukeren
+          ingen forklaring &mdash; bare tomt areal der mediet skulle
+          vært.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Antar at Ogg fungerer overalt</div>
+        <p>
+          Ogg er ikke støttet i Internet Explorer, Safari eller
+          Microsoft Edge (per pensum-tabellen). Hvis Ogg er din eneste
+          kilde, mister du de brukerne. Tilby MP3 (audio) eller MP4
+          (video) i tillegg.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Antar at <code>autoplay</code> alltid funker</div>
+        <p>
+          Mange nettlesere blokkerer autoplay med lyd som standard
+          for å unngå støy som overrumpler brukeren. Kombiner med
+          <code>muted</code> hvis du vil sikre at videoen i det hele
+          tatt starter.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.7 — Farger · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.7 Farger">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.7</div>
+      <h1>Farger — <em>tre måter å si rød</em></h1>
+      <p class="lede">
+        CSS lar deg oppgi farger på flere måter. Pensum lister tre:
+        <strong>fargenavn</strong>, <strong>hex-kode</strong> og
+        <strong>rgb/rgba</strong>. Den siste lar deg også styre opasitet.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.7 Color</span>
+        <span class="pill">color · background-color</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvor brukes farger?</a></li>
+        <li><span class="toc-num">02</span><a href="#navn">Fargenavn</a></li>
+        <li><span class="toc-num">03</span><a href="#hex">Hex-koder</a></li>
+        <li><span class="toc-num">04</span><a href="#rgb">RGB og RGBA</a></li>
+        <li><span class="toc-num">05</span><a href="#kontrast">Kontrast</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.7</div>
+    <h2>Hvor i CSS brukes <em>farger</em>?</h2>
+    <p>
+      De to vanligste egenskapene er <code>color</code> (tekstfarge) og
+      <code>background-color</code> (bakgrunnsfarge på elementets boks).
+      Begge tar én fargeverdi, og den verdien kan oppgis på tre måter ifølge
+      pensum.
+    </p>
+
+<pre><code>p {
+  color: blue;             /* navn   */
+  background-color: #f4f1ea; /* hex   */
+}
+.varsel {
+  background-color: rgba(198, 138, 31, 0.2); /* rgba   */
+}</code></pre>
+  </div></section>
+
+  <section id="navn"><div class="container">
+    <div class="section-badge">02 · Fargenavn</div>
+    <h2>147 navngitte <em>farger</em></h2>
+    <p>
+      Pensum nevner at nettleseren forstår 147 forhåndsdefinerte fargenavn,
+      f.eks. <code>red</code>, <code>blue</code>, <code>cyan</code>,
+      <code>orange</code>, <code>lightgoldenrodyellow</code>. Greit å bruke i
+      eksempler eller når du raskt vil teste, men i designsammenheng vil du
+      som regel ha mer presis kontroll.
+    </p>
+    <div class="callout-blue">
+      <div class="label">Når brukes navn?</div>
+      <p>I undervisning og prototyper. I produksjonskode brukes hex eller rgba — fordi de gir nøyaktig kontroll over fargen og kan kopieres direkte fra designverktøy som Figma eller Adobe.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.7</div>
+      <div class="q-text">Cirka hvor mange forhåndsdefinerte fargenavn nevner pensum at nettleseren støtter?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">16</li>
+        <li class="mcq-opt" data-correct="0">64</li>
+        <li class="mcq-opt" data-correct="1">147</li>
+        <li class="mcq-opt" data-correct="0">Over 1000</li>
+      </ul>
+      <div class="mcq-feedback">147 navn — fra <code>aliceblue</code> til <code>yellowgreen</code>. De originale 16 er en delmengde.</div>
+    </div>
+  </div></section>
+
+  <section id="hex"><div class="container">
+    <div class="section-badge">03 · Hex</div>
+    <h2>Hex-<em>koder</em></h2>
+    <p>
+      En hex-kode er <code>#</code> etterfulgt av seks heksadesimale sifre
+      (0–9, A–F). Den koder for tre tall: rødt, grønt og blått, hvert fra
+      <code>00</code> (av) til <code>FF</code> (255, max).
+    </p>
+
+<pre><code>#000000   /* svart — alle null  */
+#FFFFFF   /* hvit  — alle max   */
+#FF0000   /* rent rødt          */
+#0060A3   /* en bestemt blå     */</code></pre>
+
+    <p>
+      Det finnes også en kortform med tre sifre, der hvert siffer dobles:
+      <code>#0AC</code> betyr <code>#00AACC</code>. Pensum nevner at begge
+      formene er gyldige.
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.7</div>
+      <div class="q-text">Hvilken farge representerer <code>#000000</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Hvit</li>
+        <li class="mcq-opt" data-correct="0">Rødt</li>
+        <li class="mcq-opt" data-correct="1">Svart</li>
+        <li class="mcq-opt" data-correct="0">Gjennomsiktig</li>
+      </ul>
+      <div class="mcq-feedback">Alle tre kanaler (rød, grønn, blå) på 0 = ingen lys = svart. Motsatt: <code>#FFFFFF</code> = hvit.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.7</div>
+      <div class="q-text">Hva representerer den midterste delen i hex-koden <code>#1F4E79</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Den røde komponenten</li>
+        <li class="mcq-opt" data-correct="1">Den grønne komponenten</li>
+        <li class="mcq-opt" data-correct="0">Den blå komponenten</li>
+        <li class="mcq-opt" data-correct="0">Alfa-kanalen</li>
+      </ul>
+      <div class="mcq-feedback">Rekkefølgen er rød (<code>1F</code>), grønn (<code>4E</code>), blå (<code>79</code>) — RR GG BB.</div>
+    </div>
+  </div></section>
+
+  <section id="rgb"><div class="container">
+    <div class="section-badge">04 · RGB / RGBA</div>
+    <h2><em>RGB</em> og <em>RGBA</em></h2>
+    <p>
+      <code>rgb()</code> tar tre tall, hver mellom 0 og 255, for rødt, grønt
+      og blått. <code>rgba()</code> tar et fjerde tall: <strong>alfa</strong>,
+      mellom 0 (helt gjennomsiktig) og 1 (helt ugjennomsiktig).
+    </p>
+
+<pre><code>rgb(255, 0, 0)            /* rent rødt           */
+rgba(0, 96, 163, 0.5)     /* halvgjennomsiktig blå */
+rgba(0, 0, 0, 0)          /* usynlig svart        */</code></pre>
+
+    <p>
+      Alfa-kanalen er den eneste måten i pensum å lage en gjennomsiktig
+      farge på (utenom <code>opacity</code>-egenskapen, som påvirker hele
+      elementet). Brukes typisk for skygger, overlegg og glass-aktige
+      bakgrunner.
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.7</div>
+      <div class="q-text">Hva betyr den fjerde verdien i <code>rgba(0, 96, 163, 0.5)</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Lysstyrken</li>
+        <li class="mcq-opt" data-correct="1">Opasiteten (alfa) — 0.5 = 50&nbsp;% gjennomsiktig</li>
+        <li class="mcq-opt" data-correct="0">Mengden hvit som blandes inn</li>
+        <li class="mcq-opt" data-correct="0">En ID for fargen</li>
+      </ul>
+      <div class="mcq-feedback">Alfa går fra 0 (usynlig) til 1 (full opasitet). Pensum bruker det aktivt for halv-gjennomsiktige bakgrunner.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.7</div>
+      <div class="q-text">Hvilken verdi-rekkevidde har en enkelt rgb-kanal?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">0 til 1</li>
+        <li class="mcq-opt" data-correct="1">0 til 255</li>
+        <li class="mcq-opt" data-correct="0">0 til 100</li>
+        <li class="mcq-opt" data-correct="0">−128 til 127</li>
+      </ul>
+      <div class="mcq-feedback">256 nivåer per kanal. Det matcher to heksadesimale sifre — derfor passer det perfekt med hex-formatet.</div>
+    </div>
+  </div></section>
+
+  <section id="kontrast"><div class="container">
+    <div class="section-badge">05 · Kontrast</div>
+    <h2><em>Kontrast</em> mellom tekst og bakgrunn</h2>
+    <p>
+      Pensum 1.6.7 påpeker eksplisitt at lav kontrast mellom tekst og
+      bakgrunn gjør siden vanskelig å lese — særlig for synshemmede. Lys
+      grå tekst på hvit bakgrunn ser pent ut, men er ofte uleselig på solfylt
+      mobilskjerm.
+    </p>
+    <div class="callout-warn">
+      <div class="label">Tommelfingerregel</div>
+      <p>Sikt på minst kontrastforhold 4.5:1 mellom tekst og bakgrunn (WCAG AA). Verktøy som Adobe Color, WebAIM Contrast Checker eller nettleserens DevTools kan måle dette automatisk.</p>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilke tre måter å oppgi farger på lister pensum?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Hex, navn, hsl</li>
+        <li class="mcq-opt" data-correct="1">Hex, navn, rgb/rgba</li>
+        <li class="mcq-opt" data-correct="0">CMYK, RGB, navn</li>
+        <li class="mcq-opt" data-correct="0">Pantone, hex, hsla</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.6.7 lister disse tre. <code>hsl()</code> og andre fargemodeller finnes i nyere CSS, men er ikke i pensum.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken hex-kode tilsvarer <code>rgb(255, 255, 255)</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>#000000</code></li>
+        <li class="mcq-opt" data-correct="0"><code>#888888</code></li>
+        <li class="mcq-opt" data-correct="1"><code>#FFFFFF</code></li>
+        <li class="mcq-opt" data-correct="0"><code>#FF00FF</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>FF</code> hex = 255 dec. Tre kanaler på 255 = full hvitt.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../boks-modellen/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.8 – 1.6.9</div>
+        <div class="sp-title">Boks-modellen og sentrering</div>
+        <div class="sp-desc">Content → padding → border → margin. Og hvordan du sentrerer en boks med <code>margin: auto</code>.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

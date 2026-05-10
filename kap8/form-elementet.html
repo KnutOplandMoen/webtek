@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 8.1 — Form-elementet og skjemadesign</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 8</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 8.1: Form-elementet og skjemadesign">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 8 · Underside A · Pensum 1.9.1 + 1.9.4</div>
+      <h1>Form-elementet og <em>skjemadesign</em></h1>
+      <p class="lede">
+        Den ytre rammen rundt et skjema — <code>&lt;form&gt;</code>, hvor
+        data sendes, hvilken HTTP-metode som brukes — og fire attributter
+        som styrer brukeropplevelsen.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.9.1 The form element</span>
+        <span class="pill">1.9.4 How to design a form</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hva">Hva er form-elementet?</a></li>
+        <li><span class="toc-num">02</span><a href="#action-method">action og method</a></li>
+        <li><span class="toc-num">03</span><a href="#get-vs-post">GET vs POST</a></li>
+        <li><span class="toc-num">04</span><a href="#design">Designe et skjema</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hva"><div class="container">
+    <div class="section-badge">01 · Pensum 1.9.1</div>
+    <h2>Hva er <em>form-elementet</em>?</h2>
+    <p>
+      <code>&lt;form&gt;</code> er beholderen som omslutter alle kontrollene
+      i et skjema. Det er et <strong>blokkelement</strong> — på samme måte
+      som <code>&lt;div&gt;</code> — som starter på en ny linje og fyller
+      bredden. Innholdet er widgetene (tekstfelt, radioknapper, osv.) og
+      en submit-knapp.
+    </p>
+
+    <div class="callout">
+      <div class="label">Definisjon (pensum 1.9)</div>
+      <p>
+        «Forms allow users to send data to a server through a web site,
+        e.g. sign up for a news letter, register an appointment at the
+        doctors office or signing up for an account.»
+      </p>
+    </div>
+
+    <p>
+      Dataen trenger ikke nødvendigvis sendes til en tjener — i dette
+      kurset bruker vi ofte JavaScript til å lese verdiene og bruke dem
+      lokalt på klienten. Men selv om innsendingen håndteres lokalt,
+      er det <code>&lt;form&gt;</code>-elementet som grupperer kontrollene
+      og gir dem deres rolle som «data-samlere».
+    </p>
+
+    <div class="code-result">
+      <div class="pane">
+        <div class="pane-label">Tomt form-element</div>
+<pre>&lt;form action="index.html" method="post"&gt;
+&lt;/form&gt;</pre>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="action-method"><div class="container">
+    <div class="section-badge">02 · Attributter</div>
+    <h2>action og <em>method</em></h2>
+    <p>
+      Form-elementet har to viktige attributter:
+    </p>
+
+    <div class="def-box">
+      <div class="def-label">action</div>
+      <div class="def-term"><code>action="..."</code></div>
+      <p>
+        URL-en som data sendes til når brukeren submit-er. Kan være
+        absolutt (<code>https://eksempel.no/register</code>) eller relativ
+        (<code>/register</code>, <code>kontakt.html</code>).
+      </p>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">method</div>
+      <div class="def-term"><code>method="get"</code> eller <code>method="post"</code></div>
+      <p>
+        HTTP-metoden som brukes. <code>GET</code> legger data i URL-en,
+        <code>POST</code> sender data i request-body.
+      </p>
+    </div>
+
+    <div class="callout-good">
+      <div class="label">Pensum-nyans</div>
+      <p>
+        Pensum 1.9.1 nevner at <code>action</code> og <code>method</code>
+        ikke brukes aktivt i dette kurset (vi håndterer ofte data
+        klientside med JavaScript), men de er fortsatt en del av
+        eksamenspensum. Du må kunne forklare hva de gjør.
+      </p>
+    </div>
+  </div></section>
+
+  <section id="get-vs-post"><div class="container">
+    <div class="section-badge">03 · GET vs POST</div>
+    <h2>Hvor havner <em>data</em>?</h2>
+    <p class="section-intro">
+      Valget mellom GET og POST handler om <em>hvor</em> dataen ligger,
+      hvor synlig den er, og hva slags handling skjemaet representerer.
+    </p>
+
+    <div class="compare-grid">
+      <div class="compare-cell good">
+        <div class="label">GET</div>
+        <p>
+          Data legges på URL-en etter <code>?</code> som
+          navn/verdi-par: <code>?navn=Per&amp;alder=20</code>.
+        </p>
+        <ul>
+          <li>Synlig i URL og browser-historikk</li>
+          <li>Kan bookmarkes og deles</li>
+          <li>Kan caches av nettleser/proxy</li>
+          <li>Maks ~2048 tegn (IE-grense)</li>
+          <li>Brukes til <em>oppslag</em>, <em>søk</em>, <em>filtre</em></li>
+        </ul>
+      </div>
+      <div class="compare-cell bad">
+        <div class="label">POST</div>
+        <p>
+          Data sendes som en separat melding i HTTP-bodyen — ikke
+          synlig i URL-en.
+        </p>
+        <ul>
+          <li>Ikke synlig i URL eller historikk</li>
+          <li>Kan ikke bookmarkes eller deles via lenke</li>
+          <li>Caches ikke som standard</li>
+          <li>Ingen praktisk grense på datamengde</li>
+          <li>Brukes til <em>endringer</em>, <em>passord</em>, <em>filopplastning</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Tommelfingerregel</div>
+      <p>
+        Hvis skjemaet <em>endrer</em> noe på tjeneren (registrerer bruker,
+        oppretter post, sletter noe) — bruk <code>POST</code>. Hvis det
+        bare <em>spør om</em> noe (søk, filter) — bruk <code>GET</code>.
+        Sensitive data (passord, betaling) skal <em>alltid</em> sendes
+        med <code>POST</code>.
+      </p>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">Sjekk · Lett</div>
+      <div class="q-text">Et skjema lar brukeren søke i en produktkatalog. Hvilken metode passer best?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">A</span> <code>GET</code> — søk er en safe oppslagsoperasjon, brukeren kan bookmarke resultatet</li>
+        <li class="mcq-opt"><span class="opt-label">B</span> <code>POST</code> — alltid sikrest</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>PUT</code> — søk er en oppdatering</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Begge gir samme resultat</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>A</strong>. Søk er idempotent og safe — naturlig for GET. Bonus: brukeren kan dele eller bookmarke søkeresultatet.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">Sjekk · Middels</div>
+      <div class="q-text">Hva skjer hvis du sender et passord med <code>method="get"</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Det blir kryptert automatisk</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Passordet havner i URL-en — synlig i historikk, cache og serverlogger</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Nettleseren stopper innsendingen</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Passordet konverteres til POST automatisk</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. GET legger alle felt i URL-en. Passord skal alltid sendes med POST.</div>
+    </div>
+  </div></section>
+
+  <section id="design"><div class="container">
+    <div class="section-badge">04 · Pensum 1.9.4</div>
+    <h2>Designe et <em>skjema</em></h2>
+    <p class="section-intro">
+      Pensum 1.9.4 understreker ett mål: <em>brukeren skal fullføre
+      skjemaet raskt og uten forvirring</em>. Det sparer tid, og det
+      reduserer mengden «feilaktig» data som sendes inn.
+    </p>
+
+    <div class="callout">
+      <div class="label">HTML inni form</div>
+      <p>
+        Inne i <code>&lt;form&gt;</code> kan du bruke alt vanlig HTML:
+        <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> som overskrifter,
+        <code>&lt;p&gt;</code>/<code>&lt;br&gt;</code> for tekstbryting,
+        <code>&lt;b&gt;</code>/<code>&lt;i&gt;</code> for fremheving.
+        Skjemaer er ikke en isolert sandkasse.
+      </p>
+    </div>
+
+    <h3>Fire attributter for brukeropplevelse</h3>
+
+    <div class="def-box">
+      <div class="def-label">A · autofocus</div>
+      <div class="def-term"><code>&lt;input ... autofocus&gt;</code></div>
+      <p>
+        Markøren går automatisk til feltet når siden lastes. Brukes på
+        det <em>viktigste</em> feltet på siden — typisk søkefeltet på en
+        søkeside (f.eks. google.com).
+      </p>
+      <p>
+        <strong>Bruk <em>ikke</em></strong> på et lite kontaktskjema
+        nederst på en artikkel — det stjeler fokus fra det brukeren
+        egentlig kom for å lese.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Søkefelt med autofokus</div>
+<pre>&lt;form&gt;
+  &lt;label for="search"&gt;Søk:
+    &lt;input type="text" name="query" id="search" autofocus&gt;
+  &lt;/label&gt;
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">B · disabled</div>
+      <div class="def-term"><code>&lt;input ... disabled&gt;</code></div>
+      <p>
+        Feltet er ikke aktivt — kan ikke fylles ut, ikke fokuseres,
+        sendes ikke ved submit. Brukes når feltet ikke skal kunne
+        endres før noe annet er gjort. <strong>Må fjernes med JavaScript</strong>
+        for å aktivere senere.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Areal beregnes automatisk</div>
+<pre>&lt;form&gt;
+  &lt;label for="length"&gt;Lengde:
+    &lt;input type="number" name="length" id="length"&gt;
+  &lt;/label&gt;
+  &lt;label for="width"&gt;Bredde:
+    &lt;input type="number" name="width" id="width"&gt;
+  &lt;/label&gt;
+  &lt;label for="area"&gt;Areal:
+    &lt;input name="area" id="area" disabled&gt;
+  &lt;/label&gt;
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">C · value</div>
+      <div class="def-term"><code>&lt;input ... value="..."&gt;</code></div>
+      <p>
+        Forhåndsutfylt verdi. Kan hjelpe brukeren (f.eks. by basert på
+        geolokasjon), <em>men</em> brukere overser ofte ferdigutfylte
+        verdier. Bruk med omhu.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Forhåndsutfylt by</div>
+<pre>&lt;form&gt;
+  &lt;label for="city"&gt;By:
+    &lt;input type="text" name="city" id="city" value="Trondheim"&gt;
+  &lt;/label&gt;
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">D · tabindex</div>
+      <div class="def-term"><code>&lt;input ... tabindex="N"&gt;</code></div>
+      <p>
+        Styrer rekkefølgen tab-tasten flytter fokus i. Standard er
+        rekkefølgen elementene står i HTML-kilden.
+      </p>
+      <ul>
+        <li><strong>Negativ verdi</strong> — fokuserbar, men ikke nåbar via tab.</li>
+        <li><strong>0</strong> — fokuserbar, naturlig posisjon (HTML-rekkefølge).</li>
+        <li><strong>Positiv verdi</strong> — manuell rekkefølge: tab følger økende tabindex.</li>
+      </ul>
+      <p>
+        Elementer med <code>tabindex="0"</code> eller uten attributtet
+        kommer etter elementer med positiv tabindex.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Manuell tab-rekkefølge</div>
+<pre>&lt;form&gt;
+  &lt;label for="name"&gt;Fullt navn:
+    &lt;input type="text" id="name" name="name" tabindex="1"&gt;
+  &lt;/label&gt;
+  &lt;label for="email"&gt;E-post:
+    &lt;input type="email" id="email" name="email" tabindex="2"&gt;
+  &lt;/label&gt;
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">Sjekk · Middels</div>
+      <div class="q-text">Hva betyr <code>tabindex="0"</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Elementet kan ikke fokuseres</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Elementet er fokuserbart og inngår i tab-rekkefølgen i sin naturlige posisjon (HTML-rekkefølge)</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Elementet får alltid fokus først</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Elementet hopper over tab-rekkefølgen</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>0</code> = fokuserbar i naturlig posisjon. Negativ = utenfor tab-flyt. Positiv = manuell rekkefølge.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">Sjekk · Lett</div>
+      <div class="q-text">På hvilken type side passer <code>autofocus</code> dårlig?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Søkemotor (google.com)</li>
+        <li class="mcq-opt"><span class="opt-label">B</span> Innloggingsside</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Nyhetsartikkel med kontaktskjema nederst</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Registreringsskjema som er sidens hovedinnhold</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>C</strong>. Autofocus stjeler fokus — uønsket når brukeren kom for å lese artikkelen, ikke for å fylle ut skjemaet.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">05 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+
+    <div class="callout-warn">
+      <div class="label">Felle 1 — GET med passord</div>
+      <p>
+        <code>method="get"</code> legger alle felt i URL-en. Passord
+        havner da i nettleserhistorikk, server-logger og kan deles via
+        lenker uten at brukeren forstår det.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 2 — disabled betyr ikke «valgfri»</div>
+      <p>
+        En <code>disabled</code> input <em>sendes ikke</em> ved submit
+        og kan ikke endres av brukeren. Hvis du vil at brukeren skal kunne
+        velge å fylle ut feltet, ikke bruk <code>disabled</code>.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 3 — value som «hint»</div>
+      <p>
+        Forhåndsutfylte verdier (<code>value</code>) blir lett oversett
+        av brukere. Hvis du vil <em>foreslå</em> et format, bruk
+        <code>placeholder</code> i stedet.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 4 — autofocus på flere felt</div>
+      <p>
+        Bare ett felt på siden kan ha fokus. Hvis du setter
+        <code>autofocus</code> på flere, er det <em>siste</em> som vinner
+        — og det er sjelden den du forventet. Begrens til ett.
+      </p>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Multiple <em>choice</em></h2>
+
+    <div class="quiz mcq">
+      <div class="q-label">1 · Lett</div>
+      <div class="q-text">Hvilket attributt på <code>&lt;form&gt;</code> bestemmer URL-en data sendes til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>method</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>action</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>target</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>href</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B — <code>action</code></strong>. <code>method</code> er HTTP-metoden, <code>href</code> brukes på <code>&lt;a&gt;</code>, og <code>target</code> styrer hvilket vindu lenken åpnes i.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">2 · Lett</div>
+      <div class="q-text"><code>&lt;form&gt;</code> er hva slags element?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Inline-element</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Blokkelement</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Void-element</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Self-closing element</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>&lt;form&gt;</code> er et blokkelement, akkurat som <code>&lt;div&gt;</code> — starter på ny linje og fyller bredden.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">3 · Middels</div>
+      <div class="q-text">Hvor havner data ved <code>method="post"</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> I URL-en etter <code>?</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> I HTTP-bodyen, som en separat melding</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> I en cookie</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> I localStorage</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. POST sender data i request-bodyen — ikke synlig i URL-en, ikke begrenset av URL-lengde, ikke cachet som standard.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">4 · Middels</div>
+      <div class="q-text">Hvilket attributt vil du bruke på det viktigste søkefeltet på en søkemotor?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>disabled</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>autofocus</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>value</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>tabindex="-1"</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>autofocus</code> setter markøren rett i feltet ved sidelast — passer perfekt på sider hvor skjemaet er hovedinnholdet.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">5 · Vanskelig</div>
+      <div class="q-text">Hvordan fjerner du <code>disabled</code>-attributtet senere så feltet kan fylles ut?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Det er ikke mulig — feltet blir disabled for alltid</li>
+        <li class="mcq-opt"><span class="opt-label">B</span> Bruk en CSS-regel som overstyrer <code>disabled</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Bruk JavaScript til å fjerne attributtet fra elementet</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Sett <code>tabindex="0"</code> for å overstyre det</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>C</strong>. Pensum 1.9.4 sier eksplisitt at <code>disabled</code> må fjernes med JavaScript når feltet skal aktiveres.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">6 · Vanskelig</div>
+      <div class="q-text">Du har tre felt med <code>tabindex="3"</code>, <code>tabindex="1"</code> og <code>tabindex="2"</code> i den rekkefølgen i HTML-en. I hvilken rekkefølge går tab?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> Den rekkefølgen de står i HTML-en (3 → 1 → 2)</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Stigende tabindex: 1 → 2 → 3</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Synkende tabindex: 3 → 2 → 1</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Tilfeldig — nettleseren bestemmer</li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Positive tabindex-verdier følges i stigende numerisk rekkefølge, uavhengig av HTML-rekkefølgen.</div>
+    </div>
+  </div></section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 7.1 — Bilder</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 7</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 7.1: Bilder">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 7 · Underkapittel A · Pensum 1.8</div>
+      <h1>Bilder på <em>web</em></h1>
+      <p class="lede">
+        <code>&lt;img&gt;</code>-elementet, attributtene som styrer
+        det, og de fire bildeformatene du møter på web: JPEG, PNG,
+        GIF og SVG. Til slutt: hvordan <code>&lt;figure&gt;</code>
+        og <code>&lt;figcaption&gt;</code> binder bildet til en
+        bildetekst.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.8</span>
+        <span class="pill">Forelesning 11</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hva">
+    <div class="container">
+      <div class="section-badge">01 · Hva</div>
+      <h2><code>&lt;img&gt;</code> — det <em>selvlukkende</em> elementet</h2>
+      <p>
+        Et bilde legges inn med <code>&lt;img&gt;</code>. Det er et
+        <strong>selvlukkende</strong> element &mdash; det skal ikke
+        ha noen avslutningstagg. Bildet i seg selv er heller ikke
+        del av HTML-dokumentet; <code>&lt;img&gt;</code>-elementet
+        peker bare til en separat fil som nettleseren laster ned i
+        tillegg til HTML-en.
+      </p>
+      <p>
+        Det er også et <strong>inline-element</strong>. Det
+        plasseres på samme linje som teksten rundt og bryter ikke
+        til ny linje av seg selv.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Minste lovlige bilde</div>
+          <pre>&lt;img src="images/coffeetable.jpg"
+     alt="En kaffekopp p&aring; et kaffebord"&gt;</pre>
+        </div>
+      </div>
+
+      <div class="callout-blue">
+        <div class="label">Mappestruktur</div>
+        <p>
+          Pensum anbefaler å lagre bildene i en
+          <code>images</code>-undermappe. Når siden vokser kan du
+          lage flere undermapper inni, f.eks. <code>products</code>
+          og <code>icons</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="obligatoriske">
+    <div class="container">
+      <div class="section-badge">02 · Obligatoriske attributter</div>
+      <h2>De to du <em>må</em> ha</h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">src</div>
+          <div class="fc-val">
+            Sti til bildefila &mdash; vanligvis en <em>relativ URL</em>
+            (<code>images/foo.jpg</code>). Kan også være en absolutt
+            URL hvis bildet ligger på en annen server.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">alt</div>
+          <div class="fc-val">
+            Tekstbeskrivelse av bildet. Brukes av skjermlesere og
+            søkemotorer, og vises hvis bildet ikke kan lastes (f.eks.
+            ved nettverksfeil eller hvis fila er flyttet).
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Dekorative bilder</div>
+        <p>
+          Hvis bildet er <em>rent dekorativt</em> (en strek, et
+          ornament, et bakgrunnsbilde lagt inn som <code>&lt;img&gt;</code>),
+          skal <code>alt</code> likevel være med &mdash; men med tom
+          verdi: <code>alt=""</code>. Da hopper skjermlesere over
+          bildet i stedet for å lese opp filnavnet eller en irrelevant
+          beskrivelse.
+        </p>
+        <p style="margin-top:0.6em;">
+          Pensum 1.8 sier eksplisitt: «If the image is purely
+          decorative, the alt attribute should still be present, but
+          the quotes should be left empty.»
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ekstra">
+    <div class="container">
+      <div class="section-badge">03 · Ekstra-attributter</div>
+      <h2>Tre attributter som er <em>lurt</em> å bruke</h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">title</div>
+          <div class="fc-val">
+            Tilleggsinformasjon om bildet. De fleste nettlesere viser
+            innholdet som et <em>verktøytips</em> når brukeren holder
+            musepekeren over bildet.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">width</div>
+          <div class="fc-val">
+            Bredden i piksler eller prosent. La nettleseren reservere
+            plassen før bildet er lastet.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">height</div>
+          <div class="fc-val">
+            Høyden i piksler eller prosent. Settes vanligvis sammen
+            med <code>width</code>.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-blue">
+        <div class="label">Hvorfor sette <code>width</code> og <code>height</code>?</div>
+        <p>
+          Bilder bruker som regel lengre tid å laste enn HTML-koden.
+          Hvis nettleseren ikke vet hvor mye plass bildet skal ta,
+          kommer teksten først &mdash; og så <em>hopper</em> resten av
+          siden nedover når bildet endelig kommer. Med oppgitt
+          størrelse kan nettleseren reservere plassen, og layouten blir
+          stabil.
+        </p>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Med alle attributtene</div>
+          <pre>&lt;img src="images/coffeetable.jpg"
+     alt="En kaffekopp p&aring; et kaffebord"
+     title="Hjemme hos meg, l&oslash;rdag morgen"
+     width="600" height="400"&gt;</pre>
+        </div>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Ikke bruk <code>align</code></div>
+        <p>
+          Det gamle <code>align</code>-attributtet er <em>ikke</em>
+          en del av HTML5. For å justere et bilde på siden bruker
+          du CSS (f.eks. <code>float</code>, <code>margin</code>,
+          flex/grid).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="formater">
+    <div class="container">
+      <div class="section-badge">04 · Bildeformater</div>
+      <h2>Fire <em>formater</em> du må kjenne</h2>
+      <p class="section-intro">
+        Pensum 1.8 går gjennom fire bildeformater som er relevante
+        på web. Tre er rasterformater (lagrer piksler), ett er et
+        vektorformat (lagrer figurer).
+      </p>
+
+      <h3 style="margin-top:1.5em;">JPEG</h3>
+      <p>
+        <strong>Lossy raster.</strong> JPEG er det mest brukte
+        formatet for fotografier. «Lossy» betyr at bildet mister litt
+        kvalitet hver gang det komprimeres. På fotografier er dette
+        sjelden synlig &mdash; mange farger og detaljer skjuler
+        kompresjonsartefaktene.
+      </p>
+      <ul>
+        <li><strong>Bra til:</strong> fotografier (mange farger og overganger).</li>
+        <li><strong>Dårlig til:</strong> logoer og illustrasjoner med skarpe kanter &mdash; her gir JPEG synlige artefakter.</li>
+        <li><strong>Transparens:</strong> nei.</li>
+        <li><strong>OBS:</strong> hver gang du åpner og lagrer en JPEG (f.eks. i Photoshop), mister bildet litt mer kvalitet. Behold originalen i et lossless format hvis du skal redigere ofte.</li>
+      </ul>
+
+      <h3 style="margin-top:1.5em;">PNG</h3>
+      <p>
+        <strong>Lossless raster.</strong> PNG mister ingen kvalitet
+        ved kompresjon &mdash; bildet er pikseleksakt. Til gjengjeld
+        blir filene større enn JPEG for samme bilde.
+      </p>
+      <ul>
+        <li><strong>Bra til:</strong> logoer, illustrasjoner, grafer og skjermbilder &mdash; bilder med få farger og skarpe kanter.</li>
+        <li><strong>Dårlig til:</strong> fotografier &mdash; resultatet blir riktig, men fila blir veldig stor.</li>
+        <li><strong>Transparens:</strong> ja, fra 0 % til 100 % (dvs. delvis gjennomsiktighet er mulig).</li>
+      </ul>
+
+      <h3 style="margin-top:1.5em;">GIF</h3>
+      <p>
+        <strong>Lossless raster med to begrensninger.</strong> GIF kan
+        bare vise <em>maks 256 farger</em> per bilde, og transparensen
+        er <em>1-bits</em> (helt synlig eller helt usynlig &mdash; ingen
+        gradering). Til gjengjeld kan GIF inneholde animasjoner.
+      </p>
+      <ul>
+        <li><strong>Bra til:</strong> logoer og enkle animasjoner.</li>
+        <li><strong>Dårlig til:</strong> bilder med mer enn 256 farger &mdash; fotografier ser klumpete ut.</li>
+        <li><strong>Transparens:</strong> ja, men bare 1-bits.</li>
+      </ul>
+
+      <h3 style="margin-top:1.5em;">SVG</h3>
+      <p>
+        <strong>Vektorformat.</strong> SVG (Scalable Vector Graphics)
+        lagrer bildet som matematiske figurer (linjer, kurver, polygoner)
+        i stedet for piksler. Det betyr at bildet kan skaleres
+        <em>uendelig</em> opp uten kvalitetstap.
+      </p>
+      <ul>
+        <li><strong>Bra til:</strong> logoer, illustrasjoner og diagrammer som må kunne skaleres.</li>
+        <li><strong>Dårlig til:</strong> fotografier &mdash; for mange detaljer til å bli effektivt representert som vektorfigurer.</li>
+        <li><strong>Transparens:</strong> ja.</li>
+      </ul>
+
+      <h3 style="margin-top:2em;">Oversikt</h3>
+      <table class="example-table">
+        <thead>
+          <tr>
+            <th>Format</th>
+            <th>Type</th>
+            <th>Bra til</th>
+            <th>Dårlig til</th>
+            <th>Transparens</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>JPEG</strong></td>
+            <td>Lossy raster</td>
+            <td>Fotografier</td>
+            <td>Logoer, illustrasjoner</td>
+            <td>Nei</td>
+          </tr>
+          <tr>
+            <td><strong>PNG</strong></td>
+            <td>Lossless raster</td>
+            <td>Logoer, illustrasjoner, grafer</td>
+            <td>Fotografier (stor fil)</td>
+            <td>Ja (0&ndash;100&nbsp;%)</td>
+          </tr>
+          <tr>
+            <td><strong>GIF</strong></td>
+            <td>Lossless raster</td>
+            <td>Logoer, animasjoner</td>
+            <td>Bilder med &gt; 256 farger</td>
+            <td>Ja (1-bit)</td>
+          </tr>
+          <tr>
+            <td><strong>SVG</strong></td>
+            <td>Vektor</td>
+            <td>Logoer, diagrammer (skalerbart)</td>
+            <td>Fotografier</td>
+            <td>Ja</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="begreper">
+    <div class="container">
+      <div class="section-badge">05 · Begreper</div>
+      <h2>To viktige <em>distinksjoner</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Lossy vs lossless</div>
+          <div class="fc-val">
+            <strong>Lossy</strong> = bildet mister kvalitet ved kompresjon (JPEG).
+            <strong>Lossless</strong> = ingen kvalitet går tapt (PNG, GIF, SVG).
+            Lossy gir mindre filer, lossless gir bedre kvalitet.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Raster vs vektor</div>
+          <div class="fc-val">
+            <strong>Raster</strong> = bildet lagres som et rutenett av
+            piksler (JPEG, PNG, GIF). Skalerer dårlig opp.
+            <strong>Vektor</strong> = bildet lagres som figurer (SVG).
+            Skalerer uendelig.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="figure">
+    <div class="container">
+      <div class="section-badge">06 · Figure &amp; figcaption</div>
+      <h2>Bilde + <em>bildetekst</em></h2>
+      <p>
+        Et <code>&lt;figure&gt;</code>-element grupperer ett eller
+        flere bilder med en tilhørende bildetekst. Bildeteksten
+        skrives inni <code>&lt;figcaption&gt;</code>. På denne måten
+        knyttes tekst og bilde semantisk sammen &mdash; en skjermleser
+        forstår at teksten beskriver bildet, ikke avsnittet over eller
+        under.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Ett bilde, én tekst</div>
+          <pre>&lt;figure&gt;
+  &lt;img src="images/it2805.png" alt="IT2805-logoen"&gt;
+  &lt;figcaption&gt;Dette er IT2805-logoen&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="label">Flere bilder i samme figure</div>
+        <p>
+          Du kan ha mer enn ett bilde inni samme <code>&lt;figure&gt;</code>,
+          så lenge de <em>deler samme bildetekst</em>. Pensum 1.8:
+          «You can have more than one image inside the
+          <code>&lt;figure&gt;</code> element, as long as they share
+          the same caption.»
+        </p>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Flere bilder, felles tekst</div>
+          <pre>&lt;figure&gt;
+  &lt;img src="images/forside.jpg"  alt="Boka sett forfra"&gt;
+  &lt;img src="images/bakside.jpg" alt="Boka sett bakfra"&gt;
+  &lt;figcaption&gt;Pensumboka, for- og bakside&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">07 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilke to attributter MÅ være med på <code>&lt;img&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>src</code> og <code>title</code></li>
+          <li class="mcq-opt" data-correct="1"><code>src</code> og <code>alt</code></li>
+          <li class="mcq-opt" data-correct="0"><code>src</code> og <code>width</code></li>
+          <li class="mcq-opt" data-correct="0"><code>alt</code> og <code>figcaption</code></li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>src</code> peker på fila, <code>alt</code> beskriver
+          innholdet for skjermlesere og når bildet ikke kan vises.
+          Pensum 1.8 (Images).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Er <code>&lt;img&gt;</code> selvlukkende eller har det en avslutningstagg?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Selvlukkende — det skal ikke ha noen avslutningstagg</li>
+          <li class="mcq-opt" data-correct="0">Det krever en eksplisitt <code>&lt;/img&gt;</code></li>
+          <li class="mcq-opt" data-correct="0">Det avhenger av attributtene</li>
+          <li class="mcq-opt" data-correct="0">Begge varianter er gyldige i HTML5</li>
+        </ul>
+        <div class="mcq-feedback">
+          <code>&lt;img&gt;</code> er et void-element &mdash; ingen
+          avslutningstagg. Pensum 1.8 (Images).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Lett</div>
+        <div class="q-text">Hvilket bildeformat er best for fotografier?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">PNG</li>
+          <li class="mcq-opt" data-correct="0">SVG</li>
+          <li class="mcq-opt" data-correct="1">JPEG</li>
+          <li class="mcq-opt" data-correct="0">GIF</li>
+        </ul>
+        <div class="mcq-feedback">
+          JPEG er lossy &mdash; mange farger og detaljer skjuler
+          kompresjonsartefaktene. Pensum 1.8 (Image file formats).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Lett</div>
+        <div class="q-text">Du skal lage en logo som må kunne skaleres opp uten kvalitetstap. Hvilket format passer best?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">JPEG</li>
+          <li class="mcq-opt" data-correct="0">PNG</li>
+          <li class="mcq-opt" data-correct="0">GIF</li>
+          <li class="mcq-opt" data-correct="1">SVG</li>
+        </ul>
+        <div class="mcq-feedback">
+          SVG er et vektorformat &mdash; bildet lagres som figurer,
+          ikke piksler &mdash; og kan skaleres uendelig.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Hvor mange forskjellige farger kan en GIF maksimalt vise?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">16</li>
+          <li class="mcq-opt" data-correct="1">256</li>
+          <li class="mcq-opt" data-correct="0">1024</li>
+          <li class="mcq-opt" data-correct="0">Ubegrenset</li>
+        </ul>
+        <div class="mcq-feedback">
+          GIF er begrenset til 256 farger. Derfor passer formatet til
+          logoer, men ikke til fotografier.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hva betyr at JPEG er et "lossy" format?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Bildet kan ikke skaleres opp uten kvalitetstap</li>
+          <li class="mcq-opt" data-correct="1">Bildet mister litt kvalitet hver gang det komprimeres</li>
+          <li class="mcq-opt" data-correct="0">Bildet støtter ikke transparens</li>
+          <li class="mcq-opt" data-correct="0">Bildet kan bare ha 256 farger</li>
+        </ul>
+        <div class="mcq-feedback">
+          Lossy = tap. Hver lagring i Photoshop e.l. gir litt mer
+          kvalitetstap.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Middels</div>
+        <div class="q-text">Hvorfor er det lurt å spesifisere <code>width</code> og <code>height</code> på et <code>&lt;img&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Det krymper filstørrelsen</li>
+          <li class="mcq-opt" data-correct="1">Nettleseren kan reservere plassen så teksten ikke "hopper" når bildet er lastet</li>
+          <li class="mcq-opt" data-correct="0">Det er obligatorisk i HTML5</li>
+          <li class="mcq-opt" data-correct="0">Det forbedrer SEO</li>
+        </ul>
+        <div class="mcq-feedback">
+          Bilder bruker oftest lengre tid å laste enn HTML-koden. Med
+          oppgitt størrelse blir layouten stabil.
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Middels</div>
+        <div class="q-text">Hvilket av disse formatene er det <em>eneste</em> vektorformatet?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">JPEG</li>
+          <li class="mcq-opt" data-correct="0">PNG</li>
+          <li class="mcq-opt" data-correct="0">GIF</li>
+          <li class="mcq-opt" data-correct="1">SVG</li>
+        </ul>
+        <div class="mcq-feedback">
+          JPEG, PNG og GIF lagrer piksler (raster). SVG lagrer
+          figurer (vektor).
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">9 · Vanskelig</div>
+        <div class="q-text">Du har et bilde som <em>bare</em> er dekorativt (en strek mellom to seksjoner). Hva er riktig håndtering av <code>alt</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Du kan utelate <code>alt</code> helt</li>
+          <li class="mcq-opt" data-correct="1"><code>alt</code> skal være med, men tom: <code>alt=""</code></li>
+          <li class="mcq-opt" data-correct="0"><code>alt="dekorativt bilde"</code></li>
+          <li class="mcq-opt" data-correct="0">Bruk <code>title</code> i stedet</li>
+        </ul>
+        <div class="mcq-feedback">
+          Pensum sier eksplisitt: «If the image is purely decorative,
+          the alt attribute should still be present, but the quotes
+          should be left empty.»
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">10 · Vanskelig</div>
+        <div class="q-text">Hva er korrekt om <code>&lt;figure&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Kan bare inneholde nøyaktig ett bilde</li>
+          <li class="mcq-opt" data-correct="0">Krever alltid <code>&lt;figcaption&gt;</code></li>
+          <li class="mcq-opt" data-correct="1">Kan inneholde flere bilder, så lenge de deler samme bildetekst</li>
+          <li class="mcq-opt" data-correct="0">Kan kun brukes én gang per side</li>
+        </ul>
+        <div class="mcq-feedback">
+          Pensum 1.8 (Figure and figure caption): «You can have more
+          than one image inside the <code>&lt;figure&gt;</code> element,
+          as long as they share the same caption.»
+        </div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">11 · Vanskelig</div>
+        <div class="q-text">Hvorfor passer SVG dårlig til fotografier?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">SVG støtter ikke transparens</li>
+          <li class="mcq-opt" data-correct="0">SVG kan bare ha 256 farger</li>
+          <li class="mcq-opt" data-correct="1">Et fotografi har for mange detaljer til å representeres effektivt som vektorfigurer</li>
+          <li class="mcq-opt" data-correct="0">SVG er lossy</li>
+        </ul>
+        <div class="mcq-feedback">
+          SVG lagrer figurer matematisk. Fotografiers detaljnivå gjør
+          at fila blir gigantisk &mdash; eller umulig å beskrive
+          presist.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="feller">
+    <div class="container">
+      <div class="section-badge">08 · Feller</div>
+      <h2>Vanlige <em>feller</em></h2>
+
+      <div class="callout-warn">
+        <div class="label">Glemmer <code>alt</code></div>
+        <p>
+          Skjermlesere får da ingenting å lese opp, og bildet er
+          usynlig hvis fila ikke laster. For dekorative bilder skal
+          <code>alt</code> være med, men tom (<code>alt=""</code>).
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Feil format til feil type bilde</div>
+        <ul>
+          <li><strong>JPEG på logoer</strong> &mdash; gir artefakter rundt skarpe kanter. Bruk PNG eller SVG.</li>
+          <li><strong>PNG på fotografier</strong> &mdash; resultatet blir riktig, men fila blir veldig stor. Bruk JPEG.</li>
+          <li><strong>SVG på fotografier</strong> &mdash; SVG er ikke designet for piksel-detaljer.</li>
+          <li><strong>GIF til bilder med mange farger</strong> &mdash; maks 256 farger gir klumpete resultat.</li>
+        </ul>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Lagrer JPEG flere ganger</div>
+        <p>
+          Hver lagring er en ny lossy kompresjon. Behold originalen i
+          et lossless format (f.eks. PNG eller TIFF) og eksporter til
+          JPEG én gang når du publiserer.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Bruker <code>align</code>-attributtet</div>
+        <p>
+          <code>align</code> er ikke en del av HTML5. Bruk CSS for
+          posisjonering (<code>float</code>, flex/grid, <code>margin</code>).
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

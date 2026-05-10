@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.10 — Borders · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.10 Borders">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.10</div>
+      <h1>Borders — <em>tegn rammen</em></h1>
+      <p class="lede">
+        En border er den synlige rammen rundt boksen, mellom padding og
+        margin. Tre egenskaper styrer den — bredde, stil og farge — og hver
+        side kan settes individuelt.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.10 Borders</span>
+        <span class="pill">border · border-radius</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#tre">Tre egenskaper</a></li>
+        <li><span class="toc-num">02</span><a href="#shorthand">Shorthand</a></li>
+        <li><span class="toc-num">03</span><a href="#sider">Per side</a></li>
+        <li><span class="toc-num">04</span><a href="#radius">Avrunding</a></li>
+        <li><span class="toc-num">05</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="tre"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.10</div>
+    <h2>De tre <em>egenskapene</em></h2>
+    <p>
+      En ramme har alltid tre ting:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key"><code>border-width</code></div><div class="fc-val">Hvor tykk rammen er. F.eks. <code>1px</code>, <code>4px</code>, <code>thin</code>, <code>thick</code>.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>border-style</code></div><div class="fc-val">Hvordan den ser ut: <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>none</code>, <code>hidden</code>, <code>groove</code>, <code>ridge</code>, <code>inset</code>, <code>outset</code>.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>border-color</code></div><div class="fc-val">Fargen — samme syntaks som <code>color</code>: navn, hex, eller rgb/rgba.</div></div>
+    </div>
+    <div class="callout-warn">
+      <div class="label">Viktig</div>
+      <p>Standard <code>border-style</code> er <code>none</code>. Hvis du bare setter <code>border-width</code> og <code>border-color</code> uten en stil, vises ingenting. Det er en klassisk feilkilde.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.10</div>
+      <div class="q-text">Hvilken egenskap MÅ du oppgi for at en ramme i det hele tatt skal vises?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>border-width</code></li>
+        <li class="mcq-opt" data-correct="1"><code>border-style</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border-color</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border-radius</code></li>
+      </ul>
+      <div class="mcq-feedback">Standard er <code>border-style: none</code> — uten en eksplisitt stil, vises ingenting.</div>
+    </div>
+  </div></section>
+
+  <section id="shorthand"><div class="container">
+    <div class="section-badge">02 · Shorthand</div>
+    <h2><em>Shorthand</em>-skrivemåten</h2>
+    <p>
+      Du kan kombinere alle tre egenskapene på én linje med
+      <code>border</code>-shorthanden. Rekkefølgen er:
+      <code>width style color</code>.
+    </p>
+
+<pre><code>.kort {
+  border: 4px dashed #0060A3;
+}
+
+/* tilsvarer: */
+.kort {
+  border-width: 4px;
+  border-style: dashed;
+  border-color: #0060A3;
+}</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.10</div>
+      <div class="q-text">Hvilken shorthand gir en 2 piksler tjukk, prikket, rød ramme?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>border: red 2px dotted;</code></li>
+        <li class="mcq-opt" data-correct="1"><code>border: 2px dotted red;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border-style: 2px dotted red;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border: dotted 2px red;</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensums rekkefølge: <em>width</em>, <em>style</em>, <em>color</em>. Praktisk talt er rekkefølgen fleksibel i moderne nettlesere, men eksamen vil at du kan «riktig» rekkefølge.</div>
+    </div>
+  </div></section>
+
+  <section id="sider"><div class="container">
+    <div class="section-badge">03 · Per side</div>
+    <h2>Forskjellig stil <em>per side</em></h2>
+    <p>
+      Du kan adressere bare én side ved å sette inn <code>-top</code>,
+      <code>-right</code>, <code>-bottom</code> eller <code>-left</code> i
+      egenskapsnavnet:
+    </p>
+
+<pre><code>.kort {
+  border-bottom: 2px solid #c9c0ae;   /* bare bunnstrek */
+  border-top-style: dashed;
+  border-left-color: red;
+}</code></pre>
+
+    <p>
+      Eller bruke shorthand med fire verdier — på samme måte som padding og
+      margin (klokkeretningen fra topp):
+    </p>
+
+<pre><code>.kort {
+  border-style: solid dashed dotted double;
+  /* topp solid, høyre dashed, bunn dotted, venstre double */
+}</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.10</div>
+      <div class="q-text">Hva tegner <code>border-bottom: 2px solid black;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ramme på alle fire sider</li>
+        <li class="mcq-opt" data-correct="1">Bare en svart strek under elementet</li>
+        <li class="mcq-opt" data-correct="0">En understreking av teksten</li>
+        <li class="mcq-opt" data-correct="0">En skygge nederst</li>
+      </ul>
+      <div class="mcq-feedback">Suffikset <code>-bottom</code> begrenser til den siden. Praktisk for skille-streker uten å boks-omslutte hele elementet.</div>
+    </div>
+  </div></section>
+
+  <section id="radius"><div class="container">
+    <div class="section-badge">04 · Avrunding</div>
+    <h2>Avrundete <em>hjørner</em></h2>
+    <p>
+      Egenskapen <code>border-radius</code> avrunder hjørnene på boksen.
+      Verdien kan være piksler, prosent eller andre lengder. Pensum nevner
+      den som måten å lage runde knapper, kort og avatarer på.
+    </p>
+
+<pre><code>.knapp { border-radius: 4px; }
+.avatar { border-radius: 50%; }   /* en sirkel, hvis bredde = høyde */</code></pre>
+
+    <div class="callout">
+      <div class="label">Tips</div>
+      <p><code>border-radius: 50%</code> på et kvadrat = perfekt sirkel. Det er hele trikset bak runde profilbilder på de fleste nettsteder.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.10</div>
+      <div class="q-text">Hva gjør <code>border-radius: 50%;</code> på en kvadratisk boks?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Halverer bredden</li>
+        <li class="mcq-opt" data-correct="1">Gjør boksen til en sirkel</li>
+        <li class="mcq-opt" data-correct="0">Roterer rammen 50 grader</li>
+        <li class="mcq-opt" data-correct="0">Skjuler halvparten av rammen</li>
+      </ul>
+      <div class="mcq-feedback">50 % radius på alle hjørner av et kvadrat = perfekt sirkel. Med ulik bredde og høyde får du en ellipse.</div>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">05 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvor mange ulike <code>border-style</code>-verdier nevner pensum?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Fire (none, solid, dashed, dotted)</li>
+        <li class="mcq-opt" data-correct="1">Ti eller fler — bl.a. <code>none</code>, <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>groove</code>, <code>ridge</code>, <code>inset</code>, <code>outset</code></li>
+        <li class="mcq-opt" data-correct="0">Bare to (solid og dotted)</li>
+        <li class="mcq-opt" data-correct="0">Det finnes ingen border-stil</li>
+      </ul>
+      <div class="mcq-feedback">Pensum lister flere — de fleste brukes sjelden i praksis, men du må kjenne til dem på eksamen.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er <em>standardverdien</em> for <code>border-style</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><code>none</code></li>
+        <li class="mcq-opt" data-correct="0"><code>solid</code></li>
+        <li class="mcq-opt" data-correct="0"><code>dotted</code></li>
+        <li class="mcq-opt" data-correct="0"><code>inherit</code></li>
+      </ul>
+      <div class="mcq-feedback">Derfor må du eksplisitt sette en stil for at rammen skal vises. Bare bredde og farge er ikke nok.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken kort skrivemåte gir samme resultat som <code>border-width: 1px; border-style: solid; border-color: black;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>border: black solid 1px;</code></li>
+        <li class="mcq-opt" data-correct="1"><code>border: 1px solid black;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border: solid;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>border-all: 1px black;</code></li>
+      </ul>
+      <div class="mcq-feedback">Pensum-rekkefølgen er bredde → stil → farge.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../fonter/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.11</div>
+        <div class="sp-title">Tekst og fonter</div>
+        <div class="sp-desc">Serif, sans-serif og monospace. Font-stack med fallback, font-weight, line-height og text-align.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.12 — Pseudo-klasser · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.12 Pseudo-klasser">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.12</div>
+      <h1>Pseudo-<em>klasser</em></h1>
+      <p class="lede">
+        En pseudo-klasse er ikke et reelt attributt på elementet, men en
+        <em>tilstand</em>: musen er over det, det er besøkt, det er
+        avkrysset. CSS gir deg lov til å style disse tilstandene direkte.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.12 Pseudo-classes</span>
+        <span class="pill">:link · :visited · :hover · :active</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hva">Hva er en pseudo-klasse?</a></li>
+        <li><span class="toc-num">02</span><a href="#lenker">Lenketilstander</a></li>
+        <li><span class="toc-num">03</span><a href="#rekkefolge">Rekkefølgen</a></li>
+        <li><span class="toc-num">04</span><a href="#andre">Andre pseudo-klasser</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hva"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.12</div>
+    <h2>Hva er en <em>pseudo-klasse</em>?</h2>
+    <p>
+      En pseudo-klasse skrives med et kolon etter en vanlig selektor:
+    </p>
+
+<pre><code>a:hover {
+  color: red;
+}</code></pre>
+
+    <p>
+      Den treffer ikke en bestemt klasse i HTML-en, men en
+      <strong>tilstand</strong> elementet kan være i. Pensum lister tre
+      typer tilstander:
+    </p>
+    <ul>
+      <li><strong>Brukerinteraksjon:</strong> <code>:hover</code> (musen er over), <code>:active</code> (museknappen trykkes ned).</li>
+      <li><strong>Historikk:</strong> <code>:link</code> (ikke besøkt), <code>:visited</code> (besøkt).</li>
+      <li><strong>Element-status:</strong> <code>:checked</code> (avkrysset), <code>:disabled</code>, <code>:focus</code>.</li>
+    </ul>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Hva er en pseudo-klasse?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">En usynlig HTML-tag</li>
+        <li class="mcq-opt" data-correct="1">En selektor som matcher en tilstand på elementet, ikke et attributt</li>
+        <li class="mcq-opt" data-correct="0">En selektor som ikke virker i moderne nettlesere</li>
+        <li class="mcq-opt" data-correct="0">En måte å lage falske klasser i HTML</li>
+      </ul>
+      <div class="mcq-feedback">«Pseudo» = «som om». Den oppfører seg som en klasse, men matcher tilstand i stedet for attributt.</div>
+    </div>
+  </div></section>
+
+  <section id="lenker"><div class="container">
+    <div class="section-badge">02 · Lenketilstander</div>
+    <h2>De fire <em>lenketilstandene</em></h2>
+    <p>
+      En lenke (<code>&lt;a href="…"&gt;</code>) kan være i fire tilstander
+      som hver har sin egen pseudo-klasse:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key"><code>:link</code></div><div class="fc-val">Lenken er ikke besøkt enda. Standard farge i nettlesere er typisk blå.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:visited</code></div><div class="fc-val">Lenken er besøkt før (basert på nettleserhistorikk). Tradisjonelt lilla.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:hover</code></div><div class="fc-val">Musen ligger over lenken akkurat nå.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:active</code></div><div class="fc-val">Lenken er trykket på (museknappen er nede). Kortvarig tilstand.</div></div>
+    </div>
+
+<pre><code>a:link    { color: #0060A3; }
+a:visited { color: #6b4ea8; }
+a:hover   { color: red; text-decoration: underline; }
+a:active  { color: orange; }</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Hva matcher pseudo-klassen <code>:visited</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Lenker som er åpne i en annen fane</li>
+        <li class="mcq-opt" data-correct="1">Lenker brukeren har besøkt før (ifølge nettleserhistorikken)</li>
+        <li class="mcq-opt" data-correct="0">Bilder med alt-tekst</li>
+        <li class="mcq-opt" data-correct="0">Lenker som peker til samme domene</li>
+      </ul>
+      <div class="mcq-feedback">Tilstanden er basert på nettleserhistorikken — derfor kan ikke JavaScript lese den fritt (privatlivshensyn).</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Når matcher <code>:active</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Når en lenke er åpnet i en annen fane</li>
+        <li class="mcq-opt" data-correct="1">Akkurat i øyeblikket museknappen er trykket ned på elementet</li>
+        <li class="mcq-opt" data-correct="0">Når elementet har <code>:focus</code></li>
+        <li class="mcq-opt" data-correct="0">Når brukeren har scrollet til elementet</li>
+      </ul>
+      <div class="mcq-feedback">Kortvarig tilstand mens museknappen holdes nede. Slippes den, går elementet typisk over til <code>:visited</code> (hvis lenke).</div>
+    </div>
+  </div></section>
+
+  <section id="rekkefolge"><div class="container">
+    <div class="section-badge">03 · Rekkefølgen</div>
+    <h2>Rekkefølgen er <em>kritisk</em></h2>
+    <p>
+      Pseudo-klassene har lik spesifisitet — derfor avgjør «siste regel
+      vinner» hvilken som er aktiv. Hvis du skriver <code>:hover</code>
+      <em>før</em> <code>:visited</code>, vil <code>:hover</code>-stilen
+      bli «slått ut» når lenken er besøkt.
+    </p>
+    <p>
+      Riktig rekkefølge er <strong>LVHA</strong> — Link, Visited, Hover,
+      Active:
+    </p>
+
+<pre><code>a:link    { … }
+a:visited { … }
+a:hover   { … }
+a:active  { … }</code></pre>
+
+    <div class="callout-warn">
+      <div class="label">Pensum-poeng</div>
+      <p>Hvis du opplever at <code>:hover</code> ikke virker når du beveger musen over en besøkt lenke — sjekk rekkefølgen. <code>:visited</code> kommer da og overstyrer.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Hva er den korrekte rekkefølgen for lenke-pseudoklassene?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>:hover, :active, :link, :visited</code></li>
+        <li class="mcq-opt" data-correct="1"><code>:link, :visited, :hover, :active</code></li>
+        <li class="mcq-opt" data-correct="0">Rekkefølgen spiller ingen rolle</li>
+        <li class="mcq-opt" data-correct="0"><code>:active, :hover, :visited, :link</code></li>
+      </ul>
+      <div class="mcq-feedback">LVHA — huskeregel: «LoVe HAte». Pensum-spørsmål.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Hvorfor er rekkefølgen viktig?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Fordi nettleseren parser CSS bakover</li>
+        <li class="mcq-opt" data-correct="1">Fordi pseudo-klassene har lik spesifisitet, så «siste regel vinner» avgjør hvilken som er aktiv</li>
+        <li class="mcq-opt" data-correct="0">Fordi <code>:link</code> er den eneste som faktisk fungerer</li>
+        <li class="mcq-opt" data-correct="0">Det er ikke viktig — bare en stilkonvensjon</li>
+      </ul>
+      <div class="mcq-feedback">Når flere kan være sanne samtidig (f.eks. <code>:visited</code> og <code>:hover</code>), bestemmer rekkefølgen i kildefila hvilken som overstyrer.</div>
+    </div>
+  </div></section>
+
+  <section id="andre"><div class="container">
+    <div class="section-badge">04 · Andre pseudo-klasser</div>
+    <h2>Andre <em>nyttige</em> pseudo-klasser</h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key"><code>:checked</code></div><div class="fc-val">Matcher <code>&lt;input type="checkbox"&gt;</code> eller <code>&lt;input type="radio"&gt;</code> som er avkrysset, eller <code>&lt;option&gt;</code> som er valgt.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:focus</code></div><div class="fc-val">Matcher elementet som har tastaturfokus akkurat nå (typisk en <code>&lt;input&gt;</code> man tabber til).</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:disabled</code></div><div class="fc-val">Matcher form-felter som er deaktivert med <code>disabled</code>-attributtet.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>:first-child</code> / <code>:last-child</code></div><div class="fc-val">Matcher det første eller siste barnet av forelderen.</div></div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.12</div>
+      <div class="q-text">Hva matcher <code>input:checked</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle input-felter</li>
+        <li class="mcq-opt" data-correct="1">Avkryssede checkbox-er eller radioknapper</li>
+        <li class="mcq-opt" data-correct="0">Felter med tekst i</li>
+        <li class="mcq-opt" data-correct="0">Felter med <code>required</code>-attributt</li>
+      </ul>
+      <div class="mcq-feedback"><code>:checked</code> matcher status av et form-element — typisk checkbox som er huket av.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">05 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ul>
+        <li><strong>Feil rekkefølge på <code>:hover</code> og <code>:visited</code>.</strong> Klassisk eksamensfelle. Sett <code>:hover</code> sist (etter <code>:visited</code>).</li>
+        <li><strong>Glemmer <code>:focus</code>.</strong> Hvis du kun styler <code>:hover</code>, mister tastaturbrukere visuell tilbakemelding når de tabber gjennom siden. God praksis: style <code>:hover, :focus</code> sammen.</li>
+        <li><strong>Bruker for sterke effekter på <code>:visited</code>.</strong> Av personvernhensyn er det begrenset hva du kan endre — typisk bare farge, ikke størrelse eller bakgrunn.</li>
+        <li><strong>Skriver <code>:hover</code> uten kolon.</strong> Det gjør den til etterkommer-selektor av et tenkt <code>hover</code>-element.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hva er forskjellen på <code>:link</code> og <code>:visited</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Ingen — de er synonymer</li>
+        <li class="mcq-opt" data-correct="1"><code>:link</code> matcher lenker som ikke er besøkt; <code>:visited</code> matcher dem som er besøkt</li>
+        <li class="mcq-opt" data-correct="0"><code>:link</code> er for interne lenker; <code>:visited</code> for eksterne</li>
+        <li class="mcq-opt" data-correct="0"><code>:link</code> matcher knapper, <code>:visited</code> matcher lenker</li>
+      </ul>
+      <div class="mcq-feedback">Tilstanden er basert på brukerens nettleserhistorikk.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken huskeregel hjelper deg å huske rekkefølgen for lenke-pseudoklassene?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">«Hover Hates Visited»</li>
+        <li class="mcq-opt" data-correct="1">«LoVe HAte» (LVHA — Link, Visited, Hover, Active)</li>
+        <li class="mcq-opt" data-correct="0">«ABC: Active Before Cascade»</li>
+        <li class="mcq-opt" data-correct="0">«Visited Always Last»</li>
+      </ul>
+      <div class="mcq-feedback">«LoVe HAte» — første bokstav i hver pseudo-klasse i riktig rekkefølge.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Du skriver <code>a:hover { color: red; }</code> over <code>a:visited { color: purple; }</code> i CSS-en. Hva skjer når du beveger musen over en besøkt lenke?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Lenken blir rød</li>
+        <li class="mcq-opt" data-correct="1">Lenken blir lilla — fordi <code>:visited</code> står sist og overstyrer</li>
+        <li class="mcq-opt" data-correct="0">Det blir feilmelding</li>
+        <li class="mcq-opt" data-correct="0">Begge fargene blandes</li>
+      </ul>
+      <div class="mcq-feedback">Klassisk feil. Bytt rekkefølgen så <code>:hover</code> kommer sist (LVHA).</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../" class="subpage-card">
+        <div class="sp-icon">FERDIG · Kap 3</div>
+        <div class="sp-title">Tilbake til kapittel 3</div>
+        <div class="sp-desc">Du har dekket alle 12 underkapitler. Tilbake til oversikten — eller ta kapittel-eksamen i flashcard-form.</div>
+        <div class="sp-arrow">&larr; Tilbake</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

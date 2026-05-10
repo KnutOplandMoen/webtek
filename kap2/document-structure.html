@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.1 — Document structure</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.1: Document structure">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel A · Pensum 1.4.1</div>
+      <h1>Document <em>structure</em></h1>
+      <p class="lede">
+        Hvert HTML-dokument starter med en doktypedeklarasjon og bygges
+        opp som et tre med <code>&lt;html&gt;</code> som rot,
+        <code>&lt;head&gt;</code> for metadata, og <code>&lt;body&gt;</code>
+        for det synlige innholdet.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.1</span>
+        <span class="pill">Forelesning 3</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hva">
+    <div class="container">
+      <div class="section-badge">01 · Hva</div>
+      <h2>Et HTML-dokument er et <em>tre</em></h2>
+      <p>
+        Et HTML-dokument må alltid begynne med
+        <code>&lt;!DOCTYPE html&gt;</code>. Dette er en deklarasjon —
+        ikke et element — som forteller nettleseren at dokumentet skal
+        tolkes som HTML5. Uten den faller nettleseren tilbake til
+        «quirks mode» og gjetter seg fram til hvilken HTML-versjon
+        siden bruker. Resultatet kan se forskjellig ut i forskjellige
+        nettlesere.
+      </p>
+      <p>
+        Etter doktypen kommer rotelementet <code>&lt;html&gt;</code>.
+        Det har nøyaktig <strong>to barn</strong>:
+        <code>&lt;head&gt;</code> (metadata, ikke synlig) og
+        <code>&lt;body&gt;</code> (alt synlig innhold). Hvert element
+        nedover kan ha barn igjen, og slik dannes
+        <strong>dokumenttreet</strong>.
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Skjelett</div>
+          <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="no"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Min første side&lt;/title&gt;
+    &lt;link href="style.css" rel="stylesheet"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hei verden&lt;/h1&gt;
+    &lt;p&gt;Et avsnitt.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="head">
+    <div class="container">
+      <div class="section-badge">02 · Head</div>
+      <h2>Det <em>usynlige</em> hodet</h2>
+      <p>
+        <code>&lt;head&gt;</code> inneholder informasjon
+        <em>om</em> dokumentet, ikke innholdet selv. Pensum 1.4.1
+        nevner særlig tre nøkkeltagger:
+      </p>
+      <ul>
+        <li>
+          <code>&lt;meta charset="UTF-8"&gt;</code> — forteller
+          nettleseren hvordan tegnene skal tolkes. Med UTF-8 får du
+          riktig visning av æ, ø, å og andre ikke-latinske tegn.
+        </li>
+        <li>
+          <code>&lt;title&gt;</code> — vises i fanen og brukes som
+          navn på bokmerker. Bør reflektere både sidens tittel og
+          hvor på nettstedet brukeren er.
+        </li>
+        <li>
+          <code>&lt;link href="style.css" rel="stylesheet"&gt;</code>
+          — kobler inn et eksternt stilark. <code>&lt;link&gt;</code>
+          kan også koble inn andre ressurser (favicon, fonter, mm.).
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="body">
+    <div class="container">
+      <div class="section-badge">03 · Body</div>
+      <h2>Block vs <em>inline</em></h2>
+      <p>
+        Alt synlig innhold ligger i <code>&lt;body&gt;</code>.
+        Elementene inni kan grovt deles i to klasser etter sin
+        standard <code>display</code>-verdi:
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Block-elementer</div>
+          <div class="fc-val">
+            Starter alltid på ny linje og fyller hele tilgjengelige bredde.
+            Eksempler fra pensum: <code>div</code>, <code>h1</code>–<code>h6</code>,
+            <code>p</code>, <code>form</code>.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Inline-elementer</div>
+          <div class="fc-val">
+            Starter ikke på ny linje, og bruker kun så mye plass som
+            innholdet trenger. Eksempler fra pensum: <code>span</code>,
+            <code>a</code>, <code>img</code>.
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="label">Innrykk er kun for mennesker</div>
+        <p>
+          Nettleseren bryr seg ikke om mellomrom eller linjeskift i
+          kilden — den slår dem sammen ved render (white-space
+          collapsing). Konsekvent innrykk gjør det likevel lett å se
+          hvilke elementer som er barn av hvilke.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">04 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hva forteller <code>&lt;!DOCTYPE html&gt;</code> nettleseren?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">At dokumentet er XML</li>
+          <li class="mcq-opt" data-correct="1">At dokumentet skal tolkes som HTML5</li>
+          <li class="mcq-opt" data-correct="0">Hvilket språk innholdet er på</li>
+          <li class="mcq-opt" data-correct="0">Hvor stylesheet ligger</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.1: deklarasjonen forteller nettleseren at dette er HTML5. Uten den går nettleseren i «quirks mode».</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hvilke to elementer er direkte barn av <code>&lt;html&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;header&gt;</code> og <code>&lt;footer&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;head&gt;</code> og <code>&lt;body&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;meta&gt;</code> og <code>&lt;body&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;title&gt;</code> og <code>&lt;main&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.1: «The child elements of <code>&lt;html&gt;</code> is the <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> elements.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hvorfor er <code>&lt;meta charset="UTF-8"&gt;</code> viktig på en norsk side?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Den gir bedre SEO på Google</li>
+          <li class="mcq-opt" data-correct="0">Den gjør siden raskere å laste</li>
+          <li class="mcq-opt" data-correct="1">Uten den kan æ, ø og å vises feil</li>
+          <li class="mcq-opt" data-correct="0">Den definerer dokumentets språk</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.1: <code>&lt;meta charset&gt;</code> forteller nettleseren hvordan tegnene skal tolkes. UTF-8 dekker nordiske tegn riktig.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hva er forskjellen på et blokkelement og et inline-element?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Blokkelementer kan ha attributter, inline kan ikke</li>
+          <li class="mcq-opt" data-correct="1">Blokkelementer starter på ny linje og fyller bredden; inline gjør ikke det</li>
+          <li class="mcq-opt" data-correct="0">Inline-elementer kan ikke styles med CSS</li>
+          <li class="mcq-opt" data-correct="0">Bare blokkelementer kan ha barn-elementer</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.1: «Block level elements always start on a new line and takes up the full width available. Inline elements does not start on a new line.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Hvilket av disse elementene er <em>ikke</em> et blokkelement i følge pensum 1.4.1?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;div&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;p&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;form&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;a&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.1 lister <code>&lt;a&gt;</code> som inline-element sammen med <code>&lt;span&gt;</code> og <code>&lt;img&gt;</code>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="feller">
+    <div class="container">
+      <div class="section-badge">05 · Feller</div>
+      <h2>Vanlige <em>feller</em></h2>
+
+      <div class="callout-warn">
+        <div class="label">Manglende DOCTYPE</div>
+        <p>
+          Uten <code>&lt;!DOCTYPE html&gt;</code> går nettleseren i
+          quirks mode. Resultatet er at boks-modellen og marg-håndtering
+          oppfører seg annerledes enn forventet — og forskjellig
+          mellom nettlesere.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Glemt charset</div>
+        <p>
+          Uten <code>&lt;meta charset="UTF-8"&gt;</code> kan
+          nordiske tegn rendres som spørsmålstegn eller rare
+          symboler. Sett den som første barn av <code>&lt;head&gt;</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.4 — Lister</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.4: Lister">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel D · Pensum 1.4.4</div>
+      <h1>Lister — ordnede og <em>uordnede</em></h1>
+      <p class="lede">
+        To listetyper: nummererte (<code>&lt;ol&gt;</code>) og
+        kulepunkter (<code>&lt;ul&gt;</code>). Begge bruker
+        <code>&lt;li&gt;</code> for hvert listepunkt — og kan nøstes
+        i hverandre.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.4</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="ol-ul">
+    <div class="container">
+      <div class="section-badge">01 · ol vs ul</div>
+      <h2>Ordnet og <em>uordnet</em></h2>
+      <p>
+        Pensum 1.4.4 sier at vi har to typer lister i HTML, og at
+        forskjellen ligger i hvordan listepunktene markeres:
+        <strong>ordnede lister</strong> bruker tall, mens
+        <strong>uordnede lister</strong> bruker kuler.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Ordnet liste</div>
+          <pre>&lt;ol&gt;
+  &lt;li&gt;List element&lt;/li&gt;
+  &lt;li&gt;List elementer&lt;/li&gt;
+  &lt;li&gt;Even list elementer&lt;/li&gt;
+  &lt;li&gt;List elementest&lt;/li&gt;
+&lt;/ol&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Uordnet liste</div>
+          <pre>&lt;ul&gt;
+  &lt;li&gt;List element&lt;/li&gt;
+  &lt;li&gt;List elementer&lt;/li&gt;
+  &lt;li&gt;Even list elementer&lt;/li&gt;
+  &lt;li&gt;List elementest&lt;/li&gt;
+&lt;/ul&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Listepunkt-elementet <code>&lt;li&gt;</code> er felles for
+        begge — det er bare wrapperen som skifter mellom
+        <code>&lt;ol&gt;</code> og <code>&lt;ul&gt;</code>.
+      </p>
+    </div>
+  </section>
+
+  <section id="nosting">
+    <div class="container">
+      <div class="section-badge">02 · Nøsting</div>
+      <h2>Lister inni <em>lister</em></h2>
+      <p>
+        Du kan nøste én liste inni en annen ved å putte en hel
+        <code>&lt;ol&gt;</code> eller <code>&lt;ul&gt;</code> inni
+        et <code>&lt;li&gt;</code>. Nøkkelen er at den ytre
+        <code>&lt;li&gt;</code> ikke lukkes før etter den indre
+        listen.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Nøstet ordnet liste</div>
+          <pre>&lt;ol&gt;
+  &lt;li&gt;List element&lt;/li&gt;
+  &lt;li&gt;List within a list
+    &lt;ol&gt;
+      &lt;li&gt;Look at this list&lt;/li&gt;
+      &lt;li&gt;It is within another list&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;I&apos;m just a regular list element&lt;/li&gt;
+&lt;/ol&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Du kan blande typer — for eksempel en <code>&lt;ul&gt;</code>
+        nøstet inni en <code>&lt;ol&gt;</code>. Bare husk å åpne og
+        lukke med samme tag-navn.
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">03 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilken tag lager en nummerert liste?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;ul&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;ol&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;li&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;list&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.4: <code>&lt;ol&gt;</code> = ordered list (nummerert).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hvilken tag bruker du for hvert listepunkt?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;item&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;p&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;li&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;ul&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.4: <code>&lt;li&gt;</code> = list item — felles for både ordnede og uordnede lister.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hvilken tag lager en uordnet liste (med kulepunkter)?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1"><code>&lt;ul&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;ol&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;bul&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;list&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.4: <code>&lt;ul&gt;</code> = unordered list (uordnet, kulepunkter).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvor i koden lukker du en ytre <code>&lt;li&gt;</code> som inneholder en nøstet liste?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Før den indre listen åpnes</li>
+          <li class="mcq-opt" data-correct="1">Etter at den indre listen er lukket</li>
+          <li class="mcq-opt" data-correct="0">Den ytre <code>&lt;li&gt;</code> trenger ingen lukketag</li>
+          <li class="mcq-opt" data-correct="0">Lukketaggen plasseres på en valgfri linje</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.4: «the list element is closed after the sublist is written.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Kan du nøste en <code>&lt;ul&gt;</code> inni en <code>&lt;ol&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Ja — så lenge åpnings- og lukketagger matcher</li>
+          <li class="mcq-opt" data-correct="0">Nei, indre liste må være samme type som ytre</li>
+          <li class="mcq-opt" data-correct="0">Nei, kun ordnede lister kan nøstes</li>
+          <li class="mcq-opt" data-correct="0">Bare hvis du oppgir <code>type</code>-attributtet</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.4: «You can also mix list types, just remember to open and close with the same tags.»</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

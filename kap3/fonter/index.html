@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.11 — Tekst og fonter · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.11 Tekst og fonter">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.11</div>
+      <h1>Tekst og <em>fonter</em></h1>
+      <p class="lede">
+        Typografi er ofte forskjellen mellom en side som ser «hjemmelaget» ut
+        og en som ser profesjonell ut. CSS gir deg kontroll over font-familie,
+        vekt, størrelse, linjehøyde, justering og mer.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.11 Text and fonts</span>
+        <span class="pill">font-family · font-size · line-height</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#klasser">Tre typeface-klasser</a></li>
+        <li><span class="toc-num">02</span><a href="#stack">Font-stack med fallback</a></li>
+        <li><span class="toc-num">03</span><a href="#vekt-storrelse">Vekt og størrelse</a></li>
+        <li><span class="toc-num">04</span><a href="#linje">Linjehøyde og justering</a></li>
+        <li><span class="toc-num">05</span><a href="#tilgjengelighet">Lesbarhet</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="klasser"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.11</div>
+    <h2>Tre typeface-<em>klasser</em></h2>
+    <p>
+      Pensum deler skrifttyper i tre grunnklasser:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Serif</div><div class="fc-val">Med små «føtter» på bokstavene. Klassisk, formell, lesbar i lang tekst. Eksempel: Times New Roman, Georgia, Newsreader.</div></div>
+      <div class="fact-card"><div class="fc-key">Sans-serif</div><div class="fc-val">Uten føtter. Moderne, ren, lett å lese på skjerm. Eksempel: Arial, Helvetica, IBM Plex Sans.</div></div>
+      <div class="fact-card"><div class="fc-key">Monospace</div><div class="fc-val">Hvert tegn har samme bredde. Brukes for kode og tekniske visninger. Eksempel: Courier New, Menlo, IBM Plex Mono.</div></div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hvilken kategori hører Arial til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Serif</li>
+        <li class="mcq-opt" data-correct="1">Sans-serif</li>
+        <li class="mcq-opt" data-correct="0">Monospace</li>
+        <li class="mcq-opt" data-correct="0">Cursive</li>
+      </ul>
+      <div class="mcq-feedback">Arial er den mest kjente sans-serif-fonten — uten føtter, og forhåndsinstallert på de fleste systemer.</div>
+    </div>
+  </div></section>
+
+  <section id="stack"><div class="container">
+    <div class="section-badge">02 · Font-stack</div>
+    <h2><em>Font-stack</em> med fallback</h2>
+    <p>
+      Du oppgir <code>font-family</code> som en <strong>liste</strong> av
+      fonter, separert med komma. Nettleseren bruker den første som er
+      tilgjengelig på maskinen. Pensum krever at du avslutter med en
+      <em>generisk</em> klasse (<code>serif</code>, <code>sans-serif</code>
+      eller <code>monospace</code>) som ekstrem fallback.
+    </p>
+
+<pre><code>body {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+}</code></pre>
+
+    <ol class="steps">
+      <li>Først prøver nettleseren <strong>Newsreader</strong> (gjerne lastet via Google Fonts).</li>
+      <li>Hvis ikke tilgjengelig, bruker den <strong>Georgia</strong> (som er web-safe).</li>
+      <li>Faller tilbake på <strong>Times New Roman</strong> (web-safe på Windows).</li>
+      <li>Til slutt: brukerens generiske <strong>serif</strong>-font.</li>
+    </ol>
+
+    <div class="callout">
+      <div class="label">Hvorfor anførselstegn?</div>
+      <p>Fontnavn med mellomrom (som «Times New Roman») må stå i anførselstegn — uten dem oppfattes hvert ord som et eget fontnavn.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hvorfor avsluttes en <code>font-family</code>-liste typisk med <code>serif</code> eller <code>sans-serif</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">For å gjøre fontene tjukkere</li>
+        <li class="mcq-opt" data-correct="1">Som fallback hvis ingen av de andre fontene er tilgjengelige på klienten</li>
+        <li class="mcq-opt" data-correct="0">Det er en kommentar</li>
+        <li class="mcq-opt" data-correct="0">For å aktivere kursiv</li>
+      </ul>
+      <div class="mcq-feedback">Generisk familie til slutt = nettleseren har alltid <em>noe</em> å bruke. Krav i pensum.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hvorfor settes fontnavn med mellomrom i anførselstegn?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">For å gi dem høyere presedens</li>
+        <li class="mcq-opt" data-correct="1">Fordi nettleseren ellers tolker hvert ord som separat fontnavn</li>
+        <li class="mcq-opt" data-correct="0">Det er kun for stil/lesbarhet i koden</li>
+        <li class="mcq-opt" data-correct="0">For å markere at fonten er kommersiell</li>
+      </ul>
+      <div class="mcq-feedback">Komma er skilletegnet mellom fonter. Uten anførselstegn ville «Times New Roman» blitt tre forskjellige fonter.</div>
+    </div>
+  </div></section>
+
+  <section id="vekt-storrelse"><div class="container">
+    <div class="section-badge">03 · Vekt og størrelse</div>
+    <h2><em>Font-weight</em> og <em>font-size</em></h2>
+    <p>
+      <code>font-weight</code> styrer hvor «tjukk» teksten er. Vanlige
+      verdier:
+    </p>
+    <ul>
+      <li><code>normal</code> (= 400) — standard</li>
+      <li><code>bold</code> (= 700) — fet</li>
+      <li>Numeriske: <code>100, 200, …, 900</code> — der 100 er superlett og 900 er superblack. Hvilke som faktisk virker avhenger av fonten.</li>
+    </ul>
+    <p>
+      <code>font-size</code> styrer størrelsen. Pensum nevner flere enheter:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key"><code>px</code></div><div class="fc-val">Piksler — fast størrelse, uavhengig av brukerens nettleserinnstillinger.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>em</code></div><div class="fc-val">Relativ til foreldrelementets font-size. <code>1.5em</code> = 1.5× forelderens.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>rem</code></div><div class="fc-val">Relativ til <em>rot</em>-elementet (<code>html</code>). Gir mer forutsigbar skalering.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>%</code></div><div class="fc-val">Relativ til forelder, akkurat som <code>em</code>.</div></div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hvilken numerisk verdi tilsvarer <code>font-weight: bold</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">100</li>
+        <li class="mcq-opt" data-correct="0">400</li>
+        <li class="mcq-opt" data-correct="1">700</li>
+        <li class="mcq-opt" data-correct="0">1000</li>
+      </ul>
+      <div class="mcq-feedback"><code>bold = 700</code>, <code>normal = 400</code>. Skalaen går fra 100 (lettest) til 900 (tyngst).</div>
+    </div>
+  </div></section>
+
+  <section id="linje"><div class="container">
+    <div class="section-badge">04 · Linjehøyde og justering</div>
+    <h2>Linjeavstand og <em>tekstjustering</em></h2>
+    <p>
+      <code>line-height</code> bestemmer avstanden mellom linjene i et
+      avsnitt. Den oppgis ofte uten enhet — da er den et multiplum av
+      <code>font-size</code>:
+    </p>
+
+<pre><code>p {
+  font-size: 16px;
+  line-height: 1.5;   /* = 24px effektivt */
+}</code></pre>
+
+    <p>
+      Pensum gir tommelfingerregelen: 1.2× til 1.5× fontstørrelsen.
+      Tettere enn det er klaustrofobisk; mer enn det blir luftig som diktbok.
+    </p>
+
+    <p>
+      <code>text-align</code> styrer horisontal justering av teksten:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key"><code>left</code></div><div class="fc-val">Standard på de fleste språk. Ujevn høyrekant.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>right</code></div><div class="fc-val">Ujevn venstrekant. Brukes for høyrestilte språk eller spesielle effekter.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>center</code></div><div class="fc-val">Sentrert tekst. Brukes typisk på overskrifter, ikke lange avsnitt.</div></div>
+      <div class="fact-card"><div class="fc-key"><code>justify</code></div><div class="fc-val">Strekker linjene så hver linje er like bred (som i aviser). Kan gi store luker mellom ord.</div></div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hva er pensums tommelfingerregel for <code>line-height</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Eksakt 16px</li>
+        <li class="mcq-opt" data-correct="1">Mellom 1.2× og 1.5× fontstørrelsen</li>
+        <li class="mcq-opt" data-correct="0">Det dobbelte av fontstørrelsen</li>
+        <li class="mcq-opt" data-correct="0">Maks 0.8× fontstørrelsen</li>
+      </ul>
+      <div class="mcq-feedback">1.2–1.5× gir nok luft til at teksten er behagelig å lese, uten å bli «tom» mellom linjene.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.11</div>
+      <div class="q-text">Hva betyr <code>text-align: justify</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Sentrer teksten</li>
+        <li class="mcq-opt" data-correct="0">Roter teksten 90 grader</li>
+        <li class="mcq-opt" data-correct="1">Strekk linjene så hver linje er like bred (jevn både venstre- og høyrekant)</li>
+        <li class="mcq-opt" data-correct="0">Skjul teksten</li>
+      </ul>
+      <div class="mcq-feedback">Som i aviser. Funker bra på lange linjer, men kan gi rare ord-mellomrom på smale kolonner.</div>
+    </div>
+  </div></section>
+
+  <section id="tilgjengelighet"><div class="container">
+    <div class="section-badge">05 · Lesbarhet</div>
+    <h2><em>Lesbarhet</em> og tilgjengelighet</h2>
+    <p>
+      Pensum 1.6.11 påpeker tre ting som påvirker lesbarheten direkte:
+    </p>
+    <ol class="steps">
+      <li><strong>Kontrast</strong> mellom tekst og bakgrunn — særlig viktig for synshemmede.</li>
+      <li><strong>Linjelengde</strong> — for lange linjer er slitsomme. Idealet er 50–75 tegn per linje.</li>
+      <li><strong>Linjehøyde</strong> — for lite gir tett tekst, for mye løsriver linjene fra hverandre.</li>
+    </ol>
+    <div class="callout">
+      <div class="label">Praktisk konsekvens</div>
+      <p>God typografi handler ikke om å være «kreativ» med rare fonter. Det handler om å gjøre lange tekster behagelige å lese, på alle skjermer.</p>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">06 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken egenskap velger skrifttype for et element?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>font-style</code></li>
+        <li class="mcq-opt" data-correct="1"><code>font-family</code></li>
+        <li class="mcq-opt" data-correct="0"><code>typeface</code></li>
+        <li class="mcq-opt" data-correct="0"><code>font-weight</code></li>
+      </ul>
+      <div class="mcq-feedback"><code>font-family</code> tar en liste med fonter; <code>font-style</code> styrer kursiv (italic), og <code>font-weight</code> styrer fet/lett.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken kategori hører Courier til?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Serif</li>
+        <li class="mcq-opt" data-correct="0">Sans-serif</li>
+        <li class="mcq-opt" data-correct="1">Monospace</li>
+        <li class="mcq-opt" data-correct="0">Display</li>
+      </ul>
+      <div class="mcq-feedback">Courier er den klassiske skrivemaskin-fonten — alle tegn samme bredde, derfor monospace.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvilken skrivemåte for <code>font-family</code> er riktig?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>font-family: Times New Roman, serif;</code></li>
+        <li class="mcq-opt" data-correct="1"><code>font-family: 'Times New Roman', serif;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>font-family: TimesNewRoman serif;</code></li>
+        <li class="mcq-opt" data-correct="0"><code>font: Times New Roman + serif;</code></li>
+      </ul>
+      <div class="mcq-feedback">Anførselstegn rundt fontnavn med mellomrom, komma mellom alternativene, generisk familie til slutt.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../pseudo-klasser/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.12</div>
+        <div class="sp-title">Pseudo-klasser</div>
+        <div class="sp-desc">:link, :visited, :hover, :active, :checked. Hvorfor rekkefølgen er kritisk.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.4–1.6.5 — Kaskaden og arv · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.4–1.6.5 Kaskaden og arv">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.4 – 1.6.5</div>
+      <h1>Kaskaden og <em>arv</em></h1>
+      <p class="lede">
+        Når flere CSS-regler treffer samme element, må nettleseren velge én.
+        Når en forelder har en stil, må barna bestemme om de skal beholde
+        den. Disse to mekanismene — <strong>kaskaden</strong> og
+        <strong>arv</strong> — er hjertet av CSS.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.4 The Cascade</span>
+        <span class="pill">1.6.5 Inheritance</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor kaskade?</a></li>
+        <li><span class="toc-num">02</span><a href="#kilde">Fem kilder for stil</a></li>
+        <li><span class="toc-num">03</span><a href="#spesifisitet">Spesifisitet</a></li>
+        <li><span class="toc-num">04</span><a href="#siste">Siste regel + !important</a></li>
+        <li><span class="toc-num">05</span><a href="#arv">Arv</a></li>
+        <li><span class="toc-num">06</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="hvorfor"><div class="container">
+    <div class="section-badge">01 · Pensum 1.6.4</div>
+    <h2>Hvorfor trenger vi en <em>kaskade</em>?</h2>
+    <p>
+      I et ekte stilark vil ofte mange regler matche det samme elementet.
+      Du har kanskje en generell <code>p</code>-regel, en regel for klassen
+      <code>.varsel</code>, og en spesifikk regel for <code>#topp</code>.
+      Hvis to av dem prøver å sette <code>color</code>, må nettleseren
+      bestemme seg.
+    </p>
+    <p>
+      Pensum 1.6.4 sier at <strong>kaskaden</strong> er settet med regler som
+      avgjør hvem som vinner. Tre faktorer teller, i denne rekkefølgen:
+    </p>
+    <ol class="steps">
+      <li><strong>Spesifisitet</strong> — mer spesifikk selektor vinner.</li>
+      <li><strong>Rekkefølge</strong> — ved lik spesifisitet vinner regelen som er skrevet sist.</li>
+      <li><strong><code>!important</code></strong> — overstyrer (nesten) alt.</li>
+    </ol>
+  </div></section>
+
+  <section id="kilde"><div class="container">
+    <div class="section-badge">02 · Pensum 1.6.4</div>
+    <h2>Fem <em>kilder</em> til stil</h2>
+    <p>
+      Stil kan komme fra fem ulike steder. Pensum lister dem i synkende
+      presedens — øverst slår nederst, gitt at spesifisiteten er lik:
+    </p>
+    <ol class="steps">
+      <li><strong>Inline-stil</strong> — direkte på elementet via attributtet <code>style="…"</code>. Høyest presedens.</li>
+      <li><strong>Embedded styles</strong> — i en <code>&lt;style&gt;</code>-tag inni HTML-dokumentet, vanligvis i <code>&lt;head&gt;</code>.</li>
+      <li><strong>External style sheet</strong> — egen <code>.css</code>-fil koblet inn med <code>&lt;link&gt;</code>.</li>
+      <li><strong>Brukerdefinerte regler</strong> — stilark sluttbrukeren selv har installert i nettleseren (f.eks. for tilgjengelighet).</li>
+      <li><strong>Browser default</strong> — nettleserens standardstil. Brukes når ingen andre nivåer har sagt noe.</li>
+    </ol>
+    <div class="callout-blue">
+      <div class="label">Praktisk konsekvens</div>
+      <p>Hvis du undres over hvorfor en regel ikke slår igjennom: sjekk om det finnes inline-stil eller embedded stil som har høyere presedens. Inline-stil i HTML-en din kan «overdøve» det fineste eksterne stilarket.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">Hvilken stil-kilde har høyest presedens i kaskaden?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">External style sheet</li>
+        <li class="mcq-opt" data-correct="0">Embedded <code>&lt;style&gt;</code>-blokk</li>
+        <li class="mcq-opt" data-correct="1">Inline <code>style="…"</code> på elementet</li>
+        <li class="mcq-opt" data-correct="0">Browser default</li>
+      </ul>
+      <div class="mcq-feedback">Inline-stil ligger nærmest elementet og overstyrer både embedded og external. Browser default har <em>lavest</em> presedens.</div>
+    </div>
+  </div></section>
+
+  <section id="spesifisitet"><div class="container">
+    <div class="section-badge">03 · Pensum 1.6.4</div>
+    <h2><em>Spesifisitet</em> — hvor presist peker du?</h2>
+    <p>
+      En selektor som peker mer presist på elementet, vinner over en mindre
+      presis. Pensum gir en grov rangering:
+    </p>
+    <ol class="steps">
+      <li><strong>ID-selektor</strong> (<code>#topp</code>) — mest spesifikk.</li>
+      <li><strong>Klasse-selektor</strong> (<code>.varsel</code>) — middels.</li>
+      <li><strong>Type-selektor</strong> (<code>p</code>, <code>div</code>) — mindre spesifikk.</li>
+      <li><strong>Universell selektor</strong> (<code>*</code>) — minst spesifikk.</li>
+    </ol>
+    <p>
+      Sammensatte selektorer summerer spesifisiteten. <code>p b</code> er mer
+      spesifikk enn <code>p</code> alene, fordi den krever <em>to</em> ting:
+      en <code>&lt;b&gt;</code> som ligger inni en <code>&lt;p&gt;</code>.
+    </p>
+
+<pre><code>p          { color: black; }   /* type           */
+.varsel    { color: orange; }  /* klasse — vinner over type */
+#topp      { color: red; }     /* id  — vinner over klasse  */</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">Hvilken selektor er mest spesifikk?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>p</code></li>
+        <li class="mcq-opt" data-correct="0"><code>.varsel</code></li>
+        <li class="mcq-opt" data-correct="1"><code>#topp</code></li>
+        <li class="mcq-opt" data-correct="0"><code>*</code></li>
+      </ul>
+      <div class="mcq-feedback">ID &gt; klasse &gt; type &gt; universell. ID kan kun forekomme én gang per side, så den peker veldig presist.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">Hvorfor vinner <code>p b</code> over <code>p</code> hvis begge treffer en <code>&lt;b&gt;</code> inni en <code>&lt;p&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Fordi <code>p b</code> står først i CSS-filen</li>
+        <li class="mcq-opt" data-correct="0">Fordi <code>b</code> er mer presis enn <code>p</code></li>
+        <li class="mcq-opt" data-correct="1">Fordi <code>p b</code> er mer spesifikk — den krever to elementer i en bestemt nesting</li>
+        <li class="mcq-opt" data-correct="0">Fordi <code>p</code> alene aldri matcher en <code>&lt;b&gt;</code></li>
+      </ul>
+      <div class="mcq-feedback">Sammensatte selektorer summerer spesifisitet. Begge regler treffer <code>&lt;b&gt;</code>-elementet (siden <code>p</code> matcher foreldre-<code>p</code>-en, men det er kun <code>p b</code> som er en sammensatt selektor som treffer selve <code>&lt;b&gt;</code>).</div>
+    </div>
+  </div></section>
+
+  <section id="siste"><div class="container">
+    <div class="section-badge">04 · Pensum 1.6.4</div>
+    <h2>Siste regel og <em><code>!important</code></em></h2>
+    <p>
+      Hvis to regler er <em>like</em> spesifikke og treffer samme egenskap på
+      samme element, vinner regelen som er skrevet <strong>sist</strong> —
+      altså lengst ned i CSS-filen (eller siste sammenkoblede stilark).
+    </p>
+
+<pre><code>.varsel { color: orange; }
+.varsel { color: green; }   /* vinner — siste regel */</code></pre>
+
+    <p>
+      <code>!important</code> markerer en erklæring som «ekstra viktig», og
+      overstyrer normal spesifisitet. Pensum advarer eksplisitt mot misbruk:
+      hvis to regler begge har <code>!important</code>, må nettleseren bruke
+      vanlige spesifisitetsregler igjen — og kaskaden blir uleselig.
+    </p>
+
+<pre><code>p          { color: black !important; }
+#topp      { color: red; }   /* taper, fordi p har !important */</code></pre>
+
+    <div class="callout-warn">
+      <div class="label">Pensum-advarsel</div>
+      <p>«Use sparingly.» <code>!important</code> bør være en siste utvei, gjerne i tredjeparts-stilark du ikke kan endre. I egen kode er det nesten alltid bedre å gjøre selektoren mer spesifikk.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">To regler er like spesifikke og setter samme egenskap. Hvilken vinner?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Den som står først i filen</li>
+        <li class="mcq-opt" data-correct="1">Den som står sist i filen</li>
+        <li class="mcq-opt" data-correct="0">Den med kortest selektor</li>
+        <li class="mcq-opt" data-correct="0">Den med mest erklæringer</li>
+      </ul>
+      <div class="mcq-feedback">Last rule wins — gitt lik spesifisitet bestemmer rekkefølgen i kildefila.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">Gitt <code>p { color: black !important; }</code> og <code>#topp { color: red; }</code> — hvilken farge får <code>&lt;p id="topp"&gt;</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Rød, fordi ID er mest spesifikk</li>
+        <li class="mcq-opt" data-correct="1">Svart, fordi <code>!important</code> overstyrer spesifisitet</li>
+        <li class="mcq-opt" data-correct="0">Grå, en kombinasjon</li>
+        <li class="mcq-opt" data-correct="0">Standardfarge fra nettleseren</li>
+      </ul>
+      <div class="mcq-feedback"><code>!important</code> går foran spesifisitet. Det er derfor pensum advarer mot misbruk — det «bryter» den vanlige logikken.</div>
+    </div>
+  </div></section>
+
+  <section id="arv"><div class="container">
+    <div class="section-badge">05 · Pensum 1.6.5</div>
+    <h2>Arv — hva <em>renner ned</em> til barna?</h2>
+    <p>
+      Når du setter <code>color</code> eller <code>font-family</code> på
+      <code>body</code>, ser du ofte at hele dokumentet får denne fargen
+      eller fonten — uten at du har skrevet en regel for hvert enkelt
+      barn-element. Det er <strong>arv</strong> i praksis.
+    </p>
+    <p>
+      Pensum 1.6.5 deler egenskapene i to grupper:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Arves automatisk</div><div class="fc-val"><code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>, <code>visibility</code> — typisk tekstrelaterte egenskaper.</div></div>
+      <div class="fact-card"><div class="fc-key">Arves <em>ikke</em></div><div class="fc-val"><code>border</code>, <code>margin</code>, <code>padding</code>, <code>background</code>, <code>width</code>, <code>height</code> — boks-relaterte egenskaper.</div></div>
+    </div>
+    <p>
+      Du kan tvinge arv selv med verdien <code>inherit</code>:
+    </p>
+
+<pre><code>.kort      { border: 2px solid black; }
+.kort &gt; *  { border: inherit; }   /* tvinger barna til å arve rammen */</code></pre>
+
+    <div class="callout">
+      <div class="label">Hvorfor er det slik?</div>
+      <p>Tankegangen i pensum: tekst-stil <em>bør</em> arves (du vil normalt ikke ha tre forskjellige fonter inni samme avsnitt), mens boks-egenskaper <em>bør ikke</em> arves (ellers ville en <code>border</code> på <code>body</code> dukket opp rundt hvert eneste underelement i hele siden).</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.5</div>
+      <div class="q-text">Hvilken egenskap arves IKKE automatisk fra forelder til barn?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0"><code>color</code></li>
+        <li class="mcq-opt" data-correct="0"><code>font-family</code></li>
+        <li class="mcq-opt" data-correct="1"><code>border</code></li>
+        <li class="mcq-opt" data-correct="0"><code>line-height</code></li>
+      </ul>
+      <div class="mcq-feedback">Boks-egenskaper som <code>border</code>, <code>margin</code> og <code>padding</code> arves ikke. Tekst-egenskaper gjør det.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.5</div>
+      <div class="q-text">Hvordan tvinger du en egenskap til å arve verdien fra forelder eksplisitt?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Med verdien <code>auto</code></li>
+        <li class="mcq-opt" data-correct="1">Med verdien <code>inherit</code></li>
+        <li class="mcq-opt" data-correct="0">Med <code>!parent</code></li>
+        <li class="mcq-opt" data-correct="0">Det går ikke å overstyre arv</li>
+      </ul>
+      <div class="mcq-feedback"><code>inherit</code> er nøkkelordet. <code>auto</code> brukes for layout (f.eks. <code>margin: auto</code> for sentrering), ikke for arv.</div>
+    </div>
+  </div></section>
+
+  <section id="scenario"><div class="container">
+    <div class="section-badge">06 · Eksamensscenario</div>
+    <h2>Hvilken <em>regel vinner</em>?</h2>
+    <div class="code-result two-col">
+      <div class="pane"><div class="pane-label">HTML</div><pre>&lt;div id="boks" class="varsel"&gt;
+  Hei!
+&lt;/div&gt;</pre></div>
+      <div class="pane"><div class="pane-label">CSS</div><pre>div          { color: black;  }
+.varsel      { color: orange; }
+#boks        { color: red;    }
+.varsel      { color: green;  }</pre></div>
+    </div>
+    <div class="callout">
+      <div class="label">Tankegangen</div>
+      <ol class="steps">
+        <li>Alle fire reglene matcher <code>div</code>-en.</li>
+        <li>Spesifisitet: <code>#boks</code> (ID) &gt; <code>.varsel</code> (klasse) &gt; <code>div</code> (type).</li>
+        <li>De to <code>.varsel</code>-reglene konkurrerer kun seg imellom (siste vinner: <code>green</code>) — men begge taper mot <code>#boks</code>.</li>
+        <li>Konklusjon: teksten blir <strong>rød</strong>.</li>
+      </ol>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Scenario</div>
+      <div class="q-text">Med samme HTML/CSS som over — hva blir fargen om vi i tillegg legger til <code>.varsel { color: blue !important; }</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Rød — ID slår alltid klasse</li>
+        <li class="mcq-opt" data-correct="1">Blå — <code>!important</code> overstyrer normal spesifisitet</li>
+        <li class="mcq-opt" data-correct="0">Grønn — siste regel</li>
+        <li class="mcq-opt" data-correct="0">Svart — type-regel som fallback</li>
+      </ul>
+      <div class="mcq-feedback"><code>!important</code> løfter erklæringen til «vinner», uavhengig av at <code>#boks</code> normalt ville vært mer spesifikk.</div>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">07 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.4</div>
+      <div class="q-text">Hvilken rekkefølge av faktorer avgjør hvilken regel som vinner?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Lengde av selektor → kommentarer → farge</li>
+        <li class="mcq-opt" data-correct="1">Spesifisitet → siste regel → <code>!important</code></li>
+        <li class="mcq-opt" data-correct="0">Alfabetisk rekkefølge på egenskap</li>
+        <li class="mcq-opt" data-correct="0">Tilfeldig — nettleseren velger</li>
+      </ul>
+      <div class="mcq-feedback">Pensum 1.6.4 lister disse tre faktorene som det som styrer kaskaden.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.5</div>
+      <div class="q-text">Hvorfor er det smart å sette <code>font-family</code> på <code>body</code> i stedet for på hvert element?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">For å gjøre filen større</li>
+        <li class="mcq-opt" data-correct="1">Fordi <code>font-family</code> arves — alle barn av <code>body</code> får samme font automatisk</li>
+        <li class="mcq-opt" data-correct="0">Fordi <code>font-family</code> bare virker på <code>body</code></li>
+        <li class="mcq-opt" data-correct="0">Fordi nettleseren ignorerer fonter på andre elementer</li>
+      </ul>
+      <div class="mcq-feedback">Tekst-egenskaper arves automatisk. DRY i praksis: skriv det én gang, virker overalt.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../selektorer/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.6</div>
+        <div class="sp-title">Selektorer</div>
+        <div class="sp-desc">Universell, type, klasse, ID, etterkommer, barn, søsken — og hvordan de kombineres.</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

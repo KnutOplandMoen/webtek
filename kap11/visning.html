@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 11.3 — Visning &amp; JSON</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 11</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 11.3: Visning &amp; JSON ↔ XML">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 11 · Underkapittel C · Pensum 1.14</div>
+      <h1>Visning &amp; <em>JSON</em></h1>
+      <p class="lede">
+        Hvordan vise XML stylet i nettleseren med CSS, og hvordan samme
+        data ser ut i JSON og XML side om side.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.14</span>
+        <span class="pill">Forelesning 13</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="rå-xml">
+    <div class="container">
+      <div class="section-badge">01 · Rå XML</div>
+      <h2>Hva skjer <em>uten</em> styling?</h2>
+      <p>
+        Åpner du et XML-dokument i nettleseren uten å koble til et
+        stilark, viser nettleseren råstoffet — gjerne fargelagt, men ellers
+        akkurat slik koden er skrevet. XML har ingen innebygd
+        presentasjon — taggene er dine egne og betyr ingenting visuelt.
+      </p>
+      <p>
+        For å vise data stylet kan du peke dokumentet på et CSS-stilark
+        eller et XSLT-stilark. Pensum 1.14 fokuserer på CSS-varianten.
+      </p>
+    </div>
+  </section>
+
+  <section id="css">
+    <div class="container">
+      <div class="section-badge">02 · Koble til CSS</div>
+      <h2>En <em>processing instruction</em></h2>
+      <p>
+        Etter prologen, før root-elementet, legger du inn en
+        <strong>xml-stylesheet</strong>-instruksjon. Den ligner på
+        XML-deklarasjonen i syntaks (<code>&lt;? … ?&gt;</code>):
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">persons.xml</div>
+          <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/css" href="stylesheet.css"?&gt;
+&lt;persons&gt;
+  &lt;person&gt;
+    &lt;name&gt;Name Nameson&lt;/name&gt;
+    &lt;height&gt;173&lt;/height&gt;
+    &lt;age&gt;23&lt;/age&gt;
+  &lt;/person&gt;
+&lt;/persons&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">stylesheet.css</div>
+          <pre>persons { display: block; font-family: serif; }
+person  { display: block; margin: 1em 0; padding: 0.5em;
+          border: 1px solid #ccc; }
+name    { display: block; font-weight: bold; font-size: 1.2em; }
+height, age { display: inline-block; margin-right: 1em; color: #666; }</pre>
+        </div>
+      </div>
+      <p>
+        CSS-en kjenner ingen XML-tagg fra før, så du må selv si at
+        <code>person</code> er en blokk, gi <code>name</code> fet skrift
+        osv. Selektorene er bare element-navnene — alt annet i CSS er som
+        vanlig.
+      </p>
+      <div class="callout-good">
+        <div class="label">Mental modell</div>
+        <p>
+          Tenk på det som å bygge HTML fra grunnen av: ingen
+          <code>display: block</code> arvet automatisk, ingen
+          standardstiler. Du må eksplisitt si hvordan hver av dine egne
+          tagger skal vises.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="json">
+    <div class="container">
+      <div class="section-badge">03 · JSON ↔ XML</div>
+      <h2>Samme data, <em>to former</em></h2>
+      <p>
+        XML og JSON brukes til samme jobb — utveksle data mellom systemer
+        — men har ulik form. Pensum 1.14 viser hvordan de ser ut side om
+        side. Det er nyttig å kunne oversette begge veier.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">JSON</div>
+          <pre>{
+  "person": {
+    "name": "Name Nameson",
+    "height": 173,
+    "age": 23
+  }
+}</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">XML</div>
+          <pre>&lt;person&gt;
+  &lt;name&gt;Name Nameson&lt;/name&gt;
+  &lt;height&gt;173&lt;/height&gt;
+  &lt;age&gt;23&lt;/age&gt;
+&lt;/person&gt;</pre>
+        </div>
+      </div>
+      <p>
+        Reglene for oversettelse er enkle:
+      </p>
+      <ul>
+        <li>JSON-objekt → XML-element med barn</li>
+        <li>JSON-nøkkel → XML-tag-navn</li>
+        <li>JSON-verdi (string/number) → XML-tekstinnhold</li>
+        <li>JSON-array → flere søsken-elementer med samme tag-navn</li>
+      </ul>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">JSON med array</div>
+          <pre>{
+  "persons": [
+    { "name": "A", "age": 20 },
+    { "name": "B", "age": 22 }
+  ]
+}</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">XML</div>
+          <pre>&lt;persons&gt;
+  &lt;person&gt;
+    &lt;name&gt;A&lt;/name&gt;
+    &lt;age&gt;20&lt;/age&gt;
+  &lt;/person&gt;
+  &lt;person&gt;
+    &lt;name&gt;B&lt;/name&gt;
+    &lt;age&gt;22&lt;/age&gt;
+  &lt;/person&gt;
+&lt;/persons&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="forskjeller">
+    <div class="container">
+      <div class="section-badge">04 · Forskjeller</div>
+      <h2>Når <em>hva</em>?</h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">JSON</div>
+          <div class="fc-val">Kompakt, parses direkte til JS-objekt med <code>JSON.parse</code>. Mest brukt på web. Skiller mellom tall, streng, boolean.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">XML</div>
+          <div class="fc-val">Mer ordrik. Støtter attributter, kommentarer, namespaces, og strict validering via DTD/XSD. Vanlig i konfigurasjon, dokumenter, og eldre integrasjoner.</div>
+        </div>
+      </div>
+      <p>
+        I praksis brukes JSON oftest til API-kall mellom nettleser og
+        server. XML lever videre i RSS-feeds, SOAP-tjenester,
+        Office-dokumenter (<code>.docx</code> er XML inni en zip),
+        SVG-grafikk og konfigurasjonsfiler.
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hva skjer hvis du åpner et XML-dokument uten stilark i nettleseren?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Det vises som vanlig HTML</li>
+          <li class="mcq-opt" data-correct="0">Det gir feilmelding</li>
+          <li class="mcq-opt" data-correct="1">Råstoffet vises som det er — ingen automatisk styling</li>
+          <li class="mcq-opt" data-correct="0">Nettleseren laster ned filen i stedet</li>
+        </ul>
+        <div class="mcq-feedback">XML har ingen innebygd presentasjon — taggene er dine egne. Uten stilark vises kilden direkte.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hvilken instruksjon kobler et CSS-stilark til et XML-dokument?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;link rel="stylesheet" href="…"&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;?xml-stylesheet type="text/css" href="…"?&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;style src="…"/&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;css href="…"/&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.14: en processing instruction (samme <code>&lt;? … ?&gt;</code>-syntaks som prologen).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Lett</div>
+        <div class="q-text">Hvor plasseres <code>xml-stylesheet</code>-instruksjonen?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Inni root-elementet, som første barn</li>
+          <li class="mcq-opt" data-correct="1">I prologen, etter XML-deklarasjonen og før root</li>
+          <li class="mcq-opt" data-correct="0">Hvor som helst i dokumentet</li>
+          <li class="mcq-opt" data-correct="0">I et eget <code>&lt;head&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Den hører til prologen — etter <code>&lt;?xml … ?&gt;</code> og før selve dataene.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hva er en god mental modell for å style XML med CSS?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Det fungerer akkurat som HTML, alt arves automatisk</li>
+          <li class="mcq-opt" data-correct="1">Som å bygge fra grunnen av — du må eksplisitt si <code>display: block</code> osv. for hver tag</li>
+          <li class="mcq-opt" data-correct="0">CSS funker ikke på XML</li>
+          <li class="mcq-opt" data-correct="0">CSS gjelder bare for attributter</li>
+        </ul>
+        <div class="mcq-feedback">XML har ingen standard-stiler. Hver av dine egne tagger må få display, font, margin osv.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Oversett <code>{ "person": { "name": "X", "age": 23 } }</code> til XML.</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;person name="X" age="23"/&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;person&gt;&lt;name&gt;X&lt;/name&gt;&lt;age&gt;23&lt;/age&gt;&lt;/person&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;person&gt;{name: X, age: 23}&lt;/person&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;name&gt;X&lt;/name&gt;&lt;age&gt;23&lt;/age&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">JSON-objekt → element med barn. Hver nøkkel blir en egen barn-tag.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hvordan oversettes en JSON-array til XML?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Som ett element med komma-separerte verdier</li>
+          <li class="mcq-opt" data-correct="1">Som flere søsken-elementer med samme tag-navn</li>
+          <li class="mcq-opt" data-correct="0">Som et <code>array</code>-element med tall-attributter</li>
+          <li class="mcq-opt" data-correct="0">Arrayer kan ikke uttrykkes i XML</li>
+        </ul>
+        <div class="mcq-feedback">F.eks. flere <code>&lt;person&gt;</code> inni en <code>&lt;persons&gt;</code>-wrapper.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Vanskelig</div>
+        <div class="q-text">Hvilken CSS-regel gjør at <code>&lt;person&gt;</code> vises som en blokk med kantlinje?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>.person { display: block; border: 1px solid; }</code></li>
+          <li class="mcq-opt" data-correct="0"><code>#person { display: block; border: 1px solid; }</code></li>
+          <li class="mcq-opt" data-correct="1"><code>person { display: block; border: 1px solid; }</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;person&gt; { display: block; border: 1px solid; }</code></li>
+        </ul>
+        <div class="mcq-feedback">I XML er tag-navnet selektoren — uten <code>.</code> eller <code>#</code> foran. CSS bryr seg ikke om at «person» ikke er en HTML-tag.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Vanskelig</div>
+        <div class="q-text">Hvilken er en typisk fordel JSON har over XML for web-API?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Parses direkte til JS-objekt med <code>JSON.parse</code>, mer kompakt</li>
+          <li class="mcq-opt" data-correct="0">Støtter validering med XSD</li>
+          <li class="mcq-opt" data-correct="0">Har innebygde kommentarer</li>
+          <li class="mcq-opt" data-correct="0">Bedre støtte for namespaces</li>
+        </ul>
+        <div class="mcq-feedback">JSON er kompakt og blir et JS-objekt direkte. XML er rikere (attributter, kommentarer, namespaces, validering) men mer ordrik.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.9 — Site structure</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.9: Site structure (1.5)">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel J · Pensum 1.5</div>
+      <h1>Site <em>structure</em></h1>
+      <p class="lede">
+        URL-er, GET vs POST, og hvordan du planlegger
+        nettstedstrukturen før du begynner å kode — lineær,
+        hierarkisk eller en blanding.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.5</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="url">
+    <div class="container">
+      <div class="section-badge">01 · URL</div>
+      <h2>Anatomi av en <em>URL</em></h2>
+      <p>
+        URL (Uniform Resource Locator) sier <em>hvor</em> en
+        ressurs ligger på Internett. Strukturen er bygd opp av
+        flere deler:
+      </p>
+      <pre><code>http://www.example.com:80/path/to/myfile.html?key1=value1&amp;key2=value2#SomewhereInTheDocument</code></pre>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">http://</div>
+          <div class="fc-val"><strong>Protokoll</strong>. Forteller nettleseren hvilket sett av regler som skal brukes for å hente ressursen. Vanlige: <code>http</code>, <code>https</code>, <code>ftp</code>, <code>mailto</code>.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">www.example.com</div>
+          <div class="fc-val"><strong>Domene</strong>. Hvilken webserver som spørres. Kan også være en IP-adresse, men det er sjelden i praksis.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">:80</div>
+          <div class="fc-val"><strong>Port</strong>. Den «tekniske gaten» som brukes på serveren. Utelates oftest fordi standardportene (80 for HTTP, 443 for HTTPS) er underforstått.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">/path/to/myfile.html</div>
+          <div class="fc-val"><strong>Path</strong>. Stien til ressursen. I gamle dager pekte den på en faktisk fil; i dag er det ofte en abstraksjon serveren tolker.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">?key1=value1&amp;key2=value2</div>
+          <div class="fc-val"><strong>Parametre</strong> (query string). Liste av nøkkel/verdi-par adskilt med <code>&amp;</code>. Serveren kan bruke disse til å gjøre noe før den returnerer ressursen.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">#SomewhereInTheDocument</div>
+          <div class="fc-val"><strong>Anker</strong> (fragment). En «bokmerke» inni ressursen. På HTML scroller nettleseren dit ankeret er definert; på video/audio går den til riktig tidspunkt.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="get-post">
+    <div class="container">
+      <div class="section-badge">02 · GET og POST</div>
+      <h2>To <em>HTTP-metoder</em></h2>
+      <p>
+        Når en form eller annen klient sender data til serveren,
+        gjøres det via en HTTP-metode. Pensum 1.5 dekker to:
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">GET</div>
+          <div class="fc-val">Brukes for å <em>hente</em> data. Manipulerer ikke data på serveren. Parametre legges i URL-en (etter <code>?</code>). Skal returnere samme resultat ved gjentatte kall.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">POST</div>
+          <div class="fc-val">Brukes for å <em>sende</em> data som endrer tilstanden på serveren. Data sendes som egen melding, ikke i URL-en. Ingen lengdebegrensning som GET har.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="label">GET-egenskaper</div>
+        <ul>
+          <li>kan caches</li>
+          <li>kan ligge i nettleserens historikk</li>
+          <li>kan distribueres og deles (kopier URL-en)</li>
+          <li>har lengdebegrensning (URL har maks-lengde)</li>
+          <li>egner seg <strong>ikke</strong> for sensitiv data — <em>ikke</em> for passord, kontonummer osv.</li>
+        </ul>
+      </div>
+
+      <div class="callout-good">
+        <div class="label">POST-egenskaper</div>
+        <ul>
+          <li>caches aldri</li>
+          <li>ligger ikke i nettleserens historikk</li>
+          <li>kan ikke bokmerkes</li>
+          <li>ingen maks-lengde — bruk for store eller sensitive data</li>
+        </ul>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Velge metode på en form</div>
+          <pre>&lt;form method="POST" action="server_side_processing.php"&gt;
+  &lt;!-- felter --&gt;
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sitemap">
+    <div class="container">
+      <div class="section-badge">03 · Site map</div>
+      <h2>Sitemap / <em>storyboard</em></h2>
+      <p>
+        Før du begynner å kode et nettsted bør du tegne et
+        diagram av hvilke sider du har og hvordan de henger
+        sammen — et <strong>sitemap</strong> eller
+        <strong>storyboard</strong>. En gjennomtenkt struktur gjør
+        det lettere for brukeren å navigere uten å gå seg vill.
+      </p>
+    </div>
+  </section>
+
+  <section id="strukturer">
+    <div class="container">
+      <div class="section-badge">04 · Tre strukturer</div>
+      <h2>Lineær, hierarkisk og <em>blandet</em></h2>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">Lineær</div>
+          <div class="fc-val">Hver side lenkes til foregående og påfølgende side i en kjede. Passer for innhold med klar rekkefølge — galleri, lange artikler delt opp på flere sider, tutorials.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Augmented lineær</div>
+          <div class="fc-val">Som lineær, men med ekstra lenke tilbake til hovedsiden fra hver side.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Hierarkisk</div>
+          <div class="fc-val">Sidene er ordnet fra generelt til spesifikt. Brukeren beveger seg opp og ned i et tre. Vanlig for større nettsteder.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">Blandet</div>
+          <div class="fc-val">Større nettsteder bruker ofte hierarkisk grunnstruktur, men med kryssgående lenker som tillater linære stier.</div>
+        </div>
+      </div>
+      <p>
+        Pensum sier også at <strong>hver side bør minst ha en
+        lenke tilbake til hjemmesiden</strong>, slik at brukeren
+        alltid kan finne tilbake. På større nettsteder kan du
+        dessuten gi brukerne en site-index — en oversiktsside som
+        lister hele nettstedet med lenker.
+      </p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hva står «URL» for?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">Universal Resource Link</li>
+          <li class="mcq-opt" data-correct="1">Uniform Resource Locator</li>
+          <li class="mcq-opt" data-correct="0">Universal Routing Language</li>
+          <li class="mcq-opt" data-correct="0">Unified Resource Linker</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: URL = Uniform Resource Locator.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hvilken del av URL-en <code>http://example.com/products?id=5</code> er parametre?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>http://</code></li>
+          <li class="mcq-opt" data-correct="0"><code>example.com</code></li>
+          <li class="mcq-opt" data-correct="0"><code>/products</code></li>
+          <li class="mcq-opt" data-correct="1"><code>?id=5</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: parametre starter med <code>?</code> og er nøkkel/verdi-par adskilt med <code>&amp;</code>.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hva er den vanlige porten for HTTP, og hvorfor utelates den ofte?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">22 — fordi den er kortest</li>
+          <li class="mcq-opt" data-correct="0">443 — er underforstått</li>
+          <li class="mcq-opt" data-correct="1">80 — er underforstått</li>
+          <li class="mcq-opt" data-correct="0">8080 — er underforstått</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: HTTP bruker port 80 (HTTPS bruker 443). Utelates fordi de er standardene.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Hvilken metode bør du bruke for å hente data fra en server uten å endre noe?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">GET</li>
+          <li class="mcq-opt" data-correct="0">POST</li>
+          <li class="mcq-opt" data-correct="0">PUT</li>
+          <li class="mcq-opt" data-correct="0">DELETE</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: GET = hente data. Skal være «trygg» og idempotent.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Middels</div>
+        <div class="q-text">Hvorfor skal du ikke sende et passord med <code>method="GET"</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">GET er foreldet</li>
+          <li class="mcq-opt" data-correct="1">URL-en kan caches, lagres i historikk og bokmerkes — sensitiv data lekker</li>
+          <li class="mcq-opt" data-correct="0">GET kan ikke sende strenger med spesialtegn</li>
+          <li class="mcq-opt" data-correct="0">GET er treigere enn POST</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: «GET requests can be cached, can remain in the browser's history, can be distributed and shared.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Hva betyr ankeret <code>#summary</code> i en URL?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">En liste over koblinger</li>
+          <li class="mcq-opt" data-correct="0">En passordbeskyttet seksjon</li>
+          <li class="mcq-opt" data-correct="1">Et bokmerke i ressursen — nettleseren scroller til elementet med <code>id="summary"</code></li>
+          <li class="mcq-opt" data-correct="0">En kommentar som ignoreres</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: anker «represents a sort of bookmark inside the resource».</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Vanskelig</div>
+        <div class="q-text">Du planlegger et galleri som leder brukeren bilde for bilde i en kjede. Hvilken sitemap-struktur passer best?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Lineær</li>
+          <li class="mcq-opt" data-correct="0">Hierarkisk</li>
+          <li class="mcq-opt" data-correct="0">Tilfeldig</li>
+          <li class="mcq-opt" data-correct="0">Lukket</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: lineær struktur passer der innholdet har en klar rekkefølge — som galleri eller artikler over flere sider.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">8 · Vanskelig</div>
+        <div class="q-text">Hvilket utsagn om POST er <em>feil</em>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">POST sendes som egen melding, ikke i URL-en</li>
+          <li class="mcq-opt" data-correct="0">POST kan ikke bokmerkes</li>
+          <li class="mcq-opt" data-correct="1">POST har samme maks-lengde som GET</li>
+          <li class="mcq-opt" data-correct="0">POST cachen ikke</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.5: «There is no max length for POST, so use that in stead of GET if you are sending lots of data.»</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

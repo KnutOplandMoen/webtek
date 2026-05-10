@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>1.6.6 — Selektorer · Kap 3</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Kapittel 3</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kapittel 3 · 1.6.6 Selektorer">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 3 · Underkapittel 1.6.6</div>
+      <h1>Selektorer — <em>velg ut elementene</em></h1>
+      <p class="lede">
+        En selektor er mønsteret før <code>{</code>. Den bestemmer hvilke
+        HTML-elementer en regel gjelder for. CSS gir mange måter å peke på
+        elementer — fra det helt generelle <code>*</code> til presise
+        kombinasjoner som <code>nav &gt; ul &gt; li.aktiv a</code>.
+      </p>
+      <div class="pill-row">
+        <span class="pill">1.6.6 Selectors</span>
+        <span class="pill">Slides: selectors.md</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="chapter-toc">
+    <div class="container">
+      <ol class="chapter-toc-list">
+        <li><span class="toc-num">01</span><a href="#enkle">De enkle selektorene</a></li>
+        <li><span class="toc-num">02</span><a href="#klasse-id">Klasse og ID</a></li>
+        <li><span class="toc-num">03</span><a href="#kombinerte">Kombinerte selektorer</a></li>
+        <li><span class="toc-num">04</span><a href="#sosken">Søsken</a></li>
+        <li><span class="toc-num">05</span><a href="#grupper">Gruppering</a></li>
+        <li><span class="toc-num">06</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section id="enkle"><div class="container">
+    <div class="section-badge">01 · Enkle selektorer</div>
+    <h2>De fire <em>enkle</em> selektorene</h2>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Universell <code>*</code></div><div class="fc-val">Treffer alle elementer i dokumentet. Brukes ofte til en «reset» av margin/padding.</div></div>
+      <div class="fact-card"><div class="fc-key">Type <code>p</code></div><div class="fc-val">Treffer alle elementer av en bestemt type (alle <code>&lt;p&gt;</code>, alle <code>&lt;a&gt;</code> osv.).</div></div>
+      <div class="fact-card"><div class="fc-key">Klasse <code>.varsel</code></div><div class="fc-val">Treffer alle elementer som har attributtet <code>class="varsel"</code> (eller listen inneholder <code>varsel</code>).</div></div>
+      <div class="fact-card"><div class="fc-key">ID <code>#topp</code></div><div class="fc-val">Treffer det ene elementet som har <code>id="topp"</code>. ID skal være unik på siden.</div></div>
+    </div>
+
+<pre><code>* { box-sizing: border-box; }      /* universell */
+p { line-height: 1.6; }            /* type       */
+.varsel { color: orange; }         /* klasse     */
+#topp { background: #f4f1ea; }     /* id         */</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hva treffer den universelle selektoren <code>*</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Bare <code>html</code>-elementet</li>
+        <li class="mcq-opt" data-correct="1">Alle elementer i dokumentet</li>
+        <li class="mcq-opt" data-correct="0">Bare elementer uten klasse eller id</li>
+        <li class="mcq-opt" data-correct="0">Tomme elementer</li>
+      </ul>
+      <div class="mcq-feedback">Den universelle selektoren matcher absolutt alt — derfor er den den minst spesifikke.</div>
+    </div>
+  </div></section>
+
+  <section id="klasse-id"><div class="container">
+    <div class="section-badge">02 · Klasse vs. ID</div>
+    <h2>Når bruker du <em>klasse</em>, og når bruker du <em>ID</em>?</h2>
+    <p>
+      Klasse og ID er begge attributter på HTML-elementet, men brukes
+      forskjellig:
+    </p>
+    <ul>
+      <li><strong>Klasse</strong> kan brukes på <em>flere</em> elementer på samme side, og ett element kan ha flere klasser samtidig (mellomrom-separert: <code>class="varsel viktig"</code>). I CSS brukes punktum: <code>.varsel</code>.</li>
+      <li><strong>ID</strong> skal være <em>unik</em> per side. Brukes typisk for ett bestemt element du vil peke ut — gjerne som ankerlenke (<code>href="#topp"</code>). I CSS brukes hash: <code>#topp</code>.</li>
+    </ul>
+
+    <div class="callout-blue">
+      <div class="label">Praktisk regel</div>
+      <p>Bruk <em>klasse</em> som standardvalg. Bruk <em>ID</em> bare når du virkelig peker på ett unikt element — typisk for navigasjon eller layout-landemerker.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hvilket prefiks brukes for en klasse-selektor i CSS?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Hash <code>#</code></li>
+        <li class="mcq-opt" data-correct="1">Punktum <code>.</code></li>
+        <li class="mcq-opt" data-correct="0">Kolon <code>:</code></li>
+        <li class="mcq-opt" data-correct="0">Apenklamme <code>@</code></li>
+      </ul>
+      <div class="mcq-feedback">Punktum for klasse, hash for ID, kolon for pseudo-klasse (kommer i 1.6.12), <code>@</code> for at-regler som <code>@media</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hva er den viktigste forskjellen mellom klasse og ID?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Klasser virker bare i Chrome</li>
+        <li class="mcq-opt" data-correct="1">En ID skal være unik per side; en klasse kan brukes på flere elementer</li>
+        <li class="mcq-opt" data-correct="0">ID er for tekst, klasse er for bokser</li>
+        <li class="mcq-opt" data-correct="0">Klasser kan ikke kombineres med andre selektorer</li>
+      </ul>
+      <div class="mcq-feedback">ID-attributtet er unikt — det er derfor det også fungerer som ankermål for <code>href="#…"</code>.</div>
+    </div>
+  </div></section>
+
+  <section id="kombinerte"><div class="container">
+    <div class="section-badge">03 · Kombinerte selektorer</div>
+    <h2>Etterkommer og <em>barn</em></h2>
+    <p>
+      Selektorer kan kjedes med mellomrom eller <code>&gt;</code>:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Etterkommer <code>p a</code></div><div class="fc-val">Treffer alle <code>&lt;a&gt;</code> som ligger inni en <code>&lt;p&gt;</code>, uansett hvor dypt.</div></div>
+      <div class="fact-card"><div class="fc-key">Direkte barn <code>li &gt; a</code></div><div class="fc-val">Treffer kun <code>&lt;a&gt;</code> som er <em>direkte</em> barn av en <code>&lt;li&gt;</code> — ikke barnebarn.</div></div>
+    </div>
+
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;&lt;a&gt;Direkte&lt;/a&gt;       &lt;!-- treffes av  li &gt; a  OG  ul a  --&gt;
+    &lt;span&gt;&lt;a&gt;Dypt&lt;/a&gt;&lt;/span&gt; &lt;!-- treffes kun av  ul a  (ikke li &gt; a) --&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hva er forskjellen på <code>p a</code> og <code>p &gt; a</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="1"><code>p a</code> treffer alle nivåer dypt; <code>p &gt; a</code> treffer kun direkte barn</li>
+        <li class="mcq-opt" data-correct="0">De er identiske</li>
+        <li class="mcq-opt" data-correct="0"><code>p &gt; a</code> finnes ikke i CSS</li>
+        <li class="mcq-opt" data-correct="0"><code>p a</code> betyr «p eller a»</li>
+      </ul>
+      <div class="mcq-feedback">Mellomrom = etterkommer (alle nivåer). <code>&gt;</code> = barn (kun ett nivå ned).</div>
+    </div>
+  </div></section>
+
+  <section id="sosken"><div class="container">
+    <div class="section-badge">04 · Søsken-selektorer</div>
+    <h2>Element ved <em>siden av</em> et annet</h2>
+    <p>
+      To selektorer adresserer søsken — elementer som har samme forelder:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">Adjacent <code>h1 + p</code></div><div class="fc-val">«Naboen»: den <em>første</em> <code>&lt;p&gt;</code>-en rett etter en <code>&lt;h1&gt;</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">General <code>h1 ~ p</code></div><div class="fc-val">Alle <code>&lt;p&gt;</code> som er søsken etter en <code>&lt;h1&gt;</code>, uavhengig av hvor mange søsken som ligger imellom.</div></div>
+    </div>
+
+<pre><code>&lt;h1&gt;Tittel&lt;/h1&gt;
+&lt;p&gt;Første&lt;/p&gt;     &lt;!-- treffes av  h1 + p  OG  h1 ~ p --&gt;
+&lt;p&gt;Andre&lt;/p&gt;      &lt;!-- treffes kun av  h1 ~ p  --&gt;</code></pre>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hva treffer <code>h2 + p</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;p&gt;</code> inni <code>&lt;h2&gt;</code></li>
+        <li class="mcq-opt" data-correct="1">Den første <code>&lt;p&gt;</code> som kommer rett etter en <code>&lt;h2&gt;</code> som søsken</li>
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;h2&gt;</code> og alle <code>&lt;p&gt;</code></li>
+        <li class="mcq-opt" data-correct="0">Det er ugyldig CSS</li>
+      </ul>
+      <div class="mcq-feedback"><code>+</code> er adjacent sibling: kun den nærmeste søsken som matcher.</div>
+    </div>
+  </div></section>
+
+  <section id="grupper"><div class="container">
+    <div class="section-badge">05 · Gruppering</div>
+    <h2>Komma — <em>flere selektorer</em>, samme regel</h2>
+    <p>
+      Hvis du vil at flere selektorer skal dele samme erklæringsblokk,
+      separerer du dem med <strong>komma</strong>. Det sparer duplisering.
+    </p>
+
+<pre><code>h1, h2, h3 {
+  font-family: 'Newsreader', Georgia, serif;
+  color: #1f4e79;
+}</code></pre>
+
+    <p>
+      Husk: komma betyr «eller». Det er forskjellig fra mellomrom, som
+      betyr «inni».
+    </p>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.6.6</div>
+      <div class="q-text">Hva betyr <code>h1, h2 { color: red; }</code>?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;h2&gt;</code> inni en <code>&lt;h1&gt;</code></li>
+        <li class="mcq-opt" data-correct="1">Både <code>&lt;h1&gt;</code> og <code>&lt;h2&gt;</code> får farge rød</li>
+        <li class="mcq-opt" data-correct="0">Ugyldig syntaks</li>
+        <li class="mcq-opt" data-correct="0">Bare <code>&lt;h1&gt;</code> får farge</li>
+      </ul>
+      <div class="mcq-feedback">Komma grupperer selektorer slik at samme regel gjelder for hver av dem.</div>
+    </div>
+  </div></section>
+
+  <section id="feller"><div class="container">
+    <div class="section-badge">06 · Vanlige feller</div>
+    <h2>Vanlige <em>feller</em></h2>
+    <div class="callout-warn">
+      <div class="label">Pass på</div>
+      <ul>
+        <li><strong>Glemmer punktum/hash.</strong> <code>varsel { … }</code> uten punktum forsøker å matche en <code>&lt;varsel&gt;</code>-tag (som ikke finnes), ikke klassen.</li>
+        <li><strong>Bytter mellomrom og komma.</strong> <code>h1, h2</code> = «h1 eller h2». <code>h1 h2</code> = «h2 inni h1». Helt forskjellige resultat.</li>
+        <li><strong>Tror <code>p &gt; *</code> matcher dypt.</strong> Det treffer kun direkte barn av <code>&lt;p&gt;</code>. For etterkommere: <code>p *</code>.</li>
+        <li><strong>Bruker ID på flere elementer.</strong> HTML-validatoren godtar det ofte, men selektoren <code>#x</code> er tenkt som unik. Bruk klasse i stedet.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="mcq"><div class="container">
+    <div class="section-badge">07 · Test deg selv</div>
+    <h2>Avsluttende <em>spørsmål</em></h2>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Selektoren <code>article p</code> matcher hvilke elementer?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;p&gt;</code> i hele dokumentet</li>
+        <li class="mcq-opt" data-correct="1">Alle <code>&lt;p&gt;</code> som ligger inni et <code>&lt;article&gt;</code>, uansett dybde</li>
+        <li class="mcq-opt" data-correct="0">Bare <code>&lt;article&gt;</code></li>
+        <li class="mcq-opt" data-correct="0">Bare <code>&lt;p&gt;</code> som er direkte barn av <code>&lt;article&gt;</code></li>
+      </ul>
+      <div class="mcq-feedback">Mellomrom er etterkommer-selektor — alle nivåer dypt. For direkte barn ville det vært <code>article &gt; p</code>.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Hvor mange elementer kan ha samme klasse på en side?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Maks ett</li>
+        <li class="mcq-opt" data-correct="0">Maks ti</li>
+        <li class="mcq-opt" data-correct="1">Så mange du vil — det er hele poenget med klasser</li>
+        <li class="mcq-opt" data-correct="0">Bare ett, ellers blir CSS-en ignorert</li>
+      </ul>
+      <div class="mcq-feedback">Klasser er gjenbrukbare etiketter. ID-en er den unike — én ID per side.</div>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · Helhet</div>
+      <div class="q-text">Selektoren <code>div.kort</code> matcher hva?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Alle <code>&lt;div&gt;</code> som har klassen <code>kort</code> som første ord</li>
+        <li class="mcq-opt" data-correct="1"><code>&lt;div&gt;</code>-elementer som har klassen <code>kort</code></li>
+        <li class="mcq-opt" data-correct="0">En <code>&lt;div&gt;</code> inni <code>.kort</code></li>
+        <li class="mcq-opt" data-correct="0">Det er ugyldig CSS</li>
+      </ul>
+      <div class="mcq-feedback">Når selektorer kjedes uten mellomrom betyr det at <em>samme</em> element må ha begge — her: en <code>div</code> som også har klassen <code>kort</code>.</div>
+    </div>
+
+    <div class="subpage-card-grid" style="margin-top:2em;">
+      <a href="../farger/" class="subpage-card">
+        <div class="sp-icon">NESTE · 1.6.7</div>
+        <div class="sp-title">Farger</div>
+        <div class="sp-desc">Hex, fargenavn, rgb og rgba. Hva betyr alfa-kanalen og når bruker du den?</div>
+        <div class="sp-arrow">Fortsett &rarr;</div>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="ornament">&#10043; &#10043; &#10043;</div><p>NTNU · IT2805 Webteknologi · Høst 2025</p></div></footer>
+
+<script src="../../quiz.js"></script>
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

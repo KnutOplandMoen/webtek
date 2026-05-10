@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Kap 2.7 — Tabeller</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../flashcards.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Kapittel 2</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Kap 2.7: Tabeller">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Kapittel 2 · Underkapittel G · Pensum 1.4.7</div>
+      <h1>Tabeller — data i et <em>rutenett</em></h1>
+      <p class="lede">
+        Bygges rad for rad: <code>&lt;table&gt;</code> &gt;
+        <code>&lt;tr&gt;</code> &gt; <code>&lt;td&gt;</code>/<code>&lt;th&gt;</code>.
+        Med <code>colspan</code>/<code>rowspan</code> kan celler
+        strekke seg, og <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code>/<code>&lt;tfoot&gt;</code>
+        skiller hovedinnhold fra topp/bunn.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Pensum: 1.4.7</span>
+        <span class="pill">Forelesning 4</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="grunnlaget">
+    <div class="container">
+      <div class="section-badge">01 · Grunnlaget</div>
+      <h2>Rader og <em>celler</em></h2>
+      <p>
+        En tabell bygges <strong>rad for rad</strong>:
+      </p>
+      <ul>
+        <li><code>&lt;table&gt;</code> — selve tabellen</li>
+        <li><code>&lt;tr&gt;</code> — table row, en rad</li>
+        <li><code>&lt;td&gt;</code> — table data, en datacelle</li>
+        <li><code>&lt;th&gt;</code> — table header, en header-celle</li>
+      </ul>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Enkel tabell</div>
+          <pre>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Linjeforening&lt;/th&gt;
+    &lt;th&gt;Kontor&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Abakus&lt;/td&gt;
+    &lt;td&gt;P15&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Online&lt;/td&gt;
+    &lt;td&gt;P15&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+        </div>
+      </div>
+      <div class="callout-warn">
+        <div class="label">Tomme celler</div>
+        <p>
+          Selv om en celle er tom, må <code>&lt;td&gt;&lt;/td&gt;</code>
+          fortsatt skrives — ellers rendres ikke tabellen riktig.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="th">
+    <div class="container">
+      <div class="section-badge">02 · Header-celler</div>
+      <h2><code>&lt;th&gt;</code> og <code>scope</code></h2>
+      <p>
+        <code>&lt;th&gt;</code> brukes for kolonne- og rad-headers.
+        Som standard rendres innholdet fet. Bruk av
+        <code>&lt;th&gt;</code> hjelper skjermlesere, lar
+        søkemotorer indeksere bedre, og gir deg bedre kontroll i
+        CSS.
+      </p>
+      <p>
+        For <strong>rad-headers</strong> (header til venstre i hver
+        rad) brukes <code>scope="row"</code>:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Rad-headers</div>
+          <pre>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th scope="row"&gt;Linjeforening&lt;/th&gt;
+    &lt;td&gt;Online&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th scope="row"&gt;Kontor&lt;/th&gt;
+    &lt;td&gt;P15&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="span">
+    <div class="container">
+      <div class="section-badge">03 · Spanning</div>
+      <h2><code>colspan</code> og <em>rowspan</em></h2>
+      <p>
+        Trenger en celle å strekke seg over flere kolonner eller
+        rader, brukes <code>colspan</code> og <code>rowspan</code>
+        på <code>&lt;td&gt;</code> eller <code>&lt;th&gt;</code>.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">colspan — strekker seg sidelengs</div>
+          <pre>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;td&gt;8 am&lt;/td&gt;
+    &lt;td&gt;9 am&lt;/td&gt;
+    &lt;td&gt;10 am&lt;/td&gt;
+    &lt;td&gt;11 am&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Monday&lt;/th&gt;
+    &lt;td colspan="2"&gt;IT2805&lt;/td&gt;
+    &lt;td colspan="2"&gt;MA0001&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">rowspan — strekker seg nedover</div>
+          <pre>&lt;tr&gt;
+  &lt;th&gt;8 am&lt;/th&gt;
+  &lt;td rowspan="2"&gt;IT2805&lt;/td&gt;
+  &lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;th&gt;9 am&lt;/th&gt;
+  &lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="seksjoner">
+    <div class="container">
+      <div class="section-badge">04 · thead/tbody/tfoot</div>
+      <h2>Lange tabeller deles i <em>seksjoner</em></h2>
+      <p>
+        Tre wrappere skiller hovedinnholdet i tabellen fra topp- og
+        bunnrader. Disse hjelper skjermlesere, lar deg style delene
+        forskjellig, og gjør at lange tabeller kan beholde header
+        og footer synlige under scrolling eller utskrift.
+      </p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">&lt;thead&gt;</div>
+          <div class="fc-val">Tabellens topprad(er) — header.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;tbody&gt;</div>
+          <div class="fc-val">Selve datakroppen.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;tfoot&gt;</div>
+          <div class="fc-val">Bunnrad — typisk sum eller totaler.</div>
+        </div>
+      </div>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Tabell med seksjoner</div>
+          <pre>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Income&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;12th July&lt;/td&gt;&lt;td&gt;612&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;14th July&lt;/td&gt;&lt;td&gt;765&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;1377&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="container">
+      <div class="section-badge">05 · Test deg selv</div>
+      <h2>Multiple <em>choice</em></h2>
+
+      <div class="quiz mcq">
+        <div class="q-label">1 · Lett</div>
+        <div class="q-text">Hvilken tag står for «table row»?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;td&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;th&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;tr&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;row&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: <code>&lt;tr&gt;</code> = table row.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">2 · Lett</div>
+        <div class="q-text">Hva er forskjellen på <code>&lt;td&gt;</code> og <code>&lt;th&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;td&gt;</code> er topp-celle, <code>&lt;th&gt;</code> er bunn-celle</li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;td&gt;</code> er datacelle, <code>&lt;th&gt;</code> er header-celle (rendres fet som standard)</li>
+          <li class="mcq-opt" data-correct="0">De er identiske — bare ulik styling</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;th&gt;</code> kan kun stå i første rad</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: <code>&lt;td&gt;</code> = table data, <code>&lt;th&gt;</code> = table header. <code>&lt;th&gt;</code> hjelper skjermlesere og indeksering.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">3 · Middels</div>
+        <div class="q-text">Hva gjør <code>colspan="3"</code> på en celle?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="1">Cellen strekker seg over tre kolonner</li>
+          <li class="mcq-opt" data-correct="0">Cellen strekker seg over tre rader</li>
+          <li class="mcq-opt" data-correct="0">Cellen får tre kolonner inni seg</li>
+          <li class="mcq-opt" data-correct="0">Skjuler tre kolonner</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: <code>colspan</code> strekker cellen sidelengs, <code>rowspan</code> nedover.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">4 · Middels</div>
+        <div class="q-text">Du har en rad-header (header til venstre). Hvilket attributt setter du på <code>&lt;th&gt;</code>?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>type="row"</code></li>
+          <li class="mcq-opt" data-correct="1"><code>scope="row"</code></li>
+          <li class="mcq-opt" data-correct="0"><code>orient="row"</code></li>
+          <li class="mcq-opt" data-correct="0">Ingen — <code>&lt;th&gt;</code> regnes alltid som rad-header når den står først</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: <code>scope="row"</code> markerer at headeren gjelder en rad.</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">5 · Vanskelig</div>
+        <div class="q-text">Hvorfor er <code>&lt;thead&gt;</code> og <code>&lt;tfoot&gt;</code> nyttig på lange tabeller?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De gjør tabellen sortérbar</li>
+          <li class="mcq-opt" data-correct="0">De er påkrevd av HTML-validatoren</li>
+          <li class="mcq-opt" data-correct="1">Header og footer kan holdes synlige under scrolling og på utskrift</li>
+          <li class="mcq-opt" data-correct="0">De halverer renderingstiden</li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: «if you have a table that is taller than the screen ... the browser can keep the header and footer visible whilst the contents of the table scroll.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Vanskelig</div>
+        <div class="q-text">Hva må du huske om tomme celler?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0">De kan utelates helt</li>
+          <li class="mcq-opt" data-correct="1">De må fortsatt skrives som <code>&lt;td&gt;&lt;/td&gt;</code> for at tabellen skal rendres riktig</li>
+          <li class="mcq-opt" data-correct="0">De må ha innholdet «&amp;nbsp;»</li>
+          <li class="mcq-opt" data-correct="0">De skal markeres med <code>&lt;empty&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Pensum 1.4.7: «Even if a cell has no content, you should still use a <code>&lt;td&gt;</code> element to represent the empty cell.»</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../quiz.js"></script>
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>

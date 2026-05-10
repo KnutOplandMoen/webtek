@@ -154,39 +154,24 @@
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>De seks <em>delene</em></h2>
-    <p class="section-intro">Pensum 1.14 dekker disse temaene. Hvert kort er ett område du må kunne.</p>
+    <h2>Tre <em>underkapittel-sider</em></h2>
+    <p class="section-intro">Pensum 1.14 er delt opp i tre dypsider. Klikk på et kort for å gå dypere — hver side har egne MCQ-er.</p>
     <div class="subpage-card-grid">
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">A · DCL</div>
-        <div class="sp-title">XML-deklarasjon</div>
-        <div class="sp-desc">Prologen: version, encoding, standalone. Valgfri, men må stå først om brukt.</div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">B · SYN</div>
-        <div class="sp-title">Syntaks og nesting</div>
-        <div class="sp-desc">Åpne/lukke-tag, root-element, korrekt nesting, case-sensitivitet.</div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">C · ENT</div>
-        <div class="sp-title">Entity references</div>
-        <div class="sp-desc">Fem reserverte tegn: &lt; &gt; &amp; ' " — må erstattes med entitet.</div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">D · CMT</div>
-        <div class="sp-title">Kommentarer</div>
-        <div class="sp-desc"><code>&lt;!-- … --&gt;</code> — som i HTML.</div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">E · VAL</div>
-        <div class="sp-title">DTD og XSD</div>
-        <div class="sp-desc">Beskriver gyldig grammatikk. PCDATA vs CDATA. Simple, complex og global types i XSD.</div>
-      </div>
-      <div class="subpage-card" style="cursor:default;">
-        <div class="sp-icon">F · DSP</div>
-        <div class="sp-title">Visning med CSS</div>
-        <div class="sp-desc"><code>&lt;?xml-stylesheet type="text/css" href="…"?&gt;</code> styrer visningen i nettleser.</div>
-      </div>
+      <a class="subpage-card" href="syntaks.html">
+        <div class="sp-icon">A · SYN</div>
+        <div class="sp-title">Syntaks &amp; well-formed</div>
+        <div class="sp-desc">Prolog (version, encoding, standalone), root-element, nesting, case, fem entity references, kommentarer.<br><strong>Pensum:</strong> 1.14.</div>
+      </a>
+      <a class="subpage-card" href="validering.html">
+        <div class="sp-icon">B · VAL</div>
+        <div class="sp-title">DTD &amp; XSD</div>
+        <div class="sp-desc">Well-formed vs valid, DTD-syntaks, PCDATA vs CDATA, XSD med simple/complex/global types.<br><strong>Pensum:</strong> 1.14.</div>
+      </a>
+      <a class="subpage-card" href="visning.html">
+        <div class="sp-icon">C · DSP</div>
+        <div class="sp-title">Visning &amp; JSON</div>
+        <div class="sp-desc">Koble CSS til XML med <code>&lt;?xml-stylesheet?&gt;</code>, og oversettelse mellom JSON og XML.<br><strong>Pensum:</strong> 1.14.</div>
+      </a>
     </div>
   </div></section>
 
