@@ -795,51 +795,6 @@ function f(e){
   <div class="cols">
 
     <div class="box must">
-      <h4>Canvas-skjelett (10 % fast)</h4>
-<pre>&lt;canvas id="c" width="400"
-        height="200"&gt;&lt;/canvas&gt;
-&lt;script&gt;
-let c = document.getElementById("c");
-let ctx = c.getContext("2d");
-
-// linje
-ctx.beginPath();
-ctx.moveTo(20, 20);
-ctx.lineTo(180, 20);
-ctx.lineWidth = 2;
-ctx.strokeStyle = "black";
-ctx.stroke();
-
-// fylt rektangel
-ctx.fillStyle = "blue";
-ctx.fillRect(50, 50, 80, 40);
-
-// kontur-rektangel
-ctx.strokeRect(50, 50, 80, 40);
-
-// sirkel (full)
-ctx.beginPath();
-ctx.arc(200, 80, 30,
-        0, 2*Math.PI);
-ctx.fill();   // ELLER stroke()
-
-// tekst
-ctx.font = "16px Arial";
-ctx.fillStyle = "red";
-ctx.fillText("Hei", 100, 150);
-ctx.strokeText("Hei", 100, 150);
-
-// bilde
-let img = new Image();
-img.src = "x.png";
-img.onload = function(){
-  ctx.drawImage(img, 0, 0);
-};
-&lt;/script&gt;</pre>
-      <p style="font-size:7.2pt;">(0,0) er <b>øverst venstre</b>, x → høyre, y ↓ ned. Sett farge <b>før</b> du tegner. Nye paths: <code>beginPath()</code>.</p>
-    </div>
-
-    <div class="box must">
       <h4>Form med JS-validering</h4>
 <pre>&lt;form onsubmit="return val()"&gt;
  &lt;input id="nm" type="text"
@@ -1048,7 +1003,7 @@ function t(){
     </div>
 
   </div>
-  <div class="footer-strip">Side 3 · Kode-skjeletter · Canvas · Form · Dato · Kalkulator</div>
+  <div class="footer-strip">Side 3 · Kode-skjeletter · Form · Dato · Kalkulator</div>
 </section>
 
 <!-- =================================================================== -->
@@ -1186,21 +1141,8 @@ function t(){
       <ul>
         <li>HTML5 viser multimedia <b>uten plug-ins</b></li>
         <li><code>&lt;video src="x" controls&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;source&gt;</code></li>
-        <li><b>SVG</b> = vektor, basert på <b>XML</b></li>
         <li>JPEG = foto, PNG = transp. raster, GIF = animasjon, SVG = vektor</li>
         <li>Bilde-attr: <code>alt</code> (tilgjengelighet), <code>width</code>, <code>height</code>, <code>loading="lazy"</code></li>
-      </ul>
-    </div>
-
-    <div class="box">
-      <h4>XML</h4>
-      <ul>
-        <li><b>Ett</b> rot-element, alle tagger må lukkes</li>
-        <li>Case-sensitive (HTML er ikke det)</li>
-        <li>Attributter alltid i quotes</li>
-        <li>Erklæring: <code>&lt;?xml version="1.0"?&gt;</code></li>
-        <li><b>Well-formed</b>: følger syntaks. <b>Valid</b>: matcher DTD/XSD</li>
-        <li>Brukes i: SVG, RSS, SOAP, konfigurasjonsfiler</li>
       </ul>
     </div>
 
@@ -1213,7 +1155,6 @@ function t(){
         <li>HREF anker: <code>href="#id"</code></li>
         <li>Heading-nivå: <b>h1 til h6</b> (seks)</li>
         <li><code>text-decoration: none</code> fjerner understrek</li>
-        <li>SVG = XML-format</li>
         <li>Tabell-bredde 100 %: <code>table {width:100%}</code></li>
       </ul>
     </div>
@@ -1248,8 +1189,8 @@ function t(){
         <li>Les hele settet først (5 min)</li>
         <li>MCQ raskt — bruk arket</li>
         <li>Korttekst først (TCP/IP, POST/GET, display)</li>
-        <li>Selektor-kode før Canvas (raskere)</li>
-        <li>Canvas til slutt — lengst</li>
+        <li>Selektor-kode er raskest — start der</li>
+        <li>Form-validering/kalkulator til slutt — lengst</li>
         <li>Kommentarer i kode → delpoeng</li>
         <li>Skriv <i>noe</i> for hver oppgave</li>
       </ul>
@@ -1266,7 +1207,7 @@ function t(){
     </div>
 
   </div>
-  <div class="footer-strip">Side 4 · Sikkerhetsnett — TCP/IP · POST/GET · Bubbling · Flex · Grid · XML</div>
+  <div class="footer-strip">Side 4 · Sikkerhetsnett — TCP/IP · POST/GET · Bubbling · Flex · Grid</div>
 </section>
 
 </main>

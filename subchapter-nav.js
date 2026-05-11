@@ -55,14 +55,6 @@
         { path: 'funksjoner-og-json/',  title: 'Funksjoner og JSON', label: '1.11.11–1.11.12' },
         { path: 'ajax/',                title: 'AJAX',               label: '1.12' }
       ]
-    },
-    kap11: {
-      title: 'Kapittel 11: XML',
-      pages: [
-        { path: 'syntaks.html',    title: 'Syntaks & well-formed', label: 'A · SYN' },
-        { path: 'validering.html', title: 'DTD & XSD',             label: 'B · VAL' },
-        { path: 'visning.html',    title: 'Visning & JSON',        label: 'C · DSP' }
-      ]
     }
   };
 

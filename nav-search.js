@@ -38,12 +38,7 @@
     'kap8/struktur.html',
     'kap8/validering.html',
     'kap9/index.html',
-    'kap10/index.html',
-    'kap11/index.html',
-    'kap11/syntaks.html',
-    'kap11/validering.html',
-    'kap11/visning.html',
-    'kap12/index.html'
+    'kap10/index.html'
   ];
 
   var fuse = null;

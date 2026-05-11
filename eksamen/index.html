@@ -87,9 +87,20 @@
         igjen og igjen, hva som kan nedprioriteres, og en plan for det
         tosidige A4-arket du har lov til å ta med inn.
       </p>
+      <div class="callout-warn" style="margin-top:1.2em;">
+        <div class="label">Merk: Canvas og XML er ikke lenger i pensum</div>
+        <p>
+          Kun det som er gjennomgått i forelesningene er pensum. Canvas
+          (tidligere 1.15) og XML (tidligere 1.14) er derfor <strong>ute</strong>.
+          Canvas- og XML-oppgavene i de tidligere eksamenssettene er ikke
+          lenger relevante, og frekvenstallene under er justert for å gjenspeile
+          det. Eksempler og referanser til canvas/XML er fjernet fra denne siden
+          og A4-juksearket.
+        </p>
+      </div>
       <div class="pill-row">
         <span class="pill rust">4 eksamenssett analysert</span>
-        <span class="pill">Pensum 1.1–1.15</span>
+        <span class="pill">Pensum etter forelesninger</span>
         <span class="pill">A4 dobbeltsidig tillatt</span>
       </div>
     </div>
@@ -100,17 +111,16 @@
       <div class="section-badge">01 · Hovedfunn</div>
       <h2>De viktigste <em>funnene</em></h2>
       <p class="section-intro">
-        Det er sterke gjentakelser på tvers av sett. Tre temaer dukker opp i
-        tre eller fire av de fire reelle eksamenssettene, og fire–fem ekstra
-        går igjen i to. Resten av pensum testes via enklige flervalg.
+        Det er sterke gjentakelser på tvers av sett. Etter at Canvas og XML er
+        fjernet fra pensum, sitter vi igjen med to temaer som har dukket opp
+        i alle reelle sett (TCP/IP og POST vs GET), og en bredere midtgruppe
+        som går igjen i to av tre. Resten testes via enkle flervalg.
       </p>
 
       <div class="stat-row">
-        <div class="stat-box"><div class="stat-num">100 %</div><div class="stat-lbl">Canvas-oppgave i alle 3 reelle sett</div></div>
         <div class="stat-box"><div class="stat-num">~30 %</div><div class="stat-lbl">MCQ — flervalg (Section A)</div></div>
         <div class="stat-box"><div class="stat-num">~30 %</div><div class="stat-lbl">Forklaringsspørsmål (Section B)</div></div>
         <div class="stat-box"><div class="stat-num">~40 %</div><div class="stat-lbl">Kodeoppgaver (Section C)</div></div>
-        <div class="stat-box"><div class="stat-num">~10 %</div><div class="stat-lbl">av poeng er Canvas alene</div></div>
       </div>
 
       <div class="callout-blue">
@@ -129,26 +139,15 @@
   <section id="hva-kommer">
     <div class="container">
       <div class="section-badge">02 · Hva som mest sannsynlig kommer</div>
-      <h2>Tre <em>nesten-garantier</em></h2>
+      <h2>To <em>nesten-garantier</em></h2>
       <p class="section-intro">
         Disse temaene har dukket opp i nesten alle reelle eksamenssett vi har.
         Du kan ikke vite hva som spørres, men du kan vite at <em>noe</em> innen
-        disse områdene kommer.
+        disse områdene kommer. (Canvas var historisk den tredje, men er ute
+        av pensum nå.)
       </p>
 
       <div class="priority-grid">
-        <div class="priority-card must">
-          <div class="pc-label">Kommer 3/3 sett · 10 %</div>
-          <div class="pc-title">Canvas-tegning med 2D API</div>
-          <div class="pc-body">
-            Du blir bedt om å tegne en figur (linjer, rektangler, sirkler,
-            tekst) i et <code>&lt;canvas&gt;</code>. Får alltid skjelett-HTML.
-            <strong>Tren på</strong> <code>getContext("2d")</code>,
-            <code>moveTo / lineTo / stroke</code>, <code>fillRect</code>,
-            <code>arc</code>, <code>strokeText</code>.
-            Se <a href="../kap12/">Kap 12</a>.
-          </div>
-        </div>
         <div class="priority-card must">
           <div class="pc-label">Kommer 3/3 sett · 6–8 %</div>
           <div class="pc-title">TCP/IP-lagene + protokoller</div>
@@ -260,7 +259,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="tier-1"><td>Canvas 2D-tegning</td><td><a href="../kap12/">Kap 12</a></td><td class="center freq">3/3</td><td>Kode 10 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
           <tr class="tier-1"><td>TCP/IP-lag &amp; protokoller</td><td><a href="../kap1/">Kap 1</a></td><td class="center freq">3/3</td><td>MCQ-match / Langsvar 6–8 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
           <tr class="tier-1"><td>POST vs GET</td><td><a href="../kap8/">Kap 8</a></td><td class="center freq">3/3</td><td>Langsvar 4–6 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
           <tr class="tier-1"><td>JS kodelesing/output</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">3/3</td><td>MCQ 3 % / Trace</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
@@ -290,8 +288,6 @@
           <tr class="tier-3"><td>«no-underline» på lenker (text-decoration:none)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 3 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>!important</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>position default (static)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
-          <tr class="tier-3"><td>SVG = XML-format</td><td><a href="../kap11/">Kap 11</a>, <a href="../kap7/">Kap 7</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
-          <tr class="tier-3"><td>XML-regler (root, lower-case)</td><td><a href="../kap11/">Kap 11</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>border-width 4-verdier (top/right/bottom/left)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>Math.floor / Math.ceil / Math.round</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>prompt() returnerer string (string + 1 = "181")</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
@@ -341,15 +337,6 @@
             <a href="../kap6/">Kap 6</a> er ikke representert i ex2–ex5.
             Kunne en MCQ om <code>@media (max-width: …)</code> dukke opp?
             Ja. Skriv to-tre linjer på arket, gå videre.
-          </div>
-        </div>
-        <div class="priority-card low">
-          <div class="pc-label">Lav prioritet</div>
-          <div class="pc-title">XML i dybden (DTD, XPath, XSLT)</div>
-          <div class="pc-body">
-            <a href="../kap11/">Kap 11</a>. Kun grunnregler er testet
-            (root-element, lower-case). Ingen XPath/XSLT i settene. Ha
-            grunnreglene på arket.
           </div>
         </div>
         <div class="priority-card low">
@@ -416,7 +403,7 @@
           Hvis du har lov til <strong>to ark</strong> (4 sider totalt), er det
           en print-klar versjon klar: <a href="a4-jukseark.html"><strong>A4-jukseark →</strong></a>.
           Optimalisert for utskrift — tre kolonner, 8 pt, kode-skjeletter for
-          Canvas/form/dato. Sjekk reglene før du tar med to ark; standard er
+          form/dato/kalkulator. Sjekk reglene før du tar med to ark; standard er
           ett dobbeltsidig.
         </p>
       </div>
@@ -516,7 +503,7 @@ div ~ p        /* gen sib */
         </div>
       </div>
 
-      <h3>Side 2 — JavaScript &amp; Canvas</h3>
+      <h3>Side 2 — JavaScript</h3>
       <div class="cheat-cols">
         <div>
           <h4>String &amp; Array</h4>
@@ -593,41 +580,6 @@ e.preventDefault()</pre>
           </ul>
         </div>
         <div>
-          <h4>Canvas-skjelett</h4>
-          <pre>let c = document.getElementById("myCanvas");
-let ctx = c.getContext("2d");
-
-// linje
-ctx.beginPath();
-ctx.moveTo(20,20);
-ctx.lineTo(180,20);
-ctx.stroke();
-
-// rect
-ctx.fillStyle = "blue";
-ctx.fillRect(50,50,80,40);
-ctx.strokeRect(50,50,80,40);
-
-// sirkel
-ctx.beginPath();
-ctx.arc(100,80,30,0,2*Math.PI);
-ctx.stroke();
-
-// tekst
-ctx.font = "16px Arial";
-ctx.fillText("hei",100,100);</pre>
-        </div>
-        <div>
-          <h4>Canvas-oppskrift</h4>
-          <ul>
-            <li><strong>1.</strong> Hent <code>canvas</code> + <code>getContext("2d")</code></li>
-            <li><strong>2.</strong> <code>beginPath()</code> før hver figur</li>
-            <li><strong>3.</strong> <code>moveTo</code> + <code>lineTo</code> for linjer</li>
-            <li><strong>4.</strong> <code>stroke()</code> for kontur, <code>fill()</code> for fyll</li>
-            <li><strong>5.</strong> Sett farger med <code>strokeStyle</code> / <code>fillStyle</code> <em>før</em> du tegner</li>
-          </ul>
-        </div>
-        <div>
           <h4>Math &amp; tall</h4>
           <ul>
             <li><code>Math.floor(3.8) = 3</code></li>
@@ -665,7 +617,6 @@ ctx.fillText("hei",100,100);</pre>
       <ol class="question-list">
         <li><span class="qmeta">JS · 5 %</span> Skriv en funksjon som regner antall dager til neste jul (ikke i år) og varsler i en alert-boks.</li>
         <li><span class="qmeta">JS · 8 %</span> Skriv et HTML-skjema med to tekstfelt og to knapper («Multipliser» og «Divider»). Skriv to JS-funksjoner som leser feltene, regner ut, og skriver resultatet inn i et <code>&lt;span id="result"&gt;</code>.</li>
-        <li><span class="qmeta">Canvas · 10 %</span> Tegn en sirkel, et rektangel og en tekst-streng inni et 400×120 canvas. Du må hente canvasen, hente 2D-kontekst, og bruke <code>arc</code>, <code>fillRect</code>, <code>fillText</code>.</li>
         <li><span class="qmeta">CSS · 10 %</span> Gitt et HTML-tre med nested div, p og ul: skriv selektor som (a) gjør alle p inni en gitt div røde + bold, (b) gir grå bakgrunn til første-grandchild p, (c) flytter alle grandchild-p 20px til høyre.</li>
         <li><span class="qmeta">Forklar · 6 %</span> Hva er forskjellen mellom POST og GET når du sender form-data?</li>
         <li><span class="qmeta">Forklar · 8 %</span> Forklar TCP/IP-lagene og gi to protokoll-eksempler per lag.</li>
@@ -717,7 +668,7 @@ ctx.fillText("hei",100,100);</pre>
         </div>
         <div>
           <div class="tl-time">105–210 min</div>
-          <div class="tl-task">Section C — kode. Start med selektor-oppgaven (rask), deretter kalkulator-form, så Christmas/validering, til slutt Canvas.</div>
+          <div class="tl-task">Section C — kode. Start med selektor-oppgaven (rask), deretter kalkulator-form, så Christmas/validering og form-validering med JS.</div>
         </div>
         <div>
           <div class="tl-time">210–230 min</div>
@@ -744,7 +695,7 @@ ctx.fillText("hei",100,100);</pre>
           <div class="label">Unngå dette</div>
           <ul>
             <li>Ikke bruk for mye tid på en MCQ — 3 % er ikke verdt 10 minutter.</li>
-            <li>Ikke begynn med Canvas først; den er den lengste oppgaven.</li>
+            <li>Ikke begynn med den tyngste kodeoppgaven først; ta de raske selektor- og forklarings-oppgavene først.</li>
             <li>Ikke skriv <code>document.write</code> innenfor <code>onclick</code> — det overskriver hele siden.</li>
             <li>Ikke lever et tomt skjema — spør deg selv om du har skrevet <em>noe</em> for hver oppgave.</li>
             <li>Ikke skriv «alt det du kan» om et tema — sensor bedømmer presisjon, ikke mengde.</li>

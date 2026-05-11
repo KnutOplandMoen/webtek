@@ -20,7 +20,8 @@ prosjektrot/
 ├── package.json            Kun @vercel/analytics + speed-insights
 ├── vercel.json             Statisk + 120s maxDuration på api/chat.js
 │
-├── kap1/ … kap12/          Tolv kapittel-skjeletter (alle 11 standardseksjoner)
+├── kap1/ … kap10/          Ti kapittel-skjeletter (kap11 XML og kap12 Canvas
+│                           er fjernet fra pensum, men beholdt som referanse)
 ├── zero-to-hero/           "Fra null til klar" — eksamensstrategi
 ├── reisen/                 Interaktiv reise gjennom faget med sticky stegnav
 ├── repetisjon/             Tom — for senere repetisjons-moduler
@@ -51,8 +52,10 @@ prosjektrot/
 | [Kap 8 — Forms og validering](kap8/)      | 1.9      | forms.md                    |
 | [Kap 9 — JavaScript grunnleggende](kap9/) | 1.11–1.12| basic_js.md                 |
 | [Kap 10 — JS videregående: DOM/events](kap10/) | 1.13 | kommer                  |
-| [Kap 11 — XML](kap11/)                    | 1.14     | kommer                      |
-| [Kap 12 — Canvas](kap12/)                 | 1.15     | kommer                      |
+
+Tidligere kap 11 (XML, 1.14) og kap 12 (Canvas, 1.15) er ikke lenger i pensum
+— kun det som er gjennomgått i forelesningene teller. Sidene er beholdt som
+referanse med tydelig "ikke i pensum"-banner.
 
 ## Skjelett-tilstand
 
