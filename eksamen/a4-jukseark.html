@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>A4-jukseark — IT2805</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* ============================================================
+     A4-jukseark — fire sider, optimalisert for utskrift.
+     Skjerm: stablet med synlige sidegrenser.
+     Print: én side per A4, mørk tekst, ingen bakgrunn.
+     ============================================================ */
+
+  @page { size: A4 portrait; margin: 7mm 7mm 7mm 7mm; }
+
+  .print-toolbar {
+    max-width: 820px;
+    margin: 32px auto 18px;
+    padding: 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .print-toolbar .pt-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--ink);
+  }
+  .print-toolbar .pt-title em { color: var(--rust); }
+  .print-toolbar .pt-meta {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-faded);
+  }
+  .print-toolbar button {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--rust);
+    color: var(--paper);
+    border: none;
+    border-radius: 4px;
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+  .print-toolbar button:hover { background: var(--rust-dark); }
+
+  .sheet-stack {
+    max-width: 820px;
+    margin: 0 auto 48px;
+    padding: 0 12px;
+  }
+
+  /* En "page" er en A4-side. På skjerm: skalert ned m/ramme. På print: full A4. */
+  .page {
+    width: 196mm;       /* 210 - 2*7 margin */
+    min-height: 283mm;  /* 297 - 2*7 margin */
+    background: #fff;
+    color: #111;
+    padding: 4mm 4mm 5mm;
+    margin: 0 auto 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    box-sizing: border-box;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 8.2pt;
+    line-height: 1.28;
+    transform-origin: top center;
+    /* Skaler ned på små skjermer slik at hele siden vises */
+    transform: scale(1);
+  }
+
+  /* Topp-stripe per side */
+  .page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 2mm;
+    margin-bottom: 2mm;
+  }
+  .page-head .ph-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.05em;
+  }
+  .page-head .ph-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 11pt;
+    font-weight: 500;
+  }
+  .page-head .ph-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7pt;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Kolonneoppsett: 3 kolonner */
+  .cols {
+    column-count: 3;
+    column-gap: 3mm;
+    column-rule: 0.5px solid #ccc;
+  }
+
+  .box {
+    break-inside: avoid;
+    margin-bottom: 2mm;
+    padding: 1.4mm 1.8mm;
+    border: 0.6px solid #999;
+    border-left: 2.2px solid #1f4e79;
+    border-radius: 1mm;
+    background: #fafaf6;
+  }
+  .box.must { border-left-color: #b14a2e; background: #fdf4ef; }
+  .box.warn { border-left-color: #c68a1f; background: #fdf8ec; }
+  .box.code { border-left-color: #3d6b3a; background: #f3f7f1; }
+  .box.fact { border-left-color: #1f4e79; background: #f1f5f9; }
+
+  .box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 1mm;
+    color: #1f4e79;
+  }
+  .box.must h4 { color: #b14a2e; }
+  .box.warn h4 { color: #8a6014; }
+  .box.code h4 { color: #2f5530; }
+
+  .box ul, .box ol {
+    margin: 0;
+    padding-left: 3mm;
+  }
+  .box li {
+    margin: 0 0 0.4mm;
+    line-height: 1.25;
+  }
+
+  .box p { margin: 0 0 0.8mm; }
+
+  .box code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.4pt;
+    background: #ecebe5;
+    padding: 0 1px;
+    border-radius: 1px;
+  }
+  .box.code code { background: #e3ebe1; }
+  .box.must code { background: #f4e1d8; }
+  .box.fact code { background: #e2eaf2; }
+
+  .box pre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.2pt;
+    background: #f0eee5;
+    padding: 1.2mm 1.6mm;
+    margin: 0.6mm 0;
+    border-radius: 0.6mm;
+    white-space: pre;
+    line-height: 1.25;
+    overflow: hidden;
+  }
+  .box.code pre { background: #e8efe6; }
+  .box.must pre { background: #f6e6dc; }
+  .box.fact pre { background: #e6edf4; }
+
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 2mm;
+    font-size: 7.6pt;
+  }
+  .kv > b { font-family: 'IBM Plex Mono', monospace; font-weight: 700; }
+  .kv > span { color: #333; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 6.4pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #1f4e79;
+    color: #fff;
+    padding: 0.2mm 1mm;
+    border-radius: 1px;
+    margin-right: 0.6mm;
+    vertical-align: 1px;
+  }
+  .tag.red  { background: #b14a2e; }
+  .tag.ylw  { background: #c68a1f; }
+  .tag.grn  { background: #3d6b3a; }
+
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.4pt;
+  }
+  .mini-table th, .mini-table td {
+    border: 0.5px solid #aaa;
+    padding: 0.6mm 1mm;
+    text-align: left;
+    vertical-align: top;
+  }
+  .mini-table th {
+    background: #1f4e79;
+    color: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 6.8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-strip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 6.6pt;
+    color: #666;
+    text-align: right;
+    margin-top: 2mm;
+    border-top: 0.5px solid #ccc;
+    padding-top: 1mm;
+  }
+
+  /* === Skjermbilde: skaler ned så hele siden vises uten zoom === */
+  @media screen {
+    .sheet-stack { padding: 0 8px; }
+    .page {
+      /* På små skjermer: ned-skalering */
+      transform: scale(0.85);
+      transform-origin: top center;
+      margin-bottom: -32mm; /* kompenserer for skalering */
+    }
+  }
+
+  /* === Print: skjul nav, footer, toolbar; én side per ark === */
+  @media print {
+    html, body {
+      background: #fff !important;
+      color: #000 !important;
+    }
+    body::before { display: none !important; }
+    .site-nav, footer, .print-toolbar, .chat-widget,
+    nav, header.hero { display: none !important; }
+    .sheet-stack { max-width: none; margin: 0; padding: 0; }
+    .page {
+      width: 100%;
+      min-height: 0;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+      transform: none;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; }
+    .box { background: #fff !important; }
+    .box code, .box pre { background: #f2f2f2 !important; }
+    .tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    a { color: #000; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="./" class="nav-back">&larr; Eksamen</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="print-toolbar">
+  <div>
+    <div class="pt-title">A4-<em>jukseark</em></div>
+    <div class="pt-meta">4 sider · 2 ark dobbeltsidig · IT2805 H25</div>
+  </div>
+  <button onclick="window.print()">Skriv ut →</button>
+</div>
+
+<main class="sheet-stack" data-chapter="A4-jukseark — fire sider">
+
+<!-- =================================================================== -->
+<!-- SIDE 1: HTML + CSS                                                  -->
+<!-- =================================================================== -->
+<section class="page">
+  <div class="page-head">
+    <span class="ph-num">SIDE 1/4</span>
+    <span class="ph-title">HTML &amp; CSS — referanse</span>
+    <span class="ph-tag">Kap 2–4</span>
+  </div>
+
+  <div class="cols">
+
+    <div class="box must">
+      <h4>CSS-selektorer</h4>
+<pre>div p          /* etterkommer  */
+div &gt; p        /* direkte barn */
+div + p        /* neste søsken */
+div ~ p        /* alle søsken  */
+.foo           /* class        */
+#bar           /* id           */
+[type="x"]     /* attributt    */
+:hover :focus  /* tilstand     */
+:nth-child(2n) /* posisjon     */
+:first-child :last-child
+::first-letter /* pseudo-el    */
+::first-line
+::before ::after
+a:link a:visited
+input:checked</pre>
+    </div>
+
+    <div class="box fact">
+      <h4>CSS-spesifisitet</h4>
+      <div class="kv">
+        <b>inline</b><span>1000</span>
+        <b>#id</b><span>100</span>
+        <b>.class / [attr] / :hover</b><span>10</span>
+        <b>tag / ::pseudo-el</b><span>1</span>
+        <b>*</b><span>0</span>
+      </div>
+      <p style="margin-top:1mm;font-size:7.4pt;"><code>!important</code> slår alt. Ved likhet: siste regel vinner.</p>
+      <p style="font-size:7.2pt;color:#444;">Eks: <code>#a .b p</code> = 111, <code>div p:hover</code> = 12</p>
+    </div>
+
+    <div class="box must">
+      <h4>Boks-modellen</h4>
+      <p style="font-size:7.6pt;">utenfra → inn:<br><code>margin → border → padding → content</code></p>
+      <ul>
+        <li><code>border-width: 10 5 20 1</code> = top, right, bottom, left</li>
+        <li>3 verdier: top, side, bottom</li>
+        <li>2 verdier: top/bottom, side</li>
+        <li><code>padding</code> = mellom border &amp; innhold</li>
+        <li><code>margin</code> = mellom elementer (kan kollapse)</li>
+        <li><code>box-sizing:border-box</code> = w/h inkluderer padding+border</li>
+      </ul>
+    </div>
+
+    <div class="box must">
+      <h4>display / visibility</h4>
+      <ul>
+        <li><code>none</code> — fjernet, <b>ingen plass</b></li>
+        <li><code>block</code> — full bredde, ny linje, kan ha w/h</li>
+        <li><code>inline</code> — i tekstflyt, <b>ignorerer w/h</b></li>
+        <li><code>inline-block</code> — w/h ja, samme linje</li>
+        <li><code>flex</code> — 1D layout-context</li>
+        <li><code>grid</code> — 2D layout-context</li>
+        <li><code>visibility:hidden</code> — usynlig, <b>beholder plass</b></li>
+        <li><code>opacity:0</code> — gjennomsiktig, fanger fortsatt klikk</li>
+      </ul>
+    </div>
+
+    <div class="box fact">
+      <h4>position</h4>
+      <ul>
+        <li><b>static</b> (default) — normal flyt</li>
+        <li><b>relative</b> — flyttes fra normalposisjon</li>
+        <li><b>absolute</b> — relativ til nærmeste posisjonerte forelder</li>
+        <li><b>fixed</b> — relativ til viewport</li>
+        <li><b>sticky</b> — relative til scroll passerer</li>
+      </ul>
+      <p style="font-size:7.4pt;"><code>z-index</code> virker kun når position ≠ static</p>
+    </div>
+
+    <div class="box">
+      <h4>Arv (inheritance)</h4>
+      <ul>
+        <li>Arves: <code>color</code>, <code>font-*</code>, <code>line-height</code>, <code>text-align</code>, <code>visibility</code></li>
+        <li>Arves ikke: <code>border</code>, <code>margin</code>, <code>padding</code>, <code>width</code>, <code>background</code></li>
+        <li>Tving arv: <code>inherit</code></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>External / Internal / Inline</h4>
+<pre>&lt;!-- external --&gt;
+&lt;link rel="stylesheet" href="x.css"&gt;
+
+&lt;!-- internal --&gt;
+&lt;style&gt; p { color:red } &lt;/style&gt;
+
+&lt;!-- inline --&gt;
+&lt;p style="color:red"&gt;</pre>
+      <p style="font-size:7.4pt;">Rekkefølge i kaskaden ved lik spesifisitet: senere vinner.</p>
+    </div>
+
+    <div class="box">
+      <h4>HTML-skjelett</h4>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="no"&gt;
+&lt;head&gt;
+ &lt;meta charset="UTF-8"&gt;
+ &lt;meta name="viewport"
+   content="width=device-width,
+   initial-scale=1"&gt;
+ &lt;title&gt;...&lt;/title&gt;
+ &lt;link rel="stylesheet" href="..."&gt;
+&lt;/head&gt;
+&lt;body&gt; ... &lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="box">
+      <h4>Vanlige HTML-tagger</h4>
+      <ul>
+        <li>Overskrift: <code>h1</code>…<code>h6</code> (6 nivå)</li>
+        <li>Avsnitt: <code>p</code>, <code>br</code>, <code>hr</code></li>
+        <li>Lister: <code>ul/ol/li</code>, <code>dl/dt/dd</code></li>
+        <li>Lenke: <code>&lt;a href="..."&gt;</code></li>
+        <li>Bilde: <code>&lt;img src="..." alt="..."&gt;</code></li>
+        <li>Tabell: <code>table/tr/th/td</code>, <code>thead/tbody</code></li>
+        <li>Semantisk: <code>header/nav/main/section/article/aside/footer</code></li>
+        <li>Generisk: <code>div</code> (blokk), <code>span</code> (inline)</li>
+      </ul>
+    </div>
+
+    <div class="box fact">
+      <h4>Relative URLs</h4>
+      <div class="kv">
+        <b>./</b><span>samme mappe</span>
+        <b>../</b><span>ett nivå opp</span>
+        <b>../../</b><span>to nivå opp</span>
+        <b>/</b><span>fra root</span>
+        <b>#id</b><span>anker i samme side</span>
+        <b>mailto:</b><span>e-post-lenke</span>
+      </div>
+    </div>
+
+    <div class="box">
+      <h4>Tabell-syntaks</h4>
+<pre>&lt;table border="1"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;&lt;th&gt;A&lt;/th&gt;&lt;th&gt;B&lt;/th&gt;&lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+  &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      <p style="font-size:7.4pt;">Full bredde: <code>table { width:100% }</code>. Slå sammen: <code>colspan</code>, <code>rowspan</code>.</p>
+    </div>
+
+    <div class="box">
+      <h4>Farger &amp; enheter</h4>
+      <ul>
+        <li><code>#rrggbb</code> / <code>#rgb</code> / <code>rgb()</code> / <code>rgba()</code> / <code>hsl()</code></li>
+        <li>Navngitt: <code>red</code>, <code>blue</code>, <code>transparent</code></li>
+        <li><code>px</code> — piksel · <code>%</code> — av forelder</li>
+        <li><code>em</code> — relativt til eget font · <code>rem</code> — til root</li>
+        <li><code>vw</code>/<code>vh</code> — viewport-prosent</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Pseudo-klasser ofte testet</h4>
+      <ul>
+        <li><code>:hover</code> — mus over</li>
+        <li><code>:focus</code> — har tastatur-fokus</li>
+        <li><code>:active</code> — trykkes på</li>
+        <li><code>:visited</code> — besøkt lenke</li>
+        <li><code>:first-child</code>, <code>:last-child</code>, <code>:nth-child(n)</code></li>
+        <li><code>:checked</code>, <code>:disabled</code>, <code>:required</code></li>
+        <li><code>::first-letter</code>, <code>::first-line</code></li>
+      </ul>
+    </div>
+
+    <div class="box warn">
+      <h4>Fonter</h4>
+<pre>font-family: Georgia, serif;
+font-size: 16px;
+font-weight: 400|500|700|bold;
+font-style: italic;
+line-height: 1.4;
+text-align: left|center|right|justify;
+text-decoration: none|underline;
+text-transform: uppercase|capitalize;
+letter-spacing: 0.05em;</pre>
+      <p style="font-size:7.4pt;">Stack: spesifikk → generisk (<code>serif/sans-serif/monospace</code>).</p>
+    </div>
+
+    <div class="box">
+      <h4>Bakgrunn</h4>
+<pre>background-color: #f4f1ea;
+background-image: url("x.png");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover|contain;
+/* kortform */
+background: #fff url(x.png)
+  no-repeat center/cover;</pre>
+    </div>
+
+  </div>
+  <div class="footer-strip">Side 1 · HTML &amp; CSS-referanse · Kap 2 · 3 · 4</div>
+</section>
+
+<!-- =================================================================== -->
+<!-- SIDE 2: JavaScript core                                              -->
+<!-- =================================================================== -->
+<section class="page">
+  <div class="page-head">
+    <span class="ph-num">SIDE 2/4</span>
+    <span class="ph-title">JavaScript — kjernen</span>
+    <span class="ph-tag">Kap 9–10</span>
+  </div>
+
+  <div class="cols">
+
+    <div class="box must">
+      <h4>Type-feller (MCQ-favoritter)</h4>
+      <ul>
+        <li><code>5 + "9"</code> → <code>"59"</code> (string-konkat)</li>
+        <li><code>5 - "9"</code> → <code>-4</code> (numerisk)</li>
+        <li><code>"5" * "2"</code> → <code>10</code></li>
+        <li><code>prompt()</code> returnerer alltid <b>string</b></li>
+        <li><code>let a=prompt(); a+1</code> → <code>"181"</code></li>
+        <li><code>arr[100]=x</code> → <code>arr.length</code> = 101</li>
+        <li><code>typeof null</code> → <code>"object"</code></li>
+        <li><code>NaN === NaN</code> → <code>false</code></li>
+        <li><code>==</code> coerce, <code>===</code> streng</li>
+        <li><code>null == undefined</code> → <code>true</code></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Variabler &amp; typer</h4>
+<pre>let x = 5;       // re-tildelbar
+const PI = 3.14; // konstant
+var old = 1;     // funksjons-scope
+// typer:
+number | string | boolean
+null | undefined | object | array
+typeof x      // gir streng</pre>
+    </div>
+
+    <div class="box code">
+      <h4>String-metoder</h4>
+<pre>"abcde".length         // 5
+"abcde".charAt(2)      // "c"
+"abcde"[2]             // "c"
+"abcde".substring(2,4) // "cd"
+"abcde".slice(-3,-1)   // "cd"
+"abcde".indexOf("c")   // 2
+"abc".toUpperCase()    // "ABC"
+"  a  ".trim()         // "a"
+"a-b-c".split("-")     // ["a","b","c"]
+"abc".concat("de")     // "abcde"
+"abc".replace("b","X") // "aXc"
+"abc".includes("b")    // true</pre>
+    </div>
+
+    <div class="box code">
+      <h4>Array-metoder</h4>
+<pre>let a = [1,2,3];
+a.length           // 3
+a.push(4)          // [1,2,3,4] (slutten)
+a.pop()            // tar siste
+a.unshift(0)       // [0,1,2,3] (start)
+a.shift()          // tar første
+a.slice(1,3)       // KOPI, [2,3]
+a.splice(1,1)      // MUTERER, fjerner
+a.indexOf(2)       // 1
+a.includes(2)      // true
+a.sort()           // alfabetisk!
+a.reverse()
+a.join("-")        // "1-2-3"
+a.concat([4,5])
+[1,2,3].forEach(fn)
+[1,2,3].map(x =&gt; x*2)
+[1,2,3].filter(x =&gt; x&gt;1)</pre>
+    </div>
+
+    <div class="box">
+      <h4>Math</h4>
+      <div class="kv">
+        <b>Math.floor(3.8)</b><span>3</span>
+        <b>Math.ceil(3.2)</b><span>4</span>
+        <b>Math.round(3.5)</b><span>4</span>
+        <b>Math.round(2.5)</b><span>3</span>
+        <b>Math.abs(-5)</b><span>5</span>
+        <b>Math.max(1,9,3)</b><span>9</span>
+        <b>Math.min(1,9,3)</b><span>1</span>
+        <b>Math.pow(2,3)</b><span>8</span>
+        <b>Math.sqrt(9)</b><span>3</span>
+        <b>Math.PI</b><span>3.14…</span>
+        <b>Math.random()</b><span>0–1</span>
+      </div>
+      <p style="font-size:7.4pt;">Tall fra 1–10: <code>Math.floor(Math.random()*10)+1</code></p>
+    </div>
+
+    <div class="box">
+      <h4>Date-objektet</h4>
+<pre>let d = new Date();
+d.getFullYear()  // 2025
+d.getMonth()     // 0–11 (Jan=0!)
+d.getDate()      // 1–31
+d.getDay()       // 0–6 (Søn=0)
+d.getHours()
+d.getTime()      // ms siden 1970
+
+// lag konkret dato
+new Date(2025, 11, 25)  // 25. des
+// diff i dager
+let diff = d2 - d1;        // ms
+let dgr = Math.ceil(
+  diff/(1000*60*60*24));</pre>
+    </div>
+
+    <div class="box">
+      <h4>Tall-konvertering</h4>
+      <ul>
+        <li><code>parseInt("12px")</code> → <code>12</code></li>
+        <li><code>parseFloat("3.14m")</code> → <code>3.14</code></li>
+        <li><code>Number("12")</code> → <code>12</code></li>
+        <li><code>Number("12x")</code> → <code>NaN</code></li>
+        <li><code>+"5"</code> → <code>5</code> (rask cast)</li>
+        <li><code>String(5)</code> / <code>(5).toString()</code> → <code>"5"</code></li>
+        <li><code>(3.14159).toFixed(2)</code> → <code>"3.14"</code></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Kontrollflyt</h4>
+<pre>if (a &gt; 0) { ... }
+else if (a == 0) { ... }
+else { ... }
+
+switch (x) {
+ case 1: ...; break;
+ default: ...
+}
+
+for (let i=0; i&lt;n; i++) { ... }
+for (let v of arr) { ... }
+for (let k in obj) { ... }
+while (cond) { ... }
+do { ... } while (cond);
+
+break;  continue;</pre>
+    </div>
+
+    <div class="box">
+      <h4>Funksjoner</h4>
+<pre>function add(a, b) {
+  return a + b;
+}
+
+// funksjons-uttrykk
+const sub = function(a,b){
+  return a-b;
+};
+
+// arrow
+const mul = (a,b) =&gt; a*b;
+const sq  = x =&gt; x*x;
+
+// default-param
+function greet(n="Knut"){...}</pre>
+    </div>
+
+    <div class="box">
+      <h4>Objekter &amp; JSON</h4>
+<pre>let p = {
+  name: "Ada",
+  age: 25,
+  greet: function(){...}
+};
+p.name           // "Ada"
+p["name"]        // "Ada"
+p.age = 26;      // endre
+delete p.age;
+Object.keys(p)   // ["name","age",...]
+
+// JSON
+JSON.stringify(p) // → string
+JSON.parse(str)   // → objekt</pre>
+    </div>
+
+    <div class="box fact">
+      <h4>I/O — print til side</h4>
+      <ul>
+        <li><code>alert("x")</code> — modal popup</li>
+        <li><code>prompt("?")</code> — input-popup (string!)</li>
+        <li><code>confirm("?")</code> — OK/Avbryt → boolean</li>
+        <li><code>console.log(x)</code> — devtools</li>
+        <li><code>document.write("...")</code> — skriv til side; <b>overskriver hele siden</b> hvis kalt etter onload</li>
+      </ul>
+    </div>
+
+    <div class="box code">
+      <h4>DOM-tilgang</h4>
+<pre>// hent
+document.getElementById("x")
+document.getElementsByClassName("c") // HTMLCollection
+document.getElementsByTagName("p")
+document.querySelector("div p")      // én
+document.querySelectorAll("li")      // NodeList
+
+// les / skriv
+el.innerHTML  = "&lt;b&gt;hei&lt;/b&gt;";
+el.textContent = "ren tekst";
+el.value       = "input-felt";
+el.style.color = "red";
+el.className   = "ny";
+el.classList.add("on");
+el.setAttribute("src","x.png");
+el.getAttribute("href");</pre>
+    </div>
+
+    <div class="box code">
+      <h4>Events</h4>
+<pre>el.addEventListener("click", fn);
+el.addEventListener("click", fn, true); // capture
+el.removeEventListener("click", fn);
+
+// inline HTML
+&lt;button onclick="f()"&gt;X&lt;/button&gt;
+
+function f(e){
+  e.target          // klikket element
+  e.currentTarget   // listener-element
+  e.stopPropagation();
+  e.preventDefault();
+}</pre>
+      <p style="font-size:7.4pt;">Vanlige: <code>click, dblclick, mouseover, mouseout, focus, blur, submit, change, keydown, keyup, load</code>.</p>
+    </div>
+
+    <div class="box must">
+      <h4>Event-fasene</h4>
+      <ol>
+        <li><b>Capturing</b> — fra <code>window</code> nedover treet</li>
+        <li><b>Target</b> — på selve elementet</li>
+        <li><b>Bubbling</b> — opp til <code>document</code></li>
+      </ol>
+      <p style="font-size:7.4pt;">3. arg <code>true</code> = lytt i capture-fasen. <code>stopPropagation()</code> stopper videre. Bubbling slår av med <code>e.stopPropagation()</code>.</p>
+    </div>
+
+    <div class="box warn">
+      <h4>Scope &amp; hoisting</h4>
+      <ul>
+        <li><code>var</code> = funksjons-scope, hoistes</li>
+        <li><code>let</code>/<code>const</code> = blokk-scope (<code>{}</code>)</li>
+        <li>Globale: tilgang fra alle funksjoner</li>
+        <li>Lokale: kun i sin funksjon/blokk</li>
+        <li>Inner-funksjon ser ytre — <i>closure</i></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Operator-snarveier</h4>
+      <div class="kv">
+        <b>a++ / a--</b><span>+1 / −1 (post)</span>
+        <b>a += 2</b><span>a = a + 2</span>
+        <b>a *= 2</b><span>a = a * 2</span>
+        <b>a %= 3</b><span>rest etter /</span>
+        <b>a &amp;&amp; b</b><span>AND, kort-slutt</span>
+        <b>a || b</b><span>OR, kort-slutt</span>
+        <b>!a</b><span>NOT</span>
+        <b>a ? b : c</b><span>ternær</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-strip">Side 2 · JavaScript-kjerne · Kap 9 · 10</div>
+</section>
+
+<!-- =================================================================== -->
+<!-- SIDE 3: Kode-skjeletter                                              -->
+<!-- =================================================================== -->
+<section class="page">
+  <div class="page-head">
+    <span class="ph-num">SIDE 3/4</span>
+    <span class="ph-title">Kode-skjeletter — pugg disse</span>
+    <span class="ph-tag">3/3 sett</span>
+  </div>
+
+  <div class="cols">
+
+    <div class="box must">
+      <h4>Canvas-skjelett (10 % fast)</h4>
+<pre>&lt;canvas id="c" width="400"
+        height="200"&gt;&lt;/canvas&gt;
+&lt;script&gt;
+let c = document.getElementById("c");
+let ctx = c.getContext("2d");
+
+// linje
+ctx.beginPath();
+ctx.moveTo(20, 20);
+ctx.lineTo(180, 20);
+ctx.lineWidth = 2;
+ctx.strokeStyle = "black";
+ctx.stroke();
+
+// fylt rektangel
+ctx.fillStyle = "blue";
+ctx.fillRect(50, 50, 80, 40);
+
+// kontur-rektangel
+ctx.strokeRect(50, 50, 80, 40);
+
+// sirkel (full)
+ctx.beginPath();
+ctx.arc(200, 80, 30,
+        0, 2*Math.PI);
+ctx.fill();   // ELLER stroke()
+
+// tekst
+ctx.font = "16px Arial";
+ctx.fillStyle = "red";
+ctx.fillText("Hei", 100, 150);
+ctx.strokeText("Hei", 100, 150);
+
+// bilde
+let img = new Image();
+img.src = "x.png";
+img.onload = function(){
+  ctx.drawImage(img, 0, 0);
+};
+&lt;/script&gt;</pre>
+      <p style="font-size:7.2pt;">(0,0) er <b>øverst venstre</b>, x → høyre, y ↓ ned. Sett farge <b>før</b> du tegner. Nye paths: <code>beginPath()</code>.</p>
+    </div>
+
+    <div class="box must">
+      <h4>Form med JS-validering</h4>
+<pre>&lt;form onsubmit="return val()"&gt;
+ &lt;input id="nm" type="text"
+   placeholder="Navn"&gt;
+ &lt;input id="al" type="number"
+   placeholder="Alder"&gt;
+ &lt;input id="pw" type="password"&gt;
+ &lt;input type="submit"&gt;
+&lt;/form&gt;
+&lt;script&gt;
+function val(){
+ let n = document
+   .getElementById("nm").value;
+ let a = +document
+   .getElementById("al").value;
+ let p = document
+   .getElementById("pw").value;
+
+ if (/\d/.test(n)){
+   alert("Navn uten tall");
+   return false;
+ }
+ if (a &lt; 18){
+   alert("Må være 18+");
+   return false;
+ }
+ if (!/[A-Z]/.test(p) ||
+     !/\d/.test(p)    ||
+     !/[!@#$%]/.test(p)){
+   alert("Passord svakt");
+   return false;
+ }
+ return true;
+}
+&lt;/script&gt;</pre>
+    </div>
+
+    <div class="box must">
+      <h4>Dager til neste jul</h4>
+<pre>function daysToXmas(){
+  let now = new Date();
+  let yr  = now.getFullYear();
+  let xmas = new Date(yr, 11, 25);
+  if (xmas &lt; now){
+    xmas = new Date(yr+1, 11, 25);
+  }
+  let ms   = xmas - now;
+  let days = Math.ceil(
+     ms / (1000*60*60*24));
+  alert("Dager til jul: " + days);
+}</pre>
+      <p style="font-size:7.2pt;">Måned-indeks: Jan=0, Des=11. <code>xmas - now</code> = millisekunder.</p>
+    </div>
+
+    <div class="box must">
+      <h4>Kalkulator-form (mult/div)</h4>
+<pre>&lt;input id="a" type="number"&gt;
+&lt;input id="b" type="number"&gt;
+&lt;button onclick="mult()"&gt;×&lt;/button&gt;
+&lt;button onclick="div()" &gt;÷&lt;/button&gt;
+&lt;span id="r"&gt;&lt;/span&gt;
+&lt;script&gt;
+function read(id){
+  return +document
+    .getElementById(id).value;
+}
+function mult(){
+  let r = read("a") * read("b");
+  document.getElementById("r")
+    .innerHTML = r;
+}
+function div(){
+  let b = read("b");
+  if (b === 0){
+    alert("÷ med 0"); return;
+  }
+  document.getElementById("r")
+    .innerHTML = read("a") / b;
+}
+&lt;/script&gt;</pre>
+    </div>
+
+    <div class="box code">
+      <h4>Selektor-eksempel</h4>
+<pre>/* alle p inni .box */
+.box p { color: red; }
+
+/* kun direkte barn-p */
+.box &gt; p { font-weight: bold; }
+
+/* første p i forelder */
+p:first-child { color: blue; }
+
+/* hver andre li */
+li:nth-child(2n){
+  background:#eee;
+}
+
+/* hover på lenke */
+a:hover { color: green; }
+
+/* første bokstav stor */
+p::first-letter {
+  font-size: 200%;
+}
+
+/* p rett etter ul */
+ul + p { margin-top: 0; }
+
+/* attributt-velger */
+input[type="text"] {
+  border: 1px solid #ccc;
+}</pre>
+    </div>
+
+    <div class="box">
+      <h4>Event-bubbling-eksempel</h4>
+<pre>&lt;div id="ut"&gt;
+ &lt;div id="inn"&gt;Klikk&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+document.getElementById("ut")
+ .addEventListener("click",
+  () =&gt; console.log("YTRE"));
+document.getElementById("inn")
+ .addEventListener("click",
+  (e) =&gt; {
+    console.log("INDRE");
+    // e.stopPropagation();
+  });
+&lt;/script&gt;</pre>
+      <p style="font-size:7.4pt;">Klikk på <code>#inn</code> → "INDRE" så "YTRE" (bubbling). Med <code>stopPropagation()</code> bare "INDRE".</p>
+    </div>
+
+    <div class="box">
+      <h4>Skriv tabell-celle dynamisk</h4>
+<pre>let tds =
+ document.getElementsByTagName("td");
+for (let i=0; i&lt;tds.length; i++){
+  tds[i].innerHTML = i*i;
+}
+// eller med querySelectorAll:
+document.querySelectorAll("td")
+  .forEach((td,i) =&gt;
+    td.textContent = i*i);</pre>
+    </div>
+
+    <div class="box">
+      <h4>Toggle CSS-klasse</h4>
+<pre>&lt;button onclick="t()"&gt;Toggle&lt;/button&gt;
+&lt;div id="x" class="boks"&gt;...&lt;/div&gt;
+&lt;script&gt;
+function t(){
+  let d = document
+    .getElementById("x");
+  d.classList.toggle("aktiv");
+}
+&lt;/script&gt;
+&lt;style&gt;
+.boks { background:#fff; }
+.aktiv { background:#ff0; }
+&lt;/style&gt;</pre>
+    </div>
+
+    <div class="box code">
+      <h4>Regex — vanlige mønstre</h4>
+      <div class="kv">
+        <b>/\d/</b><span>siffer (0-9)</span>
+        <b>/\D/</b><span>ikke-siffer</span>
+        <b>/\w/</b><span>bokstav/siffer/_</span>
+        <b>/\s/</b><span>whitespace</span>
+        <b>/[A-Z]/</b><span>stor bokstav</span>
+        <b>/[a-z]/</b><span>liten bokstav</span>
+        <b>/[!@#$%]/</b><span>spesialtegn</span>
+        <b>/^.{8,}$/</b><span>min 8 tegn</span>
+        <b>/^\d{4}$/</b><span>nøyaktig 4 siffer</span>
+        <b>.test(str)</b><span>→ true/false</span>
+        <b>.match(re)</b><span>→ array/null</span>
+      </div>
+    </div>
+
+    <div class="box">
+      <h4>Armstrong-tall (1/3 sett)</h4>
+<pre>function armstrong(n){
+  let s = String(n);
+  let p = s.length;
+  let sum = 0;
+  for (let c of s){
+    sum += Math.pow(+c, p);
+  }
+  return sum === n;
+}
+// armstrong(153) → true
+//   1³+5³+3³ = 1+125+27 = 153</pre>
+    </div>
+
+    <div class="box">
+      <h4>Variabel-trace-tips</h4>
+      <ul>
+        <li>Tegn en kolonne per variabel</li>
+        <li>For loop: skriv inn ny <code>i</code>-verdi før blokk</li>
+        <li>Husk <code>++</code> post: bruk verdi, så øk</li>
+        <li><code>arr</code> muteres av push/pop/sort</li>
+        <li><code>slice</code> kopierer; <code>splice</code> muterer</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="footer-strip">Side 3 · Kode-skjeletter · Canvas · Form · Dato · Kalkulator</div>
+</section>
+
+<!-- =================================================================== -->
+<!-- SIDE 4: Begreper & lavfrekvent                                       -->
+<!-- =================================================================== -->
+<section class="page">
+  <div class="page-head">
+    <span class="ph-num">SIDE 4/4</span>
+    <span class="ph-title">Begreper &amp; sikkerhetsnett</span>
+    <span class="ph-tag">Kap 1 · 5–8 · 11–12</span>
+  </div>
+
+  <div class="cols">
+
+    <div class="box must">
+      <h4>TCP/IP-modellen (4 lag)</h4>
+      <table class="mini-table">
+        <thead><tr><th>Lag</th><th>Protokoller</th></tr></thead>
+        <tbody>
+          <tr><td><b>Application</b></td><td>HTTP, HTTPS, FTP, SMTP, POP3, IMAP, DNS, SSH, Telnet</td></tr>
+          <tr><td><b>Transport</b></td><td>TCP (pålitelig), UDP (rask, upålitelig)</td></tr>
+          <tr><td><b>Network</b></td><td>IP, ICMP, ARP</td></tr>
+          <tr><td><b>Physical / Link</b></td><td>Ethernet, WiFi, Bluetooth</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:7.4pt;">Hver pakke "innpakkes" lag for lag (encapsulation), pakkes ut på mottakersiden.</p>
+    </div>
+
+    <div class="box must">
+      <h4>POST vs GET</h4>
+      <table class="mini-table">
+        <thead><tr><th></th><th>GET</th><th>POST</th></tr></thead>
+        <tbody>
+          <tr><td>Data</td><td>i URL</td><td>i body</td></tr>
+          <tr><td>Synlig</td><td>ja</td><td>nei</td></tr>
+          <tr><td>Bokmerke</td><td>ja</td><td>nei</td></tr>
+          <tr><td>Cache</td><td>ja</td><td>nei</td></tr>
+          <tr><td>Størrelse</td><td>&lt; 2 KB</td><td>ubegrenset</td></tr>
+          <tr><td>Idempotent</td><td>ja</td><td>nei</td></tr>
+          <tr><td>Sensitive</td><td>nei</td><td>ja</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:7.4pt;">GET for å hente, POST for å endre tilstand. Sensitive: <b>alltid POST + HTTPS</b>.</p>
+    </div>
+
+    <div class="box">
+      <h4>HTTP-grunnleggende</h4>
+      <ul>
+        <li>Klient sender forespørsel, server svarer (request/response)</li>
+        <li>Statuskode: 2xx OK · 3xx redirect · 4xx klientfeil · 5xx serverfeil</li>
+        <li>200 OK, 301 moved, 404 not found, 500 server error</li>
+        <li>HTTPS = HTTP over TLS/SSL (kryptert)</li>
+        <li>Stateless — cookies/session for tilstand</li>
+      </ul>
+    </div>
+
+    <div class="box fact">
+      <h4>Hva nettleseren gjør</h4>
+      <ol>
+        <li>DNS slår opp domene → IP</li>
+        <li>TCP-handshake til server</li>
+        <li>HTTP-forespørsel sendes</li>
+        <li>HTML lastes, parses → DOM</li>
+        <li>CSS lastes → CSSOM</li>
+        <li>Render-tre bygges, layout, paint</li>
+        <li>JS lastes &amp; kjøres (kan endre DOM)</li>
+      </ol>
+    </div>
+
+    <div class="box">
+      <h4>Flexbox (1D)</h4>
+<pre>.container {
+  display: flex;
+  flex-direction: row|column;
+  justify-content:
+    flex-start|center|space-between;
+  align-items:
+    stretch|center|flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.item {
+  flex: 1;          /* grow */
+  align-self: center;
+}</pre>
+    </div>
+
+    <div class="box">
+      <h4>Grid (2D)</h4>
+<pre>.grid {
+  display: grid;
+  grid-template-columns:
+    1fr 2fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+}
+/* span over flere kolonner */
+.item {
+  grid-column: 1 / 3;
+  grid-row: 1 / span 2;
+}</pre>
+      <p style="font-size:7.4pt;">Flex = én retning. Grid = rader + kolonner.</p>
+    </div>
+
+    <div class="box">
+      <h4>Responsivt design</h4>
+<pre>&lt;meta name="viewport"
+ content="width=device-width,
+ initial-scale=1.0"&gt;
+
+@media (max-width: 600px){
+  .col { width: 100%; }
+}
+@media (min-width: 901px){
+  .col { width: 33%; }
+}</pre>
+      <p style="font-size:7.4pt;">Mobile-first: standard er små skjermer, <code>min-width</code> legger til for større.</p>
+    </div>
+
+    <div class="box">
+      <h4>Forms — input-typer</h4>
+      <ul>
+        <li><code>text</code>, <code>password</code>, <code>email</code></li>
+        <li><code>number</code>, <code>tel</code>, <code>url</code></li>
+        <li><code>date</code>, <code>time</code>, <code>color</code>, <code>range</code></li>
+        <li><code>checkbox</code>, <code>radio</code> (samme <code>name</code> i gruppe)</li>
+        <li><code>file</code>, <code>hidden</code>, <code>submit</code>, <code>reset</code></li>
+        <li><code>select</code>+<code>option</code>, <code>textarea</code></li>
+      </ul>
+      <p style="font-size:7.4pt;">Attributter: <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern="..."</code>, <code>placeholder</code>, <code>autofocus</code>.</p>
+    </div>
+
+    <div class="box">
+      <h4>Multimedia &amp; HTML5</h4>
+      <ul>
+        <li>HTML5 viser multimedia <b>uten plug-ins</b></li>
+        <li><code>&lt;video src="x" controls&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;source&gt;</code></li>
+        <li><b>SVG</b> = vektor, basert på <b>XML</b></li>
+        <li>JPEG = foto, PNG = transp. raster, GIF = animasjon, SVG = vektor</li>
+        <li>Bilde-attr: <code>alt</code> (tilgjengelighet), <code>width</code>, <code>height</code>, <code>loading="lazy"</code></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>XML</h4>
+      <ul>
+        <li><b>Ett</b> rot-element, alle tagger må lukkes</li>
+        <li>Case-sensitive (HTML er ikke det)</li>
+        <li>Attributter alltid i quotes</li>
+        <li>Erklæring: <code>&lt;?xml version="1.0"?&gt;</code></li>
+        <li><b>Well-formed</b>: følger syntaks. <b>Valid</b>: matcher DTD/XSD</li>
+        <li>Brukes i: SVG, RSS, SOAP, konfigurasjonsfiler</li>
+      </ul>
+    </div>
+
+    <div class="box fact">
+      <h4>Småfakta-MCQ</h4>
+      <ul>
+        <li>Default <code>position</code> = <code>static</code></li>
+        <li>Default <code>display</code> for <code>div</code> = <code>block</code>, for <code>span</code> = <code>inline</code></li>
+        <li><code>id</code> = unik, <code>class</code> = mange</li>
+        <li>HREF anker: <code>href="#id"</code></li>
+        <li>Heading-nivå: <b>h1 til h6</b> (seks)</li>
+        <li><code>text-decoration: none</code> fjerner understrek</li>
+        <li>SVG = XML-format</li>
+        <li>Tabell-bredde 100 %: <code>table {width:100%}</code></li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Tilgjengelighet (a11y)</h4>
+      <ul>
+        <li>Alle bilder: <code>alt="..."</code></li>
+        <li>Skjema: <code>&lt;label for="id"&gt;</code></li>
+        <li>Bruk semantiske tags (<code>nav</code>, <code>main</code>)</li>
+        <li>God kontrast tekst/bakgrunn</li>
+        <li>Tab-rekkefølge logisk (<code>tabindex</code>)</li>
+        <li>Ikke bare farge for å vise feil</li>
+      </ul>
+    </div>
+
+    <div class="box warn">
+      <h4>Vanlige eksamen-feller</h4>
+      <ul>
+        <li><code>document.write()</code> etter <code>onload</code> sletter siden</li>
+        <li><code>onclick="alert(x)"</code> — bruk anførselstegn riktig</li>
+        <li>Glemte <code>;</code> eller <code>{}</code> — sjekk på slutten</li>
+        <li>Ikke lukket HTML-tagg → resten brytes</li>
+        <li>JS-fil før HTML-elementet → <code>getElementById</code> = null</li>
+        <li>CSS-feil: glemt enheter (<code>10</code> vs <code>10px</code>)</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h4>Strategi på eksamen</h4>
+      <ul>
+        <li>Les hele settet først (5 min)</li>
+        <li>MCQ raskt — bruk arket</li>
+        <li>Korttekst først (TCP/IP, POST/GET, display)</li>
+        <li>Selektor-kode før Canvas (raskere)</li>
+        <li>Canvas til slutt — lengst</li>
+        <li>Kommentarer i kode → delpoeng</li>
+        <li>Skriv <i>noe</i> for hver oppgave</li>
+      </ul>
+    </div>
+
+    <div class="box code">
+      <h4>Forklaringssvar-mal (TCP/IP)</h4>
+      <p style="font-size:7.6pt;">TCP/IP-modellen organiserer nettverkskommunikasjon i fire lag. <b>Application</b>-laget gir tjenester til programmer (HTTP, DNS). <b>Transport</b> sørger for ende-til-ende-overføring (TCP pålitelig, UDP raskt). <b>Network</b> ruter pakker mellom maskiner (IP). <b>Physical/Link</b> håndterer faktisk signal (Ethernet, WiFi). Data pakkes inn lag for lag på sender og pakkes ut på mottaker.</p>
+    </div>
+
+    <div class="box code">
+      <h4>Forklaringssvar-mal (Bubbling)</h4>
+      <p style="font-size:7.6pt;">Event propagation har tre faser: capturing (fra <code>window</code> ned til target), target-fasen (på selve elementet), bubbling (oppover treet til <code>document</code>). Som standard kjører handlere i bubbling-fasen. Med <code>addEventListener(..., true)</code> kjører den i capture-fasen. <code>e.stopPropagation()</code> stopper videre forplantning. Eksempel: klikk på en knapp inni en div trigger først knapp-handler, så div-handler (med mindre stopProp kalles).</p>
+    </div>
+
+  </div>
+  <div class="footer-strip">Side 4 · Sikkerhetsnett — TCP/IP · POST/GET · Bubbling · Flex · Grid · XML</div>
+</section>
+
+</main>
+
+<footer style="margin-top:20px;">
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · H25 · A4-jukseark</p>
+  </div>
+</footer>
+
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>
