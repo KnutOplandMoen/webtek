@@ -52,8 +52,7 @@
         { path: 'skrive-js/',           title: 'Skrive JavaScript',  label: '1.11.1–1.11.2' },
         { path: 'data-og-variabler/',   title: 'Data og variabler',  label: '1.11.3–1.11.6' },
         { path: 'kontrollflyt/',        title: 'Kontrollflyt',       label: '1.11.7–1.11.10' },
-        { path: 'funksjoner-og-json/',  title: 'Funksjoner og JSON', label: '1.11.11–1.11.12' },
-        { path: 'ajax/',                title: 'AJAX',               label: '1.12' }
+        { path: 'funksjoner-og-json/',  title: 'Funksjoner',         label: '1.11.11' }
       ]
     }
   };
