@@ -46,7 +46,7 @@ prosjektrot/
 | [Kap 2 — HTML](kap2/)                     | 1.4–1.5  | basics_html.md, list.md     |
 | [Kap 3 — CSS grunnleggende](kap3/)        | 1.6      | css.md, selectors.md        |
 | [Kap 4 — CSS videregående](kap4/)         | 1.7      | css_props.md                |
-| [Kap 5 — Flexbox og Grid](kap5/)          | (slides) | grid_flebox.md, exam_info.md|
+| [Kap 5 — Flexbox og Grid](kap5/)          | (slides) | grid_flebox.md              |
 | [Kap 6 — Responsivt webdesign](kap6/)     | 1.10     | kommer                      |
 | [Kap 7 — Multimedia](kap7/)               | 1.8      | kommer                      |
 | [Kap 8 — Forms og validering](kap8/)      | 1.9      | forms.md                    |
