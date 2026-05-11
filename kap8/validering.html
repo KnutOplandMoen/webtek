@@ -353,6 +353,19 @@ input:valid {
         Da får du gratis format-validering uten ekstra arbeid.
       </p>
     </div>
+
+    <div class="callout-warn">
+      <div class="label">Eksamensvarsel — e-postvalidering kan forby <code>type="email"</code></div>
+      <p>
+        Foreleser har sagt eksplisitt at en typisk eksamensoppgave er å skrive
+        e-postvalidering i JavaScript — og <strong>oppgaveteksten kan kreve at
+        du <em>ikke</em> bruker <code>type="email"</code></strong>. Bruker du
+        det likevel, får du 0 poeng for den deloppgaven, selv om resten av
+        koden er riktig. Les oppgaveteksten nøye: hvis e-post-input står som
+        <code>type="text"</code>, må du validere selv med regex (f.eks.
+        <code>/.+@.+\..+/.test(verdi)</code>).
+      </p>
+    </div>
   </div></section>
 
   <section id="mcq"><div class="container">

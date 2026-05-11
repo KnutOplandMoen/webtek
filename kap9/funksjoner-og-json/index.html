@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../../favicon.png" type="image/png">
-<title>1.11.11–1.11.12 — Funksjoner og JSON · Kap 9</title>
+<title>1.11.11 — Funksjoner · Kap 9</title>
 <link rel="stylesheet" href="../../style.css">
 <link rel="stylesheet" href="../../flashcards.css">
 </head>
@@ -24,18 +24,16 @@
   </div>
 </nav>
 
-<main data-chapter="Kapittel 9 · 1.11.11–1.11.12 Funksjoner og JSON">
+<main data-chapter="Kapittel 9 · 1.11.11 Funksjoner">
   <header class="hero">
     <div class="container">
-      <div class="eyebrow">Kapittel 9 · Underkapittel 1.11.11 – 1.11.12</div>
-      <h1>Funksjoner og <em>JSON</em></h1>
+      <div class="eyebrow">Kapittel 9 · Underkapittel 1.11.11</div>
+      <h1><em>Funksjoner</em></h1>
       <p class="lede">
-        Pakk gjentagende kode inn i et navn du kan kalle, og lær formatet
-        som hele weben bruker til å sende data fram og tilbake.
+        Pakk gjentagende kode inn i et navn du kan kalle igjen og igjen.
       </p>
       <div class="pill-row">
         <span class="pill">1.11.11 Functions</span>
-        <span class="pill">1.11.12 JSON</span>
       </div>
     </div>
   </header>
@@ -47,10 +45,8 @@
         <li><span class="toc-num">02</span><a href="#syntaks">To måter å skrive</a></li>
         <li><span class="toc-num">03</span><a href="#parameter">Parameter vs argument</a></li>
         <li><span class="toc-num">04</span><a href="#return"><code>return</code></a></li>
-        <li><span class="toc-num">05</span><a href="#json">JSON</a></li>
-        <li><span class="toc-num">06</span><a href="#stringify">stringify / parse</a></li>
-        <li><span class="toc-num">07</span><a href="#feller">Feller</a></li>
-        <li><span class="toc-num">08</span><a href="#mcq">Test deg selv</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
       </ol>
     </div>
   </nav>
@@ -208,131 +204,21 @@ console.log(square(5)); // 25</code></pre>
     </div>
   </div></section>
 
-  <section id="json"><div class="container">
-    <div class="section-badge">05 · Pensum 1.11.12</div>
-    <h2><em>JSON</em> — JavaScript Object Notation</h2>
-    <p>
-      JSON er et tekstformat for å representere data. Det er bygget på
-      JS-objekter, men er strengere — og brukes <em>uavhengig av JS</em>
-      som standard for å sende data mellom systemer.
-    </p>
-
-<pre><code>{
-  "navn": "Anna",
-  "alder": 22,
-  "kurs": ["IT2805", "TDT4140"],
-  "aktiv": true
-}</code></pre>
-
-    <h3>Forskjellen fra et JS-objekt</h3>
-    <ul>
-      <li><strong>Nøkler må stå i doble fnutter</strong> — <code>"navn"</code>, ikke <code>navn</code>.</li>
-      <li><strong>Strenger må bruke doble fnutter</strong> — <code>"Anna"</code>, ikke <code>'Anna'</code>.</li>
-      <li><strong>Ingen kommentarer</strong> tillatt.</li>
-      <li><strong>Kun enkle data:</strong> string, number, boolean, null, array, objekt. Ingen funksjoner, ingen variabler, ingen beregninger.</li>
-    </ul>
-
-    <div class="callout-blue"><div class="label">Hvorfor</div>
-      <p>JSON er strengt fordi det skal kunne leses pålitelig av programmer skrevet i ethvert språk — Python, Java, C# — ikke bare JavaScript. Strengheten er funksjonen.</p>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · 1.11.12</div>
-      <div class="q-text">Hvilket av disse er <em>ikke</em> tillatt i JSON?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="0">Tall</li>
-        <li class="mcq-opt" data-correct="0">Strenger med doble fnutter</li>
-        <li class="mcq-opt" data-correct="0">Arrays</li>
-        <li class="mcq-opt" data-correct="1">Kommentarer</li>
-      </ul>
-      <div class="mcq-feedback">JSON er enkle data — ingen kommentarer, ingen funksjoner, ingen variabler.</div>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · 1.11.12</div>
-      <div class="q-text">Hvilken nøkkel-syntaks er gyldig JSON?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="0"><code>navn: "Anna"</code></li>
-        <li class="mcq-opt" data-correct="0"><code>'navn': 'Anna'</code></li>
-        <li class="mcq-opt" data-correct="1"><code>"navn": "Anna"</code></li>
-        <li class="mcq-opt" data-correct="0"><code>navn = "Anna"</code></li>
-      </ul>
-      <div class="mcq-feedback">Doble fnutter rundt både nøkkel og string-verdi. Enkle fnutter er ikke tillatt i JSON.</div>
-    </div>
-  </div></section>
-
-  <section id="stringify"><div class="container">
-    <div class="section-badge">06 · Pensum 1.11.12</div>
-    <h2><code>JSON.stringify</code> og <code>JSON.parse</code></h2>
-    <p>JS har to innebygde funksjoner for å oversette mellom JS-objekter og JSON-strenger:</p>
-
-    <div class="fact-grid">
-      <div class="fact-card">
-        <div class="fc-key">JSON.stringify(obj)</div>
-        <div class="fc-val">Tar et JS-objekt → returnerer en JSON-streng. Brukes f.eks. når du <em>sender</em> data til en server.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key">JSON.parse(str)</div>
-        <div class="fc-val">Tar en JSON-streng → returnerer et JS-objekt. Brukes når du <em>mottar</em> data fra en server.</div>
-      </div>
-    </div>
-
-<pre><code>const person = { navn: "Anna", alder: 22 };
-
-const tekst = JSON.stringify(person);
-// '{"navn":"Anna","alder":22}'
-
-const tilbake = JSON.parse(tekst);
-// { navn: "Anna", alder: 22 }
-tilbake.navn; // "Anna"</code></pre>
-
-    <div class="callout-warn"><div class="label">Pass på</div>
-      <p><code>JSON.parse</code> kaster <code>SyntaxError</code> hvis strengen ikke er gyldig JSON. Bruk <code>try/catch</code> hvis du tar imot data du ikke stoler på.</p>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · 1.11.12</div>
-      <div class="q-text">Hvilken funksjon brukes for å gjøre et JS-objekt om til en streng som kan sendes over nett?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="1"><code>JSON.stringify</code></li>
-        <li class="mcq-opt" data-correct="0"><code>JSON.parse</code></li>
-        <li class="mcq-opt" data-correct="0"><code>obj.toString()</code></li>
-        <li class="mcq-opt" data-correct="0"><code>String(obj)</code></li>
-      </ul>
-      <div class="mcq-feedback"><code>JSON.stringify</code> serialiserer objektet til JSON-tekst. <code>JSON.parse</code> går motsatt vei.</div>
-    </div>
-  </div></section>
-
   <section id="feller"><div class="container">
-    <div class="section-badge">07 · Vanlige feller</div>
+    <div class="section-badge">05 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
     <div class="callout-warn"><div class="label">Pass på</div>
       <ul>
         <li><strong>Glemme parentes ved funksjonskall:</strong> <code>square</code> er en <em>referanse</em>; <code>square(5)</code> kjører funksjonen.</li>
         <li><strong>Glemme <code>return</code>:</strong> uten <code>return</code> får kalleren bare <code>undefined</code>, selv om funksjonen beregner noe.</li>
         <li><strong>Forveksle parameter og argument:</strong> sensor sjekker at du bruker begrepene riktig.</li>
-        <li><strong>Enkle fnutter i JSON:</strong> ikke gyldig. Doble fnutter alltid.</li>
-        <li><strong>Kommentarer i JSON:</strong> <code>JSON.parse</code> vil feile.</li>
-        <li><strong>Komma etter siste element:</strong> <code>{"a": 1,}</code> er ikke gyldig JSON. JS-objekter tillater det.</li>
       </ul>
     </div>
   </div></section>
 
   <section id="mcq"><div class="container">
-    <div class="section-badge">08 · Test deg selv</div>
+    <div class="section-badge">06 · Test deg selv</div>
     <h2>Avsluttende <em>spørsmål</em></h2>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · Helhet</div>
-      <div class="q-text">Hva er hovedforskjellen på et JS-objekt og JSON?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="0">Ingen forskjell</li>
-        <li class="mcq-opt" data-correct="1">JSON er strengere — doble fnutter på alle nøkler, ingen kommentarer, kun enkle data</li>
-        <li class="mcq-opt" data-correct="0">JS-objekter kan kun ha tall som verdier</li>
-        <li class="mcq-opt" data-correct="0">JSON kan inneholde funksjoner, JS-objekter kan ikke</li>
-      </ul>
-      <div class="mcq-feedback">JSON er en strengere undermengde av JS-objekt-syntaks, designet for trygg utveksling mellom systemer.</div>
-    </div>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">MCQ · Helhet</div>
@@ -344,27 +230,6 @@ tilbake.navn; // "Anna"</code></pre>
         <li class="mcq-opt" data-correct="0"><code>SyntaxError</code></li>
       </ul>
       <div class="mcq-feedback">Uten parentes refererer <code>f</code> til selve funksjonen, ikke et resultat. <code>f(5)</code> ville logget <code>6</code>.</div>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · Helhet</div>
-      <div class="q-text">Hvilken funksjon parser tekst-strengen <code>'{"a":1}'</code> til et JS-objekt?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="0"><code>JSON.stringify</code></li>
-        <li class="mcq-opt" data-correct="1"><code>JSON.parse</code></li>
-        <li class="mcq-opt" data-correct="0"><code>eval</code></li>
-        <li class="mcq-opt" data-correct="0"><code>Object.from</code></li>
-      </ul>
-      <div class="mcq-feedback"><code>JSON.parse</code> tar JSON-streng → JS-objekt. <code>JSON.stringify</code> går motsatt vei.</div>
-    </div>
-
-    <div class="subpage-card-grid" style="margin-top:2em;">
-      <a href="../ajax/" class="subpage-card">
-        <div class="sp-icon">NESTE · 1.12</div>
-        <div class="sp-title">Dynamiske nettsider (Ajax)</div>
-        <div class="sp-desc">Hvordan henter JS data fra en server uten å laste hele siden på nytt? XMLHttpRequest, statuskoder og same-origin.</div>
-        <div class="sp-arrow">Fortsett &rarr;</div>
-      </a>
     </div>
   </div></section>
 </main>

@@ -976,30 +976,41 @@ function t(){
       </div>
     </div>
 
-    <div class="box">
-      <h4>Armstrong-tall (1/3 sett)</h4>
-<pre>function armstrong(n){
-  let s = String(n);
-  let p = s.length;
-  let sum = 0;
-  for (let c of s){
-    sum += Math.pow(+c, p);
-  }
-  return sum === n;
-}
-// armstrong(153) → true
-//   1³+5³+3³ = 1+125+27 = 153</pre>
+    <div class="box must">
+      <h4>Find result of code — slik forklarer du</h4>
+      <p style="font-size:7.6pt;">1 poeng for riktig svar, <b>2 for forklaringen</b>. Forklar i termer av <b>mekanismer</b>, ikke linje-for-linje:</p>
+      <ul>
+        <li><b>Hoisting</b> — <code>var</code> heves, ikke <code>let</code>/<code>const</code></li>
+        <li><b>Scope</b> — blokk- vs funksjonsscope</li>
+        <li><b>Event-fase</b> — capture / target / bubble</li>
+        <li><b>Type-coercion</b> — <code>+</code> vs <code>-</code></li>
+        <li><b>Referanse vs verdi</b> — array/objekt deler ref</li>
+        <li><b>Mutering</b> — push/pop/sort endrer; slice/map ikke</li>
+      </ul>
+      <p style="font-size:7.4pt;">Eks: «Output er 5 fordi <code>setTimeout</code>-callback legges i kø og <code>i</code> er <code>let</code>-bundet til hver iterasjon».</p>
+    </div>
+
+    <div class="box warn">
+      <h4>Stavefeller som koster poeng</h4>
+      <ul>
+        <li><code>getElementById</code> — ikke <s><code>getElementByID</code></s> (begge store)</li>
+        <li><code>getElementsByClassName</code> — <b>Elements</b> (flertall) + flertall i feltnavn</li>
+        <li><code>getElementsByTagName</code> — samme regel</li>
+        <li><code>addEventListener</code> — én L</li>
+        <li>Event-navn små bokstaver: <code>click</code>, <code>keyup</code>, <code>blur</code>, <code>mouseover</code></li>
+        <li><code>onclick</code> som HTML-attributt, <code>"click"</code> som streng i JS</li>
+      </ul>
+      <p style="font-size:7.4pt;">Foreleser strekker seg langt på rettskriving — men feil method-navn = ingen poeng.</p>
     </div>
 
     <div class="box">
-      <h4>Variabel-trace-tips</h4>
+      <h4>let / const / var</h4>
       <ul>
-        <li>Tegn en kolonne per variabel</li>
-        <li>For loop: skriv inn ny <code>i</code>-verdi før blokk</li>
-        <li>Husk <code>++</code> post: bruk verdi, så øk</li>
-        <li><code>arr</code> muteres av push/pop/sort</li>
-        <li><code>slice</code> kopierer; <code>splice</code> muterer</li>
+        <li><code>let</code> — kan re-assignes, ikke re-deklareres, blokk-scope</li>
+        <li><code>const</code> — verken re-assigne eller re-deklarere</li>
+        <li><code>var</code> — kan <b>re-deklareres</b> (samme navn flere ganger!) → debugging-mareritt</li>
       </ul>
+      <p style="font-size:7.4pt;">Foreleser: «bruk <code>let</code>, ikke <code>var</code>». <code>var</code>-redeclaration er hele grunnen.</p>
     </div>
 
   </div>
