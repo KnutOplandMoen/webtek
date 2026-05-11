@@ -68,8 +68,8 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.18);
     box-sizing: border-box;
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
-    font-size: 8.2pt;
-    line-height: 1.28;
+    font-size: 7.6pt;
+    line-height: 1.22;
     transform-origin: top center;
     /* Skaler ned på små skjermer slik at hele siden vises */
     transform: scale(1);
@@ -107,14 +107,14 @@
   /* Kolonneoppsett: 3 kolonner */
   .cols {
     column-count: 3;
-    column-gap: 3mm;
+    column-gap: 2.5mm;
     column-rule: 0.5px solid #ccc;
   }
 
   .box {
     break-inside: avoid;
-    margin-bottom: 2mm;
-    padding: 1.4mm 1.8mm;
+    margin-bottom: 1.4mm;
+    padding: 1.1mm 1.5mm;
     border: 0.6px solid #999;
     border-left: 2.2px solid #1f4e79;
     border-radius: 1mm;
@@ -127,11 +127,11 @@
 
   .box h4 {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 7pt;
+    font-size: 6.6pt;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin: 0 0 1mm;
+    margin: 0 0 0.7mm;
     color: #1f4e79;
   }
   .box.must h4 { color: #b14a2e; }
@@ -140,18 +140,18 @@
 
   .box ul, .box ol {
     margin: 0;
-    padding-left: 3mm;
+    padding-left: 2.6mm;
   }
   .box li {
-    margin: 0 0 0.4mm;
-    line-height: 1.25;
+    margin: 0 0 0.2mm;
+    line-height: 1.2;
   }
 
-  .box p { margin: 0 0 0.8mm; }
+  .box p { margin: 0 0 0.5mm; }
 
   .box code {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 7.4pt;
+    font-size: 6.9pt;
     background: #ecebe5;
     padding: 0 1px;
     border-radius: 1px;
@@ -162,13 +162,13 @@
 
   .box pre {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 7.2pt;
+    font-size: 6.7pt;
     background: #f0eee5;
-    padding: 1.2mm 1.6mm;
-    margin: 0.6mm 0;
+    padding: 0.9mm 1.3mm;
+    margin: 0.4mm 0;
     border-radius: 0.6mm;
     white-space: pre;
-    line-height: 1.25;
+    line-height: 1.2;
     overflow: hidden;
   }
   .box.code pre { background: #e8efe6; }
@@ -178,8 +178,8 @@
   .kv {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0 2mm;
-    font-size: 7.6pt;
+    gap: 0 1.6mm;
+    font-size: 7.0pt;
   }
   .kv > b { font-family: 'IBM Plex Mono', monospace; font-weight: 700; }
   .kv > span { color: #333; }
@@ -205,11 +205,11 @@
   .mini-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 7.4pt;
+    font-size: 6.9pt;
   }
   .mini-table th, .mini-table td {
     border: 0.5px solid #aaa;
-    padding: 0.6mm 1mm;
+    padding: 0.4mm 0.8mm;
     text-align: left;
     vertical-align: top;
   }
@@ -217,7 +217,7 @@
     background: #1f4e79;
     color: #fff;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 6.8pt;
+    font-size: 6.3pt;
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
@@ -378,7 +378,30 @@ input:checked</pre>
         <li><b>fixed</b> — relativ til viewport</li>
         <li><b>sticky</b> — relative til scroll passerer</li>
       </ul>
-      <p style="font-size:7.4pt;"><code>z-index</code> virker kun når position ≠ static</p>
+      <p style="font-size:6.8pt;"><code>z-index</code> virker kun når position ≠ static</p>
+    </div>
+
+    <div class="box must">
+      <h4>float &amp; clear</h4>
+<pre>img { float: left; }   /* tekst flyter rundt */
+img { float: right; }
+img { float: none; }   /* default */
+
+/* stopp wrap */
+h2 { clear: left; }
+h2 { clear: both; }    /* begge sider */</pre>
+      <p style="font-size:6.8pt;">Float tar element ut av normal flyt → forelder kan kollapse. Fiks: <code>overflow:auto</code> på container, eller clearfix.</p>
+    </div>
+
+    <div class="box">
+      <h4>overflow</h4>
+      <div class="kv">
+        <b>visible</b><span>default, søler ut</span>
+        <b>hidden</b><span>kuttes, ingen scroll</span>
+        <b>scroll</b><span>alltid scrollbar</span>
+        <b>auto</b><span>scroll kun ved behov</span>
+      </div>
+      <p style="font-size:6.8pt;"><code>overflow-x</code> / <code>overflow-y</code> styrer hver akse.</p>
     </div>
 
     <div class="box">
@@ -722,6 +745,63 @@ el.getAttribute("href");</pre>
     </div>
 
     <div class="box code">
+      <h4>DOM-mutering</h4>
+<pre>let p = document.createElement("p");
+p.textContent = "Hei";
+p.className = "ny";
+parent.appendChild(p);
+
+// fjern
+parent.removeChild(child);
+el.remove();         // moderne
+
+// erstatt
+parent.replaceChild(ny, gml);
+
+// klone
+let kopi = el.cloneNode(true);</pre>
+    </div>
+
+    <div class="box">
+      <h4>DOM-navigasjon</h4>
+      <div class="kv">
+        <b>el.parentNode</b><span>forelder</span>
+        <b>el.children</b><span>barn (HTMLColl.)</span>
+        <b>el.firstChild</b><span>første (inkl. tekst)</span>
+        <b>el.firstElementChild</b><span>første elem</span>
+        <b>el.lastChild</b><span>siste</span>
+        <b>el.nextSibling</b><span>neste søsken</span>
+        <b>el.previousSibling</b><span>forrige</span>
+      </div>
+    </div>
+
+    <div class="box must">
+      <h4>setTimeout / setInterval</h4>
+<pre>// kjør én gang etter 2 sek
+let id = setTimeout(fn, 2000);
+clearTimeout(id);
+
+// kjør hvert sekund
+let iv = setInterval(() =&gt; {
+  console.log("tick");
+}, 1000);
+clearInterval(iv);</pre>
+      <p style="font-size:6.8pt;"><b>ms!</b> ikke sekunder. 1000 = 1 sek. Kallbacken kjører <b>etter</b> at scriptet er ferdig.</p>
+    </div>
+
+    <div class="box">
+      <h4>Keyboard-events</h4>
+      <div class="kv">
+        <b>keydown</b><span>tast trykkes</span>
+        <b>keyup</b><span>tast slippes</span>
+        <b>keypress</b><span>(deprecated)</span>
+        <b>e.key</b><span>"a", "Enter", "ArrowUp"</span>
+        <b>e.keyCode</b><span>tall (gammel)</span>
+      </div>
+      <p style="font-size:6.8pt;"><b>KeyCodes:</b> 37/38/39/40 = ←↑→↓, 13 = Enter, 27 = Esc, 32 = mellomrom, 65–90 = A–Z, 48–57 = 0–9.</p>
+    </div>
+
+    <div class="box code">
       <h4>Events</h4>
 <pre>el.addEventListener("click", fn);
 el.addEventListener("click", fn, true); // capture
@@ -954,6 +1034,66 @@ function t(){
 &lt;/style&gt;</pre>
     </div>
 
+    <div class="box must">
+      <h4>Tastatur-styring (piltaster)</h4>
+<pre>&lt;div id="b" style="position:absolute;
+  left:50px;top:50px;width:40px;
+  height:40px;background:red"&gt;&lt;/div&gt;
+&lt;script&gt;
+document.addEventListener(
+ "keydown", (e) =&gt; {
+  let b = document.getElementById("b");
+  let l = parseInt(b.style.left);
+  let t = parseInt(b.style.top);
+  if (e.key === "ArrowLeft")  l -= 10;
+  if (e.key === "ArrowRight") l += 10;
+  if (e.key === "ArrowUp")    t -= 10;
+  if (e.key === "ArrowDown")  t += 10;
+  b.style.left = l + "px";
+  b.style.top  = t + "px";
+});
+&lt;/script&gt;</pre>
+      <p style="font-size:6.8pt;">Alt: <code>e.keyCode</code> 37/38/39/40.</p>
+    </div>
+
+    <div class="box must">
+      <h4>Klokke / nedtelling</h4>
+<pre>&lt;span id="ur"&gt;&lt;/span&gt;
+&lt;script&gt;
+function vis(){
+  let d = new Date();
+  document.getElementById("ur")
+   .textContent = d.toLocaleTimeString();
+}
+setInterval(vis, 1000);
+vis();   // første gang straks
+&lt;/script&gt;
+
+// nedtelling fra 10
+let n = 10;
+let id = setInterval(() =&gt; {
+  console.log(n--);
+  if (n &lt; 0) clearInterval(id);
+}, 1000);</pre>
+    </div>
+
+    <div class="box code">
+      <h4>Legg til element dynamisk</h4>
+<pre>&lt;ul id="ls"&gt;&lt;/ul&gt;
+&lt;input id="in"&gt;
+&lt;button onclick="add()"&gt;Legg til&lt;/button&gt;
+&lt;script&gt;
+function add(){
+  let v = document
+    .getElementById("in").value;
+  let li = document.createElement("li");
+  li.textContent = v;
+  document.getElementById("ls")
+    .appendChild(li);
+}
+&lt;/script&gt;</pre>
+    </div>
+
     <div class="box code">
       <h4>Regex — vanlige mønstre</h4>
       <div class="kv">
@@ -1084,15 +1224,20 @@ function t(){
 <pre>.container {
   display: flex;
   flex-direction: row|column;
-  justify-content:
-    flex-start|center|space-between;
-  align-items:
-    stretch|center|flex-start;
-  flex-wrap: wrap;
+  justify-content:        /* hovedakse */
+    flex-start|center|flex-end
+   |space-between|space-around|space-evenly;
+  align-items:            /* kryssakse */
+    stretch|center|flex-start|flex-end;
+  flex-wrap: wrap|nowrap;
+  flex-flow: row wrap;    /* kortform */
   gap: 10px;
 }
 .item {
-  flex: 1;          /* grow */
+  flex: 1;                /* grow */
+  flex-grow: 1; flex-shrink: 1;
+  flex-basis: 200px;
+  order: -1;              /* sortering */
   align-self: center;
 }</pre>
     </div>
@@ -1103,15 +1248,32 @@ function t(){
   display: grid;
   grid-template-columns:
     1fr 2fr 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: 100px auto;
+  grid-template-areas:
+    "h h h"
+    "s m m";
   gap: 10px;
+  justify-items: center;  /* horiz */
+  align-items: center;    /* vert */
 }
-/* span over flere kolonner */
 .item {
-  grid-column: 1 / 3;
+  grid-column: 1 / 3;     /* fra/til */
   grid-row: 1 / span 2;
+  grid-area: h;           /* navngitt */
 }</pre>
-      <p style="font-size:7.4pt;">Flex = én retning. Grid = rader + kolonner.</p>
+      <p style="font-size:6.8pt;">Flex = 1D. Grid = 2D. <code>fr</code> = del av ledig plass.</p>
+    </div>
+
+    <div class="box code">
+      <h4>Media query — detalj</h4>
+<pre>@media screen and (max-width: 600px){…}
+@media (min-width:601px) and
+       (max-width:900px){…}
+@media (orientation: landscape){…}
+@media print {…}
+@media not screen {…}
+@media only screen and (min-width:900px){…}</pre>
+      <p style="font-size:6.8pt;">Typer: <code>all|screen|print</code>. Features: <code>width</code>, <code>height</code>, <code>orientation</code>, <code>resolution</code> (med <code>min-/max-</code>).</p>
     </div>
 
     <div class="box">
@@ -1139,17 +1301,59 @@ function t(){
         <li><code>file</code>, <code>hidden</code>, <code>submit</code>, <code>reset</code></li>
         <li><code>select</code>+<code>option</code>, <code>textarea</code></li>
       </ul>
-      <p style="font-size:7.4pt;">Attributter: <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern="..."</code>, <code>placeholder</code>, <code>autofocus</code>.</p>
+      <p style="font-size:6.8pt;">Attributter: <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern="..."</code>, <code>placeholder</code>, <code>autofocus</code>, <code>maxlength</code>, <code>checked</code>.</p>
+    </div>
+
+    <div class="box must">
+      <h4>Form-struktur</h4>
+<pre>&lt;form action="x.php" method="post"&gt;
+ &lt;fieldset&gt;
+  &lt;legend&gt;Personalia&lt;/legend&gt;
+  &lt;label for="n"&gt;Navn:&lt;/label&gt;
+  &lt;input id="n" name="navn" required&gt;
+
+  &lt;label for="k"&gt;Kjønn:&lt;/label&gt;
+  &lt;input type="radio" name="k" value="m"&gt; Mann
+  &lt;input type="radio" name="k" value="k"&gt; Kvinne
+
+  &lt;select name="land"&gt;
+   &lt;option value="no"&gt;Norge&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;textarea rows="4" cols="30"&gt;&lt;/textarea&gt;
+  &lt;output id="r"&gt;&lt;/output&gt;
+ &lt;/fieldset&gt;
+&lt;/form&gt;</pre>
+      <p style="font-size:6.8pt;"><b>name</b> sendes til server, <b>id</b> brukes av JS/CSS/label. Radio-gruppe: samme <code>name</code> → bare ett valg.</p>
     </div>
 
     <div class="box">
-      <h4>Multimedia &amp; HTML5</h4>
-      <ul>
-        <li>HTML5 viser multimedia <b>uten plug-ins</b></li>
-        <li><code>&lt;video src="x" controls&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;source&gt;</code></li>
-        <li>JPEG = foto, PNG = transp. raster, GIF = animasjon, SVG = vektor</li>
-        <li>Bilde-attr: <code>alt</code> (tilgjengelighet), <code>width</code>, <code>height</code>, <code>loading="lazy"</code></li>
-      </ul>
+      <h4>Bildeformater</h4>
+      <table class="mini-table">
+        <thead><tr><th>Format</th><th>Type</th><th>Bruk</th></tr></thead>
+        <tbody>
+          <tr><td><b>JPEG</b></td><td>raster, lossy</td><td>foto</td></tr>
+          <tr><td><b>PNG</b></td><td>raster, lossless, alpha</td><td>logo, transp.</td></tr>
+          <tr><td><b>GIF</b></td><td>raster, 256 farger</td><td>animasjon</td></tr>
+          <tr><td><b>SVG</b></td><td>vektor</td><td>ikoner, diagram</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:6.8pt;"><b>Raster</b> = piksler (skaleres dårlig). <b>Vektor</b> = matematikk (skalerer fritt). <code>&lt;figure&gt;&lt;img&gt;&lt;figcaption&gt;</code> = bilde m/ tekst.</p>
+    </div>
+
+    <div class="box code">
+      <h4>Video / audio</h4>
+<pre>&lt;video controls poster="x.jpg"
+       width="400" autoplay muted loop&gt;
+  &lt;source src="film.mp4" type="video/mp4"&gt;
+  &lt;source src="film.webm" type="video/webm"&gt;
+  Nettleseren støtter ikke video.
+&lt;/video&gt;
+
+&lt;audio controls&gt;
+  &lt;source src="lyd.mp3" type="audio/mp3"&gt;
+  &lt;source src="lyd.ogg" type="audio/ogg"&gt;
+&lt;/audio&gt;</pre>
+      <p style="font-size:6.8pt;"><b>Boolean attr:</b> <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>preload</code>. Flere <code>&lt;source&gt;</code> = fallback. HTML5 = ingen plug-ins.</p>
     </div>
 
     <div class="box fact">
