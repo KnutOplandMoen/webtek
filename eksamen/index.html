@@ -148,6 +148,47 @@
           krympe og kode tilsvarende vokse.
         </p>
       </div>
+
+      <div class="callout-warn">
+        <div class="label">Eksamensvarsel — skriv kode, ikke pseudokode</div>
+        <p>
+          Foreleser sa rett ut at <strong>den største enkeltårsaken til poengtap</strong>
+          (utenom panikk) er å skrive pseudokode eller engelsk prosa i stedet for faktisk JS:
+          <em>«writing pseudocode instead of some code that will give me an idea of your
+          thinking process is the biggest mistake»</em>. Setninger som «jeg ville hentet
+          elementet og endret teksten» gir <strong>0 poeng</strong>, selv om logikken er
+          riktig. Skriv kode — stavefeil og småfeil i syntaks straffes ikke så lenge koden er
+          lesbar, men det <em>må</em> være kode. Kommentarer som <code>// regner dager til jul</code>
+          gir derimot delpoeng selv ved feil — bruk dem aktivt.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Find result of code — forklar i mekanismer, ikke linje-for-linje</div>
+        <p>
+          Foreleser sa: <em>«people have explained me code line by line. That is not what I'm
+          looking for.»</em> Du får <strong>1 av 3 poeng for riktig svar</strong>, og
+          <strong>2 av 3 for riktig forklaring</strong> — så forklaringen er <em>tyngre</em>
+          enn selve svaret. Forklar i terminologien for <em>mekanismen</em> som styrer resultatet:
+          <em>«fordi <code>+</code> mellom string og number konverterer tallet til string»</em>,
+          <em>«fordi <code>arr[100] = x</code> setter <code>length</code> til 101 og fyller med
+          tomme slots»</em>, <em>«fordi <code>let</code> er blokk-scopet og variabelen ikke
+          finnes utenfor blokken»</em>. Ikke skriv «på linje 1 lager vi en variabel … på linje 2
+          legger vi til …» — det gir lite uttelling selv om svaret er riktig.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Eksamensvarsel — staving av DOM-metoder</div>
+        <p>
+          Tre stavemåter foreleser nevnte spesifikt som typiske poengtap:
+        </p>
+        <ul>
+          <li><code>getElementById</code> — kun <strong>I</strong> er stor. <code>getElementByID</code> (begge caps) regnes som <strong>feil</strong>.</li>
+          <li><code>getElementsByClassName</code> / <code>getElementsByTagName</code> — husk <strong>«s»-en i «Elements»</strong> når metoden returnerer flere. Uten s er det feil.</li>
+          <li>Event-navn i strenger: <code>"click"</code>, <code>"keyup"</code>, <code>"blur"</code>, <code>"focus"</code>, <code>"submit"</code>, <code>"change"</code> — eksakt stavet, og <em>ikke</em> med «on»-prefiks (det er <code>"click"</code>, ikke <code>"onclick"</code>, inne i <code>addEventListener</code>).</li>
+        </ul>
+      </div>
     </div>
   </section>
 

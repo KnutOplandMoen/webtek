@@ -136,7 +136,7 @@
     <div class="callout"><div class="label">Stegvis</div>
       <ol>
         <li><strong>Hello world</strong> — skriv <code>console.log("Hei");</code> i en <code>&lt;script&gt;</code>-tag og åpne dev-konsollen.</li>
-        <li><strong>Variabler</strong> — lagre verdier med <code>const</code>, <code>let</code> eller <code>var</code>.</li>
+        <li><strong>Variabler</strong> — lagre verdier med <code>const</code> eller <code>let</code>. <code>var</code> frarådes — se feller.</li>
         <li><strong>Datatyper</strong> — string, number, boolean. Pluss <code>undefined</code> og <code>null</code>.</li>
         <li><strong>Logiske operatorer</strong> — <code>===</code> for likhet, <code>&amp;&amp;</code> og <code>||</code> for kombinasjoner.</li>
         <li><strong>Kontrollstruktur</strong> — bestem hva som skjer med <code>if / else if / else</code>.</li>
@@ -151,8 +151,8 @@
 
   <section id="deler"><div class="container">
     <div class="section-badge">04 · Hovedtemaer</div>
-    <h2>Fem <em>underkapittelsider</em></h2>
-    <p class="section-intro">Pensum 1.11 – 1.12 er gruppert i fem sider — hver dekker et beslektet sett delkapitler med egne forklaringer og MCQ-er.</p>
+    <h2>Fire <em>underkapittelsider</em></h2>
+    <p class="section-intro">Pensumet er gruppert i fire sider — hver dekker et beslektet sett delkapitler med egne forklaringer og MCQ-er.</p>
     <div class="subpage-card-grid">
       <a href="skrive-js/" class="subpage-card">
         <div class="sp-icon">1.11.1 – 1.11.2</div>
@@ -173,18 +173,17 @@
         <div class="sp-arrow">Åpne &rarr;</div>
       </a>
       <a href="funksjoner-og-json/" class="subpage-card">
-        <div class="sp-icon">1.11.11 – 1.11.12</div>
-        <div class="sp-title">Funksjoner og JSON</div>
-        <div class="sp-desc">Pakk gjentagende kode inn i et navn, og lær formatet for å sende data over nett.</div>
-        <div class="sp-arrow">Åpne &rarr;</div>
-      </a>
-      <a href="ajax/" class="subpage-card">
-        <div class="sp-icon">1.12</div>
-        <div class="sp-title">Dynamiske nettsider (Ajax)</div>
-        <div class="sp-desc"><code>XMLHttpRequest</code>, HTTP-metoder, statuskoder, same-origin og JSONP.</div>
+        <div class="sp-icon">1.11.11</div>
+        <div class="sp-title">Funksjoner</div>
+        <div class="sp-desc">Pakk gjentagende kode inn i et navn du kan kalle igjen og igjen.</div>
         <div class="sp-arrow">Åpne &rarr;</div>
       </a>
     </div>
+    <p style="margin-top:1.2em;font-size:0.92rem;color:var(--ink-faded);">
+      JSON (1.11.12) og Ajax / <code>XMLHttpRequest</code> (1.12) ble ikke
+      dekket i forelesningen og er ikke i pensum. Notatsidene står igjen som
+      referanse: <a href="ajax/">Ajax-notater</a>.
+    </p>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
@@ -194,8 +193,8 @@
       <div class="fact-card"><div class="fc-key">script-tag</div><div class="fc-val">Plassering: <code>head</code> eller <code>body</code>. Eksternt med <code>src</code>.</div></div>
       <div class="fact-card"><div class="fc-key">window.onload</div><div class="fc-val">Venter til DOM-en er ferdig rendret før JS kjøres.</div></div>
       <div class="fact-card"><div class="fc-key">console.log()</div><div class="fc-val">Skriver til dev-konsollen.</div></div>
-      <div class="fact-card"><div class="fc-key">var</div><div class="fc-val">Funksjons-scopet, kan re-deklareres.</div></div>
-      <div class="fact-card"><div class="fc-key">let</div><div class="fc-val">Block-scopet (ES6), kan re-tilordnes.</div></div>
+      <div class="fact-card"><div class="fc-key">var</div><div class="fc-val">Funksjons-scopet, kan re-deklareres. <strong>Frarådes</strong> — re-deklarering gjør debugging vanskelig. Bruk <code>let</code>/<code>const</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">let</div><div class="fc-val">Block-scopet (ES6), kan re-tilordnes. Foreleser-anbefaling for variabler som endrer seg.</div></div>
       <div class="fact-card"><div class="fc-key">const</div><div class="fc-val">Block-scopet, kan ikke re-tilordnes.</div></div>
       <div class="fact-card"><div class="fc-key">==</div><div class="fc-val">Likhet med automatisk type-koersjon.</div></div>
       <div class="fact-card"><div class="fc-key">===</div><div class="fc-val">Streng likhet — samme verdi <em>og</em> samme type.</div></div>
@@ -214,16 +213,6 @@
       <div class="fact-card"><div class="fc-key">parameter vs argument</div><div class="fc-val">Parameter står i deklarasjonen. Argument er verdien som sendes inn.</div></div>
       <div class="fact-card"><div class="fc-key">return</div><div class="fc-val">Returnerer en verdi fra en funksjon.</div></div>
       <div class="fact-card"><div class="fc-key">break / continue</div><div class="fc-val">Avbryter loop / hopper over én iterasjon.</div></div>
-      <div class="fact-card"><div class="fc-key">JSON</div><div class="fc-val">Tekstformat for utveksling. Doble fnutter rundt nøkler.</div></div>
-      <div class="fact-card"><div class="fc-key">JSON.stringify</div><div class="fc-val">JS-objekt → JSON-streng.</div></div>
-      <div class="fact-card"><div class="fc-key">JSON.parse</div><div class="fc-val">JSON-streng → JS-objekt.</div></div>
-      <div class="fact-card"><div class="fc-key">XMLHttpRequest</div><div class="fc-val">API for å sende HTTP-requests fra JS (Ajax).</div></div>
-      <div class="fact-card"><div class="fc-key">GET / POST / PUT / DELETE</div><div class="fc-val">Hente / opprette / oppdatere / slette.</div></div>
-      <div class="fact-card"><div class="fc-key">request.status</div><div class="fc-val">HTTP-statuskode på svaret.</div></div>
-      <div class="fact-card"><div class="fc-key">request.responseText</div><div class="fc-val">Selve dataen tjeneren returnerer.</div></div>
-      <div class="fact-card"><div class="fc-key">200 / 404 / 500</div><div class="fc-val">OK / Not found / Internal Server Error.</div></div>
-      <div class="fact-card"><div class="fc-key">Same-origin policy</div><div class="fc-val">JS får ikke hente fra en annen tjener uten videre.</div></div>
-      <div class="fact-card"><div class="fc-key">JSONP</div><div class="fc-val">Teknikk for å omgå same-origin ved å laste JS fra annen tjener.</div></div>
     </div>
   </div></section>
 
@@ -233,7 +222,7 @@
     <div class="recap-grid">
       <span class="recap-pill">skrive en script-tag, intern eller ekstern</span>
       <span class="recap-pill">forklare hvorfor scriptet må kjøres etter DOM-en er rendret</span>
-      <span class="recap-pill">deklarere variabler med var, let og const</span>
+      <span class="recap-pill">deklarere variabler med let og const (var frarådes)</span>
       <span class="recap-pill">forskjell på == og ===</span>
       <span class="recap-pill">forskjell på undefined og null</span>
       <span class="recap-pill">if / else if / else</span>
@@ -241,9 +230,6 @@
       <span class="recap-pill">arrays: indeksering, length, push, pop</span>
       <span class="recap-pill">objekter: dot- og bracket-tilgang</span>
       <span class="recap-pill">skrive funksjoner med return</span>
-      <span class="recap-pill">parse og stringify JSON</span>
-      <span class="recap-pill">sende en GET-request med XMLHttpRequest</span>
-      <span class="recap-pill">tolke statuskoder 200 / 400 / 404 / 500</span>
     </div>
   </div></section>
 
@@ -251,7 +237,7 @@
     <div class="section-badge">07 · Notatmapping</div>
     <h2>Hvor <em>finner du det</em></h2>
     <ul>
-      <li><strong>Lærebok:</strong> pensum 1.11 (alle 12 delkapitler — How and where to write JS, Comments, Data types, Logical operators, Variables and constants, When something doesn't exist, Control structures, Arrays, Objects, Loops, Functions, JSON) og 1.12 (Dynamic websites — XMLHttpRequest, HTTP-metoder, statuskoder, JSONP).</li>
+      <li><strong>Lærebok:</strong> pensum 1.11.1 — 1.11.11 (How and where to write JS, Comments, Data types, Logical operators, Variables and constants, When something doesn't exist, Control structures, Arrays, Objects, Loops, Functions). JSON (1.11.12) og 1.12 (Dynamic websites / Ajax) ble ikke gjennomgått i forelesningen og er ikke i pensum.</li>
       <li><strong>Slides:</strong> <code>presentasjoner/basic_js.md</code>.</li>
     </ul>
   </div></section>
@@ -259,6 +245,18 @@
   <section id="feller"><div class="container">
     <div class="section-badge">08 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
+
+    <div class="callout-warn">
+      <div class="label">Eksamensvarsel — unngå <code>var</code></div>
+      <p>
+        Foreleser sa rett ut: <em>«var is not common to use anymore. We use let.»</em> Problemet
+        med <code>var</code> er at den tillater re-deklarering av samme variabelnavn — det gjør
+        debugging vanskeligere. Bruk <code>let</code> for variabler som endrer seg, og
+        <code>const</code> for de som ikke gjør det. Sensor vil ikke trekke poeng for korrekt
+        <code>var</code>, men koden din er tryggere og mer idiomatisk uten den.
+      </p>
+    </div>
+
     <div class="callout-warn"><div class="label">Pass på</div>
       <ul>
         <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code>, men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> hvis du ikke har en grunn til å la JS gjøre type-koersjon.</li>
@@ -269,10 +267,6 @@
         <li><strong>Off-by-one i loop:</strong> <code>i &lt;= array.length</code> går én for langt. Skal være <code>i &lt; array.length</code>.</li>
         <li><strong>Lese et element som ikke fins:</strong> en array-indeks utenfor lengden gir feil; en property som ikke fins på et objekt gir <code>undefined</code> (ikke feil).</li>
         <li><strong>Glemme parentes ved funksjonskall:</strong> <code>square</code> er en referanse til funksjonen, <code>square(5)</code> kjører den.</li>
-        <li><strong>Enkle fnutter i JSON:</strong> JSON krever doble fnutter rundt nøkler og strenger.</li>
-        <li><strong>Kommentarer i JSON:</strong> ikke tillatt. <code>JSON.parse</code> vil feile.</li>
-        <li><strong>XMLHttpRequest synkront:</strong> tredje argument til <code>open()</code> som <code>false</code> blokkerer UI-en. Bruk <code>true</code> og <code>onload</code>-callback.</li>
-        <li><strong>Same-origin policy:</strong> et <code>XMLHttpRequest</code> mot et annet domene blokkeres av nettleseren.</li>
       </ul>
     </div>
   </div></section>
@@ -298,28 +292,12 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
       <p><strong>Hva sensor sjekker:</strong> riktig <code>function</code>-syntaks, parameter brukt (ikke en hardkodet array), korrekte loop-grenser (<code>i &lt; tall.length</code>, ikke <code>&lt;=</code>), <code>if</code>-test mot <code>0</code>, <code>return</code> utenfor loopen, <code>let</code>/<code>const</code> brukt riktig.</p>
     </div>
 
-    <div class="callout"><div class="label">Variant — XMLHttpRequest</div>
-      <p><em>Skriv en funksjon <code>hentNyheter()</code> som sender en GET-request til <code>/newsfeed</code>, og logger responsen til konsollen ved status 200.</em></p>
-<pre><code>function hentNyheter() {
-  const request = new XMLHttpRequest();
-  request.open('GET', '/newsfeed', true);
-  request.onload = function() {
-    if (request.status === 200) {
-      console.log(request.responseText);
-    } else {
-      console.log(request.status);
-    }
-  };
-  request.send();
-}</code></pre>
-      <p><strong>Sjekkes:</strong> ny instans med <code>new</code>, riktig HTTP-metode, asynkron flagg <code>true</code>, <code>onload</code> brukes til å håndtere svaret, <code>request.send()</code> til slutt.</p>
-    </div>
   </div></section>
 
   <section id="quiz"><div class="container">
     <div class="section-badge">10 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">Et utvalg flervalgs- og forklaringsspørsmål. Alle hentet fra pensum 1.11 — 1.12.</p>
+    <p class="section-intro">Et utvalg flervalgs- og forklaringsspørsmål. Alle hentet fra pensum 1.11.1 — 1.11.11.</p>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">Lett · Datatyper</div>
@@ -394,30 +372,6 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
     </div>
 
     <div class="quiz mcq" data-quiz>
-      <div class="q-label">Middels · JSON</div>
-      <div class="q-text">Hvilket av disse er <em>ikke</em> tillatt i JSON?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt">Tall</li>
-        <li class="mcq-opt">Strenger med doble fnutter</li>
-        <li class="mcq-opt">Arrays</li>
-        <li class="mcq-opt" data-correct="1">Kommentarer</li>
-      </ul>
-      <div class="mcq-feedback">JSON tillater ikke kommentarer, funksjoner eller variabler — bare enkle data-uttrykk. Nøkler må omsluttes av doble fnutter. Pensum 1.11.12.</div>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">Middels · XMLHttpRequest</div>
-      <div class="q-text">Hva betyr statuskoden <strong>404</strong>?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt">OK</li>
-        <li class="mcq-opt">Bad Request</li>
-        <li class="mcq-opt" data-correct="1">Not Found</li>
-        <li class="mcq-opt">Internal Server Error</li>
-      </ul>
-      <div class="mcq-feedback"><strong>404 Not Found</strong> betyr at tjeneren ikke fant ressursen. <strong>500</strong> er Internal Server Error, <strong>200</strong> er OK, <strong>400</strong> er Bad Request. Pensum 1.12.</div>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
       <div class="q-label">Vanskelig · Funksjoner</div>
       <div class="q-text">Hva logges?<br><code>function f(x) { return x * x; }<br>console.log(f);</code></div>
       <ul class="mcq-options">
@@ -427,18 +381,6 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         <li class="mcq-opt">SyntaxError</li>
       </ul>
       <div class="mcq-feedback">Uten parentes refererer <code>f</code> til selve funksjonsobjektet, ikke et resultat. <code>f(5)</code> ville logget <code>25</code>. Pensum 1.11.11.</div>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">Vanskelig · Ajax</div>
-      <div class="q-text">I <code>request.open('GET', url, true)</code> — hva betyr det tredje argumentet (<code>true</code>)?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt">At cache skal brukes</li>
-        <li class="mcq-opt" data-correct="1">At requesten skal være asynkron</li>
-        <li class="mcq-opt">At svaret skal parses som JSON</li>
-        <li class="mcq-opt">At cookies skal sendes med</li>
-      </ul>
-      <div class="mcq-feedback">Det tredje argumentet er asynkron-flagget. <code>true</code> = asynkron (varsel via <code>onload</code>); <code>false</code> = synkron (<code>send()</code> blokkerer til svaret kommer). Pensum 1.12.</div>
     </div>
 
     <div class="quiz" data-quiz>
@@ -713,7 +655,7 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         <div class="flashcard__head"><span class="flashcard__topic">1.11.11 · Funksjoner</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front"><p class="fc-question">Hva er de to måtene å skrive en funksjon på?</p></div>
-          <div class="flashcard__back"><p><strong>Declaration:</strong> <code>function navn(p){ … }</code></p><p><strong>Expression:</strong> <code>var navn = function(p){ … }</code></p><p>Begge er likeverdige; valg er personlig preferanse.</p></div>
+          <div class="flashcard__back"><p><strong>Declaration:</strong> <code>function navn(p){ … }</code></p><p><strong>Expression:</strong> <code>const navn = function(p){ … }</code></p><p>Begge er likeverdige; valg er personlig preferanse. (Foreleser fraråder <code>var</code> — bruk <code>let</code>/<code>const</code>.)</p></div>
         </div>
       </div>
 
@@ -733,101 +675,6 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         </div>
       </div>
 
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · JSON</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva betyr JSON, og hva brukes det til?</p></div>
-          <div class="flashcard__back"><p><strong>JavaScript Object Notation</strong>. Et tekstformat for utveksling av data — særlig mellom klient og tjener. Filnavn ender på <code>.json</code>.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · JSON-regler</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på JSON og et JavaScript-objekt?</p></div>
-          <div class="flashcard__back"><p>JSON er strengere: alle nøkler må omsluttes av doble fnutter, kun enkle data-uttrykk er tillatt (ingen funksjoner, variabler eller beregninger), og ingen kommentarer.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.12 · stringify/parse</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>JSON.stringify()</code> og <code>JSON.parse()</code>?</p></div>
-          <div class="flashcard__back"><p><code>JSON.stringify(obj)</code> tar et JS-objekt og returnerer en JSON-streng.</p><p><code>JSON.parse(str)</code> tar en JSON-streng og returnerer det tilsvarende JS-objektet.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · XMLHttpRequest</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er <code>XMLHttpRequest</code> (Ajax)?</p></div>
-          <div class="flashcard__back"><p>Et API som lar JavaScript sende HTTP-requests fra nettleseren — slik at innhold kan lastes dynamisk uten å oppdatere hele siden.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · open()</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva betyr argumentene i <code>request.open('GET', '/url', true)</code>?</p></div>
-          <div class="flashcard__back"><p><strong>1.</strong> HTTP-metode (GET).</p><p><strong>2.</strong> URL/sti til ressursen.</p><p><strong>3.</strong> Asynkron-flagg: <code>true</code> = asynkron (med <code>onload</code>-callback), <code>false</code> = synkron (blokkerer).</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · onload</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er <code>request.onload</code>?</p></div>
-          <div class="flashcard__back"><p>En funksjon som kjøres når tjeneren har svart på requesten. Inni denne kan man lese <code>request.status</code> og <code>request.responseText</code>.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · HTTP-metoder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på GET, POST, PUT og DELETE?</p></div>
-          <div class="flashcard__back"><p><strong>GET:</strong> hente data uten å endre noe.</p><p><strong>POST:</strong> opprette / lagre ny data.</p><p><strong>PUT:</strong> oppdatere eksisterende data.</p><p><strong>DELETE:</strong> slette data.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · Statuskoder</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva betyr statuskodene 200, 404 og 500?</p></div>
-          <div class="flashcard__back"><p><strong>200 OK</strong> — request var vellykket.</p><p><strong>404 Not Found</strong> — tjeneren fant ikke ressursen.</p><p><strong>500 Internal Server Error</strong> — tjener-feil som tjeneren ikke vet hvordan håndteres.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · 4xx-koder</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva betyr 400, 401 og 403?</p></div>
-          <div class="flashcard__back"><p><strong>400 Bad Request</strong> — ugyldig syntaks i requesten.</p><p><strong>401 Unauthorized</strong> — autentisering kreves.</p><p><strong>403 Forbidden</strong> — klienten har ikke tilgang (autentisering hjelper ikke).</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · responseText</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva inneholder <code>request.responseText</code>?</p></div>
-          <div class="flashcard__back"><p>Selve dataen tjeneren returnerte, som tekststreng. Hvis det er JSON, kan man bruke <code>JSON.parse(request.responseText)</code> for å få et JS-objekt.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · Same-origin</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er Same-origin policy?</p></div>
-          <div class="flashcard__back"><p>En sikkerhetsbegrensning i nettleseren som hindrer en side på en server fra å laste innhold fra en annen server via <code>XMLHttpRequest</code>.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.12 · JSONP</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva er JSONP, og hvilket problem løser det?</p></div>
-          <div class="flashcard__back"><p>En teknikk for å omgå Same-origin policy. JSONP utnytter at JavaScript fra en annen tjener <em>kan</em> lastes inn (det stoppes ikke av policy-en) — typisk via en callback-parameter den andre tjeneren støtter.</p></div>
-        </div>
-      </div>
     </div>
   </div></section>
 </main>

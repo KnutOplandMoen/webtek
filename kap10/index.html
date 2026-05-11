@@ -233,6 +233,17 @@
       tre former for scope.
     </p>
 
+    <div class="callout-warn">
+      <div class="label">Eksamen — bruk <code>let</code>/<code>const</code>, ikke <code>var</code></div>
+      <p>
+        Pensumeksemplene under bruker <code>var</code> fordi det er det pensum gjør, og fordi
+        <code>var</code> er <em>funksjons</em>-scopet (relevant for å forklare hva «lokalt scope»
+        er). Men på eksamen bør du skrive <code>let</code>/<code>const</code>. Foreleser sa rett ut:
+        <em>«a very good practice is to not use var and use let every time»</em> — fordi
+        <code>var</code> tillater re-deklarering som lett gir bugs.
+      </p>
+    </div>
+
     <h3>Globalt scope</h3>
     <p>
       Alt som er definert <em>utenfor</em> en funksjon, ligger i globalt scope og er
@@ -462,6 +473,30 @@ greetingButton.addEventListener('click', (event) =&gt; {
   <section id="feller"><div class="container">
     <div class="section-badge">11 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
+
+    <div class="callout-warn">
+      <div class="label">Eksamensvarsel — staving av <code>getElementById</code></div>
+      <p>
+        Foreleser har sagt at <code>getElementByID</code> (med både <strong>I</strong> og
+        <strong>D</strong> som store bokstaver) <em>regnes som feil</em> på eksamen. Riktig
+        staving er <code>getElementById</code> — kun <strong>I</strong> er stor, <code>d</code>
+        er liten. Samme prinsipp for de pluraliserte variantene: <code>getElementsByClassName</code>
+        og <code>getElementsByTagName</code> — husk «s»-en i «<em>Elements</em>» når du henter
+        flere. Disse navnene må staves nøyaktig riktig; foreleser strekker seg ikke på dette.
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Eksamensvarsel — skriv kode, ikke pseudokode</div>
+      <p>
+        Foreleser sa rett ut: <em>«writing pseudocode instead of some code that will give me an
+        idea of your thinking process is the biggest mistake»</em>. Engelsk prosa som «jeg ville
+        hentet elementet og endret teksten» gir <strong>0 poeng</strong>, selv om logikken er
+        riktig. Skriv faktisk JS — stavefeil og småfeil i syntaksen straffes ikke så lenge koden
+        er lesbar, men det <em>må</em> være kode.
+      </p>
+    </div>
+
     <div class="callout-warn">
       <div class="label">Pass på</div>
       <ul>
@@ -472,6 +507,7 @@ greetingButton.addEventListener('click', (event) =&gt; {
         <li><strong>setInterval kjører ikke umiddelbart</strong> — første kjøring skjer etter første intervall.</li>
         <li><strong>removeChild kalles på forelderen</strong>, ikke på elementet selv. Du må først finne foreldernoden.</li>
         <li><strong>keypress fyres ikke for modifikatorer</strong> som Shift; bruk keydown hvis du må fange dem også.</li>
+        <li><strong>Event-navn må staves eksakt:</strong> <code>click</code>, <code>keyup</code>, <code>keydown</code>, <code>blur</code>, <code>focus</code>, <code>submit</code>, <code>change</code>. Foreleser er streng på dette — <code>onClick</code> som event-streng i <code>addEventListener("onClick", …)</code> er feil.</li>
       </ul>
     </div>
   </div></section>
