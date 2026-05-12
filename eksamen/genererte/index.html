@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../../favicon.png" type="image/png">
+<title>Øvingseksamener — IT2805</title>
+<link rel="stylesheet" href="../../style.css">
+<style>
+  .exam-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin: 1.4em 0; }
+  .exam-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 24px;
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-left: 5px solid var(--rust);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+  }
+  .exam-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--rust-dark);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  }
+  .exam-card .ec-num {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+  }
+  .exam-card .ec-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  .exam-card .ec-meta {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.02em;
+  }
+  .exam-card .ec-focus {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 4px 0 0;
+  }
+  .exam-card .ec-stats {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .exam-card .ec-stat {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 2px 10px;
+    color: var(--ink-faded);
+  }
+  .exam-card .ec-cta {
+    margin-top: auto;
+    padding-top: 10px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rust);
+  }
+  .exam-card:hover .ec-cta { color: var(--rust-dark); }
+
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 1em 0 1.6em;
+  }
+  .format-card {
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-radius: 5px;
+    padding: 14px 16px;
+  }
+  .format-card h4 {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 6px;
+  }
+  .format-card p {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Eksamensforberedelse</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Genererte øvingseksamener — IT2805">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Øvingseksamener · interaktive · selvrettet</div>
+      <h1>Genererte <em>øvingseksamener</em></h1>
+      <p class="lede">
+        Praktiserings-sett som speiler det digitale Inspera-formatet:
+        flervalg, output-prediksjon, kortsvar med egenvurdering og
+        kode-oppgaver med sandbox-preview. Hvert sett er kalibrert mot
+        analysen av tidligere eksamener i <a href="../">eksamensanalysen</a>.
+      </p>
+      <div class="pill-row">
+        <span class="pill rust">4 seksjoner per sett</span>
+        <span class="pill">100 poeng</span>
+        <span class="pill">Interaktivt + sandbox</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="format">
+    <div class="container">
+      <div class="section-badge">01 · Format</div>
+      <h2>Fire <em>oppgavetyper</em></h2>
+      <p class="section-intro">
+        Hvert sett består av fire seksjoner som matcher det ekte
+        eksamensformatet (jf. <a href="../../exam_prep_summary.md">exam_prep_summary</a>).
+        Ikke alt kan klikkes — Section C og D krever at du <em>skriver</em>,
+        akkurat som på den ekte digital-eksamenen.
+      </p>
+
+      <div class="format-grid">
+        <div class="format-card">
+          <h4>A · Flervalg (~25 %)</h4>
+          <p>Klikk på ett av fire alternativer. Riktig farges grønt, valgt feil rødt. Forklaringen åpnes automatisk.</p>
+        </div>
+        <div class="format-card">
+          <h4>B · Output (~18 %)</h4>
+          <p>Skriv hva koden returnerer eller skriver ut. Sjekken normaliserer whitespace og anførselstegn.</p>
+        </div>
+        <div class="format-card">
+          <h4>C · Kortsvar (~17 %)</h4>
+          <p>Skriv prosa-svar, åpne fasit-rubrikk med poenglister, og egenvurder hvor mange punkter du traff.</p>
+        </div>
+        <div class="format-card">
+          <h4>D · Koding (~40 %)</h4>
+          <p>Skriv kode i HTML/CSS/JS-felt, kjør i sandbox-iframe, sammenlign mot referanseløsning og egenvurder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sett">
+    <div class="container">
+      <div class="section-badge">02 · Tilgjengelige sett</div>
+      <h2>Øvelse <em>på øvelse</em></h2>
+      <p class="section-intro">
+        Klikk inn på et sett for å starte. Poengtelleren nederst til høyre
+        oppdaterer seg automatisk etter hvert som du klikker, skriver inn
+        svar og egenvurderer. Et sett tar typisk 2.5–3 timer å gjennomføre
+        nøye.
+      </p>
+
+      <div class="exam-list">
+        <a href="eksamen_01.html" class="exam-card">
+          <span class="ec-num">Sett 01</span>
+          <h3 class="ec-title">Bred prediksjon — alle ti kapitler</h3>
+          <div class="ec-meta">Laget 2026-05-12 · 3 timer anbefalt</div>
+          <p class="ec-focus">
+            TCP/IP og protokoller, CSS-selektorer på et nytt HTML-tre,
+            form-validering med email/telefon/alder, minutter til midnatt,
+            DOM med event-delegation, hover med JS.
+          </p>
+          <div class="ec-stats">
+            <span class="ec-stat">27 oppgaver</span>
+            <span class="ec-stat">100 poeng</span>
+            <span class="ec-stat">10 A · 6 B · 6 C · 5 D</span>
+          </div>
+          <span class="ec-cta">Start sett →</span>
+        </a>
+
+        <div class="exam-card" style="border-left-color: var(--ink-ghost); cursor: default; opacity: 0.7;">
+          <span class="ec-num" style="color: var(--ink-faded);">Sett 02</span>
+          <h3 class="ec-title" style="color: var(--ink-faded);">Kommer snart</h3>
+          <div class="ec-meta">Planlagt fokus: events &amp; DOM-tunge oppgaver</div>
+          <p class="ec-focus">
+            Neste sett vil legge mer vekt på event-håndtering, querySelector vs
+            getElement-familien, og responsivt design — temaer som er
+            underrepresentert i sett 01.
+          </p>
+          <span class="ec-cta" style="color: var(--ink-faded);">Ikke laget enda</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bruksanvisning">
+    <div class="container">
+      <div class="section-badge">03 · Slik øver du</div>
+      <h2>Hvordan <em>bruke settene</em></h2>
+
+      <div class="callout-blue">
+        <div class="label">Anbefalt rytme</div>
+        <p>
+          Sett en timer på 3 timer. Lukk pensum, lukk juksearket. Gjør hele
+          settet i ett strekk, akkurat som på ekte eksamen. Etter at du har
+          klikket gjennom alle oppgavene, gå tilbake og les forklaringene
+          grundig — de er der læringa sitter, ikke i selve klikkingen. Marker
+          temaer du bommet på, og legg dem på A4-juksearket.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Egenvurdering — vær ærlig</div>
+        <p>
+          Section C og D bruker selvvurderings-knapper fordi prosa og kode
+          ikke kan auto-rettes. Vurder mot fasit-rubrikken som om du var
+          sensor: traff du <em>punktet</em>, eller skrev du noe relatert men
+          ved siden av? Det er fristende å gi seg selv full pott — men da
+          mister du signalet om hvor du faktisk står. Bedre å være kritisk og
+          få et realistisk bilde av poengnivået ditt.
+        </p>
+      </div>
+
+      <div class="callout-warn">
+        <div class="label">Sandbox-iframen er for øving — ikke på ekte eksamen</div>
+        <p>
+          Section D lar deg kjøre koden live i en sandboxet iframe. På
+          den ekte eksamenen i Inspera kan du <em>ikke</em> kjøre kode —
+          du må forutsi resultatet og skrive korrekt syntaks i en vanlig
+          tekstboks. Bruk sandbox-en til å lære og eksperimentere, men prøv
+          å løse oppgaven uten først.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lage-nye">
+    <div class="container">
+      <div class="section-badge">04 · Lage flere sett</div>
+      <h2>Mal og <em>retningslinjer</em></h2>
+      <p>
+        Når du (eller AI-en) lager et nytt sett, følg
+        <a href="MAL.md"><code>MAL.md</code></a> som mal-dokument og
+        sjekkliste. Kjernepunktene: ikke kopier oppgaver fra
+        <a href="../../tidligere_eksamener/">tidligere_eksamener</a>, dekk
+        alle 10 kapitler, ha en jevn fordeling av riktig svar-posisjon
+        (A/B/C/D), og sørg for at distraktorer er omtrent like lange som
+        riktig svar.
+      </p>
+      <p>
+        De felles stilreglene ligger i <a href="exam.css"><code>exam.css</code></a>
+        og interaksjons-logikken i <a href="exam.js"><code>exam.js</code></a>.
+        Hver oppgave er en <code>&lt;article class="exam-q exam-q--TYPE"&gt;</code>
+        der TYPE er <code>mc</code>, <code>output</code>, <code>essay</code>
+        eller <code>code</code>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Høst 2025</p>
+  </div>
+</footer>
+
+<script src="../../nav-search.js"></script>
+<script src="../../chat-widget.js"></script>
+</body>
+</html>

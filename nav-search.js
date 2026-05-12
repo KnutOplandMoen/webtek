@@ -17,6 +17,7 @@
     'pensum.html',
     'zero-to-hero/index.html',
     'eksamen/index.html',
+    'eksamen/genererte/index.html',
     'reisen/index.html',
     'kap1/index.html',
     'kap2/index.html',
