@@ -95,12 +95,13 @@
         <li><span class="toc-num">06</span><a href="#tid">Tid</a></li>
         <li><span class="toc-num">07</span><a href="#dom">DOM</a></li>
         <li><span class="toc-num">08</span><a href="#events">Events</a></li>
-        <li><span class="toc-num">09</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
-        <li><span class="toc-num">10</span><a href="#oppsummering">Oppsummering</a></li>
-        <li><span class="toc-num">11</span><a href="#feller">Vanlige feller</a></li>
-        <li><span class="toc-num">12</span><a href="#scenario">Eksamensscenario</a></li>
-        <li><span class="toc-num">13</span><a href="#quiz">Test deg selv</a></li>
-        <li><span class="toc-num">14</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
+        <li><span class="toc-num">09</span><a href="#propagation">Event propagation &amp; bubbling</a></li>
+        <li><span class="toc-num">10</span><a href="#nokkelbegreper">Nøkkelbegreper</a></li>
+        <li><span class="toc-num">11</span><a href="#oppsummering">Oppsummering</a></li>
+        <li><span class="toc-num">12</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">13</span><a href="#scenario">Eksamensscenario</a></li>
+        <li><span class="toc-num">14</span><a href="#quiz">Test deg selv</a></li>
+        <li><span class="toc-num">15</span><a href="#kapittel-eksamen">Kapittel-eksamen</a></li>
       </ol>
     </div>
   </nav>
@@ -360,6 +361,21 @@ console.log(groceries[2].innerText);   // 'Cheese'</code></pre>
     <pre><code>const groceries = document.getElementsByTagName('li');
 groceries[0].innerText = 'Juice';   // Milk → Juice</code></pre>
 
+    <p>I tillegg til <code>innerText</code> dukker disse opp i oppgaver:</p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">el.innerHTML</div><div class="fc-val">Hele HTML-innholdet i elementet — du kan sette inn tagger, ikke bare tekst. <code>el.innerHTML = '&lt;b&gt;Hei&lt;/b&gt;'</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">el.value</div><div class="fc-val">Verdien i et <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> eller <code>&lt;select&gt;</code>. <code>document.getElementById('navn').value</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">el.style.<em>egenskap</em></div><div class="fc-val">Endre CSS direkte. <code>el.style.color = 'red'</code>, <code>el.style.backgroundColor = '#eee'</code>. Merk: camelCase for CSS-navn med bindestrek.</div></div>
+      <div class="fact-card"><div class="fc-key">el.classList</div><div class="fc-val"><code>add</code>, <code>remove</code>, <code>toggle</code> CSS-klasser uten å overskrive eksisterende.</div></div>
+    </div>
+    <pre><code>const overskrift = document.getElementById('tittel');
+overskrift.innerHTML = 'Hei &lt;em&gt;du&lt;/em&gt;!';
+overskrift.style.color = 'red';
+overskrift.style.backgroundColor = '#eee';
+
+const navn = document.getElementById('navn').value;   // les input
+document.getElementById('boks').classList.add('aktiv');</code></pre>
+
     <h3>Legge til elementer</h3>
     <p>
       Nye noder lages med <code>document.createElement</code> og kobles inn i treet
@@ -430,10 +446,171 @@ greetingButton.addEventListener('click', (event) =&gt; {
     alert('You pressed an arrow key.');
   }
 });</code></pre>
+
+    <h3>Andre vanlige event-typer</h3>
+    <p>
+      Foreleser nevner en håndfull event-typer du må gjenkjenne navnene på. De
+      registreres alle med <code>addEventListener('navn', fn)</code>:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card"><div class="fc-key">click</div><div class="fc-val">Brukeren klikker på elementet.</div></div>
+      <div class="fact-card"><div class="fc-key">mouseover / mouseout</div><div class="fc-val">Musen går inn i / ut av elementet (hover-effekter i JS).</div></div>
+      <div class="fact-card"><div class="fc-key">focus / blur</div><div class="fc-val">Et input-felt får / mister fokus.</div></div>
+      <div class="fact-card"><div class="fc-key">submit</div><div class="fc-val">Skjemaet sendes — brukes oftest med <code>preventDefault()</code> for å validere først.</div></div>
+      <div class="fact-card"><div class="fc-key">change</div><div class="fc-val">Verdien i et input-felt eller select endres.</div></div>
+      <div class="fact-card"><div class="fc-key">keydown / keypress / keyup</div><div class="fc-val">Tre faser ved tastetrykk (se over).</div></div>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Staving må være riktig</div>
+      <p>
+        Event-navnet i <code>addEventListener</code> må være eksakt slik
+        nettleseren venter det: <code>click</code> — ikke <code>onClick</code>
+        eller <code>onclick</code>. Foreleser er streng på dette.
+        <code>on…</code>-formen er for HTML-attributter (<code>&lt;button onclick="…"&gt;</code>),
+        ikke for <code>addEventListener</code>.
+      </p>
+    </div>
+  </div></section>
+
+  <section id="propagation"><div class="container">
+    <div class="section-badge">09 · Pensum 1.13.5 (events forts.)</div>
+    <h2>Event <em>propagation</em> og bubbling</h2>
+    <p class="section-intro">
+      Dette er det mest sannsynlige langsvar-temaet på eksamen (10 %, 2 av 3 sett).
+      Foreleser har påpekt at studenter taper poeng fordi de forklarer
+      <em>hva</em> som skjer men glemmer å nevne de tre fasene.
+    </p>
+
+    <h3>Problemet: hvilket element &laquo;eier&raquo; eventen?</h3>
+    <p>
+      Tenk på en knapp som ligger inni en <code>div</code> som ligger inni
+      <code>body</code>. Brukeren klikker på knappen. Skal eventen utløse
+      lyttere registrert på <em>knappen</em>, på <em>div-en</em>, på
+      <em>body</em> — eller alle tre? Svaret er: <strong>alle tre</strong>, men
+      i en bestemt rekkefølge.
+    </p>
+
+    <h3>De tre fasene</h3>
+    <p>
+      Hver event-instans går gjennom DOM-treet i tre faser, alltid i samme
+      rekkefølge:
+    </p>
+    <ol class="steps">
+      <li>
+        <strong>Capturing-fasen</strong> — eventen reiser <em>nedover</em> fra
+        <code>window</code> gjennom <code>document</code>, <code>html</code>,
+        <code>body</code> og videre ned til target-elementet. Lyttere
+        registrert med tredje argument <code>true</code> kjører her.
+      </li>
+      <li>
+        <strong>Target-fasen</strong> — eventen er framme ved elementet som
+        faktisk ble klikket. Lyttere på selve target-elementet kjører.
+      </li>
+      <li>
+        <strong>Bubbling-fasen</strong> — eventen <em>bobler oppover</em> fra
+        target tilbake mot <code>window</code>. Lyttere registrert med
+        <code>false</code> (eller utelatt tredje argument) kjører her. Dette
+        er default-fasen.
+      </li>
+    </ol>
+
+    <div class="callout">
+      <div class="label">Bubbling = «opp», capturing = «ned»</div>
+      <p>
+        Navnet &laquo;bubbling&raquo; kommer av at eventen bobler oppover
+        treet som en luftboble i vann. Capturing er det motsatte: eventen
+        fanges på vei <em>ned</em> mot target.
+      </p>
+    </div>
+
+    <h3>Tredje argument til addEventListener</h3>
+    <p>
+      Default-oppførselen er bubbling. Du velger capturing ved å sende
+      <code>true</code> som tredje argument:
+    </p>
+    <pre><code>el.addEventListener('click', fn);          // bubbling (default)
+el.addEventListener('click', fn, false);   // bubbling (eksplisitt)
+el.addEventListener('click', fn, true);    // capturing</code></pre>
+
+    <h3>Konkret eksempel — nestede divs</h3>
+    <pre><code>&lt;div id="ytre"&gt;
+  &lt;div id="indre"&gt;
+    &lt;button id="knapp"&gt;Klikk meg&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <pre><code>document.getElementById('ytre').addEventListener('click', () =&gt; {
+  console.log('ytre div ble klikket');
+});
+document.getElementById('indre').addEventListener('click', () =&gt; {
+  console.log('indre div ble klikket');
+});
+document.getElementById('knapp').addEventListener('click', () =&gt; {
+  console.log('knappen ble klikket');
+});</code></pre>
+    <p>Brukeren klikker på knappen. Konsollen viser (i denne rekkefølgen):</p>
+    <pre><code>knappen ble klikket
+indre div ble klikket
+ytre div ble klikket</code></pre>
+    <p>
+      Selv om brukeren bare klikket på knappen, fyres alle tre lytterne fordi
+      eventen bobler oppover gjennom forelderne. Hadde den ytterste lytteren
+      vært registrert med <code>true</code>, ville den kjørt <em>først</em>
+      (i capturing-fasen), før knappens egen lytter.
+    </p>
+
+    <h3>stopPropagation — stans flyten</h3>
+    <p>
+      Hvis du vil at <em>bare</em> det innerste elementet skal reagere på
+      klikket, kaller du <code>event.stopPropagation()</code> i lytteren. Da
+      stopper eventen og kjører ikke flere lyttere oppover (eller nedover,
+      hvis du stopper i capturing-fasen).
+    </p>
+    <pre><code>document.getElementById('knapp').addEventListener('click', (event) =&gt; {
+  event.stopPropagation();   // ytre lyttere fyres ikke
+  console.log('kun knappen');
+});</code></pre>
+
+    <h3>preventDefault — blokker default-handling</h3>
+    <p>
+      <code>preventDefault()</code> stopper <em>ikke</em> propagation. Den
+      stopper nettleserens <strong>default-oppførsel</strong> for eventen:
+    </p>
+    <ul>
+      <li>På et <code>&lt;a&gt;</code>-klikk hindrer den navigering.</li>
+      <li>På et <code>submit</code>-event hindrer den at skjemaet sendes.</li>
+      <li>På en høyreklikk-event hindrer den kontekstmenyen.</li>
+    </ul>
+    <pre><code>form.addEventListener('submit', (event) =&gt; {
+  if (!validerInput()) {
+    event.preventDefault();   // skjemaet sendes ikke
+  }
+});</code></pre>
+
+    <div class="callout-good">
+      <div class="label">Forskjellen i én setning</div>
+      <p>
+        <strong>stopPropagation()</strong> sier «ikke fortsett til andre
+        lyttere». <strong>preventDefault()</strong> sier «ikke gjør det
+        nettleseren ellers ville gjort».
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Eksamen — sjekkliste for langsvar</div>
+      <p>For full uttelling på &laquo;Forklar event propagation og bubbling&raquo; må svaret ditt inneholde:</p>
+      <ul>
+        <li>Navngi alle <strong>tre fasene</strong>: capturing → target → bubbling</li>
+        <li>Capturing = ned fra <code>window</code>, bubbling = opp til <code>window</code></li>
+        <li>Default-fasen er bubbling — tredje argument <code>true</code> bytter til capturing</li>
+        <li>Konkret eksempel med <strong>nestede elementer</strong> (en div inni en div, eller knapp i div)</li>
+        <li>Nevn <code>stopPropagation()</code> som måten å bryte flyten på</li>
+      </ul>
+    </div>
   </div></section>
 
   <section id="nokkelbegreper"><div class="container">
-    <div class="section-badge">09 · Begreper</div>
+    <div class="section-badge">10 · Begreper</div>
     <h2>Nøkkel<em>begreper</em></h2>
     <div class="fact-grid">
       <div class="fact-card"><div class="fc-key">filter</div><div class="fc-val">Beholder elementer som returnerer true. Pensum 1.13.1.</div></div>
@@ -452,11 +629,18 @@ greetingButton.addEventListener('click', (event) =&gt; {
       <div class="fact-card"><div class="fc-key">addEventListener</div><div class="fc-val">Knytter en lytterfunksjon til en event. Pensum 1.13.5.</div></div>
       <div class="fact-card"><div class="fc-key">keyCode</div><div class="fc-val">Tallverdi som identifiserer tasten. Pensum 1.13.5.</div></div>
       <div class="fact-card"><div class="fc-key">keydown / keypress / keyup</div><div class="fc-val">Tre faser av tastetrykk. Pensum 1.13.5.</div></div>
+      <div class="fact-card"><div class="fc-key">innerHTML / value / style</div><div class="fc-val">Endre HTML-innhold, input-verdi eller CSS direkte fra JS. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">Event propagation</div><div class="fc-val">Eventens reise gjennom DOM-treet i tre faser. Pensum 1.13.5.</div></div>
+      <div class="fact-card"><div class="fc-key">Capturing-fasen</div><div class="fc-val">Eventen reiser ned fra <code>window</code> mot target. Aktiveres med tredje arg <code>true</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">Target-fasen</div><div class="fc-val">Eventen er ved selve elementet som ble klikket.</div></div>
+      <div class="fact-card"><div class="fc-key">Bubbling-fasen</div><div class="fc-val">Eventen bobler opp fra target til <code>window</code>. Default-fasen for lyttere.</div></div>
+      <div class="fact-card"><div class="fc-key">stopPropagation()</div><div class="fc-val">Stopper at eventen fortsetter til andre lyttere i kjeden.</div></div>
+      <div class="fact-card"><div class="fc-key">preventDefault()</div><div class="fc-val">Stopper nettleserens default-handling (f.eks. form submit, lenke-navigering).</div></div>
     </div>
   </div></section>
 
   <section id="oppsummering"><div class="container">
-    <div class="section-badge">10 · Oppsummering</div>
+    <div class="section-badge">11 · Oppsummering</div>
     <h2>Hva du skal kunne <em>etter kap 10</em></h2>
     <div class="recap-grid">
       <span class="recap-pill">velge riktig array-metode (filter / map / some / every / forEach)</span>
@@ -467,11 +651,15 @@ greetingButton.addEventListener('click', (event) =&gt; {
       <span class="recap-pill">legge til og fjerne noder med createElement / appendChild / removeChild</span>
       <span class="recap-pill">registrere event listener for click</span>
       <span class="recap-pill">skille keydown, keypress og keyup og bruke keyCode</span>
+      <span class="recap-pill">endre innhold og stil med innerHTML, value, style</span>
+      <span class="recap-pill">forklare event propagation: capturing → target → bubbling</span>
+      <span class="recap-pill">bruke tredje arg <code>true</code> for capturing</span>
+      <span class="recap-pill">skille stopPropagation() fra preventDefault()</span>
     </div>
   </div></section>
 
   <section id="feller"><div class="container">
-    <div class="section-badge">11 · Vanlige feller</div>
+    <div class="section-badge">12 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
 
     <div class="callout-warn">
@@ -508,12 +696,15 @@ greetingButton.addEventListener('click', (event) =&gt; {
         <li><strong>removeChild kalles på forelderen</strong>, ikke på elementet selv. Du må først finne foreldernoden.</li>
         <li><strong>keypress fyres ikke for modifikatorer</strong> som Shift; bruk keydown hvis du må fange dem også.</li>
         <li><strong>Event-navn må staves eksakt:</strong> <code>click</code>, <code>keyup</code>, <code>keydown</code>, <code>blur</code>, <code>focus</code>, <code>submit</code>, <code>change</code>. Foreleser er streng på dette — <code>onClick</code> som event-streng i <code>addEventListener("onClick", …)</code> er feil.</li>
+        <li><strong>stopPropagation ≠ preventDefault.</strong> <code>stopPropagation</code> stopper at andre lyttere fyres. <code>preventDefault</code> stopper bare nettleserens default-oppførsel (submit, navigering). Du kan trenge begge i en form-validator.</li>
+        <li><strong>Bubbling er default.</strong> Glemmer du tredje argument er det <em>bubbling</em>-fasen lytteren reagerer i, ikke capturing. Ikke skriv «default er capturing» — det er feil.</li>
+        <li><strong>Bubbling skjer alltid</strong> — selv når du ikke har registrert flere lyttere. Eventen bobler likevel oppover; det er bare ingen som lytter. Dette er viktig å forklare i langsvaret.</li>
       </ul>
     </div>
   </div></section>
 
   <section id="scenario"><div class="container">
-    <div class="section-badge">12 · Eksamensscenario</div>
+    <div class="section-badge">13 · Eksamensscenario</div>
     <h2>Bytt og <em>utvid handlelista</em></h2>
     <div class="callout">
       <div class="label">Oppgave</div>
@@ -562,9 +753,9 @@ button.addEventListener('click', (event) =&gt; {
   </div></section>
 
   <section id="quiz"><div class="container">
-    <div class="section-badge">13 · Test deg selv</div>
+    <div class="section-badge">14 · Test deg selv</div>
     <h2>Helhets<em>spørsmål</em></h2>
-    <p class="section-intro">Tolv spørsmål som dekker alle fem delkapitler i 1.13.</p>
+    <p class="section-intro">Femten spørsmål som dekker alle fem delkapitler i 1.13, inkludert event propagation.</p>
 
     <div class="quiz" data-quiz>
       <div class="q-label">1 · Lett · 1.13.1</div>
@@ -684,13 +875,40 @@ ul.appendChild(li);</code></pre>
         </div>
       </div>
     </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">13 · Middels · Propagation</div>
+      <div class="q-text">Nevn de tre fasene en event går gjennom, i riktig rekkefølge.</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><strong>Capturing</strong> (ned fra <code>window</code> mot target) → <strong>target</strong> (på selve elementet) → <strong>bubbling</strong> (opp fra target tilbake til <code>window</code>). Default-lyttere kjører i bubbling-fasen.</div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">14 · Vanskelig · Propagation</div>
+      <div class="q-text">Gitt nestede divs <code>&lt;div id="A"&gt;&lt;div id="B"&gt;&lt;button id="C"&gt;Klikk&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;</code> med en click-lytter på alle tre. Brukeren klikker på knappen. I hvilken rekkefølge logges «A», «B», «C» — og hvordan endrer det seg hvis A-lytteren registreres med tredje arg <code>true</code>?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer">
+          <p><strong>Default (alle bubbling):</strong> C → B → A. Eventen treffer target (knappen) først, så bobler den oppover.</p>
+          <p><strong>Med A som capturing (<code>true</code>):</strong> A → C → B. A fanger eventen på vei <em>ned</em> i capturing-fasen, før target nås. B er fortsatt bubbling, så den kjører etter C.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz" data-quiz>
+      <div class="q-label">15 · Middels · Propagation</div>
+      <div class="q-text">Hva er forskjellen på <code>event.stopPropagation()</code> og <code>event.preventDefault()</code>?</div>
+      <div class="quiz-reveal"><button class="reveal-btn">Se svar</button>
+        <div class="answer"><code>stopPropagation()</code> stopper at eventen fortsetter til <em>andre lyttere</em> i DOM-treet — bubbling/capturing stanser. <code>preventDefault()</code> stopper nettleserens <em>default-handling</em> for eventen (f.eks. at et skjema sendes, eller at en lenke navigerer). De påvirker uavhengige ting og kan kombineres.</div>
+      </div>
+    </div>
   </div></section>
 
   <section id="kapittel-eksamen"><div class="container">
-    <div class="section-badge">14 · Kapittel-eksamen</div>
+    <div class="section-badge">15 · Kapittel-eksamen</div>
     <h2>Flashcards — <em>hele kap 10 i kortform</em></h2>
     <p class="section-intro">
-      20 kort som dekker alle fem delkapitler. Bruk <kbd>←</kbd> <kbd>→</kbd> for å bla,
+      24 kort som dekker alle fem delkapitler, inkludert event propagation. Bruk <kbd>←</kbd> <kbd>→</kbd> for å bla,
       klikk for å snu, <kbd>S</kbd> shuffle, <kbd>R</kbd> reset.
     </p>
     <div class="flashcard-deck" data-flashcards>
@@ -910,6 +1128,49 @@ ul.appendChild(li);</code></pre>
 });</code></pre>
             <p>Piltastene har keyCode 37–40, så <code>&gt; 36 &amp;&amp; &lt; 41</code> matcher akkurat dem.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Propagation</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er de tre fasene i event propagation, i riktig rekkefølge?</p></div>
+          <div class="flashcard__back"><p><strong>1. Capturing</strong> (ned fra <code>window</code>) → <strong>2. Target</strong> (på elementet selv) → <strong>3. Bubbling</strong> (opp til <code>window</code>). Default-fasen for lyttere er bubbling.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Propagation</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front">
+            <p class="fc-question">Hva gjør tredje argument til <code>addEventListener(..., true)</code>?</p>
+            <ul class="fc-opts">
+              <li><span class="opt-label">A</span> Stopper bubbling</li>
+              <li><span class="opt-label">B</span> Aktiverer capturing-fasen</li>
+              <li><span class="opt-label">C</span> Fjerner default-handling</li>
+              <li><span class="opt-label">D</span> Gjør lytteren passiv</li>
+            </ul>
+          </div>
+          <div class="flashcard__back">
+            <p><strong>B — aktiverer capturing.</strong> Default (<code>false</code>/utelatt) er bubbling. Med <code>true</code> fyres lytteren på vei <em>ned</em> mot target i stedet for på vei opp.</p>
+            <p class="fc-correct">Riktig: B</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Propagation</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>stopPropagation()</code> og <code>preventDefault()</code>?</p></div>
+          <div class="flashcard__back"><p><code>stopPropagation</code> stopper at eventen når <em>andre lyttere</em> i DOM-treet (bryter capturing/bubbling-kjeden). <code>preventDefault</code> stopper <em>nettleserens default-handling</em> (form submit, lenke-navigering, kontekstmeny). Uavhengige — kan brukes sammen.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Propagation</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Gitt <code>&lt;div id="ytre"&gt;&lt;button id="indre"&gt;&lt;/button&gt;&lt;/div&gt;</code> med click-lytter på begge, og brukeren klikker på knappen. Hva logges først?</p></div>
+          <div class="flashcard__back"><p><strong>indre</strong> først, deretter <strong>ytre</strong>. Eventen treffer target (knappen) først, så bobler oppover gjennom forelderen. Skal <code>ytre</code> kjøre <em>først</em>, må den registreres med tredje argument <code>true</code> (capturing).</p></div>
         </div>
       </div>
 

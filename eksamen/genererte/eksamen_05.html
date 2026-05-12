@@ -1,0 +1,1073 @@
+<!doctype html>
+<!--
+  Øvingseksamen 05 — IT2805 Webteknologi
+  Laget: 2026-05-12.
+  Fokus: Layout-dypdykk — flex, grid, position, float, z-index, overflow.
+  Komplementerer sett 01–04 ved å gå i detalj på CSS-layout-mekanismer.
+  Ingen oppgave er en kopi av sett 01–04 eller ex2–ex5.
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>Øvingseksamen 05 — IT2805</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+
+<header class="exam-head">
+  <h1>Øvingseksamen 05 — IT2805</h1>
+  <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
+  <p class="exam-meta">
+    Hovedfokus: CSS-layout-dypdykk — position, flex, grid, float, clear,
+    z-index, og overflow. Tier 1 holdes med TCP/IP, POST/GET og JS-output.
+    Speiler det digitale Inspera-formatet med fire seksjoner.
+  </p>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section A — Flervalg (~25 %)</h2>
+  <p class="part-intro">Klikk på alternativet du tror er korrekt. Riktig svar fargelegges grønt, feil rødt — forklaring vises automatisk.</p>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 1</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — TCP/IP-applikasjonslag</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken protokoll hører til <em>applikasjonslaget</em> (Application layer) i TCP/IP-modellen?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Ethernet</li>
+        <li><span class="opt-label">B</span> IP</li>
+        <li><span class="opt-label">C</span> SMTP</li>
+        <li><span class="opt-label">D</span> TCP</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>SMTP (Simple Mail Transfer Protocol) er en applikasjonsprotokoll for sending av e-post. Andre applikasjons-protokoller: HTTP, HTTPS, FTP, DNS, IMAP, POP3.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> Ethernet er fysisk/link-laget (nederst). IP er nettverkslaget (rutet pakker). TCP er transportlaget (pålitelig levering).</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 2</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — z-index krever position</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva må være sant for at <code>z-index: 5</code> skal ha effekt på et element?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Elementet må ha en bakgrunnsfarge satt.</li>
+        <li><span class="opt-label">B</span> Elementet må ha <code>position</code> satt til noe annet enn <code>static</code>.</li>
+        <li><span class="opt-label">C</span> Elementet må være barn av <code>&lt;body&gt;</code>.</li>
+        <li><span class="opt-label">D</span> Elementet må ha <code>display: block</code>.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>z-index</code> påvirker bare elementer som er "posisjonerte" — det vil si har <code>position: relative</code>, <code>absolute</code>, <code>fixed</code>, eller <code>sticky</code> (og flex/grid-barn). For <code>position: static</code> (default) ignoreres <code>z-index</code> helt.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A, C, D er ikke krav — z-index virker uavhengig av disse. Vanlig nybegynner-feil: sette <code>z-index: 999</code> uten <code>position</code> og lure på hvorfor det ikke skjer noe.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 3</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — position:fixed referansepunkt</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvor plasseres et element med <code>position: fixed; top: 0; left: 0;</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Øverst venstre i nærmeste forelder.</li>
+        <li><span class="opt-label">B</span> Øverst venstre i nettleserens viewport (synlig vindu).</li>
+        <li><span class="opt-label">C</span> Øverst venstre i hele dokumentet (kan kreve scrolling).</li>
+        <li><span class="opt-label">D</span> Avhengig av nettleserens innstillinger.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>position: fixed</code> låser elementet til <em>viewport</em> — det synlige nettleser-vinduet. Elementet blir værende på samme sted selv når man scroller. Brukes typisk for "sticky" navmenyer, chat-knapper, eller cookie-bannere.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A beskriver <code>position: absolute</code> (plassert relativt nærmeste posisjonerte forelder). C er nær <code>absolute</code> uten posisjonert forelder (defaulter til html-elementet). D er feil — fixed er deterministisk per spec.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 4</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — flex-direction column</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Når en flex-container har <code>flex-direction: column</code>, hvilken egenskap styrer den <em>horisontale</em> plasseringen av barna?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>justify-content</code></li>
+        <li><span class="opt-label">B</span> <code>align-items</code></li>
+        <li><span class="opt-label">C</span> <code>flex-wrap</code></li>
+        <li><span class="opt-label">D</span> <code>align-content</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>I <code>column</code>-layout snur aksene: hovedaksen (main axis) er vertikal, og tverr-aksen (cross axis) er horisontal. <code>align-items</code> styrer alltid tverr-aksen — som her er horisontal.</p>
+          <p><strong>Mnemonisk:</strong> justify = main axis (avhengig av flex-direction); align = cross axis. I <code>row</code>: justify=horisontal, align=vertikal. I <code>column</code>: justify=vertikal, align=horisontal. Aksene snur, ikke betydningen.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A styrer hovedaksen, som er vertikal her. C styrer line-wrap-oppførsel. D påvirker plassering av <em>linjer</em> (når <code>flex-wrap: wrap</code> er aktivert), ikke individuelle elementer.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 5</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — grid-template-columns</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">CSS-regelen <code>grid-template-columns: 1fr 2fr 1fr;</code> på en grid-container gjør hva?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Lager tre kolonner der midten er halvparten av bredden, og sidene deler resten likt.</li>
+        <li><span class="opt-label">B</span> Lager tre kolonner der midten er dobbelt så bred som hver av sidekolonnene.</li>
+        <li><span class="opt-label">C</span> Lager tre rader, ikke kolonner — <code>fr</code> gjelder rader.</li>
+        <li><span class="opt-label">D</span> Lager fire kolonner (1 + 2 + 1 = 4 enheter total).</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>fr</code> = "fraction of available space". Med <code>1fr 2fr 1fr</code> deles bredden i 4 deler (1+2+1): første og siste kolonne får hver 25 %, midten 50 % — dobbelt så bred.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A snur regelen. C er feil — <code>grid-template-columns</code> gjelder kolonner; for rader brukes <code>grid-template-rows</code>. D er konfabulering — tre fr-verdier gir tre kolonner.</p>
+          <p><strong>Kontrast:</strong> Hvis du blander <code>fr</code> med faste enheter — f.eks. <code>200px 1fr 1fr</code> — så får første kolonne 200px, og resten av plassen deles 1:1 mellom de to <code>fr</code>-kolonnene.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 6</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — clear: both</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hensikten med <code>clear: both;</code> i klassisk float-basert CSS-layout?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Sletter alle CSS-regler arvet fra foreldre-elementet.</li>
+        <li><span class="opt-label">B</span> Tvinger elementet til å plasseres <em>under</em> ethvert floatet element foran det — både venstre- og høyre-floats.</li>
+        <li><span class="opt-label">C</span> Aktiverer transparent bakgrunn med RGBA.</li>
+        <li><span class="opt-label">D</span> Fjerner alle padding og margin (samme som <code>all: unset</code>).</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>clear: both</code> sier "ikke plasser meg ved siden av floats — jeg vil under". <code>clear: left</code> og <code>clear: right</code> klarerer kun den respektive siden. Klassisk brukt på en "clearfix"-div etter en serie floatede elementer for å hindre at forelderen kollapser.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A, C og D er konfabulering. CSS har ingen "slett alle regler"-mekanisme (<code>all: revert</code> er nærmest), og <code>clear</code> har <em>ingenting</em> å gjøre med bakgrunn eller padding.</p>
+          <p><strong>Moderne alternativ:</strong> Bruk Flexbox eller Grid i stedet for floats — da slipper du clearfix-hacks.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 7</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — Box-model: width</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Med default <code>box-sizing: content-box</code>: hvis et div har <code>width: 200px; padding: 10px; border: 5px solid;</code>, hvor mange piksler er den <em>totale synlige bredden</em>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> 200 px</li>
+        <li><span class="opt-label">B</span> 210 px</li>
+        <li><span class="opt-label">C</span> 220 px</li>
+        <li><span class="opt-label">D</span> 230 px</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p>Med <code>content-box</code> gjelder <code>width</code> bare <em>innholdet</em>. Total bredde = width + padding (begge sider) + border (begge sider) = 200 + 10·2 + 5·2 = 200 + 20 + 10 = <strong>230 px</strong>.</p>
+          <p><strong>Margin telles ikke</strong> i synlig bredde, men i hvor mye plass elementet "tar opp" i layouten.</p>
+          <p><strong>Med <code>border-box</code> (moderne praksis):</strong> Padding og border <em>inkluderes</em> i de 200 px — så innholdsbredden krymper til 170 px, men total bredde er 200 px. Mange CSS-resets setter <code>* { box-sizing: border-box; }</code> for å gjøre layout-regning mer intuitiv.</p>
+          <p class="ref">Pensum: <a href="../../kap3/boks-modellen/">Kap. 3 — Boks-modellen</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 8</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — visibility:hidden vs display:none</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedforskjellen mellom <code>visibility: hidden</code> og <code>display: none</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Begge er identiske, bare ulike navn.</li>
+        <li><span class="opt-label">B</span> <code>visibility: hidden</code> tar fortsatt plass i layouten; <code>display: none</code> fjerner elementet fullstendig.</li>
+        <li><span class="opt-label">C</span> <code>display: none</code> tar fortsatt plass; <code>visibility: hidden</code> fjerner elementet helt.</li>
+        <li><span class="opt-label">D</span> <code>visibility: hidden</code> gjelder bare tekst; <code>display: none</code> gjelder hele elementet.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>visibility: hidden</code> gjør elementet usynlig, <em>men det opptar fortsatt plass</em> — andre elementer flytter seg ikke nærmere. Det er som "usynlig blekk". <code>display: none</code> fjerner det fra layouten — andre elementer fyller plassen.</p>
+          <p><strong>Praktiske bruksområder:</strong> <code>visibility: hidden</code> for å skjule noe midlertidig uten å forandre layoutet (f.eks. en tooltip som dukker opp i samme posisjon hver gang). <code>display: none</code> for å fjerne helt (f.eks. menyer som ikke skal være der i mobilvisning).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er helt feil — semantisk og visuelt forskjellige. C snur regelen. D er konfabulering — begge gjelder hele elementet.</p>
+          <p><strong>Bonus:</strong> Skjermlesere oppfører seg også forskjellig. <code>display: none</code> hopper helt over elementet; <code>visibility: hidden</code> gjør det samme (men <code>opacity: 0</code> leser fortsatt opp innholdet).</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 9</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — overflow: hidden</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva gjør <code>overflow: hidden</code> på et element?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Skjuler elementet hvis det er for stort til å vises.</li>
+        <li><span class="opt-label">B</span> Kutter innhold som strekker seg utenfor elementets boks, uten å vise scrollbars.</li>
+        <li><span class="opt-label">C</span> Skjuler bare bakgrunnsbilde, men ikke tekst.</li>
+        <li><span class="opt-label">D</span> Legger til scrollbars hvis innholdet er for stort.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>overflow: hidden</code> klipper alt innhold som strekker seg utenfor element-boksen (basert på <code>width</code> og <code>height</code>). Ingen scroll-mulighet — innholdet er bare borte fra synet.</p>
+          <p><strong>Andre verdier:</strong> <code>visible</code> (default — innhold renner ut), <code>scroll</code> (alltid scrollbars), <code>auto</code> (scrollbars kun ved behov).</p>
+          <p><strong>Bonusbruk:</strong> <code>overflow: hidden</code> på en forelder etablerer også et nytt "block formatting context" — som har den effekten å <em>inneholde</em> floats inni. Klassisk clearfix-alternativ.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 10</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — margin: 0 auto</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken CSS-regel sentrerer en block-level boks med fast bredde horisontalt i forelderen?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>text-align: center;</code></li>
+        <li><span class="opt-label">B</span> <code>margin: 0 auto;</code></li>
+        <li><span class="opt-label">C</span> <code>display: center;</code></li>
+        <li><span class="opt-label">D</span> <code>position: center;</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>margin: 0 auto</code> = "0 top/bottom, auto left/right". <code>auto</code> på horisontale marginer ber nettleseren fordele restplassen likt — derfor sentreres elementet. Krever at elementet har en fast (eller maks) bredde, ellers fyller det hele forelderen.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A sentrerer <em>innholdet</em> (tekst og inline-elementer), ikke selve boksen. C er ikke en gyldig <code>display</code>-verdi. D er ikke en gyldig <code>position</code>-verdi.</p>
+          <p><strong>Moderne alternativ:</strong> Flexbox med <code>justify-content: center</code> på forelderen — virker uten å sette bredde på barnet.</p>
+          <p class="ref">Pensum: <a href="../../kap3/boks-modellen/">Kap. 3 — Boks-modellen</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION B — OUTPUT (5 oppgaver, 18 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section B — Find result of code (~18 %)</h2>
+  <p class="part-intro">Forutsi hva koden returnerer eller skriver ut. Skriv svaret i input-feltet og trykk <em>Sjekk</em> (anførselstegn og whitespace ignoreres). Forklaringen forteller deg hvilken <em>mekanisme</em> som driver outputen.</p>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 11</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Spread og Array.from</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let a = [1, 2, 3];
+let b = [...a, 4, 5];
+console.log(b.length);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q11-input">Ditt svar:</label>
+        <input type="text" id="q11-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="5">Riktig svar: 5</span>
+          <p><strong>Mekanisme:</strong> <em>Spread-operatoren</em> <code>...a</code> "pakker ut" elementene i <code>a</code> én og én. Så <code>[...a, 4, 5]</code> blir <code>[1, 2, 3, 4, 5]</code> — fem elementer.</p>
+          <p><strong>Kontrast — hva spread <em>ikke</em> gjør:</strong> <code>[a, 4, 5]</code> uten spread ville gitt et array på tre elementer: <code>[[1,2,3], 4, 5]</code> — der første element er hele arrayet (nested).</p>
+          <p><strong>Bruksområde:</strong> Spread er den moderne måten å konkatenere arrays. Tidligere måtte man bruke <code>a.concat([4, 5])</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 12</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Array.every</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let nums = [2, 4, 6, 7, 10];
+console.log(nums.every(n =&gt; n % 2 === 0));</code></pre>
+      <div class="exam-q__answer">
+        <label for="q12-input">Ditt svar:</label>
+        <input type="text" id="q12-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="false">Riktig svar: false</span>
+          <p><strong>Mekanisme:</strong> <code>every()</code> returnerer <code>true</code> bare hvis <em>alle</em> elementer passerer testen. Her: <code>7 % 2 === 1</code> (ikke 0), så <code>7</code> feiler testen, og <code>every</code> returnerer <code>false</code>.</p>
+          <p><strong>Kontrast:</strong></p>
+          <ul>
+            <li><code>some()</code> returnerer <code>true</code> hvis <em>minst ett</em> element passerer. <code>nums.some(n =&gt; n % 2 === 0)</code> ville vært <code>true</code> (mange partall).</li>
+            <li><code>filter()</code> returnerer alle som passerer som ny array.</li>
+            <li><code>find()</code> returnerer første som passerer (eller <code>undefined</code>).</li>
+          </ul>
+          <p><strong>Early exit:</strong> <code>every</code> stopper ved første <code>false</code> — den iterer ikke nødvendigvis hele arrayet. <code>some</code> stopper ved første <code>true</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 13</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Array.splice return</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let a = [10, 20, 30, 40, 50];
+let r = a.splice(1, 2, 99);
+console.log(r);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q13-input">Ditt svar:</label>
+        <input type="text" id="q13-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="[20, 30]" data-answer-alts='[20,30]|20,30'>Riktig svar: [20, 30]</span>
+          <p><strong>Mekanisme:</strong> <code>splice(start, deleteCount, ...newItems)</code> returnerer <em>de fjernede elementene</em> som array — ikke den nye listen.</p>
+          <p>Her: fra indeks 1, fjern 2 elementer (20 og 30), og sett inn 99. Resultat:</p>
+          <ul>
+            <li><code>a</code> blir <code>[10, 99, 40, 50]</code> (mutert!)</li>
+            <li><code>r</code> blir <code>[20, 30]</code> (det som ble fjernet)</li>
+          </ul>
+          <p><strong>Vanlig feil:</strong> Tro at <code>r</code> blir den <em>nye</em> arrayet (det man tenker etter en "edit"). Det er <code>a</code> som er den nye — <code>splice</code>'s return er det fjernede.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 14</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — String.repeat med 0</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log("abc".repeat(0).length);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q14-input">Ditt svar:</label>
+        <input type="text" id="q14-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="0">Riktig svar: 0</span>
+          <p><strong>Mekanisme:</strong> <code>"abc".repeat(0)</code> returnerer tom streng <code>""</code> — gjentakelse 0 ganger er ingen ting. Lengden av tom streng er <code>0</code>.</p>
+          <p><strong>Edge cases:</strong></p>
+          <ul>
+            <li><code>"abc".repeat(1)</code> → <code>"abc"</code> (length 3)</li>
+            <li><code>"abc".repeat(3)</code> → <code>"abcabcabc"</code> (length 9)</li>
+            <li><code>"abc".repeat(-1)</code> → <em>RangeError</em> (negativt antall ikke tillatt)</li>
+            <li><code>"abc".repeat(0.7)</code> → <code>""</code> (avrundes ned til 0)</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — String-API</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 15</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Boolean av tom array</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>if ([]) {
+  console.log("ja");
+} else {
+  console.log("nei");
+}</code></pre>
+      <div class="exam-q__answer">
+        <label for="q15-input">Ditt svar:</label>
+        <input type="text" id="q15-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="ja">Riktig svar: ja</span>
+          <p><strong>Mekanisme:</strong> En tom array <code>[]</code> er et <em>objekt</em>, og objekter er <em>alltid truthy</em> i JS — uavhengig av hva de inneholder. Derfor går vi inn i if-grenen.</p>
+          <p><strong>Falsy-verdiene</strong> i JS er bare disse seks: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. <em>Alt annet</em> er truthy, inklusive <code>[]</code>, <code>{}</code>, <code>"0"</code>, <code>" "</code>, <code>function(){}</code>.</p>
+          <p><strong>Vanlig feil:</strong> "Tom array er falsy som i Python." Nei — det er en JS-felle. For å sjekke om en array er tom, bruk <code>arr.length === 0</code>, ikke <code>!arr</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Typer og truthy/falsy</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION C — KORTSVAR (5 oppgaver, 17 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section C — Kortsvar (~17 %)</h2>
+  <p class="part-intro">Skriv prosa-svar i textarea-feltet. Når du er ferdig, klikk <em>Vis fasit og vurder</em> — sammenlign mot rubrikken, og bruk knappene under fasit til å gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 16</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — Position static/relative/absolute/fixed</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar de fire CSS-position-verdiene <code>static</code>, <code>relative</code>, <code>absolute</code> og <code>fixed</code>. For hver: hva er <em>referansepunktet</em> for <code>top</code>/<code>left</code>-offsets, og hvordan oppfører elementet seg i normal dokument-flyt?</p>
+      <textarea class="exam-q__textarea" rows="8" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng — 1 poeng per verdi):</strong></p>
+          <ul>
+            <li><strong><code>static</code> (default):</strong> Elementet plasseres i normal dokument-flyt. <code>top</code>/<code>left</code>/<code>right</code>/<code>bottom</code> og <code>z-index</code> ignoreres.</li>
+            <li><strong><code>relative</code>:</strong> Elementet plasseres først i normal flyt, og kan deretter forskyves med <code>top</code>/<code>left</code>. <em>Den opprinnelige plassen i flyten beholdes</em> — andre elementer "vet ikke" at det er forskjøvet. Brukes også ofte for å være referanseramme for <code>absolute</code>-barn.</li>
+            <li><strong><code>absolute</code>:</strong> Tatt ut av flyt. Plasseres relativt til <em>nærmeste posisjonerte forelder</em> (ikke <code>static</code>) — eller <code>&lt;html&gt;</code> hvis ingen finnes. Andre elementer fyller plassen som om det ikke var der.</li>
+            <li><strong><code>fixed</code>:</strong> Tatt ut av flyt. Plasseres relativt til <em>viewport</em> (synlig nettleser-vindu). Blir værende på samme sted ved scroll. Bra for sticky navmenyer.</li>
+          </ul>
+          <p><strong>Bonus:</strong> <code>sticky</code> er en hybrid — oppfører seg som <code>relative</code> til en viss scroll-posisjon, så blir den <code>fixed</code> ved nådd terskel.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 dekket presist</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 17</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — POST vs GET (caching og bookmarks)</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar hvorfor <strong>GET-forespørsler kan caches og bookmarkes</strong>, mens <strong>POST-forespørsler typisk ikke kan det</strong>. Begrunn med begrepet <em>idempotens</em>.</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng — Idempotens-definisjon:</strong> En operasjon er idempotent hvis å kalle den N ganger har samme effekt som å kalle den 1 gang. GET er idempotent — å hente en side endrer ikke serveren. POST er <em>ikke</em> idempotent — to like POST-er kan opprette to like rader (f.eks. to identiske ordre).</li>
+            <li><strong>1 poeng — Caching:</strong> Siden GET er idempotent og kun leser data, kan nettleseren og mellomliggende proxies trygt caches resultatet. Ved gjentatt forespørsel kan vi returnere cachen i stedet for å gå til serveren. POST kan ikke caches fordi gjentakelsen <em>endrer state</em> — vi må snakke med serveren hver gang.</li>
+            <li><strong>1 poeng — Bookmarks:</strong> URL-en for en GET inneholder alle parameterne (etter <code>?</code>) — så den er en komplett "oppskrift" som kan lagres som bookmark og kjøres på nytt. POST-data ligger i request-body som ikke er en del av URL-en — det er ingenting å bookmarke.</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> Hvis du prøver å reload en POST-side i nettleseren, får du typisk en advarsel: "Forespørselen kan ikke gjentas — fortsette?" Det er fordi POST ikke skal gjentas implisitt.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a>, <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 18</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — Border-box vs content-box</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <code>box-sizing: content-box</code> (default) og <code>box-sizing: border-box</code>. Hva skjer med faktisk bredde hvis du har <code>width: 300px; padding: 20px; border: 2px solid;</code> i begge tilfeller?</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng — content-box:</strong> <code>width</code> gjelder kun <em>innholdet</em>. Total synlig bredde = width + 2·padding + 2·border = 300 + 40 + 4 = <strong>344 px</strong>.</li>
+            <li><strong>1 poeng — border-box:</strong> <code>width</code> gjelder hele boksen (innhold + padding + border). Innholdsbredden krymper for å gi plass til padding og border: 300 - 40 - 4 = <strong>256 px innhold</strong>, men total bredde fortsatt 300 px.</li>
+            <li><strong>1 poeng — Hvorfor border-box er populært:</strong> Layout-beregning blir mer intuitivt. "Jeg vil at boksen skal være 300 px bred" gir 300 px bred. Med content-box må man trekke fra padding/border manuelt for å regne ut innholdsbredden.</li>
+          </ul>
+          <p><strong>Vanlig praksis:</strong> Mange CSS-resets bruker <code>* { box-sizing: border-box; }</code> for å gjøre hele dokumentet konsistent.</p>
+          <p class="ref">Pensum: <a href="../../kap3/boks-modellen/">Kap. 3 — Boks-modellen</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter med riktig regning</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 19</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Flexbox vs Grid: når bruker man hva?</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du skal designe en layout. Forklar <strong>når Flexbox er mer egnet enn Grid</strong>, og <strong>når Grid er mer egnet enn Flexbox</strong>. Gi <em>ett konkret eksempel for hver</em>.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng — Flexbox er én-dimensjonal:</strong> Best for å plassere elementer langs <em>én</em> akse (horisontal eller vertikal). Når antall elementer kan variere og du vil at de fordeler seg dynamisk.</li>
+            <li><strong>1 poeng — Eksempel på Flexbox-egnethet:</strong> En navmeny med varierende antall lenker, en knapprad i en dialog, vertikal sentrering av innhold. Klassiker: "header med logo til venstre og knapper til høyre".</li>
+            <li><strong>1 poeng — Grid er to-dimensjonal:</strong> Best for å plassere elementer i et eksplisitt <em>rutenett</em> med både rader og kolonner. Designet for layouts hvor du planlegger hvor hver del skal være.</li>
+            <li><strong>1 poeng — Eksempel på Grid-egnethet:</strong> Et magasin-layout med header, sidebar, hovedinnhold og footer i eksplisitte celler. Et bildegalleri med faste kort i et rutenett. Et dashboard med widgets.</li>
+          </ul>
+          <p><strong>Bonus:</strong> Praksisen er ofte å kombinere — bruk Grid for det overordnede side-layoutet, og Flexbox inne i hver celle for å organisere innholdet på én linje. <em>"Grid for layoutet av siden; Flex for layoutet i komponentene."</em></p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 punkter dekket</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 20</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — z-index og stacking context</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er et <em>stacking context</em>, og hvorfor kan et element med <code>z-index: 9999</code> noen ganger <em>likevel</em> være "under" et annet element med lavere z-index? Forklar med ett konkret scenario.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng — Definisjon:</strong> Et stacking context er en "gruppe" elementer som stables sammen. <code>z-index</code> sammenlignes <em>kun innenfor samme stacking context</em>. Mellom contexts er det <em>forelderens</em> z-index som bestemmer rekkefølgen, ikke barnas individuelle verdier.</li>
+            <li><strong>1 poeng — Hva oppretter en context:</strong> Root-elementet, alle elementer med <code>position: ...</code> og en numerisk <code>z-index</code>, samt elementer med <code>opacity &lt; 1</code>, <code>transform</code>, <code>filter</code>, eller <code>will-change</code>.</li>
+            <li><strong>1 poeng — Scenario:</strong> Forelder A har <code>z-index: 1; position: relative</code>; et barn av A har <code>z-index: 9999</code>. Forelder B (søsken av A) har <code>z-index: 2; position: relative</code>. Til tross for at barnet i A har z-index 9999, vil B alltid være "over" det — fordi A og B er to forskjellige stacking contexts, og A (z-index 1) er under B (z-index 2). Barnets høye z-index gjelder bare innenfor A's context.</li>
+          </ul>
+          <p><strong>Praktisk konsekvens:</strong> Modaler/popups som "skal være over alt" må ofte rendres som direkte barn av <code>&lt;body&gt;</code>, ikke nested inne i en card-komponent — for å unngå å bli fanget i forelderens stacking context.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Manglet poenget</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION D — KODING (5 oppgaver, 40 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section D — Koding (~40 %)</h2>
+  <p class="part-intro">Skriv kode i tre felt (HTML/CSS/JS). Klikk <em>Kjør i sandbox</em> for å se resultatet i forhåndsvisning. Klikk <em>Vis fasit og vurder</em> for å se referanseløsning + rubrikk og gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 21</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Tre-kolonners flex-layout</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv CSS som lager en <strong>tre-kolonners layout</strong> med Flexbox:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> <code>&lt;main class="layout"&gt;</code> skal være en flex-container.</li>
+        <li><strong>(3 poeng)</strong> Sidemenyene <code>&lt;aside class="venstre"&gt;</code> og <code>&lt;aside class="hoyre"&gt;</code> skal være <em>fast bredde</em> (200px hver).</li>
+        <li><strong>(2 poeng)</strong> <code>&lt;section class="senter"&gt;</code> skal <em>vokse</em> for å fylle resten av bredden (bruk <code>flex: 1</code> eller <code>flex-grow: 1</code>).</li>
+        <li><strong>(1 poeng)</strong> Gi de tre kolonnene synlige bakgrunner og litt padding, slik at strukturen er klar i preview.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="9">&lt;main class="layout"&gt;
+  &lt;aside class="venstre"&gt;&lt;h3&gt;Venstre&lt;/h3&gt;&lt;p&gt;Meny&lt;/p&gt;&lt;/aside&gt;
+  &lt;section class="senter"&gt;
+    &lt;h2&gt;Hovedinnhold&lt;/h2&gt;
+    &lt;p&gt;Her er artikkelen som tar mest plass.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;aside class="hoyre"&gt;&lt;h3&gt;Høyre&lt;/h3&gt;&lt;p&gt;Tips&lt;/p&gt;&lt;/aside&gt;
+&lt;/main&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="10" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>.layout {
+  display: flex;
+  gap: 12px;
+}
+
+.venstre, .hoyre {
+  flex: 0 0 200px;       /* grow=0, shrink=0, basis=200px */
+  background: #e7e3d4;
+  padding: 12px;
+}
+
+.senter {
+  flex: 1;               /* eller flex-grow: 1; */
+  background: #faf3df;
+  padding: 12px;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>flex: 0 0 200px:</strong> Shorthand for "grow=0, shrink=0, basis=200px" — låser bredden til 200px og hindrer at den vokser eller krymper. Alternativ: bare <code>width: 200px; flex-shrink: 0;</code>.</li>
+            <li><strong>flex: 1:</strong> Shorthand for "grow=1, shrink=1, basis=0%". Tilsvarer "ta opp den resterende plassen".</li>
+            <li><strong>gap:</strong> Den moderne måten å sette avstand mellom flex-barn — alternativet er <code>margin</code> på hvert barn, som er tungvint.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>width: 200px</code> uten <code>flex-shrink: 0</code> — Flexbox kan krympe barna under deres bredde-verdi hvis det blir trangt. Bruke <code>justify-content: space-between</code> for å fordele bredden — det fungerer bare hvis de tre boksene har lik bredde. Glemme <code>display: flex</code> på forelderen.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 22</span>
+      <span class="exam-q__points">10 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Grid magasin-layout</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er en typisk avis-/magasin-struktur. Skriv CSS som bruker <strong>CSS Grid</strong> med <code>grid-template-areas</code> for å plassere fire seksjoner i et 2×2-ruteformasjon:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> <code>&lt;div class="grid"&gt;</code> skal være en grid med to kolonner (1fr 2fr) og to rader.</li>
+        <li><strong>(4 poeng)</strong> Bruk <code>grid-template-areas</code> for å lage layoutet:<br>
+          rad 1: <code>header header</code><br>
+          rad 2: <code>aside main</code>
+        </li>
+        <li><strong>(2 poeng)</strong> Koble hver del til riktig area med <code>grid-area: header</code> osv.</li>
+        <li><strong>(2 poeng)</strong> Gi alle deler bakgrunnsfarger og 16px padding for å gjøre layoutet synlig.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="8">&lt;div class="grid"&gt;
+  &lt;header class="g-head"&gt;&lt;h1&gt;Magasinet&lt;/h1&gt;&lt;/header&gt;
+  &lt;aside class="g-side"&gt;&lt;h3&gt;Kategorier&lt;/h3&gt;&lt;p&gt;Politikk · Kultur · Sport&lt;/p&gt;&lt;/aside&gt;
+  &lt;main class="g-main"&gt;
+    &lt;h2&gt;Forsideartikkel&lt;/h2&gt;
+    &lt;p&gt;Lengre tekst...&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="12" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+    "header header"
+    "aside main";
+  gap: 12px;
+}
+
+.g-head  { grid-area: header; background: #4a2c2a; color: white; padding: 16px; }
+.g-side  { grid-area: aside;  background: #e7e3d4; padding: 16px; }
+.g-main  { grid-area: main;   background: #faf3df; padding: 16px; }</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>grid-template-areas:</strong> En "ASCII-art"-måte å definere layout. Hver linje er en rad, og hvert "ord" er et navngitt område som tar én celle. Gjentakelse av samme navn på rad gjør at området spanner over flere kolonner — her <code>header header</code> spanner hele rad 1.</li>
+            <li><strong>grid-area:</strong> Kobler et element til et navngitt område. Verdiene må <em>nøyaktig</em> matche navnene fra <code>grid-template-areas</code> (case-sensitive).</li>
+            <li><strong>Hvorfor 1fr 2fr:</strong> Sidebar tar 1/3 av bredden, hovedinnhold 2/3. Justerbart etter design — bytt til <code>200px 1fr</code> for fast sidebar.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme anførselstegnene rundt hver rad i <code>grid-template-areas</code> — det er en parser-feil. Forskjellige navn på samme rad mellom CSS og <code>grid-area</code>. Bruke <code>grid-row</code>/<code>grid-column</code>-syntaks (også gyldig, men mye mer skrevet for samme effekt).</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 23</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Countdown timer</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har et input-felt for antall sekunder, en start-knapp og et display. Skriv JavaScript som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Når brukeren klikker «Start», leses antall sekunder fra input.</li>
+        <li><strong>(3 poeng)</strong> Bruk <code>setInterval</code> til å telle ned hver sekund, og oppdater <code>&lt;span id="display"&gt;</code> med gjenværende sekunder.</li>
+        <li><strong>(2 poeng)</strong> Når tellingen når 0, stopp intervallet med <code>clearInterval</code> og vis "Ferdig!" i displayet.</li>
+        <li><strong>(1 poeng)</strong> Håndter ugyldig input (negative tall eller ikke-tall) med en feilmelding.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="5">&lt;input type="text" id="sek" placeholder="Antall sekunder" value="10"&gt;
+&lt;button id="start"&gt;Start&lt;/button&gt;
+&lt;p&gt;Tid igjen: &lt;span id="display"&gt;–&lt;/span&gt;&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2">#display { font-size: 1.6rem; font-weight: bold; }</textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="14" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const startBtn = document.getElementById("start");
+const sekInput = document.getElementById("sek");
+const display = document.getElementById("display");
+
+let timerId = null;
+
+startBtn.addEventListener("click", function () {
+  // stopp ev. eksisterende timer
+  if (timerId !== null) clearInterval(timerId);
+
+  let igjen = parseInt(sekInput.value, 10);
+  if (isNaN(igjen) || igjen &lt; 1) {
+    display.textContent = "Skriv et positivt heltall";
+    return;
+  }
+
+  display.textContent = igjen;
+  timerId = setInterval(function () {
+    igjen--;
+    if (igjen &lt;= 0) {
+      clearInterval(timerId);
+      timerId = null;
+      display.textContent = "Ferdig!";
+    } else {
+      display.textContent = igjen;
+    }
+  }, 1000);
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>setInterval:</strong> Tar (callback, milliseconds). Returnerer en id som kan brukes med <code>clearInterval(id)</code> for å stoppe.</li>
+            <li><strong>Stopp eksisterende timer:</strong> Hvis brukeren klikker Start to ganger, må vi stoppe den første — ellers løper to timere samtidig og tallene blir tullete.</li>
+            <li><strong>Hvorfor sjekke igjen &lt;= 0 inne i callbacken:</strong> setInterval venter første gang også 1 sekund — så hvis vi vil vise tallet umiddelbart, må vi gjøre det <em>før</em> setInterval starter.</li>
+            <li><strong>Alternativ: setTimeout-rekursjon:</strong> <code>function tick() { ... setTimeout(tick, 1000); }</code> — gir mer kontroll på drift, men er mer kode.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme å lagre <code>timerId</code>, så vi kan ikke stoppe. Glemme <code>parseInt</code> så <code>igjen</code> blir en streng og <code>igjen--</code> gir <code>NaN</code>. Glemme å sjekke om timer allerede kjører — gir doble teller.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 24</span>
+      <span class="exam-q__points">7 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Scroll-to-top knapp</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har en lang side med mye innhold og en "scroll-til-toppen"-knapp. Skriv kode som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Bruk CSS for å plassere <code>&lt;button id="topp"&gt;</code> <code>position: fixed</code> nederst til høyre, og skjul den i utgangspunktet (display:none).</li>
+        <li><strong>(3 poeng)</strong> Når brukeren har scrollet mer enn 300px nedover, vis knappen. Når de scroller tilbake til toppen, skjul den igjen.</li>
+        <li><strong>(2 poeng)</strong> Når brukeren klikker knappen, scroll smooth til topp av siden.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — fyllinnhold + knapp)</small></label>
+          <textarea class="code-html" rows="10">&lt;article&gt;
+  &lt;h1&gt;En lang side&lt;/h1&gt;
+  &lt;p style="margin-bottom: 800px;"&gt;Avsnitt 1...&lt;/p&gt;
+  &lt;p style="margin-bottom: 800px;"&gt;Avsnitt 2...&lt;/p&gt;
+  &lt;p&gt;Avsnitt 3 (bunnen)&lt;/p&gt;
+&lt;/article&gt;
+&lt;button id="topp"&gt;↑ Topp&lt;/button&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="6">#topp {
+  /* skriv styling her */
+}</textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="10" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>/* CSS */
+#topp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  background: #5b1f1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+}
+
+/* JS */
+const knapp = document.getElementById("topp");
+
+window.addEventListener("scroll", function () {
+  if (window.scrollY &gt; 300) {
+    knapp.style.display = "block";
+  } else {
+    knapp.style.display = "none";
+  }
+});
+
+knapp.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>position: fixed:</strong> Låser knappen til viewport — blir værende synlig under scroll. <code>bottom: 20px; right: 20px;</code> plasserer den 20px fra nederste høyre hjørne.</li>
+            <li><strong>window.scrollY:</strong> Gir antall piksler scrollet fra toppen. Alternativer: <code>document.documentElement.scrollTop</code> (mer cross-browser, men mer kode).</li>
+            <li><strong>scrollTo med behavior smooth:</strong> Moderne syntaks for animert scroll. Eldre måte: <code>window.scrollTo(0, 0)</code> uten animasjon, eller jQuery's <code>$("body").animate({scrollTop: 0})</code>.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Lytte på <code>document</code> i stedet for <code>window</code> for scroll-event — fungerer sjelden. Bruke <code>scrollTop = 0</code> direkte på <code>window</code> — det funker ikke (må gå via <code>document.documentElement</code>). Glemme å skjule knappen i utgangspunktet — synlig før scroll skjer.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 25</span>
+      <span class="exam-q__points">7 poeng</span>
+      <span class="exam-q__topic">Kap. 3+4 — Float + clear</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har et bilde og to avsnitt. Skriv CSS som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Floater <code>&lt;img&gt;</code> til venstre, slik at <em>første avsnitt</em> flyter rundt det på høyre side.</li>
+        <li><strong>(2 poeng)</strong> Gir bildet 12px margin på høyre og bunnen, slik at tekst ikke klistrer seg fast.</li>
+        <li><strong>(3 poeng)</strong> <em>Andre avsnitt</em> (med <code>class="bunn"</code>) skal <strong>ikke</strong> flyte rundt bildet — det skal plasseres helt under det floatede bildet (bruk <code>clear</code>).</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="6">&lt;article&gt;
+  &lt;img src="https://placehold.co/150x150/c8543d/fff?text=BILDE" alt="placeholder"&gt;
+  &lt;p&gt;Dette er første avsnitt — det skal flyte rundt bildet på høyre side. Bildet skal være til venstre, og teksten skal pakke seg pent rundt. Hvis avsnittet er langt nok, vil det fortsette under bildet med full bredde.&lt;/p&gt;
+  &lt;p class="bunn"&gt;Dette er andre avsnitt — det skal IKKE flyte rundt bildet. Det skal alltid begynne helt under bildet, i full bredde.&lt;/p&gt;
+&lt;/article&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="8" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>img {
+  float: left;
+  margin: 0 12px 12px 0;
+}
+
+.bunn {
+  clear: left;     /* eller clear: both */
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>float: left:</strong> Tar bildet ut av normal flyt og plasserer det til venstre. Påfølgende tekst flyter rundt på høyre side.</li>
+            <li><strong>margin:</strong> Shorthand er top right bottom left. Her: 0 over, 12px høyre (mellom bilde og tekst), 12px under (hvis bildet er høyere enn første avsnitt), 0 venstre.</li>
+            <li><strong>clear: left:</strong> Tvinger elementet til å starte under alle floats til venstre. <code>clear: both</code> ville fungert også — tvinger under både venstre- og høyre-floats.</li>
+            <li><strong>Float er klassisk teknologi:</strong> Brukes mest historisk og for tekst-flyt rundt bilder. For moderne layouts er Flexbox og Grid bedre — float er bevart i pensum mest for å forstå eldre kode og clear-mekanikken.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>clear</code> — andre avsnitt flyter også rundt bildet. Bruke <code>display: block</code> i stedet for clear (gjør ingenting). Sette <code>clear</code> på første avsnitt i stedet for andre.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<script src="exam.js"></script>
+<script src="../cheat-toggle.js" data-cheat-src="../a4-jukseark.html"></script>
+</body>
+</html>
