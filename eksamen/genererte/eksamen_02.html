@@ -1,0 +1,1079 @@
+<!doctype html>
+<!--
+  Øvingseksamen 02 — IT2805 Webteknologi
+  Laget: 2026-05-12.
+  Fokus: events, DOM-manipulasjon, event delegation, query-metoder,
+  scope, closures. Komplementerer sett 01 ved å gå dypere på Kap 10.
+  Ingen oppgave er en kopi av sett 01 eller ex2-ex5.
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>Øvingseksamen 02 — IT2805</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+
+<header class="exam-head">
+  <h1>Øvingseksamen 02 — IT2805</h1>
+  <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
+  <p class="exam-meta">
+    Hovedfokus: DOM-querying, event-håndtering, event delegation,
+    scope/closures, og DOM-manipulasjon. Speiler det digitale
+    Inspera-formatet med fire seksjoner.
+  </p>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section A — Flervalg (~25 %)</h2>
+  <p class="part-intro">Klikk på alternativet du tror er korrekt. Riktig svar fargelegges grønt, feil rødt — forklaring vises automatisk.</p>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 1</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — HTTP-metoder</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken av følgende HTTP-metoder er <strong>idempotent</strong> — altså gir samme tilstand på serveren uansett hvor mange ganger den kalles?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> POST</li>
+        <li><span class="opt-label">B</span> GET</li>
+        <li><span class="opt-label">C</span> CONNECT</li>
+        <li><span class="opt-label">D</span> PATCH</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>GET er idempotent — å hente samme ressurs ti ganger endrer ikke tilstanden på serveren. Det samme gjelder PUT og DELETE (kall N ganger gir samme resultat som ett kall).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> POST oppretter typisk en ny ressurs hver gang (to like POST-er kan lage to like rader). PATCH endrer delvis og er ikke garantert idempotent. CONNECT brukes til tunneler og er ikke idempotent.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 2</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Likhets-operatorer</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedforskjellen mellom <code>==</code> og <code>===</code> i JavaScript?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>==</code> sammenligner referanser; <code>===</code> sammenligner verdier.</li>
+        <li><span class="opt-label">B</span> <code>==</code> utfører type-coercion før sammenligning; <code>===</code> krever samme type og samme verdi.</li>
+        <li><span class="opt-label">C</span> <code>===</code> brukes bare for strenger; <code>==</code> for alle andre typer.</li>
+        <li><span class="opt-label">D</span> De er identiske; <code>===</code> er bare en gammel skrivemåte.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>===</code> ("strict equality") krever at både type og verdi er like — derfor er <code>0 === "0"</code> falskt og <code>1 === true</code> falskt. <code>==</code> ("loose equality") konverterer typer først, så <code>0 == "0"</code> er sant og <code>1 == true</code> er sant.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A blander med <code>Object.is</code> / referanse-sammenligning. C er konfabulasjon — begge fungerer for alle typer. D er feil — semantikken er reelt forskjellig, derfor anbefales <code>===</code> i moderne JS.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Data og variabler</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 3</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — Selektor-specificity</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken av følgende selektorer har <strong>høyest</strong> specificity?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>nav ul li a</code></li>
+        <li><span class="opt-label">B</span> <code>.menu .item a:hover</code></li>
+        <li><span class="opt-label">C</span> <code>#hovedmeny a</code></li>
+        <li><span class="opt-label">D</span> <code>a.aktiv.utvalgt</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>Specificity telles som (inline, id, class/attr/pseudo, element). Beregningen for hver:
+          <br>A = (0,0,0,4) = 4
+          <br>B = (0,0,3,1) = 31
+          <br>C = (0,1,0,1) = 101
+          <br>D = (0,0,2,1) = 21</p>
+          <p>C "vinner" fordi den har én id-selektor (verdi 100), og den slår uansett hvor mange klasser eller elementer du legger på som de andre.</p>
+          <p class="ref">Pensum: <a href="../../kap3/kaskade-arv/">Kap. 3 — Kaskade og arv</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 4</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — HTML-attributter</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hensikten med <code>checked</code>-attributtet i <code>&lt;input type="checkbox" checked&gt;</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Det gjør boksen krevd ved skjema-innsending.</li>
+        <li><span class="opt-label">B</span> Det gjør at boksen er <em>avkrysset</em> som default når siden lastes.</li>
+        <li><span class="opt-label">C</span> Det forhindrer at brukeren kan endre tilstanden.</li>
+        <li><span class="opt-label">D</span> Det aktiverer JS-validering av boksen.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>checked</code> er et "boolean attribute" — hvis det er til stede, er boksen avkrysset ved sideinnlasting. Tilsvarende finnes for <code>&lt;select&gt;</code> (<code>selected</code>) og <code>&lt;input&gt;</code> generelt (<code>disabled</code>, <code>readonly</code>).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A beskriver <code>required</code>. C beskriver <code>disabled</code> eller <code>readonly</code>. D er konfabulasjon — attributtet trigger ingen JS av seg selv.</p>
+          <p class="ref">Pensum: <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 5</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Event-typer</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken event utløses <strong>én gang</strong> når brukeren krysser av en checkbox?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>keypress</code></li>
+        <li><span class="opt-label">B</span> <code>change</code></li>
+        <li><span class="opt-label">C</span> <code>load</code></li>
+        <li><span class="opt-label">D</span> <code>submit</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>change</code> utløses når verdien på et form-element endres og brukeren har "bekreftet" endringen (for checkbox/radio: ved klikk; for text-input: ved blur). Du kan også bruke <code>click</code> på en checkbox, men <code>change</code> er den semantisk riktige.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er for tastatur (deprecated til fordel for <code>keydown</code>/<code>keyup</code>). C er for når siden eller en ressurs er ferdig lastet. D er for skjema-innsending.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 6</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Grid-enheter</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva blir resultatet av <code>grid-template-columns: 1fr 2fr 1fr;</code> i en CSS Grid med tre kolonner?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Tre kolonner med eksakt 1 px, 2 px og 1 px bredde.</li>
+        <li><span class="opt-label">B</span> Den midterste kolonnen er dobbelt så bred som hver av de to andre, og total bredde fyller containeren.</li>
+        <li><span class="opt-label">C</span> Den første kolonnen vises foran de andre i z-order.</li>
+        <li><span class="opt-label">D</span> En syntaksfeil — <code>fr</code> er ikke en gyldig enhet.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>fr</code> ("fractional unit") deler tilgjengelig plass i forholdstall. Med <code>1fr 2fr 1fr</code> får containeren 4 enheter totalt: 1/4, 2/4, 1/4 — så midten er dobbelt så bred.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A — <code>fr</code> er ikke piksler. C — kolonner i grid ligger side om side, ikke i stable. D — <code>fr</code> er gyldig og standard CSS Grid.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 7</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Event-kontroll</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er forskjellen mellom <code>event.preventDefault()</code> og <code>event.stopPropagation()</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>preventDefault()</code> stanser eventets bubbling til foreldre-elementer; <code>stopPropagation()</code> hindrer nettleserens standardoppførsel.</li>
+        <li><span class="opt-label">B</span> <code>preventDefault()</code> hindrer nettleserens standardoppførsel (f.eks. skjema-submit eller lenke-navigering); <code>stopPropagation()</code> hindrer eventet i å boble videre til foreldre.</li>
+        <li><span class="opt-label">C</span> Begge metodene gjør det samme — den ene er bare et alias for den andre.</li>
+        <li><span class="opt-label">D</span> <code>preventDefault()</code> brukes kun på form-submit; <code>stopPropagation()</code> kun på keyboard-events.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>preventDefault()</code> hindrer nettleserens innebygde reaksjon — f.eks. at en lenke navigerer videre, at et skjema submittes, eller at et høyreklikk åpner kontekstmeny. <code>stopPropagation()</code> stanser videre fly gjennom event-fasene (typisk: bobler ikke opp til foreldre-elementer).</p>
+          <p>De er <em>uavhengige</em>: du kan kalle begge, ingen, eller bare den ene.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A har snudd begrepene. C — de gjør forskjellige ting. D — begge fungerer på alle event-typer.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 8</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — DOM-querying</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva returnerer <code>document.querySelectorAll(".item")</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Det første elementet med class <code>item</code>.</li>
+        <li><span class="opt-label">B</span> Et ekte <code>Array</code> med matchede elementer.</li>
+        <li><span class="opt-label">C</span> En <em>statisk</em> <code>NodeList</code> over alle matchende elementer.</li>
+        <li><span class="opt-label">D</span> En <em>live</em> <code>HTMLCollection</code> som oppdaterer seg når DOM endres.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p><code>querySelectorAll</code> returnerer en <em>statisk</em> <code>NodeList</code> — en samling som er en "snapshot" av DOM-en på det tidspunktet metoden ble kalt. Hvis du senere legger til nye matchende elementer, blir de <em>ikke</em> med.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A beskriver <code>querySelector</code> (uten "All"). B — NodeList er <em>ikke</em> et ekte array, men det er iterable og har <code>.forEach</code>. D beskriver <code>getElementsByClassName</code>, som returnerer en live HTMLCollection.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 9</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — DOM-mutasjon</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken kodelinje er <strong>den mest moderne og leselige</strong> måten å fjerne et DOM-element på, gitt at du har referansen <code>el</code> til elementet?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>el.parent.delete(el);</code></li>
+        <li><span class="opt-label">B</span> <code>el.remove();</code></li>
+        <li><span class="opt-label">C</span> <code>el.innerHTML = "";</code></li>
+        <li><span class="opt-label">D</span> <code>el.style.display = "none";</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>el.remove()</code> fjerner elementet helt fra DOM-en. Eldre alternativ er <code>el.parentNode.removeChild(el)</code> — samme effekt, mer skriving.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er konfabulasjon — <code>el.parent</code> finnes ikke (det heter <code>parentNode</code>) og <code>delete</code> brukes ikke på DOM-noder. C tømmer innholdet i elementet, men elementet selv står igjen. D <em>skjuler</em> elementet, men det er fortsatt i DOM-treet.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 10</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — addEventListener</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken syntaks for <code>addEventListener</code> er <strong>korrekt</strong>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>btn.addEventListener("onclick", handler);</code></li>
+        <li><span class="opt-label">B</span> <code>btn.addEventListener(click, handler);</code></li>
+        <li><span class="opt-label">C</span> <code>btn.addEventListener("click", handler);</code></li>
+        <li><span class="opt-label">D</span> <code>btn.addEventListener("click", handler());</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>Event-navnet er en streng <em>uten</em> "on"-prefiks (<code>"click"</code>, ikke <code>"onclick"</code>), og handler er en funksjons-<em>referanse</em>, ikke et funksjonskall.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A — feil event-navn (har "on"-prefiks som hører til den gamle property-syntaksen <code>btn.onclick = ...</code>). B — <code>click</code> uten anførselstegn ville være en udefinert variabel. D — <code>handler()</code> kaller funksjonen <em>med en gang</em> og sender returverdien som handler.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION B — OUTPUT (5 oppgaver, 18 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section B — Find result of code (~18 %)</h2>
+  <p class="part-intro">Forutsi hva koden returnerer eller skriver ut. Skriv svaret i input-feltet og trykk <em>Sjekk</em> (anførselstegn og whitespace ignoreres). Forklaringen forteller deg hvilken <em>mekanisme</em> som driver outputen.</p>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 11</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — parseInt</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(parseInt("3.7px"));</code></pre>
+      <div class="exam-q__answer">
+        <label for="q11-input">Ditt svar:</label>
+        <input type="text" id="q11-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="3">Riktig svar: 3</span>
+          <p><strong>Mekanisme:</strong> <code>parseInt</code> leser tegn fra venstre og stopper ved første ikke-gyldige tegn for et heltall. <code>"3"</code> er gyldig, <code>"."</code> er ikke et heltallstegn — så parsing stopper og resultatet er <code>3</code>.</p>
+          <p><strong>Kontraster å huske:</strong>
+          <br><code>parseFloat("3.7px")</code> → <code>3.7</code> (godtar desimaltegn).
+          <br><code>Number("3.7px")</code> → <code>NaN</code> (krever at hele strengen er et gyldig tall).
+          <br><code>parseInt("abc")</code> → <code>NaN</code> (ingen gyldige tegn i starten).</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Typer og coercion</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 12</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — for...in vs verdier</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut (på én linje, mellomrom mellom)?</p>
+      <pre><code>let result = "";
+for (let x in [10, 20, 30]) {
+  result += x + " ";
+}
+console.log(result.trim());</code></pre>
+      <div class="exam-q__answer">
+        <label for="q12-input">Ditt svar:</label>
+        <input type="text" id="q12-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="0 1 2">Riktig svar: 0 1 2</span>
+          <p><strong>Mekanisme — den klassiske for-in-fellen:</strong> <code>for...in</code> itererer over <em>nøklene/indeksene</em> i et objekt eller array. For arrayet <code>[10, 20, 30]</code> er nøklene strengene <code>"0"</code>, <code>"1"</code>, <code>"2"</code> — ikke verdiene.</p>
+          <p><strong>Kontrast — for...of:</strong> Hadde koden brukt <code>for (let x of [10, 20, 30])</code>, ville outputen blitt <code>10 20 30</code>. Tommelfingerregel: <em>in</em> = indeks/key, <em>of</em> = verdi. For arrays foretrekkes nesten alltid <code>for...of</code> eller <code>forEach</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/kontrollflyt/">Kap. 9 — Kontrollflyt</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 13</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Closures</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut (siste linje)?</p>
+      <pre><code>function lagTeller() {
+  let n = 0;
+  return function () {
+    n += 1;
+    return n;
+  };
+}
+const tell = lagTeller();
+tell();
+tell();
+console.log(tell());</code></pre>
+      <div class="exam-q__answer">
+        <label for="q13-input">Ditt svar:</label>
+        <input type="text" id="q13-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="3">Riktig svar: 3</span>
+          <p><strong>Mekanisme — closure:</strong> Den indre funksjonen "lukker" rundt variabelen <code>n</code> fra ytre scope. Selv etter at <code>lagTeller()</code> har returnert, holder den indre funksjonen liv i <code>n</code>. Hver <code>tell()</code>-kall øker samme <code>n</code> med 1: 1, 2, 3.</p>
+          <p><strong>Vanlig misforståelse:</strong> Mange tror at <code>n</code> resettes til 0 ved hvert kall, fordi <code>let n = 0</code> står inni <code>lagTeller</code>. Men <code>lagTeller</code> kjøres bare <em>én gang</em> — den returnerer en funksjon som hver gang refererer til samme lukkede <code>n</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/funksjoner-og-json/">Kap. 9 — Funksjoner</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 14</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Boolean coercion</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(Boolean("false") &amp;&amp; !!"0");</code></pre>
+      <div class="exam-q__answer">
+        <label for="q14-input">Ditt svar:</label>
+        <input type="text" id="q14-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="true">Riktig svar: true</span>
+          <p><strong>Mekanisme:</strong> Begge uttrykk konverterer en <em>ikke-tom</em> streng til boolean. I JS er <em>alle</em> ikke-tomme strenger truthy — inkludert <code>"false"</code> og <code>"0"</code>. Tegnene betyr ingenting for konverteringen; bare lengde &gt; 0.</p>
+          <ul>
+            <li><code>Boolean("false")</code> → <code>true</code> (strengen er ikke tom).</li>
+            <li><code>!!"0"</code> → <code>true</code> (samme prinsipp; dobbel-negasjon er en kortform for boolean-cast).</li>
+            <li><code>true &amp;&amp; true</code> → <code>true</code>.</li>
+          </ul>
+          <p><strong>Falsy-verdier i JS:</strong> <code>false</code>, <code>0</code> (nummer, ikke streng!), <code>""</code> (tom streng), <code>null</code>, <code>undefined</code>, <code>NaN</code>. Alt annet er truthy.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Typer og coercion</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 15</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Array.length</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let arr = [1, 2, 3];
+arr[5] = "x";
+console.log(arr.length);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q15-input">Ditt svar:</label>
+        <input type="text" id="q15-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="6">Riktig svar: 6</span>
+          <p><strong>Mekanisme:</strong> Når du tildeler verdi til en indeks som er <em>høyere</em> enn nåværende length, vokser arrayet automatisk til å dekke den indeksen. <code>arr[5] = "x"</code> krever at indeks 5 finnes, så <code>length</code> settes til 6.</p>
+          <p><strong>Bonus:</strong> Indeksene 3 og 4 blir <em>tomme spor</em> ("empty slots") — ikke <code>undefined</code>, men noe som oppfører seg som det i de fleste situasjoner. <code>arr</code> ser ut som <code>[1, 2, 3, &lt;3 empty&gt;, "x"]</code> i konsollen.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION C — KORTSVAR (5 oppgaver, 17 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section C — Kortsvar (~17 %)</h2>
+  <p class="part-intro">Skriv prosa-svar i textarea-feltet. Når du er ferdig, klikk <em>Vis fasit og vurder</em> — sammenlign mot rubrikken, og bruk knappene under fasit til å gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 16</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — DOM-querying</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <code>getElementById</code>, <code>getElementsByClassName</code> og <code>querySelector</code> / <code>querySelectorAll</code>. Hva returnerer hver, og når foretrekker du hva?</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> <code>getElementById("x")</code> returnerer ett enkelt <code>Element</code> (eller <code>null</code>) — krever et <code>id</code>-attributt. Raskeste lookup.</li>
+            <li><strong>1 poeng:</strong> <code>getElementsByClassName("x")</code> returnerer en <em>live</em> <code>HTMLCollection</code> — endringer i DOM reflekteres umiddelbart i samlingen. Ingen direkte iteratorer; må indekseres med <code>[i]</code>.</li>
+            <li><strong>1 poeng:</strong> <code>querySelector("css-selector")</code> returnerer første matchende element; <code>querySelectorAll(...)</code> returnerer en <em>statisk</em> <code>NodeList</code>. Tar full CSS-selektor-syntaks (<code>.x .y &gt; a</code>) — mer fleksibelt.</li>
+            <li><strong>1 poeng:</strong> Anbefaling: <code>getElementById</code> når du har en id (raskest, mest eksplisitt). <code>querySelector/All</code> for alt annet (kraftigst, leselig). <code>getElementsByClassName</code> brukes sjelden i moderne kode.</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> NodeList fra <code>querySelectorAll</code> har <code>forEach</code>, men er ikke et ekte array — bruk <code>Array.from(nodeList)</code> hvis du trenger <code>.map</code>/<code>.filter</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 poeng</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 17</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — Skjuling av elementer</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <code>display: none</code>, <code>visibility: hidden</code> og <code>opacity: 0</code>. Hva skjer med plassen elementet opptar, og kan brukeren klikke på det?</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng — 1 per verdi):</strong></p>
+          <ul>
+            <li><strong><code>display: none</code> (1 poeng):</strong> Elementet fjernes helt fra layouten. Tar <em>ingen</em> plass, kan <em>ikke</em> klikkes, lesere overhopper det. Som om det ikke fantes.</li>
+            <li><strong><code>visibility: hidden</code> (1 poeng):</strong> Elementet er usynlig, men <em>beholder plassen sin</em> i layouten — innholdet etter flyttes ikke. Kan ikke klikkes. Screenreaders hopper over.</li>
+            <li><strong><code>opacity: 0</code> (1 poeng):</strong> Elementet er <em>fullstendig gjennomsiktig</em>, men beholder plassen og <em>er fortsatt klikkbart</em> (musen treffer en usynlig boks). Screenreaders leser det fortsatt.</li>
+          </ul>
+          <p><strong>Bonus:</strong> Skal et element animeres inn/ut, brukes <code>opacity</code> + <code>transition</code> (kan animeres) — <code>display</code> kan ikke animeres.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS videregående</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 dekket</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 18</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — let vs var</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar <strong>tre konkrete forskjeller</strong> mellom <code>let</code> og <code>var</code> i JavaScript.</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Sensor leter etter minst tre av disse (1 poeng hver, maks 3):</strong></p>
+          <ul>
+            <li><strong>Scope:</strong> <code>let</code> har <em>blokk-scope</em> ({ ... }), <code>var</code> har <em>function-scope</em>. <code>let x</code> inni en <code>if</code>-blokk er ikke synlig utenfor; en <code>var x</code> samme sted er synlig i hele funksjonen.</li>
+            <li><strong>Hoisting:</strong> <code>var</code>-deklarasjoner heves til toppen av funksjonen og initialiseres til <code>undefined</code> (kan brukes før deklarasjons-linja, men er undefined). <code>let</code> heves også, men er i en "temporal dead zone" — bruker du den før deklarasjonen får du en ReferenceError.</li>
+            <li><strong>Redeklarering:</strong> <code>var x = 1; var x = 2;</code> i samme scope er lovlig. <code>let x = 1; let x = 2;</code> kaster SyntaxError.</li>
+            <li><strong>Global property:</strong> Globalt deklarert <code>var foo</code> blir <code>window.foo</code> i nettleseren; globalt <code>let foo</code> blir <em>ikke</em> en property på window-objektet.</li>
+          </ul>
+          <p><strong>Anbefaling:</strong> I moderne JS brukes <code>const</code> som standard, <code>let</code> når verdien skal endres, og <code>var</code> aldri.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Data og variabler</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">3 av 3</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 19</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Event delegation</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er <strong>event delegation</strong>? Forklar prinsippet, og gi <strong>én konkret situasjon</strong> der det er nyttig. Hvilken event-fase ligger i bunn av teknikken?</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> Definisjon: feste én event-listener på en <em>forelder</em>-node i stedet for på hvert barn, og bruke <code>e.target</code> for å se hva som faktisk ble klikket.</li>
+            <li><strong>1 poeng:</strong> Bygger på <em>event bubbling</em> — en click-event på et barn bobler opp gjennom foreldrene, og forelder-listeneren mottar samme event.</li>
+            <li><strong>1 poeng:</strong> Konkret situasjon: en liste der elementer legges til/fjernes dynamisk (en todo-liste, en chat-feed). Hadde du festet listeners på hvert barn, måtte du gjort det på nytt for hvert nye element. Med delegation gjør du det én gang.</li>
+            <li><strong>1 poeng:</strong> Nevner ekstra fordel (en av): færre listeners = mindre minnebruk; lettere oppsett; tilstrekkelig sjekk via <code>e.target.matches(".klasse")</code> for å filtrere riktige treff.</li>
+          </ul>
+          <p><strong>Eksempel-snippet:</strong></p>
+          <pre><code>listEl.addEventListener("click", (e) =&gt; {
+  if (e.target.matches("li")) {
+    e.target.classList.toggle("done");
+  }
+});</code></pre>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 poeng</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 20</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — HTTP-metoder</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Beskriv kort hva de fire HTTP-metodene <code>GET</code>, <code>POST</code>, <code>PUT</code> og <code>DELETE</code> brukes til. Bruk gjerne én setning per metode.</p>
+      <textarea class="exam-q__textarea" rows="5" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng — 0.75 per metode):</strong></p>
+          <ul>
+            <li><strong>GET</strong> — hente en ressurs uten å endre serveren. Idempotent. Brukes for lesning/visning (f.eks. åpning av en nettside, søk, filtre).</li>
+            <li><strong>POST</strong> — sende data for å <em>opprette</em> en ny ressurs eller utløse en handling. Ikke idempotent (to POST-er = to nye rader). Brukes for skjema-innsending, ny bruker, nytt innlegg.</li>
+            <li><strong>PUT</strong> — <em>erstatte</em> en ressurs helt med en ny versjon. Idempotent: samme PUT N ganger gir samme tilstand. Brukes for full oppdatering.</li>
+            <li><strong>DELETE</strong> — slette en ressurs. Idempotent: slett-én-gang gir samme resultat som slett-N-ganger (ressursen er borte uansett).</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 dekket godt</button>
+            <button type="button" data-grade="0.66">2-3 av 4</button>
+            <button type="button" data-grade="0.33">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION D — KODING (5 oppgaver, 40 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section D — Koding (~40 %)</h2>
+  <p class="part-intro">Skriv kode i tre felt (HTML/CSS/JS). Klikk <em>Kjør i sandbox</em> for å se resultatet i forhåndsvisning. Klikk <em>Vis fasit og vurder</em> for å se referanseløsning + rubrikk og gi deg selv delpoeng. Tab inni kode-feltene gir to mellomrom — Shift+Tab forflytter fokus.</p>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 21</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Tegn-teller</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv JavaScript som lager en <strong>tegn-teller</strong> for textarea-feltet:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Mens brukeren skriver i textarea (event <code>input</code> eller <code>keyup</code>), oppdater <code>&lt;span id="count"&gt;</code> til å vise antall tegn brukeren har skrevet.</li>
+        <li><strong>(3 poeng)</strong> Hvis antall tegn overstiger <strong>100</strong>, sett tellerens tekstfarge til rød (<code>red</code>) ved hjelp av <code>style.color</code>. Når tallet faller under 100 igjen, settes fargen tilbake til sort/default.</li>
+        <li><strong>(2 poeng)</strong> Initialiser telleren slik at den viser <code>0</code> ved sideinnlasting (uten at brukeren har skrevet noe).</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="5">&lt;label for="melding"&gt;Din melding:&lt;/label&gt;&lt;br&gt;
+&lt;textarea id="melding" rows="4" cols="40"&gt;&lt;/textarea&gt;&lt;br&gt;
+&lt;p&gt;Tegn brukt: &lt;span id="count"&gt;&lt;/span&gt;&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="3"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="10" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const melding = document.getElementById("melding");
+const teller = document.getElementById("count");
+
+function oppdater() {
+  const n = melding.value.length;
+  teller.textContent = n;
+  teller.style.color = (n &gt; 100) ? "red" : "";
+}
+
+melding.addEventListener("input", oppdater);
+oppdater();  // initialiser ved load</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Event <code>input</code> vs <code>keyup</code>:</strong> <code>input</code> trigger ved enhver verdiendring (også paste, drag-drop, autocomplete). <code>keyup</code> trigger bare for tastetrykk — så hvis brukeren limer inn tekst, kan telleren bli feil. Begge er godkjent i denne oppgaven, men <code>input</code> er det robuste valget.</li>
+            <li><strong>Initialisering:</strong> Å kalle <code>oppdater()</code> én gang ved load sørger for at telleren viser <code>0</code> fra start. Alternativt kan man sette <code>teller.textContent = "0"</code> eksplisitt.</li>
+            <li><strong>Tilbakestilling av farge:</strong> Sett <code>style.color = ""</code> (tom streng) for å fjerne inline-stilen og falle tilbake til CSS-arv. Hadde man satt <code>"black"</code> hardkodet, ville evt. tema-CSS bli overstyrt.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>onkeyup</code>-attribute inline i HTML (godtatt, men ikke moderne). Glemme initial-oppdateringen så telleren er tom inntil første tastetrykk. Sjekke <code>=== 100</code> i stedet for <code>&gt; 100</code> — da blir den aldri rød.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 22</span>
+      <span class="exam-q__points">10 poeng</span>
+      <span class="exam-q__topic">Kap. 8+9 — Kalkulator</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv JavaScript som lager en enkel kalkulator med fire knapper:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Når en av knappene klikkes, les verdiene fra <code>#a</code> og <code>#b</code>, konverter til tall, og skriv resultatet til <code>&lt;span id="res"&gt;</code>.</li>
+        <li><strong>(3 poeng)</strong> Knappene støtter operasjonene: +, −, ×, ÷. Bruk en <em>data-attributt</em> (<code>data-op</code>) for å skille mellom dem, og en felles handler (ikke fire separate funksjoner).</li>
+        <li><strong>(2 poeng)</strong> Ved divisjon med 0, skriv teksten <code>"Kan ikke dele på 0"</code> i resultat-feltet i stedet for <code>Infinity</code>.</li>
+        <li><strong>(2 poeng)</strong> Hvis ett av feltene ikke er et gyldig tall (f.eks. tomt eller "abc"), skriv <code>"Ugyldig input"</code>.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="8">&lt;label&gt;a: &lt;input type="text" id="a"&gt;&lt;/label&gt;
+&lt;label&gt;b: &lt;input type="text" id="b"&gt;&lt;/label&gt;
+&lt;button class="op" data-op="+"&gt;+&lt;/button&gt;
+&lt;button class="op" data-op="-"&gt;−&lt;/button&gt;
+&lt;button class="op" data-op="*"&gt;×&lt;/button&gt;
+&lt;button class="op" data-op="/"&gt;÷&lt;/button&gt;
+&lt;p&gt;Resultat: &lt;span id="res"&gt;&lt;/span&gt;&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="3"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="14" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning (én idiomatisk variant):</strong></p>
+          <pre><code>const knapper = document.querySelectorAll(".op");
+const res = document.getElementById("res");
+
+knapper.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    const a = parseFloat(document.getElementById("a").value);
+    const b = parseFloat(document.getElementById("b").value);
+    if (isNaN(a) || isNaN(b)) {
+      res.textContent = "Ugyldig input";
+      return;
+    }
+    const op = btn.dataset.op;
+    let svar;
+    switch (op) {
+      case "+": svar = a + b; break;
+      case "-": svar = a - b; break;
+      case "*": svar = a * b; break;
+      case "/":
+        if (b === 0) { res.textContent = "Kan ikke dele på 0"; return; }
+        svar = a / b;
+        break;
+    }
+    res.textContent = svar;
+  });
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Felles handler:</strong> Vi itererer over alle knapper med <code>querySelectorAll(".op")</code> og fester samme handler — operasjonen avgjøres av <code>btn.dataset.op</code> (som leser <code>data-op</code>-attributtet). Dette er DRY (don't repeat yourself).</li>
+            <li><strong>parseFloat vs Number:</strong> <code>parseFloat</code> er forgivende (<code>"3.7px"</code> → <code>3.7</code>). <code>Number("3.7px")</code> ville gitt <code>NaN</code>. Begge er gyldige for denne oppgaven — viktigste er <code>isNaN</code>-sjekken.</li>
+            <li><strong>Division-by-zero:</strong> JS gir <code>Infinity</code> (ikke en exception) ved <code>x / 0</code>. Vi må sjekke eksplisitt for <code>b === 0</code>.</li>
+            <li><strong>Alternative tilnærminger:</strong> Et objekt-lookup som <code>const ops = { "+": (a,b) =&gt; a+b, ... }</code> er en elegant variant — men switch er like korrekt.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>parseFloat</code> så <code>"5" + "3"</code> blir <code>"53"</code> (string-concat). Lage fire separate funksjoner — fungerer, men er ikke det oppgaven ber om. Skrive <code>btn.getAttribute("data-op")</code> i stedet for <code>btn.dataset.op</code> (begge funker, første er mer verbose).</p>
+          <p class="ref">Pensum: <a href="../../kap8/">Kap. 8 — Forms</a>, <a href="../../kap10/">Kap. 10 — DOM</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 23</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Modal dialog</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML/CSS er gitt for en modal-dialog. Skriv JavaScript som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Klikk på <code>#aapne</code> setter <code>.is-open</code>-klassen på <code>#modal</code> (gjør den synlig).</li>
+        <li><strong>(2 poeng)</strong> Klikk på <code>#lukk</code> fjerner <code>.is-open</code>.</li>
+        <li><strong>(2 poeng)</strong> Klikk på <em>backdrop</em>-en (selve <code>#modal</code>, ikke <code>.modal-box</code> inni) lukker også modalen.</li>
+        <li><strong>(1 poeng)</strong> Trykk på <code>Escape</code>-tasten lukker modalen.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="8">&lt;button id="aapne"&gt;Åpne modal&lt;/button&gt;
+&lt;div id="modal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;h2&gt;Hei!&lt;/h2&gt;
+    &lt;p&gt;Dette er en modal-dialog.&lt;/p&gt;
+    &lt;button id="lukk"&gt;Lukk&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-css" rows="11">#modal {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  align-items: center; justify-content: center;
+}
+#modal.is-open { display: flex; }
+.modal-box {
+  background: white; padding: 24px; border-radius: 8px;
+  min-width: 280px;
+}</textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="12" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const modal = document.getElementById("modal");
+const aapne = document.getElementById("aapne");
+const lukk = document.getElementById("lukk");
+
+aapne.addEventListener("click", function () {
+  modal.classList.add("is-open");
+});
+
+lukk.addEventListener("click", function () {
+  modal.classList.remove("is-open");
+});
+
+// Klikk på selve backdroppen (men ikke på .modal-box inni)
+modal.addEventListener("click", function (e) {
+  if (e.target === modal) {
+    modal.classList.remove("is-open");
+  }
+});
+
+// Escape lukker
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    modal.classList.remove("is-open");
+  }
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Backdrop-klikk:</strong> Sjekken <code>e.target === modal</code> er nøkkelen. Klikker du på <code>.modal-box</code> inni, bobler klikket opp til <code>#modal</code>, men <code>e.target</code> er fortsatt <code>.modal-box</code> — så sjekken filtrerer bort interne klikk. Alternativt kunne man kalt <code>e.stopPropagation()</code> på modal-box-klikk.</li>
+            <li><strong>Escape-key:</strong> <code>e.key</code> er den moderne string-baserte API-en (<code>"Escape"</code>, <code>"Enter"</code>, <code>"ArrowLeft"</code>). Den gamle <code>e.keyCode</code> (27) er deprecated.</li>
+            <li><strong>classList.add/remove:</strong> Mer leselig enn å sette <code>.className = "..."</code> manuelt, og det fjerner ikke andre klasser ved et uhell.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme sjekken på backdrop og lukke modalen ved klikk inni boksen også. Lytte på <code>keypress</code> i stedet for <code>keydown</code> (Escape sender ikke keypress). Festes Escape-handler på <code>modal</code> i stedet for <code>document</code> — fungerer ikke når modalen er lukket og ikke har fokus.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 24</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Bilde-galleri</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML/CSS for et lite galleri er gitt. Skriv JavaScript som lar brukeren bytte hoved-bildet ved å klikke på en thumbnail:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Når brukeren klikker på en thumbnail (<code>.thumb</code>), skal <code>src</code>-attributtet til <code>&lt;img id="stor"&gt;</code> bytte til samme bildet (les <code>src</code> fra thumbnailen).</li>
+        <li><strong>(2 poeng)</strong> Den klikkede thumbnailen får klassen <code>active</code>; alle andre mister den. Default skal første thumbnail være aktiv.</li>
+        <li><strong>(2 poeng)</strong> Bruk <em>event delegation</em>: én listener på <code>.gallery</code>-containeren, ikke én listener per thumbnail.</li>
+        <li><strong>(1 poeng)</strong> Bruk <code>addEventListener</code> (ikke inline <code>onclick</code>).</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="9">&lt;img id="stor" src="https://placehold.co/300x200/cccccc/333333?text=1" alt="Stor versjon" width="300"&gt;
+&lt;div class="gallery"&gt;
+  &lt;img class="thumb active" src="https://placehold.co/300x200/cccccc/333333?text=1" alt="" width="60"&gt;
+  &lt;img class="thumb" src="https://placehold.co/300x200/a0c0ff/333333?text=2" alt="" width="60"&gt;
+  &lt;img class="thumb" src="https://placehold.co/300x200/ffc0a0/333333?text=3" alt="" width="60"&gt;
+  &lt;img class="thumb" src="https://placehold.co/300x200/c0ffa0/333333?text=4" alt="" width="60"&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(gitt — kan utvides)</small></label>
+          <textarea class="code-css" rows="6">.gallery { display: flex; gap: 6px; margin-top: 10px; }
+.thumb { cursor: pointer; opacity: 0.6; border: 2px solid transparent; }
+.thumb.active { opacity: 1; border-color: #a23b2a; }</textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="10" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const galleri = document.querySelector(".gallery");
+const stor = document.getElementById("stor");
+
+galleri.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("thumb")) return;
+
+  // Bytt hoved-bilde
+  stor.src = e.target.src;
+
+  // Oppdater active-klassen
+  galleri.querySelectorAll(".thumb").forEach(function (t) {
+    t.classList.remove("active");
+  });
+  e.target.classList.add("active");
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Event delegation:</strong> Én listener på <code>.gallery</code> — vi sjekker <code>e.target.classList.contains("thumb")</code> for å filtrere. Hvis vi seinere legger til flere thumbnails dynamisk, fungerer det fortsatt uten ekstra arbeid.</li>
+            <li><strong>src-attributtet:</strong> <code>e.target.src</code> gir den absolutte URL-en til thumbnailen — perfekt for å overføre direkte til <code>stor.src</code>.</li>
+            <li><strong>Oppdater active:</strong> Vi rydder bort active fra alle, og legger den til på den klikkede. Alternativt kan man bruke <code>galleri.querySelector(".active").classList.remove("active")</code>, men da må man være sikker på at det alltid finnes én.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Feste klikk-handler på hver <code>.thumb</code> (fungerer, men ikke event delegation som oppgaven ber om). Glemme å fjerne <code>active</code> fra de andre — så <em>alle</em> blir aktive til slutt. Skrive til <code>stor.setAttribute("src", ...)</code> — fungerer, men <code>.src</code> er enklere.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 25</span>
+      <span class="exam-q__points">6 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Tema-toggle</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML er gitt. Skriv kode som lar brukeren bytte mellom lyst og mørkt tema:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Skriv CSS-regler slik at <code>body.dark</code> får mørk bakgrunn (<code>#222</code>) og lys tekst (<code>#eee</code>). Default er lys.</li>
+        <li><strong>(3 poeng)</strong> Klikk på <code>#bytt</code> toggler klassen <code>dark</code> på <code>body</code> (legg til hvis den ikke er der, fjern hvis den er).</li>
+        <li><strong>(1 poeng)</strong> Knappens tekst skal vise nåværende handling: "Bytt til mørkt" når lyst er aktivt, "Bytt til lyst" når mørkt er aktivt.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="4">&lt;button id="bytt"&gt;Bytt til mørkt&lt;/button&gt;
+&lt;h2&gt;Hovedinnhold&lt;/h2&gt;
+&lt;p&gt;Dette er noe tekst som skal endre farge.&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="5" placeholder="/* skriv CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="8" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>/* CSS */
+body.dark {
+  background-color: #222;
+  color: #eee;
+}
+
+/* JS */
+const knapp = document.getElementById("bytt");
+
+knapp.addEventListener("click", function () {
+  const erMork = document.body.classList.toggle("dark");
+  knapp.textContent = erMork ? "Bytt til lyst" : "Bytt til mørkt";
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong><code>classList.toggle()</code> returnerer boolean:</strong> <code>true</code> hvis klassen ble lagt til, <code>false</code> hvis den ble fjernet. Perfekt for å vite hvilken tilstand vi er i etter toggle.</li>
+            <li><strong>Alternativ med <code>contains</code>:</strong>
+            <pre><code>if (document.body.classList.contains("dark")) {
+  document.body.classList.remove("dark");
+  knapp.textContent = "Bytt til mørkt";
+} else {
+  document.body.classList.add("dark");
+  knapp.textContent = "Bytt til lyst";
+}</code></pre>
+            Mer verbose, men også korrekt.</li>
+            <li><strong>CSS-arv:</strong> Når vi setter <code>color</code> på <code>body</code>, arver alle barn (h2, p) den med mindre de overstyrer den selv.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Hardkode at klassen alltid legges til (uten å sjekke nåværende tilstand) — etter første klikk gjør den ingenting nytt. Skrive om hele <code>className</code>-strengen i stedet for å bruke <code>classList</code> — kan overskrive andre klasser.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a>, <a href="../../kap4/">Kap. 4 — CSS</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<script src="exam.js"></script>
+</body>
+</html>
