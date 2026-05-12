@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../favicon.png" type="image/png">
+<title>Lekeplass — HTML / CSS / JS</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+  .pg-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 12px;
+    height: calc(100vh - 240px);
+    min-height: 520px;
+    margin: 1.2em 0 2em;
+  }
+  .pg-toolbar {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+  }
+  .pg-toolbar button,
+  .pg-toolbar label {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+  .pg-toolbar button {
+    background: var(--rust);
+    color: var(--paper);
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .pg-toolbar button:hover { background: var(--rust-dark); }
+  .pg-toolbar button.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line-soft);
+  }
+  .pg-toolbar button.ghost:hover {
+    border-color: var(--rust);
+    color: var(--rust);
+  }
+  .pg-toolbar label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .pg-toolbar .pg-status {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--ink-faded);
+  }
+
+  .pg-pane {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .pg-pane > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    background: var(--paper-darker);
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faded);
+  }
+  .pg-pane > header .pg-tag {
+    color: var(--rust);
+    font-weight: 600;
+  }
+  .pg-pane textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    line-height: 1.5;
+    tab-size: 2;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: auto;
+  }
+
+  /* Pane placement */
+  .pg-pane--html { grid-column: 1; grid-row: 2; }
+  .pg-pane--css  { grid-column: 1; grid-row: 3; }
+  .pg-pane--js   { grid-column: 2; grid-row: 2; }
+  .pg-pane--prev { grid-column: 2; grid-row: 3; }
+
+  .pg-pane--prev iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: white;
+  }
+
+  @media (max-width: 900px) {
+    .pg-wrap {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto repeat(4, 280px);
+      height: auto;
+    }
+    .pg-pane--html { grid-column: 1; grid-row: 2; }
+    .pg-pane--css  { grid-column: 1; grid-row: 3; }
+    .pg-pane--js   { grid-column: 1; grid-row: 4; }
+    .pg-pane--prev { grid-column: 1; grid-row: 5; }
+  }
+
+  .pg-hint {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-faded);
+    margin-top: 0.6em;
+  }
+  .pg-hint kbd {
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../" class="brand">IT2805</a>
+    <a href="../" class="nav-back">&larr; Forside</a>
+    <div class="nav-search-wrapper">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="nav-search" placeholder="Laster…" autocomplete="off" disabled>
+      <div id="nav-search-results"></div>
+    </div>
+  </div>
+</nav>
+
+<main data-chapter="Lekeplass — HTML/CSS/JS">
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Skriv kode · Kjør live · Eksperimenter</div>
+      <h1>Leke<em>plassen</em></h1>
+      <p class="lede">
+        Skriv HTML, CSS og JavaScript i hvert sitt felt og kjør koden live i en
+        sandboxet preview. Bra for å teste CSS-selektorer, DOM-events eller
+        en rask <code>console.log</code>-snutt mens du leser pensum.
+      </p>
+    </div>
+  </header>
+
+  <section style="border-bottom:none;padding-top:1em;">
+    <div class="container">
+      <div class="pg-wrap">
+        <div class="pg-toolbar">
+          <button type="button" id="pg-run">Kjør &#9654;</button>
+          <label><input type="checkbox" id="pg-auto" checked> Auto-kjør</label>
+          <button type="button" class="ghost" id="pg-reset">Tilbakestill</button>
+          <button type="button" class="ghost" id="pg-clear">Tøm alt</button>
+          <span class="pg-status" id="pg-status">Klar</span>
+        </div>
+
+        <div class="pg-pane pg-pane--html">
+          <header><span><span class="pg-tag">HTML</span> &mdash; struktur</span></header>
+          <textarea id="pg-html" spellcheck="false" autocomplete="off"></textarea>
+        </div>
+
+        <div class="pg-pane pg-pane--css">
+          <header><span><span class="pg-tag">CSS</span> &mdash; styling</span></header>
+          <textarea id="pg-css" spellcheck="false" autocomplete="off"></textarea>
+        </div>
+
+        <div class="pg-pane pg-pane--js">
+          <header><span><span class="pg-tag">JS</span> &mdash; oppførsel</span></header>
+          <textarea id="pg-js" spellcheck="false" autocomplete="off"></textarea>
+        </div>
+
+        <div class="pg-pane pg-pane--prev">
+          <header><span><span class="pg-tag">Preview</span> &mdash; sandboxet iframe</span></header>
+          <iframe id="pg-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+        </div>
+      </div>
+
+      <p class="pg-hint">
+        <kbd>Tab</kbd> setter inn to mellomrom. JavaScript-feil vises nederst i
+        preview. Sandboxen er isolert (<code>allow-scripts</code>) &mdash; den
+        kan ikke nå denne siden eller lagre noe.
+        Endringer huskes i nettleserens <code>localStorage</code>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="ornament">&#10043; &#10043; &#10043;</div>
+    <p>NTNU · IT2805 Webteknologi · Lekeplass</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  const STARTER = {
+    html:
+      '<h1>Hei, verden!</h1>\n' +
+      '<p>Endre koden &mdash; preview oppdaterer seg automatisk.</p>\n' +
+      '<button id="knapp">Klikk meg</button>\n' +
+      '<p id="utdata"></p>',
+    css:
+      'body {\n' +
+      '  font-family: Georgia, serif;\n' +
+      '  padding: 1.5em;\n' +
+      '  color: #1a1612;\n' +
+      '  background: #f4f1ea;\n' +
+      '}\n' +
+      'h1 { color: #1f4e79; }\n' +
+      'button {\n' +
+      '  padding: 8px 16px;\n' +
+      '  background: #1f4e79;\n' +
+      '  color: white;\n' +
+      '  border: none;\n' +
+      '  border-radius: 4px;\n' +
+      '  cursor: pointer;\n' +
+      '}\n' +
+      'button:hover { background: #163758; }',
+    js:
+      'const knapp = document.getElementById("knapp");\n' +
+      'const utdata = document.getElementById("utdata");\n' +
+      'let antall = 0;\n' +
+      'knapp.addEventListener("click", () => {\n' +
+      '  antall++;\n' +
+      '  utdata.textContent = "Klikket " + antall + " ganger";\n' +
+      '});'
+  };
+
+  const STORAGE_KEY = 'lekeplass.v1';
+
+  const html = document.getElementById('pg-html');
+  const css  = document.getElementById('pg-css');
+  const js   = document.getElementById('pg-js');
+  const preview = document.getElementById('pg-preview');
+  const runBtn = document.getElementById('pg-run');
+  const autoBox = document.getElementById('pg-auto');
+  const resetBtn = document.getElementById('pg-reset');
+  const clearBtn = document.getElementById('pg-clear');
+  const status = document.getElementById('pg-status');
+
+  function load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (saved && typeof saved === 'object') {
+        html.value = saved.html != null ? saved.html : STARTER.html;
+        css.value  = saved.css  != null ? saved.css  : STARTER.css;
+        js.value   = saved.js   != null ? saved.js   : STARTER.js;
+        return;
+      }
+    } catch (e) { /* ignore */ }
+    html.value = STARTER.html;
+    css.value  = STARTER.css;
+    js.value   = STARTER.js;
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        html: html.value, css: css.value, js: js.value
+      }));
+    } catch (e) { /* full / disabled */ }
+  }
+
+  function buildSrcdoc(h, c, j) {
+    const errStyle =
+      'color:#a23b2a;font:13px monospace;background:#f0d9d3;' +
+      'padding:8px;border-radius:4px;margin-top:8px;white-space:pre-wrap;';
+    return (
+      '<!doctype html>\n' +
+      '<html><head><meta charset="utf-8"><style>\n' +
+      c + '\n' +
+      '</style></head><body>\n' +
+      h + '\n' +
+      '<script>\n' +
+      'window.addEventListener("error", function (e) {\n' +
+      '  var p = document.createElement("pre");\n' +
+      '  p.style.cssText = ' + JSON.stringify(errStyle) + ';\n' +
+      '  p.textContent = (e.message || e.error || "Error");\n' +
+      '  document.body.appendChild(p);\n' +
+      '});\n' +
+      'try {\n' +
+      j + '\n' +
+      '} catch (e) {\n' +
+      '  var p = document.createElement("pre");\n' +
+      '  p.style.cssText = ' + JSON.stringify(errStyle) + ';\n' +
+      '  p.textContent = (e && e.message) ? e.message : String(e);\n' +
+      '  document.body.appendChild(p);\n' +
+      '}\n' +
+      '<\/script>\n' +
+      '</body></html>'
+    );
+  }
+
+  function run() {
+    preview.srcdoc = buildSrcdoc(html.value, css.value, js.value);
+    const t = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    status.textContent = 'Kjørt ' + pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
+  }
+
+  let debounce = null;
+  function scheduleAuto() {
+    if (!autoBox.checked) return;
+    if (debounce) clearTimeout(debounce);
+    debounce = setTimeout(run, 400);
+  }
+
+  function attachTab(area) {
+    area.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Tab' || ev.shiftKey) return;
+      ev.preventDefault();
+      const start = area.selectionStart;
+      const end = area.selectionEnd;
+      area.value = area.value.slice(0, start) + '  ' + area.value.slice(end);
+      area.selectionStart = area.selectionEnd = start + 2;
+      onInput();
+    });
+  }
+
+  function onInput() {
+    save();
+    scheduleAuto();
+  }
+
+  [html, css, js].forEach((area) => {
+    attachTab(area);
+    area.addEventListener('input', onInput);
+  });
+
+  runBtn.addEventListener('click', run);
+
+  resetBtn.addEventListener('click', () => {
+    if (!confirm('Tilbakestille til eksempel-koden? Det du har skrevet forsvinner.')) return;
+    html.value = STARTER.html;
+    css.value  = STARTER.css;
+    js.value   = STARTER.js;
+    save();
+    run();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    if (!confirm('Tømme alle tre felt?')) return;
+    html.value = '';
+    css.value  = '';
+    js.value   = '';
+    save();
+    run();
+  });
+
+  load();
+  run();
+})();
+</script>
+
+<script src="../nav-search.js"></script>
+<script src="../chat-widget.js"></script>
+</body>
+</html>
