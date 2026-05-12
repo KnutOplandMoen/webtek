@@ -6,148 +6,259 @@
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>Lekeplass — HTML / CSS / JS</title>
 <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css">
 <style>
-  .pg-wrap {
+  /* Skjul standard hero på denne siden — lekeplassen vil ha mest plass */
+  main { padding: 0; }
+  .pg-section { padding: 1em 0 1.5em; border-bottom: none; }
+
+  .pg-shell {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
-    gap: 12px;
-    height: calc(100vh - 240px);
-    min-height: 520px;
-    margin: 1.2em 0 2em;
-  }
-  .pg-toolbar {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    padding: 10px 14px;
-    background: var(--paper-dark);
+    grid-template-columns: 180px 1fr 1fr;
+    height: calc(100vh - 130px);
+    min-height: 540px;
     border: 1px solid var(--line-soft);
     border-radius: 6px;
+    overflow: hidden;
+    background: var(--paper);
   }
-  .pg-toolbar button,
-  .pg-toolbar label {
+
+  /* ---------- File list (sidebar) ---------- */
+  .pg-files {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-darker);
+    border-right: 1px solid var(--line-soft);
+  }
+  .pg-files header {
+    padding: 10px 14px;
     font-family: var(--mono);
-    font-size: 0.82rem;
-    letter-spacing: 0.04em;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faded);
+    border-bottom: 1px solid var(--line-soft);
   }
-  .pg-toolbar button {
+  .pg-file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    background: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  .pg-file:hover { background: var(--paper-dark); }
+  .pg-file.is-active {
+    background: var(--paper);
+    border-left-color: var(--rust);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .pg-file .pg-file-ico {
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 1px 0;
+    border-radius: 2px;
+    color: white;
+  }
+  .pg-file[data-file="html"] .pg-file-ico { background: #d35400; }
+  .pg-file[data-file="css"]  .pg-file-ico { background: #1f4e79; }
+  .pg-file[data-file="js"]   .pg-file-ico { background: #b8881a; }
+
+  .pg-files .pg-tools {
+    margin-top: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .pg-tools button {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .pg-tools .pg-btn-run {
     background: var(--rust);
     color: var(--paper);
     border: none;
-    border-radius: 4px;
-    padding: 6px 14px;
-    cursor: pointer;
     text-transform: uppercase;
   }
-  .pg-toolbar button:hover { background: var(--rust-dark); }
-  .pg-toolbar button.ghost {
+  .pg-tools .pg-btn-run:hover { background: var(--rust-dark); }
+  .pg-tools .pg-btn-ghost {
     background: transparent;
     color: var(--ink-soft);
     border: 1px solid var(--line-soft);
   }
-  .pg-toolbar button.ghost:hover {
-    border-color: var(--rust);
-    color: var(--rust);
-  }
-  .pg-toolbar label {
-    display: inline-flex;
+  .pg-tools .pg-btn-ghost:hover { border-color: var(--rust); color: var(--rust); }
+  .pg-tools label {
+    display: flex;
     align-items: center;
     gap: 6px;
-    color: var(--ink-soft);
-    cursor: pointer;
-  }
-  .pg-toolbar .pg-status {
-    margin-left: auto;
     font-family: var(--mono);
     font-size: 0.74rem;
-    color: var(--ink-faded);
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 2px 0;
   }
 
-  .pg-pane {
+  /* ---------- Editor pane ---------- */
+  .pg-editor {
     display: flex;
     flex-direction: column;
-    background: var(--paper-dark);
-    border: 1px solid var(--line-soft);
-    border-radius: 6px;
-    overflow: hidden;
+    background: var(--paper);
+    border-right: 1px solid var(--line-soft);
+    min-width: 0;
+  }
+  .pg-tab-bar {
+    display: flex;
+    background: var(--paper-darker);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 0 8px;
+    height: 34px;
+    align-items: stretch;
+  }
+  .pg-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 14px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-faded);
+    border-right: 1px solid var(--line-soft);
+    background: transparent;
+    border-top: 2px solid transparent;
+    border-bottom: none;
+    cursor: pointer;
+  }
+  .pg-tab.is-active {
+    background: var(--paper);
+    color: var(--ink);
+    border-top-color: var(--rust);
+  }
+  .pg-tab .pg-tab-ico {
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.65rem;
+    padding: 1px 0;
+    border-radius: 2px;
+    color: white;
+  }
+  .pg-tab[data-file="html"] .pg-tab-ico { background: #d35400; }
+  .pg-tab[data-file="css"]  .pg-tab-ico { background: #1f4e79; }
+  .pg-tab[data-file="js"]   .pg-tab-ico { background: #b8881a; }
+
+  .pg-editor-stage {
+    flex: 1;
+    position: relative;
     min-height: 0;
   }
-  .pg-pane > header {
+  .pg-editor-stage .CodeMirror {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.55;
+    background: var(--paper);
+    color: var(--ink);
+    display: none;
+  }
+  .pg-editor-stage .CodeMirror.is-active { display: block; }
+  .pg-editor-stage .CodeMirror-gutters {
+    background: var(--paper-dark);
+    border-right: 1px solid var(--line-soft);
+  }
+  .pg-editor-stage .CodeMirror-linenumber { color: var(--ink-ghost); }
+  .pg-editor-stage .CodeMirror-cursor { border-left-color: var(--rust); }
+  .pg-editor-stage .CodeMirror-selected { background: rgba(31, 78, 121, 0.18) !important; }
+
+  /* ---------- Preview pane ---------- */
+  .pg-preview {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    min-width: 0;
+  }
+  .pg-preview header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 12px;
+    padding: 0 12px;
+    height: 34px;
     background: var(--paper-darker);
     border-bottom: 1px solid var(--line-soft);
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--ink-faded);
   }
-  .pg-pane > header .pg-tag {
-    color: var(--rust);
-    font-weight: 600;
+  .pg-preview header .pg-status {
+    color: var(--ink-ghost);
+    text-transform: none;
+    letter-spacing: 0;
   }
-  .pg-pane textarea {
-    flex: 1;
-    border: none;
-    outline: none;
-    resize: none;
-    padding: 12px;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 0.86rem;
-    line-height: 1.5;
-    tab-size: 2;
-    white-space: pre;
-    overflow-wrap: normal;
-    overflow-x: auto;
-  }
-
-  /* Pane placement */
-  .pg-pane--html { grid-column: 1; grid-row: 2; }
-  .pg-pane--css  { grid-column: 1; grid-row: 3; }
-  .pg-pane--js   { grid-column: 2; grid-row: 2; }
-  .pg-pane--prev { grid-column: 2; grid-row: 3; }
-
-  .pg-pane--prev iframe {
+  .pg-preview iframe {
     flex: 1;
     width: 100%;
     border: none;
     background: white;
   }
 
-  @media (max-width: 900px) {
-    .pg-wrap {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto repeat(4, 280px);
-      height: auto;
-    }
-    .pg-pane--html { grid-column: 1; grid-row: 2; }
-    .pg-pane--css  { grid-column: 1; grid-row: 3; }
-    .pg-pane--js   { grid-column: 1; grid-row: 4; }
-    .pg-pane--prev { grid-column: 1; grid-row: 5; }
+  /* ---------- Loading state ---------- */
+  .pg-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-faded);
+    background: var(--paper);
   }
 
-  .pg-hint {
-    font-family: var(--mono);
-    font-size: 0.76rem;
-    color: var(--ink-faded);
-    margin-top: 0.6em;
-  }
-  .pg-hint kbd {
-    background: var(--paper-dark);
-    border: 1px solid var(--line-soft);
-    border-bottom-width: 2px;
-    border-radius: 3px;
-    padding: 1px 6px;
-    font-family: var(--mono);
-    font-size: 0.72rem;
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .pg-shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 360px 360px;
+      height: auto;
+    }
+    .pg-files {
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-right: none;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .pg-files header { width: 100%; }
+    .pg-file { flex: 1; border-left: none; border-bottom: 3px solid transparent; }
+    .pg-file.is-active { border-left: none; border-bottom-color: var(--rust); }
+    .pg-files .pg-tools {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      border-top: 1px solid var(--line-soft);
+    }
+    .pg-tools button { flex: 1; }
+    .pg-editor { border-right: none; border-bottom: 1px solid var(--line-soft); }
   }
 </style>
 </head>
@@ -168,67 +279,69 @@
 </nav>
 
 <main data-chapter="Lekeplass — HTML/CSS/JS">
-  <header class="hero">
+  <section class="pg-section">
     <div class="container">
-      <div class="eyebrow">Skriv kode · Kjør live · Eksperimenter</div>
-      <h1>Leke<em>plassen</em></h1>
-      <p class="lede">
-        Skriv HTML, CSS og JavaScript i hvert sitt felt og kjør koden live i en
-        sandboxet preview. Bra for å teste CSS-selektorer, DOM-events eller
-        en rask <code>console.log</code>-snutt mens du leser pensum.
-      </p>
-    </div>
-  </header>
+      <div class="pg-shell">
+        <!-- File list -->
+        <aside class="pg-files">
+          <header>Filer</header>
+          <button type="button" class="pg-file is-active" data-file="html">
+            <span class="pg-file-ico">H</span> index.html
+          </button>
+          <button type="button" class="pg-file" data-file="css">
+            <span class="pg-file-ico">C</span> style.css
+          </button>
+          <button type="button" class="pg-file" data-file="js">
+            <span class="pg-file-ico">J</span> script.js
+          </button>
 
-  <section style="border-bottom:none;padding-top:1em;">
-    <div class="container">
-      <div class="pg-wrap">
-        <div class="pg-toolbar">
-          <button type="button" id="pg-run">Kjør &#9654;</button>
-          <label><input type="checkbox" id="pg-auto" checked> Auto-kjør</label>
-          <button type="button" class="ghost" id="pg-reset">Tilbakestill</button>
-          <button type="button" class="ghost" id="pg-clear">Tøm alt</button>
-          <span class="pg-status" id="pg-status">Klar</span>
+          <div class="pg-tools">
+            <button type="button" class="pg-btn-run" id="pg-run">Kjør &#9654;</button>
+            <label><input type="checkbox" id="pg-auto" checked> Auto-kjør</label>
+            <button type="button" class="pg-btn-ghost" id="pg-reset">Tilbakestill</button>
+            <button type="button" class="pg-btn-ghost" id="pg-clear">Tøm alt</button>
+          </div>
+        </aside>
+
+        <!-- Editor -->
+        <div class="pg-editor">
+          <div class="pg-tab-bar">
+            <button type="button" class="pg-tab is-active" data-file="html">
+              <span class="pg-tab-ico">H</span> index.html
+            </button>
+            <button type="button" class="pg-tab" data-file="css">
+              <span class="pg-tab-ico">C</span> style.css
+            </button>
+            <button type="button" class="pg-tab" data-file="js">
+              <span class="pg-tab-ico">J</span> script.js
+            </button>
+          </div>
+          <div class="pg-editor-stage" id="pg-stage">
+            <textarea id="pg-ta-html" spellcheck="false"></textarea>
+            <textarea id="pg-ta-css" spellcheck="false"></textarea>
+            <textarea id="pg-ta-js" spellcheck="false"></textarea>
+            <div class="pg-loading" id="pg-loading">Laster editor…</div>
+          </div>
         </div>
 
-        <div class="pg-pane pg-pane--html">
-          <header><span><span class="pg-tag">HTML</span> &mdash; struktur</span></header>
-          <textarea id="pg-html" spellcheck="false" autocomplete="off"></textarea>
-        </div>
-
-        <div class="pg-pane pg-pane--css">
-          <header><span><span class="pg-tag">CSS</span> &mdash; styling</span></header>
-          <textarea id="pg-css" spellcheck="false" autocomplete="off"></textarea>
-        </div>
-
-        <div class="pg-pane pg-pane--js">
-          <header><span><span class="pg-tag">JS</span> &mdash; oppførsel</span></header>
-          <textarea id="pg-js" spellcheck="false" autocomplete="off"></textarea>
-        </div>
-
-        <div class="pg-pane pg-pane--prev">
-          <header><span><span class="pg-tag">Preview</span> &mdash; sandboxet iframe</span></header>
+        <!-- Preview -->
+        <div class="pg-preview">
+          <header>
+            <span>Preview &mdash; sandbox</span>
+            <span class="pg-status" id="pg-status">&nbsp;</span>
+          </header>
           <iframe id="pg-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
         </div>
       </div>
-
-      <p class="pg-hint">
-        <kbd>Tab</kbd> setter inn to mellomrom. JavaScript-feil vises nederst i
-        preview. Sandboxen er isolert (<code>allow-scripts</code>) &mdash; den
-        kan ikke nå denne siden eller lagre noe.
-        Endringer huskes i nettleserens <code>localStorage</code>.
-      </p>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="container">
-    <div class="ornament">&#10043; &#10043; &#10043;</div>
-    <p>NTNU · IT2805 Webteknologi · Lekeplass</p>
-  </div>
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -238,7 +351,7 @@
       '<h1>Hei, verden!</h1>\n' +
       '<p>Endre koden &mdash; preview oppdaterer seg automatisk.</p>\n' +
       '<button id="knapp">Klikk meg</button>\n' +
-      '<p id="utdata"></p>',
+      '<p id="utdata"></p>\n',
     css:
       'body {\n' +
       '  font-family: Georgia, serif;\n' +
@@ -255,7 +368,7 @@
       '  border-radius: 4px;\n' +
       '  cursor: pointer;\n' +
       '}\n' +
-      'button:hover { background: #163758; }',
+      'button:hover { background: #163758; }\n',
     js:
       'const knapp = document.getElementById("knapp");\n' +
       'const utdata = document.getElementById("utdata");\n' +
@@ -263,14 +376,21 @@
       'knapp.addEventListener("click", () => {\n' +
       '  antall++;\n' +
       '  utdata.textContent = "Klikket " + antall + " ganger";\n' +
-      '});'
+      '});\n'
   };
 
-  const STORAGE_KEY = 'lekeplass.v1';
+  const STORAGE_KEY = 'lekeplass.v2';
+  const ACTIVE_KEY = 'lekeplass.v2.active';
 
-  const html = document.getElementById('pg-html');
-  const css  = document.getElementById('pg-css');
-  const js   = document.getElementById('pg-js');
+  const FILES = ['html', 'css', 'js'];
+  const MODES = {
+    html: 'htmlmixed',
+    css:  'css',
+    js:   'javascript'
+  };
+
+  const stage = document.getElementById('pg-stage');
+  const loading = document.getElementById('pg-loading');
   const preview = document.getElementById('pg-preview');
   const runBtn = document.getElementById('pg-run');
   const autoBox = document.getElementById('pg-auto');
@@ -278,27 +398,27 @@
   const clearBtn = document.getElementById('pg-clear');
   const status = document.getElementById('pg-status');
 
-  function load() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (saved && typeof saved === 'object') {
-        html.value = saved.html != null ? saved.html : STARTER.html;
-        css.value  = saved.css  != null ? saved.css  : STARTER.css;
-        js.value   = saved.js   != null ? saved.js   : STARTER.js;
-        return;
-      }
-    } catch (e) { /* ignore */ }
-    html.value = STARTER.html;
-    css.value  = STARTER.css;
-    js.value   = STARTER.js;
+  const editors = {};
+  let activeFile = 'html';
+
+  function loadSaved() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); }
+    catch (e) { saved = null; }
+    const out = {};
+    FILES.forEach((f) => {
+      out[f] = (saved && saved[f] != null) ? saved[f] : STARTER[f];
+    });
+    try { activeFile = localStorage.getItem(ACTIVE_KEY) || 'html'; } catch (e) {}
+    if (!FILES.includes(activeFile)) activeFile = 'html';
+    return out;
   }
 
   function save() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        html: html.value, css: css.value, js: js.value
-      }));
-    } catch (e) { /* full / disabled */ }
+    const data = {};
+    FILES.forEach((f) => { data[f] = editors[f].getValue(); });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
+    try { localStorage.setItem(ACTIVE_KEY, activeFile); } catch (e) {}
   }
 
   function buildSrcdoc(h, c, j) {
@@ -332,7 +452,10 @@
   }
 
   function run() {
-    preview.srcdoc = buildSrcdoc(html.value, css.value, js.value);
+    const h = editors.html.getValue();
+    const c = editors.css.getValue();
+    const j = editors.js.getValue();
+    preview.srcdoc = buildSrcdoc(h, c, j);
     const t = new Date();
     const pad = (n) => String(n).padStart(2, '0');
     status.textContent = 'Kjørt ' + pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
@@ -345,50 +468,86 @@
     debounce = setTimeout(run, 400);
   }
 
-  function attachTab(area) {
-    area.addEventListener('keydown', (ev) => {
-      if (ev.key !== 'Tab' || ev.shiftKey) return;
-      ev.preventDefault();
-      const start = area.selectionStart;
-      const end = area.selectionEnd;
-      area.value = area.value.slice(0, start) + '  ' + area.value.slice(end);
-      area.selectionStart = area.selectionEnd = start + 2;
-      onInput();
+  function setActive(file) {
+    if (!FILES.includes(file)) return;
+    activeFile = file;
+    FILES.forEach((f) => {
+      editors[f].getWrapperElement().classList.toggle('is-active', f === file);
     });
+    document.querySelectorAll('.pg-file').forEach((b) => {
+      b.classList.toggle('is-active', b.getAttribute('data-file') === file);
+    });
+    document.querySelectorAll('.pg-tab').forEach((b) => {
+      b.classList.toggle('is-active', b.getAttribute('data-file') === file);
+    });
+    editors[file].refresh();
+    editors[file].focus();
+    save();
   }
 
-  function onInput() {
-    save();
-    scheduleAuto();
+  function init() {
+    if (typeof CodeMirror === 'undefined') {
+      loading.textContent = 'Kunne ikke laste editor (CodeMirror). Sjekk nett.';
+      return;
+    }
+
+    const initial = loadSaved();
+
+    FILES.forEach((f) => {
+      const ta = document.getElementById('pg-ta-' + f);
+      ta.value = initial[f];
+      const cm = CodeMirror.fromTextArea(ta, {
+        mode: MODES[f],
+        lineNumbers: true,
+        lineWrapping: false,
+        indentUnit: 2,
+        tabSize: 2,
+        indentWithTabs: false,
+        autoCloseBrackets: false,
+        viewportMargin: Infinity,
+        extraKeys: {
+          'Tab': (cm) => cm.replaceSelection('  '),
+          'Ctrl-Enter': run,
+          'Cmd-Enter': run,
+          'Ctrl-S': (cm) => { save(); run(); },
+          'Cmd-S': (cm) => { save(); run(); }
+        }
+      });
+      cm.on('change', () => { save(); scheduleAuto(); });
+      editors[f] = cm;
+    });
+
+    loading.remove();
+
+    document.querySelectorAll('.pg-file, .pg-tab').forEach((btn) => {
+      btn.addEventListener('click', () => setActive(btn.getAttribute('data-file')));
+    });
+
+    runBtn.addEventListener('click', run);
+
+    resetBtn.addEventListener('click', () => {
+      if (!confirm('Tilbakestille til eksempel-koden? Det du har skrevet forsvinner.')) return;
+      FILES.forEach((f) => editors[f].setValue(STARTER[f]));
+      save();
+      run();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      if (!confirm('Tømme alle tre filer?')) return;
+      FILES.forEach((f) => editors[f].setValue(''));
+      save();
+      run();
+    });
+
+    setActive(activeFile);
+    run();
   }
 
-  [html, css, js].forEach((area) => {
-    attachTab(area);
-    area.addEventListener('input', onInput);
-  });
-
-  runBtn.addEventListener('click', run);
-
-  resetBtn.addEventListener('click', () => {
-    if (!confirm('Tilbakestille til eksempel-koden? Det du har skrevet forsvinner.')) return;
-    html.value = STARTER.html;
-    css.value  = STARTER.css;
-    js.value   = STARTER.js;
-    save();
-    run();
-  });
-
-  clearBtn.addEventListener('click', () => {
-    if (!confirm('Tømme alle tre felt?')) return;
-    html.value = '';
-    css.value  = '';
-    js.value   = '';
-    save();
-    run();
-  });
-
-  load();
-  run();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 
