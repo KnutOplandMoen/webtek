@@ -1,0 +1,990 @@
+<!doctype html>
+<!--
+  Eldre eksamen: ex5 — IT2805 Webteknologi
+  Konvertert til interaktiv form 2026-05-12 fra tidligere_eksamener/ex5.md.
+
+  ENDRINGER FRA ORIGINAL (markert i HTML med "ENDRING", "FJERNET" eller "EKSTRA"):
+  - A5 (SVG defined in XML format) er FJERNET — Kap 11 (XML) er ute av pensum.
+  - A10 (XML root element) er FJERNET — Kap 11 (XML) er ute av pensum.
+  - A11 (HTML5 multimedia) er FJERNET — er identisk med A3 i originalen (duplikat).
+  - C5 (canvas-tegning) er FJERNET — Kap 12 (Canvas) er ute av pensum.
+  - EKSTRA Spørsmål 19 er lagt til (16 poeng) for å erstatte de fjernede
+    poengene — en kombinert responsivt-design-/JS-oppgave (Kap 5+6+10).
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>Eldre eksamen: ex5 — IT2805</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+
+<header class="exam-head">
+  <h1>Eldre eksamen: ex5 — IT2805</h1>
+  <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
+  <p class="exam-meta">
+    Kilde: <a href="../../tidligere_eksamener/ex5.md">tidligere_eksamener/ex5.md</a>.
+    Original A5 (SVG/XML), A10 (XML), A11 (duplikat) og C5 (canvas) er
+    <strong>fjernet</strong> fordi XML og Canvas er ute av pensum. En ny
+    16-poengs <strong>EKSTRA</strong>-oppgave er lagt til som dekker
+    responsivt design + DOM — mer relevant for nåværende pensum.
+  </p>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION A — FLERVALG (9 oppgaver, 24 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section A — Flervalg (~24 %)</h2>
+  <p class="part-intro">Klikk på alternativet du tror er korrekt. Tre opprinnelige MCer er fjernet (XML/duplikat) — derfor har denne seksjonen 24 poeng, ikke 30. De fjernede poengene flyttes til EKSTRA-oppgave 19.</p>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 1 (Original A1)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — !important</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">I CSS kan du overstyre kaskade-regler ved å legge til ____-property i en style-deklarasjon.</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> !override</li>
+        <li><span class="opt-label">B</span> !main</li>
+        <li><span class="opt-label">C</span> !important</li>
+        <li><span class="opt-label">D</span> !priority</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p><code>!important</code> markerer en CSS-deklarasjon som "vinner uansett specificity og kilderekkefølge" (med unntak av en annen <code>!important</code> med høyere specificity).</p>
+          <p><strong>Bruk sparsomt:</strong> <code>!important</code> blir et anti-mønster når man bruker det for å "unngå å forstå specificity". Vurder først å bruke en mer spesifikk selektor.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> <code>!override</code>, <code>!main</code> og <code>!priority</code> er oppdiktede — finnes ikke i CSS-spec.</p>
+          <p class="ref">Pensum: <a href="../../kap3/kaskade-arv/">Kap. 3 — Kaskade og arv</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 2 (Original A2)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — position-default</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er default-verdien til <code>position</code>-property?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> relative</li>
+        <li><span class="opt-label">B</span> absolute</li>
+        <li><span class="opt-label">C</span> fixed</li>
+        <li><span class="opt-label">D</span> static</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p><code>position: static</code> er default — elementet plasseres i den vanlige dokumentflyten, og <code>top/left/right/bottom</code> har ingen effekt.</p>
+          <p><strong>De andre:</strong> <code>relative</code> beholder elementet i flyten men kan forskyves. <code>absolute</code> tar ut av flyten og posisjonerer relativt til nærmeste posisjonerte forelder. <code>fixed</code> posisjonerer relativt til viewport (følger med ved scroll).</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — CSS posisjonering</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 3 (Original A3)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 7 — HTML5 multimedia</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er én fordel HTML5 APIer tilbyr for moderne web-design?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> De lar brukere se Flash-innhold på mobile enheter.</li>
+        <li><span class="opt-label">B</span> De lar utviklere lage apper uten kodeferdigheter.</li>
+        <li><span class="opt-label">C</span> De lar eldre nettlesere vise multimedia-innhold.</li>
+        <li><span class="opt-label">D</span> De lar brukere se multimedia uten plug-ins.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p>HTML5 introduserte native multimedia-tags som <code>&lt;video&gt;</code> og <code>&lt;audio&gt;</code> — multimedia kan dermed spilles av direkte i nettleseren uten plug-ins (som tidligere Flash, QuickTime, RealPlayer).</p>
+          <p><strong>Konsekvens:</strong> Mer pålitelig avspilling, færre sikkerhetshull (plug-ins var en kjent angrepsvektor), og bedre integrasjon med JS via standard <em>HTMLMediaElement</em>-API.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er motsatt — Flash er <em>uavhengig</em> av HTML5, og er deprekert. B er overdrevent — HTML5 forenkler, men erstatter ikke koding. C: HTML5 hjelper ikke eldre nettlesere som ikke støtter det.</p>
+          <p class="ref">Pensum: <a href="../../kap7/">Kap. 7 — Multimedia</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 4 (Original A4)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Math.floor</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er resultatet av denne koden?</p>
+      <pre><code>var y = Math.floor(3.8);</code></pre>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> 3.8</li>
+        <li><span class="opt-label">B</span> 4</li>
+        <li><span class="opt-label">C</span> 3.5</li>
+        <li><span class="opt-label">D</span> 3</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p><code>Math.floor(x)</code> avrunder <strong>nedover</strong> til nærmeste heltall. <code>Math.floor(3.8) = 3</code>, ikke 4.</p>
+          <p><strong>Tre relaterte funksjoner:</strong></p>
+          <ul>
+            <li><code>Math.floor(3.8)</code> = 3 (alltid nedover)</li>
+            <li><code>Math.ceil(3.8)</code> = 4 (alltid oppover)</li>
+            <li><code>Math.round(3.8)</code> = 4 (nærmeste — 0.5 runder oppover)</li>
+          </ul>
+          <p><strong>Fellen med negative tall:</strong> <code>Math.floor(-3.8) = -4</code> (nedover på tallinjen, ikke "mot null").</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Math</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <!-- FJERNET: Original A5 (SVG defined in XML format) — Kap 11 XML er ute av pensum -->
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 5 (Original A6)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Type-coercion (prompt)</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva gjør koden under hvis brukeren skriver "18"?</p>
+      <pre><code>var age = prompt("Enter your age ");
+var next = age + 1;
+alert("On your next birthday, you'll be " + next);</code></pre>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Det gir en feil.</li>
+        <li><span class="opt-label">B</span> Den viser "18".</li>
+        <li><span class="opt-label">C</span> Den viser "19".</li>
+        <li><span class="opt-label">D</span> Den viser "181".</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p><code>prompt()</code> returnerer alltid <em>string</em>. Når <code>+</code> har en string-operand, konkateneres strengene: <code>"18" + 1</code> blir <code>"181"</code>, ikke 19.</p>
+          <p><strong>Fix:</strong> Konverter input til tall først: <code>var age = parseInt(prompt("..."), 10)</code>. Da blir <code>age + 1 = 19</code>.</p>
+          <p><strong>Klassisk feil:</strong> Anta at JS er "smart nok" til å gjette at brukeren mente tall. Det er JS ikke — eksplisitt konvertering er alltid tryggere.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Type-coercion</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 6 (Original A7)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — Descendant-selector</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvordan velger du <em>alle</em> <code>&lt;p&gt;</code>-elementer som er <em>inni</em> et <code>&lt;div&gt;</code>-element?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>div.p</code></li>
+        <li><span class="opt-label">B</span> <code>div p</code></li>
+        <li><span class="opt-label">C</span> <code>div + p</code></li>
+        <li><span class="opt-label">D</span> <code>div * p</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>div p</code> (med mellomrom) er <em>descendant-combinatoren</em> — matcher alle <code>&lt;p&gt;</code> som er en etterkommer av en <code>&lt;div&gt;</code>, uansett nivå.</p>
+          <p><strong>Hvorfor de andre er feil:</strong></p>
+          <ul>
+            <li><code>div.p</code> — matcher en <code>&lt;div&gt;</code> som <em>også</em> har <code>class="p"</code>.</li>
+            <li><code>div + p</code> — matcher en <code>&lt;p&gt;</code> som er <em>umiddelbart neste søsken</em> av en <code>&lt;div&gt;</code> (ikke inni).</li>
+            <li><code>div * p</code> — matcher en <code>&lt;p&gt;</code> som er etterkommer av <em>noe annet</em> som er etterkommer av en <code>&lt;div&gt;</code> (sjelden brukt).</li>
+          </ul>
+          <p><strong>Beslektet:</strong> <code>div &gt; p</code> matcher <em>kun</em> direkte barn (child-combinator).</p>
+          <p class="ref">Pensum: <a href="../../kap3/selektorer/">Kap. 3 — Selektorer</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 7 (Original A8)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — border-width-shorthand</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvordan får du følgende borders?<br>Top = 10 px, Bottom = 5 px, Left = 20 px, Right = 1 px.</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>border-width: 10px 1px 5px 20px;</code></li>
+        <li><span class="opt-label">B</span> <code>border-width: 5px 20px 10px 1px;</code></li>
+        <li><span class="opt-label">C</span> <code>border-width: 10px 5px 20px 1px;</code></li>
+        <li><span class="opt-label">D</span> <code>border-width: 10px 20px 5px 1px;</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: A</span>
+          <p>Med fire verdier følger rekkefølgen <strong>TRBL</strong> (Top–Right–Bottom–Left, "klokken fra 12"): <code>top right bottom left</code>.</p>
+          <p>Med kravene Top=10, Right=1, Bottom=5, Left=20 blir det <code>10px 1px 5px 20px</code> — alternativ <strong>A</strong>.</p>
+          <p><strong>Husk:</strong> Med tre verdier: top, horisontal, bottom. Med to verdier: vertikal, horisontal. Med én verdi: alle fire sider.</p>
+          <p class="ref">Pensum: <a href="../../kap3/boks-modellen/">Kap. 3 — Boks-modellen</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 8 (Original A9)</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — Box-model-rekkefølge</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">En boks (block) har <em>fra utsiden og inn</em>:</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> border, margins, padding</li>
+        <li><span class="opt-label">B</span> margins, padding, border</li>
+        <li><span class="opt-label">C</span> padding, margins, border</li>
+        <li><span class="opt-label">D</span> margins, border, padding</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: D</span>
+          <p>Box-model fra utsiden og inn: <strong>margin → border → padding → content</strong>.</p>
+          <p><strong>Hvert nivå:</strong></p>
+          <ul>
+            <li><strong>margin:</strong> mellomrom mellom dette elementet og naboene.</li>
+            <li><strong>border:</strong> selve kantlinjen — kan ha tykkelse, farge, stil.</li>
+            <li><strong>padding:</strong> mellomrom mellom borderen og det indre innholdet.</li>
+            <li><strong>content:</strong> selve innholdet (tekst, bilder, andre elementer).</li>
+          </ul>
+          <p><strong>Total bredde</strong> = content-width + 2×padding + 2×border-width + 2×margin (standard box-sizing). <code>box-sizing: border-box</code> inkluderer padding og border i bredden — moderne default i mange resets.</p>
+          <p class="ref">Pensum: <a href="../../kap3/boks-modellen/">Kap. 3 — Boks-modellen</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <!-- FJERNET: Original A10 (XML root element) — Kap 11 XML er ute av pensum -->
+  <!-- FJERNET: Original A11 (HTML5 multimedia duplikat av A3) — duplikat -->
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 9 (Original A12)</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — TCP/IP-matching</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilket alternativ matcher TCP/IP-lagene riktig med deres typiske protokoll?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Application = IP; Transport = WiFi; Network = TCP; Physical = HTTP.</li>
+        <li><span class="opt-label">B</span> Application = HTTP; Transport = TCP; Network = IP; Physical = WiFi.</li>
+        <li><span class="opt-label">C</span> Application = TCP; Transport = HTTP; Network = WiFi; Physical = IP.</li>
+        <li><span class="opt-label">D</span> Application = WiFi; Transport = IP; Network = HTTP; Physical = TCP.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Den korrekte mappingen, fra topp til bunn:</p>
+          <ul>
+            <li><strong>Application:</strong> HTTP (web), SMTP (mail), FTP (file), DNS (navneoppslag).</li>
+            <li><strong>Transport:</strong> TCP (pålitelig, ordnet strøm), UDP (rask).</li>
+            <li><strong>Network:</strong> IP (Internet Protocol — ruting via IP-adresser), ICMP.</li>
+            <li><strong>Physical/Link:</strong> WiFi (IEEE 802.11), Ethernet.</li>
+          </ul>
+          <p><strong>Mnemonic:</strong> "Alle Trenger Nye Pakker" → Application–Transport–Network–Physical, topp til bunn.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION B — KORTSVAR + OUTPUT (5 oppgaver, 30 poeng)          -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section B — Kortsvar og output (~30 %)</h2>
+  <p class="part-intro">Originalens B blander prosa, output-resonnement og trace-oppgaver. Vi har plassert dem i riktig oppgavetype.</p>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 10 (B1)</span>
+      <span class="exam-q__points">6 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — Relative URLs</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">
+        Du lager et nettsted med følgende mappestruktur (eksempel):
+      </p>
+      <pre><code>website/
+├─ index.html
+├─ shows/
+│   ├─ plot.html
+│   └─ mythology.html
+└─ characters/
+    ├─ buffy.html
+    └─ gunn.html</code></pre>
+      <p>Gi den relative URL-en for hver av disse lenkene (1,5 poeng hver):</p>
+      <ol>
+        <li>Fra <code>plot.html</code> til <code>mythology.html</code>.</li>
+        <li>Fra <code>plot.html</code> til <code>buffy.html</code>.</li>
+        <li>Fra <code>buffy.html</code> til <code>plot.html</code>.</li>
+        <li>Fra <code>buffy.html</code> til <code>gunn.html</code>.</li>
+      </ol>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (6 poeng — 1,5 hver):</strong></p>
+          <ul>
+            <li><strong>plot.html → mythology.html:</strong> Begge i <code>shows/</code>. Relativ: <code>mythology.html</code> (eller <code>./mythology.html</code>).</li>
+            <li><strong>plot.html → buffy.html:</strong> Plot er i <code>shows/</code>, buffy er i <code>characters/</code>. Relativ: <code>../characters/buffy.html</code>.</li>
+            <li><strong>buffy.html → plot.html:</strong> Speilvendt forrige. Relativ: <code>../shows/plot.html</code>.</li>
+            <li><strong>buffy.html → gunn.html:</strong> Begge i <code>characters/</code>. Relativ: <code>gunn.html</code> (eller <code>./gunn.html</code>).</li>
+          </ul>
+          <p><strong>Mekanikk:</strong> <code>./</code> = samme mappe, <code>../</code> = ett nivå opp. Stables: <code>../../</code> = to nivåer opp. Starter med <code>/</code> = fra siden-rot.</p>
+          <p class="ref">Pensum: <a href="../../kap2/links.html">Kap. 2 — Lenker og URLs</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 riktige</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 11 (B2)</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Sparse array</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva blir utskriften til siden når denne koden lastes?</p>
+      <pre><code>book = new Array(1, 2, 3, 4, 5, 6, 7, 8);
+document.write(book[1]);
+book[10] = 10;
+document.write(book[10]);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q11-input">Ditt svar:</label>
+        <input type="text" id="q11-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="210" data-answer-alts="2 10|2, 10">Riktig svar: 210</span>
+          <p><strong>Mekanisme:</strong> <code>book[1]</code> er 2 (indeks 1 = andre element). Så settes <code>book[10] = 10</code> — JS tillater hull, og lengden blir 11. <code>book[10]</code> er 10.</p>
+          <p><code>document.write</code> skriver "2" og deretter "10" rett etter hverandre på siden, så resultatet er <code>210</code>.</p>
+          <p><strong>Vanlig feil:</strong> Tolke <code>book[1]</code> som første element (= 1) i stedet for andre element (=2). Forveksle <code>book[10]</code> (verdi på indeks 10 = 10) med <code>book.length</code> (=11 etter setting).</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 12 (B3)</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Variabel-trace</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">
+        <em>(Originalen viste ikke selve koden — vi gjenskaper en typisk trace-oppgave i samme stil.)</em>
+      </p>
+      <p>Hva blir verdien av hver variabel etter at koden under kjører?</p>
+      <pre><code>let myDogsAge = 5;
+myDogsAge = myDogsAge * 2 - 3;
+
+let rectArea = 4 * 6;
+
+let prices = [120, 80, 50];
+let theTotal = 0;
+for (let i = 0; i &lt; prices.length; i++) {
+  theTotal += prices[i];
+}
+
+let avatars = ["wolf", "fox", "owl"];
+let myAvatar = avatars[avatars.length - 1];</code></pre>
+      <p>Skriv svarene i rekkefølge, separert med komma: <code>myDogsAge, rectArea, theTotal, myAvatar</code></p>
+      <div class="exam-q__answer">
+        <label for="q12-input">Ditt svar:</label>
+        <input type="text" id="q12-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="7,24,250,owl" data-answer-alts='7, 24, 250, owl|7,24,250,"owl"|7, 24, 250, "owl"'>Riktig svar: 7, 24, 250, owl</span>
+          <p><strong>Trace:</strong></p>
+          <ul>
+            <li><strong>myDogsAge</strong> = 5 × 2 - 3 = 10 - 3 = <code>7</code>.</li>
+            <li><strong>rectArea</strong> = 4 × 6 = <code>24</code>.</li>
+            <li><strong>theTotal</strong> = 120 + 80 + 50 = <code>250</code>.</li>
+            <li><strong>myAvatar</strong> = <code>avatars[3 - 1]</code> = <code>avatars[2]</code> = <code>"owl"</code> (siste element via length - 1).</li>
+          </ul>
+          <p><strong>Operatorprioritet:</strong> <code>*</code> har høyere prioritet enn <code>-</code>, så <code>5 * 2 - 3</code> = <code>(5 * 2) - 3</code> = 7, ikke <code>5 * (2 - 3)</code> = -5.</p>
+          <p class="ref">Pensum: <a href="../../kap9/">Kap. 9 — JavaScript</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 13 (B4)</span>
+      <span class="exam-q__points">6 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — External / Internal / Inline CSS</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Beskriv når man bruker <em>External Style Sheets</em>, <em>Embedded (Internal) Style Sheets</em> og <em>Inline Styles</em>. Bruk både CSS- og HTML-kode for å vise hvordan hver type brukes.</p>
+      <textarea class="exam-q__textarea" rows="8" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (6 poeng — 2 per type):</strong></p>
+          <ul>
+            <li>
+              <strong>External (1 poeng for forklaring, 1 for syntaks):</strong> Stilen ligger i egen <code>.css</code>-fil og lenkes inn via <code>&lt;link&gt;</code>. Anbefalt for større prosjekter — én fil styler hele sitet, cacheable.
+              <pre><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+            </li>
+            <li>
+              <strong>Internal / Embedded (1+1 poeng):</strong> CSS inni <code>&lt;style&gt;</code>-tag i dokumentets <code>&lt;head&gt;</code>. Brukes for sidespesifikke stiler eller small prototypes.
+              <pre><code>&lt;style&gt;
+  p { color: red; }
+&lt;/style&gt;</code></pre>
+            </li>
+            <li>
+              <strong>Inline (1+1 poeng):</strong> CSS direkte på elementet via <code>style</code>-attributtet. Bruk sparsomt — kun for engangs-overstyringer eller dynamisk JS-styling. Vanskelig å vedlikeholde.
+              <pre><code>&lt;p style="color: red;"&gt;Hei&lt;/p&gt;</code></pre>
+            </li>
+          </ul>
+          <p><strong>Cascade-ordrer fra svakest til sterkest:</strong> External &amp; Internal (avhengig av kilderekkefølge), så Inline. <code>!important</code> overstyrer alt.</p>
+          <p class="ref">Pensum: <a href="../../kap3/">Kap. 3 — CSS-grunnleggende</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 typer dekket m/ kode</button>
+            <button type="button" data-grade="0.66">2 av 3 dekket</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 14 (B5)</span>
+      <span class="exam-q__points">6 poeng</span>
+      <span class="exam-q__topic">Kap. 8 — POST vs GET</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellene mellom <code>POST</code> og <code>GET</code> når du sender HTML-skjema-data.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (6 poeng — 1,5 per godt punkt, maks 6):</strong></p>
+          <ul>
+            <li><strong>Plassering:</strong> GET legger parametere i URL-en (etter <code>?</code>); POST legger dem i request-body.</li>
+            <li><strong>Idempotens / caching:</strong> GET er idempotent og kan caches/bookmarks/legges i browser-historikk; POST er ikke idempotent og caches normalt ikke.</li>
+            <li><strong>Størrelse:</strong> GET har URL-grense (~2 KB i praksis); POST har ingen praktisk grense.</li>
+            <li><strong>Synlighet/sikkerhet:</strong> GET-data vises i URL, history og server-logger — uegnet for sensitive data; POST-data er skjult i body (ikke kryptert uten HTTPS).</li>
+            <li><strong>Bruksområder:</strong> GET for henting/lesing (søk, filtre); POST for å endre serverens tilstand (registrering, opplasting).</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">4+ punkter</button>
+            <button type="button" data-grade="0.75">3 punkter</button>
+            <button type="button" data-grade="0.5">2 punkter</button>
+            <button type="button" data-grade="0.25">1 punkt</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION C — KODING (4 + 1 ekstra, 46 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section C — Koding (~46 %)</h2>
+  <p class="part-intro">Skriv kode i tre felt (HTML/CSS/JS). Klikk <em>Kjør i sandbox</em> for å se resultatet. Klikk <em>Vis fasit og vurder</em> for å se referanseløsning + rubrikk og gi deg selv delpoeng. Section C er litt større enn 40 % i dette settet for å kompensere for fjernede MCer.</p>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 15 (C1)</span>
+      <span class="exam-q__points">5 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — HTML-tabell med bilde</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Skriv HTML-en som produserer en tabell med to celler — én celle inneholder bildet <code>mainbuilding.jpg</code> (lagret i mappen <code>images/</code> i samme mappe som HTML-filen), og en annen celle inneholder en kort beskrivelse av bygningen.</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Korrekt <code>&lt;table&gt;</code>-struktur med <code>&lt;tr&gt;</code> og <code>&lt;td&gt;</code>.</li>
+        <li><strong>(2 poeng)</strong> Korrekt relativ sti til bildet i <code>&lt;img&gt;</code>-tag-en.</li>
+        <li><strong>(1 poeng)</strong> Inkluder <code>alt</code>-attributt på bildet (for tilgjengelighet).</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML</label>
+          <textarea class="code-html" rows="12" placeholder="&lt;table&gt;...&lt;/table&gt;"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="3"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;img src="images/mainbuilding.jpg" alt="Hovedbygningen ved NTNU"&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      Hovedbygningen ble bygget i 1910 og er hjertet av NTNU Gløshaugen.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Relativ sti:</strong> <code>images/mainbuilding.jpg</code> peker til mappen <code>images/</code> i samme mappe som HTML-en. Ikke skriv <code>/images/...</code> (absolutt sti fra serverrot) med mindre du vet at det er der bildet faktisk ligger.</li>
+            <li><strong>alt:</strong> Tilgjengelighetskrav — skjermlesere bruker dette, og det vises hvis bildet ikke kan lastes. Beskrivelsen skal beskrive bildet, ikke gjenta filnavnet.</li>
+            <li><strong>Tabeller for layout vs data:</strong> I gamle dager ble tabeller brukt til generell layout. Idag bør tabeller bare brukes til tabulære data; layout gjøres med CSS Flexbox/Grid.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>alt</code>-attributt. Bruke <code>/images/...</code> som ikke er korrekt relativ. Bruke <code>&lt;table&gt;</code> uten <code>&lt;tr&gt;</code> (radene er obligatoriske).</p>
+          <p class="ref">Pensum: <a href="../../kap2/">Kap. 2 — HTML</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 16 (C2)</span>
+      <span class="exam-q__points">10 poeng</span>
+      <span class="exam-q__topic">Kap. 3+4 — CSS på gitt DOM</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv CSS som løser <strong>fem</strong> deloppgaver:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Posisjoner <code>&lt;h1&gt;</code> 20 px til venstre og 30 px nedover, <em>relativt</em> til sin normale plassering.</li>
+        <li><strong>(2 poeng)</strong> Posisjoner <code>&lt;h1&gt;</code> 50 px fra venstre og 100 px fra toppen <em>relativt til HTML-siden</em> (ikke normal flyt). — NB: denne er motstridende mot 1 på samme element; vurder dem som separate løsningsforslag.</li>
+        <li><strong>(2 poeng)</strong> Vis listeelementene <code>&lt;li&gt;</code> som <em>inline-elementer</em>.</li>
+        <li><strong>(2 poeng)</strong> Endre bakgrunnsfargen til <code>&lt;p class="highlight"&gt;</code> til lyseblå <em>når brukeren holder musa over den</em>.</li>
+        <li><strong>(2 poeng)</strong> Sett tekstfarge til rød på <em>første linje</em> av alle <code>&lt;p&gt;</code>-elementer.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="12">&lt;h1&gt;This is a Heading&lt;/h1&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;p&gt;This is another paragraph.&lt;/p&gt;
+&lt;p class="highlight"&gt;This is a third paragraph.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Apple&lt;/li&gt;
+  &lt;li&gt;Orange&lt;/li&gt;
+  &lt;li&gt;Pear&lt;/li&gt;
+&lt;/ul&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="14" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>/* 1: relative — forskyv 20px venstre, 30px ned */
+h1 {
+  position: relative;
+  left: -20px;   /* negativ = mot venstre */
+  top: 30px;
+}
+
+/* 2: absolute — relativt til siden */
+/* (Velg kun ETT av disse for h1 — de er gjensidig utelukkende.) */
+h1 {
+  position: absolute;
+  left: 50px;
+  top: 100px;
+}
+
+/* 3: inline list-items */
+ul li {
+  display: inline;
+}
+
+/* 4: hover */
+p.highlight:hover {
+  background-color: lightblue;
+}
+
+/* 5: first-line */
+p::first-line {
+  color: red;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>relative vs absolute:</strong> <code>relative</code> holder elementet i normal flyt (men det forskyves visuelt); <code>absolute</code> tar det ut av flyten og posisjonerer det relativt til nærmeste posisjonerte forelder (eller <code>&lt;html&gt;</code>).</li>
+            <li><strong>"20 px venstre":</strong> Med <code>position: relative</code> betyr <code>left: -20px</code> "flytt 20 px <em>til venstre</em>". Vanlig forvirring: positivt <code>left</code> = mot høyre.</li>
+            <li><strong>display: inline på li:</strong> Brukes ofte for horisontale menyer. Listestilen (<code>list-style</code>) bør også settes til <code>none</code> hvis du vil fjerne kuler.</li>
+            <li><strong>::first-line:</strong> Pseudo-element som styler første <em>linje</em> av et blokk-element (avhenger av viewport-bredde — første linje endres når man resizer).</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>left: 20px</code> for "20 px venstre" (gir 20 px mot høyre). Forveksle <code>:first-line</code> med <code>:first-letter</code>. Glemme <code>position: relative</code>/<code>absolute</code> før man bruker top/left.</p>
+          <p class="ref">Pensum: <a href="../../kap4/">Kap. 4 — Posisjonering</a>, <a href="../../kap3/pseudo-klasser/">Kap. 3 — Pseudo</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 5 deloppgaver løst</button>
+            <button type="button" data-grade="0.8">4 av 5</button>
+            <button type="button" data-grade="0.6">3 av 5</button>
+            <button type="button" data-grade="0.4">2 av 5</button>
+            <button type="button" data-grade="0.2">1 av 5</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 17 (C3)</span>
+      <span class="exam-q__points">7 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Date / dager til jul</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Skriv en JavaScript-funksjon som regner ut antall dager fra <em>i dag</em> til årets jul (25. desember). Vis resultatet i en <code>alert</code> når brukeren klikker knappen.</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Lag <code>Date</code>-objekter for nå og for 25. desember inneværende år.</li>
+        <li><strong>(3 poeng)</strong> Regn ut differansen og konverter ms → dager med <code>Math.ceil</code>.</li>
+        <li><strong>(1 poeng)</strong> Håndter at jul kan være forbi: hvis <code>dager &lt; 0</code>, sett til neste års jul.</li>
+        <li><strong>(1 poeng)</strong> Bruk <code>addEventListener</code> på knappen.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="3">&lt;button id="vis"&gt;Dager til jul&lt;/button&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="12" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>function dagerTilJul() {
+  const naa = new Date();
+  let aar = naa.getFullYear();
+  let jul = new Date(aar, 11, 25);  // 11 = desember
+  if (jul - naa &lt; 0) {
+    aar += 1;
+    jul = new Date(aar, 11, 25);
+  }
+  const ms = jul - naa;
+  const dager = Math.ceil(ms / (1000 * 60 * 60 * 24));
+  alert("Det er " + dager + " dager til jul " + aar);
+}
+
+document.getElementById("vis").addEventListener("click", dagerTilJul);</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Måned-index:</strong> Desember er 11, ikke 12. Standard "off-by-one"-snublepunkt.</li>
+            <li><strong>Subtraksjon av Date-objekter:</strong> Tvinger dem til ms-tallverdier. Resultat er ms-differanse.</li>
+            <li><strong>Math.ceil:</strong> Runder oppover, så "12,3 dager" blir 13 (mer naturlig "om 13 dager").</li>
+            <li><strong>Behandling av jul forbi:</strong> Sjekk <code>jul - naa &lt; 0</code> og hopp ett år frem. Uten denne ville du fått negativt antall dager i januar.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke måned 12 (gir januar neste år). Bruke <code>Math.floor</code> (kan gi 0 dager når det er morgen 25. desember). Glemme håndtering av jul forbi.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Date</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 18 (C4)</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 8+9 — Kalkulator</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv JavaScript som leser inn to tall og regner ut multiplikasjon eller divisjon når brukeren klikker den respektive knappen. Vis resultatet i <code>&lt;span id="result"&gt;</code>.</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Funksjonen <code>multiplyBy()</code> regner ut produktet av de to feltene.</li>
+        <li><strong>(2 poeng)</strong> Funksjonen <code>divideBy()</code> regner ut divisjonen.</li>
+        <li><strong>(2 poeng)</strong> Bruk <code>parseFloat</code> for å unngå string-konkatenering.</li>
+        <li><strong>(2 poeng)</strong> Håndter divisjon-på-null: hvis det andre tallet er 0, vis "Kan ikke dele på null" i resultatet.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="9">&lt;form&gt;
+  1st Number: &lt;input type="text" id="firstNumber"&gt;&lt;br&gt;
+  2nd Number: &lt;input type="text" id="secondNumber"&gt;&lt;br&gt;
+  &lt;input type="button" onclick="multiplyBy()" value="Multiply"&gt;
+  &lt;input type="button" onclick="divideBy()" value="Divide"&gt;
+&lt;/form&gt;
+&lt;p&gt;The Result is: &lt;br&gt;
+  &lt;span id="result"&gt;&lt;/span&gt;
+&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="12" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>function lesTall() {
+  const a = parseFloat(document.getElementById("firstNumber").value);
+  const b = parseFloat(document.getElementById("secondNumber").value);
+  return [a, b];
+}
+
+function multiplyBy() {
+  const [a, b] = lesTall();
+  document.getElementById("result").textContent = a * b;
+}
+
+function divideBy() {
+  const [a, b] = lesTall();
+  if (b === 0) {
+    document.getElementById("result").textContent = "Kan ikke dele på null";
+    return;
+  }
+  document.getElementById("result").textContent = a / b;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>parseFloat-fellen:</strong> Uten denne ville <code>"5" * "3"</code> bli regnet riktig (multiplikasjon konverterer), men <code>"5" + "3"</code> blir <code>"53"</code>. Konsistens: konverter alltid eksplisitt.</li>
+            <li><strong>Globale funksjoner:</strong> HTML-en bruker inline <code>onclick="multiplyBy()"</code> — funksjonene må derfor være globalt tilgjengelige. <code>function multiplyBy(){}</code> i toppnivå-script blir det.</li>
+            <li><strong>Divisjon på null:</strong> <code>5 / 0</code> i JS gir <code>Infinity</code>, ikke en feilmelding. Eksplisitt sjekk gjør resultatet brukervennlig.</li>
+            <li><strong>textContent vs innerHTML:</strong> <code>textContent</code> er trygt mot XSS; <code>innerHTML</code> tolker tagger.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>parseFloat</code> ved multiplikasjon — virker tilfeldigvis OK, men feiler ved addisjon i andre oppgaver. Ikke håndtere null-divisjon. Bruke <code>document.write</code> til output (overskriver hele dokumentet).</p>
+          <p class="ref">Pensum: <a href="../../kap8/">Kap. 8 — Forms</a>, <a href="../../kap9/">Kap. 9 — JS</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 19 (EKSTRA — erstatter canvas + XML-MCer)</span>
+      <span class="exam-q__points">16 poeng</span>
+      <span class="exam-q__topic">Kap. 5 + 6 + 10 — Responsivt + DOM</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">
+        <strong>NB: EKSTRA-oppgave.</strong> Originalens C5 (canvas) og tre MC-er
+        om XML/duplikater er fjernet (Kap 11 og 12 er ute av pensum). Denne
+        16-poengs oppgaven erstatter alle de fjernede poengene og dekker tre
+        sentrale pensumblokker: Flexbox (Kap 5), responsivt design (Kap 6) og
+        DOM-events (Kap 10).
+      </p>
+      <p>HTML-en under er gitt — en enkel "kort-galleri". Skriv CSS og JS som løser fem deloppgaver:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Bruk <strong>CSS Grid</strong> til å vise kortene i et rutenett: 1 kolonne på mobil, 2 kolonner fra 600 px viewport, og 3 kolonner fra 900 px viewport (mobile-first med <code>@media (min-width: ...)</code>).</li>
+        <li><strong>(3 poeng)</strong> Bruk <code>gap: 16px</code> mellom kortene. Hvert kort skal ha en lett grå bakgrunn, 12 px padding, og avrundede hjørner (8 px).</li>
+        <li><strong>(3 poeng)</strong> Bruk <strong>Flexbox</strong> inni hvert kort til å sentrere innholdet vertikalt og horisontalt.</li>
+        <li><strong>(4 poeng)</strong> Når brukeren klikker på et kort, skal det bytte mellom "valgt"-tilstand (rød kant 2 px) og "ikke valgt" (ingen kant). Bruk <strong>event delegation</strong> på <code>&lt;section class="galleri"&gt;</code> — ikke fest handlere på hvert kort individuelt.</li>
+        <li><strong>(3 poeng)</strong> Vis antall valgte kort i <code>&lt;span id="teller"&gt;</code> — oppdater telleren ved hvert klikk.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="12">&lt;p&gt;Valgte: &lt;span id="teller"&gt;0&lt;/span&gt;&lt;/p&gt;
+&lt;section class="galleri"&gt;
+  &lt;article class="kort"&gt;Eple&lt;/article&gt;
+  &lt;article class="kort"&gt;Banan&lt;/article&gt;
+  &lt;article class="kort"&gt;Kiwi&lt;/article&gt;
+  &lt;article class="kort"&gt;Mango&lt;/article&gt;
+  &lt;article class="kort"&gt;Druer&lt;/article&gt;
+  &lt;article class="kort"&gt;Pære&lt;/article&gt;
+&lt;/section&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="16" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="12" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>/* CSS */
+.galleri {
+  display: grid;
+  grid-template-columns: 1fr;   /* mobile-first: 1 kolonne */
+  gap: 16px;
+  padding: 12px;
+}
+
+@media (min-width: 600px) {
+  .galleri { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .galleri { grid-template-columns: repeat(3, 1fr); }
+}
+
+.kort {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eee;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid transparent;  /* plass til "valgt"-border */
+  cursor: pointer;
+  min-height: 80px;
+}
+
+.kort.valgt {
+  border-color: red;
+}</code></pre>
+          <pre><code>/* JavaScript */
+const galleri = document.querySelector(".galleri");
+const teller = document.getElementById("teller");
+
+galleri.addEventListener("click", (e) =&gt; {
+  const kort = e.target.closest(".kort");
+  if (!kort) return;                // klikk utenfor et kort
+  kort.classList.toggle("valgt");
+  const antall = galleri.querySelectorAll(".kort.valgt").length;
+  teller.textContent = antall;
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Mobile-first:</strong> Standardregelen er for mobil (1 kolonne). <code>@media (min-width: 600px)</code> aktiveres når viewport er ≥ 600 px, og overstyrer reglene <em>oppover</em>. Slik bygger man stilen progressivt for større skjermer.</li>
+            <li><strong>repeat(3, 1fr):</strong> Kortform for tre like brede kolonner. <code>1fr</code> = "én del av tilgjengelig plass" — alle kolonner får like brede.</li>
+            <li><strong>Flexbox-sentrering:</strong> <code>justify-content: center</code> sentrerer på hovedaksen (her: horisontal i row-default); <code>align-items: center</code> sentrerer på tverraksen (vertikal).</li>
+            <li><strong>Event delegation med closest():</strong> Hvis brukeren klikker på et barn inni kortet (f.eks. en span), gir <code>e.target</code> det barnet — ikke kortet. <code>e.target.closest(".kort")</code> finner nærmeste forelder med klassen <code>kort</code>, inkludert kortet selv hvis det er <code>e.target</code>.</li>
+            <li><strong>Border som plassholder:</strong> Vi setter <code>border: 2px solid transparent</code> som default, slik at å bytte til <code>border-color: red</code> ikke flytter rundt på layouten.</li>
+            <li><strong>classList.toggle:</strong> Veksler klassen av/på. Mer presist enn å sjekke <code>contains</code> manuelt og endre.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>max-width</code> i stedet for <code>min-width</code> (gir desktop-first, motsatt retning). Glemme <code>closest()</code> og bare sjekke <code>e.target.classList.contains</code> (feiler hvis kortet har barn). Sette <code>border: 2px solid red</code> direkte i toggle uten transparent default — kortene "hopper" når man klikker. Glemme å oppdatere telleren etter toggle.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox/Grid</a>, <a href="../../kap6/">Kap. 6 — Responsivt</a>, <a href="../../kap10/">Kap. 10 — Events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 5 deloppgaver løst</button>
+            <button type="button" data-grade="0.8">4 av 5</button>
+            <button type="button" data-grade="0.6">3 av 5</button>
+            <button type="button" data-grade="0.4">2 av 5</button>
+            <button type="button" data-grade="0.2">1 av 5</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<script src="exam.js"></script>
+<script src="../cheat-toggle.js" data-cheat-src="../a4-jukseark.html"></script>
+</body>
+</html>

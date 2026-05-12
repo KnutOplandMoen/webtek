@@ -361,20 +361,18 @@ console.log(groceries[2].innerText);   // 'Cheese'</code></pre>
     <pre><code>const groceries = document.getElementsByTagName('li');
 groceries[0].innerText = 'Juice';   // Milk → Juice</code></pre>
 
-    <p>I tillegg til <code>innerText</code> dukker disse opp i oppgaver:</p>
+    <p>I tillegg til <code>innerText</code> dukker disse opp i kode-oppgaver:</p>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">el.innerHTML</div><div class="fc-val">Hele HTML-innholdet i elementet — du kan sette inn tagger, ikke bare tekst. <code>el.innerHTML = '&lt;b&gt;Hei&lt;/b&gt;'</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">el.value</div><div class="fc-val">Verdien i et <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> eller <code>&lt;select&gt;</code>. <code>document.getElementById('navn').value</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">el.style.<em>egenskap</em></div><div class="fc-val">Endre CSS direkte. <code>el.style.color = 'red'</code>, <code>el.style.backgroundColor = '#eee'</code>. Merk: camelCase for CSS-navn med bindestrek.</div></div>
-      <div class="fact-card"><div class="fc-key">el.classList</div><div class="fc-val"><code>add</code>, <code>remove</code>, <code>toggle</code> CSS-klasser uten å overskrive eksisterende.</div></div>
+      <div class="fact-card"><div class="fc-key">el.innerHTML</div><div class="fc-val">Hele HTML-innholdet i elementet — du kan sette inn tagger, ikke bare tekst. Pensum 1.13 (Ajax-eksempel) bruker den til å oppdatere siden dynamisk.</div></div>
+      <div class="fact-card"><div class="fc-key">el.value</div><div class="fc-val">Verdien i et <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> eller <code>&lt;select&gt;</code>. Brukt i form-validering på alle tidligere eksamener.</div></div>
+      <div class="fact-card"><div class="fc-key">el.style.<em>egenskap</em></div><div class="fc-val">Endre CSS direkte fra JS. <code>el.style.color = 'red'</code>, <code>el.style.backgroundColor = '#eee'</code>. Merk: camelCase for CSS-navn med bindestrek. Brukes i &laquo;endre farge ved fokus&raquo;-oppgaver.</div></div>
     </div>
     <pre><code>const overskrift = document.getElementById('tittel');
 overskrift.innerHTML = 'Hei &lt;em&gt;du&lt;/em&gt;!';
 overskrift.style.color = 'red';
 overskrift.style.backgroundColor = '#eee';
 
-const navn = document.getElementById('navn').value;   // les input
-document.getElementById('boks').classList.add('aktiv');</code></pre>
+const navn = document.getElementById('navn').value;   // les input fra felt</code></pre>
 
     <h3>Legge til elementer</h3>
     <p>
@@ -449,13 +447,13 @@ greetingButton.addEventListener('click', (event) =&gt; {
 
     <h3>Andre vanlige event-typer</h3>
     <p>
-      Foreleser nevner en håndfull event-typer du må gjenkjenne navnene på. De
-      registreres alle med <code>addEventListener('navn', fn)</code>:
+      Foreleser anbefaler eksplisitt å skrive disse event-navnene på juksearket
+      («Event names — spell them right»). De registreres alle med
+      <code>addEventListener('navn', fn)</code>:
     </p>
     <div class="fact-grid">
       <div class="fact-card"><div class="fc-key">click</div><div class="fc-val">Brukeren klikker på elementet.</div></div>
-      <div class="fact-card"><div class="fc-key">mouseover / mouseout</div><div class="fc-val">Musen går inn i / ut av elementet (hover-effekter i JS).</div></div>
-      <div class="fact-card"><div class="fc-key">focus / blur</div><div class="fc-val">Et input-felt får / mister fokus.</div></div>
+      <div class="fact-card"><div class="fc-key">focus / blur</div><div class="fc-val">Et input-felt får / mister fokus. <em>Validate on blur</em> er forelesers eksempel.</div></div>
       <div class="fact-card"><div class="fc-key">submit</div><div class="fc-val">Skjemaet sendes — brukes oftest med <code>preventDefault()</code> for å validere først.</div></div>
       <div class="fact-card"><div class="fc-key">change</div><div class="fc-val">Verdien i et input-felt eller select endres.</div></div>
       <div class="fact-card"><div class="fc-key">keydown / keypress / keyup</div><div class="fc-val">Tre faser ved tastetrykk (se over).</div></div>
