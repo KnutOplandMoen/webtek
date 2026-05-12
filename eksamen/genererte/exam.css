@@ -573,11 +573,26 @@ body {
   z-index: 100;
   display: none;
 }
-.exam-score.is-active { display: block; }
+.exam-score.is-active { display: flex; align-items: center; gap: 12px; }
 .exam-score strong {
   color: var(--ochre);
   font-weight: 700;
 }
+.score-reset {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.score-reset:hover { opacity: 1; border-color: var(--ochre); color: var(--ochre); }
 
 /* ---------- RESPONSIV ---------- */
 

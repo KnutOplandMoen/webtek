@@ -1,0 +1,1089 @@
+<!doctype html>
+<!--
+  Øvingseksamen 03 — IT2805 Webteknologi
+  Laget: 2026-05-12.
+  Fokus: responsivt design, Flexbox/Grid, multimedia, semantisk HTML.
+  Kompenserer for at sett 01 og 02 har lite om disse underrepresenterte
+  temaene. TCP/IP og output-resonnement er fortsatt med, men med nye
+  vinklinger. Ingen oppgave er en kopi av sett 01, sett 02 eller ex2-ex5.
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>Øvingseksamen 03 — IT2805</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+
+<header class="exam-head">
+  <h1>Øvingseksamen 03 — IT2805</h1>
+  <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
+  <p class="exam-meta">
+    Hovedfokus: responsivt design, Flexbox og Grid, multimedia,
+    semantisk HTML. Speiler det digitale Inspera-formatet med fire
+    seksjoner.
+  </p>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section A — Flervalg (~25 %)</h2>
+  <p class="part-intro">Klikk på alternativet du tror er korrekt. Riktig svar fargelegges grønt, feil rødt — forklaring vises automatisk.</p>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 1</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — Transportlaget</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken transport-protokoll i TCP/IP-modellen er <strong>forbindelsesløs</strong> — altså sender pakker uten å bygge opp en koblingen først?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> TCP</li>
+        <li><span class="opt-label">B</span> UDP</li>
+        <li><span class="opt-label">C</span> HTTP</li>
+        <li><span class="opt-label">D</span> DNS</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>UDP (User Datagram Protocol) er forbindelsesløs — den sender datagrammer uten hand-shake og uten å garantere levering eller rekkefølge. Brukes til video-streaming, spill, DNS-oppslag — anvendelser der lav latency er viktigere enn 100 % leveranse.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> TCP er forbindelses-orientert (bygger en sesjon, garanterer ordnet leveranse). HTTP er applikasjonslag (over TCP). DNS er applikasjonslag (kjører oftest over UDP, men er ikke selv en transportprotokoll).</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 2</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — Statuskoder</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva betyr HTTP-statuskode <code>500</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Klient-feil: ressursen finnes ikke.</li>
+        <li><span class="opt-label">B</span> Server-feil: noe gikk galt på server-siden.</li>
+        <li><span class="opt-label">C</span> Suksess: ressurs flyttet permanent.</li>
+        <li><span class="opt-label">D</span> Klient-feil: ugyldig request-syntaks.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>500 Internal Server Error</code> er den generelle "noe gikk galt på server-siden"-meldingen — feks ukastet exception i backend. 5xx-gruppen er alltid server-feil; 4xx-gruppen er alltid klient-feil; 3xx er redirects; 2xx er suksess.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er <code>404 Not Found</code>. C er <code>301</code>. D er <code>400 Bad Request</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 3</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 6 — Viewport-meta</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedhensikten med <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> i <code>&lt;head&gt;</code>-en?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Den setter siden til kun å virke i 1080p oppløsning.</li>
+        <li><span class="opt-label">B</span> Den ber mobile nettlesere bruke skjermens faktiske bredde i CSS-piksler og ikke zoome ut til en kunstig 980 px-bredde.</li>
+        <li><span class="opt-label">C</span> Den setter en standard zoom på 100 % som ikke kan endres av brukeren.</li>
+        <li><span class="opt-label">D</span> Den deaktiverer alle JavaScript-kjøringer på siden for sikkerhet.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Uten viewport-meta antar mobile nettlesere historisk at sidene ble laget for desktop og rendrer dem med en virtuell bredde rundt 980 px, deretter zoomer ned. Resultatet er liten, uleselig tekst. Med <code>width=device-width</code> brukes telefonens faktiske bredde i CSS-piksler, og <code>initial-scale=1</code> hindrer auto-zoom-out. Dette er fundamentalt for at responsive design skal fungere på mobil.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er konfabulasjon. C ville krevd <code>user-scalable=no</code> i tillegg — og er en a11y-anti-pattern. D er konfabulasjon — viewport-meta har ingenting med JS å gjøre.</p>
+          <p class="ref">Pensum: <a href="../../kap6/">Kap. 6 — Responsivt webdesign</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 4</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Flexbox</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er <strong>default-verdien</strong> av <code>flex-direction</code> på en flex-container?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>column</code> — barna stables vertikalt.</li>
+        <li><span class="opt-label">B</span> <code>row</code> — barna ordnes horisontalt fra venstre til høyre.</li>
+        <li><span class="opt-label">C</span> <code>row-reverse</code> — barna ordnes horisontalt fra høyre til venstre.</li>
+        <li><span class="opt-label">D</span> Det finnes ingen default — du må alltid sette verdien eksplisitt.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>flex-direction</code> er <code>row</code> som default, altså horisontal flyt fra venstre til høyre (i LTR-språk). Det er den vanligste oppførselen, og er grunnen til at <code>display: flex</code> alene ofte legger elementene side om side.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er det vanligste man trenger å skrive eksplisitt — derav forvirring. C er en av variantene, men ikke default. D er feil — alle CSS-properties har en spesifisert default.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 5</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 6 — Viewport-enheter</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilken CSS-enhet er <strong>relativ til viewport-bredden</strong> — slik at <code>50vw</code> er halvparten av det synlige nettleser-vinduets bredde?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>em</code></li>
+        <li><span class="opt-label">B</span> <code>rem</code></li>
+        <li><span class="opt-label">C</span> <code>vw</code></li>
+        <li><span class="opt-label">D</span> <code>%</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p><code>vw</code> ("viewport width") — <code>1vw</code> = 1 % av viewport-bredden. <code>50vw</code> er halve viewport-bredden uansett hva foreldre-element-bredden er. Tilsvarende finnes <code>vh</code> for høyde, og <code>vmin</code>/<code>vmax</code> for den minste/største dimensjonen.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A — <code>em</code> er relativt til foreldre-elementets font-size. B — <code>rem</code> er relativt til root-elementets font-size. D — <code>%</code> er relativt til foreldre-elementet (ikke viewport).</p>
+          <p class="ref">Pensum: <a href="../../kap6/">Kap. 6 — Responsivt webdesign</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 6</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 7 — Video</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvilket attributt må stå på <code>&lt;video&gt;</code> for at nettleseren skal vise <strong>standardkontroller</strong> (play, pause, volume osv.)?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>autoplay</code></li>
+        <li><span class="opt-label">B</span> <code>controls</code></li>
+        <li><span class="opt-label">C</span> <code>player</code></li>
+        <li><span class="opt-label">D</span> <code>visible</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>&lt;video src="..." controls&gt;</code> — det boolske <code>controls</code>-attributtet aktiverer nettleserens innebygde spiller-UI med play, pause, volum og scrubbing.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A starter avspilling automatisk (uten controls = ingen UI). C og D er ikke gyldige HTML-attributter.</p>
+          <p class="ref">Pensum: <a href="../../kap7/video-audio.html">Kap. 7 — Video og audio</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 7</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 7 — Responsive bilder</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedhensikten med <code>srcset</code>-attributtet på <code>&lt;img&gt;</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Å gi flere alternative bilde-filer slik at nettleseren kan velge den som passer best til skjerm-oppløsning eller viewport-bredde.</li>
+        <li><span class="opt-label">B</span> Å sette flere fallback-tekster hvis bildet ikke kan vises.</li>
+        <li><span class="opt-label">C</span> Å erstatte <code>alt</code>-attributtet med en mer detaljert beskrivelse.</li>
+        <li><span class="opt-label">D</span> Å laste bilder fra flere CDN-servere samtidig for redundans.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: A</span>
+          <p><code>srcset="liten.jpg 480w, stor.jpg 1200w"</code> lar nettleseren velge mest egnet variant — typisk laster den ned <code>liten.jpg</code> på en mobil og <code>stor.jpg</code> på en stor skjerm. Brukes ofte sammen med <code>sizes</code> for å fortelle hvor bred bildet vil vises.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> B/C er alternative tekster — det er <code>alt</code>-attributtet. D er konfabulasjon — nettleseren laster bare én variant, ikke flere.</p>
+          <p class="ref">Pensum: <a href="../../kap7/bilder.html">Kap. 7 — Bilder</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 8</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Grid-span</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du vil at en grid-celle skal strekke seg over <strong>to kolonner</strong>. Hvilken CSS er korrekt?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>colspan: 2;</code></li>
+        <li><span class="opt-label">B</span> <code>grid-column: span 2;</code></li>
+        <li><span class="opt-label">C</span> <code>flex: 2;</code></li>
+        <li><span class="opt-label">D</span> <code>width: 200%;</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>grid-column: span 2</code> er kortform for "denne cellen tar 2 kolonner fra der den naturlig plasseres". Ekvivalent <code>grid-column: 1 / 3</code> hvis du vil være eksplisitt om start- og slutt-linje. Tilsvarende <code>grid-row: span 2</code> for høyde.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A — <code>colspan</code> er et HTML-attributt på <code>&lt;td&gt;</code> i tabeller, ikke CSS. C er flexbox-syntaks (irrelevant i grid). D ville strukket boksen ut over kolonnen, ikke endre grid-layouten.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 9</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 7 — Audio</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skjer hvis du bruker <code>&lt;audio src="lyd.mp3"&gt;&lt;/audio&gt;</code> uten <code>controls</code>-attributtet?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Lyden spilles automatisk når siden lastes.</li>
+        <li><span class="opt-label">B</span> Browseren viser feilmelding — <code>controls</code> er obligatorisk.</li>
+        <li><span class="opt-label">C</span> Lyden er lastet og kan spilles via JavaScript, men ingen knapper vises i UI-et.</li>
+        <li><span class="opt-label">D</span> Lyden vises i en standardspiller, men brukerne kan ikke pause den.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>Uten <code>controls</code> tar elementet ingen visuell plass (eller veldig lite) og vises ikke som spiller. Det er fortsatt et fungerende media-element — du kan styre det via JS (<code>audio.play()</code>, <code>audio.pause()</code>), nyttig hvis du lager en custom spiller.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A krever <code>autoplay</code> (og selv da blokkerer moderne nettlesere ofte uten <code>muted</code>). B — <code>controls</code> er valgfritt. D — uten controls finnes ikke standardspiller.</p>
+          <p class="ref">Pensum: <a href="../../kap7/video-audio.html">Kap. 7 — Video og audio</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 10</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 6 — Mobile-first</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva kjennetegner <strong>mobile-first</strong> CSS-strategi?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> All CSS skrives i en egen fil som heter <code>mobile.css</code> og lastes først.</li>
+        <li><span class="opt-label">B</span> Standard-CSS (uten media query) er designet for mobile skjermer; <code>min-width</code> media queries utvider for større skjermer.</li>
+        <li><span class="opt-label">C</span> Standard-CSS er for desktop; <code>max-width</code> media queries reduserer ned for små skjermer.</li>
+        <li><span class="opt-label">D</span> Nettsiden viser et helt nytt sett HTML på mobil enn på desktop.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>I mobile-first beskriver den ustilte (default) CSS-en det enkleste tilfellet — en smal mobilskjerm med én kolonne, kompakt nav, store knapper. Deretter introduseres <code>@media (min-width: ...px)</code>-blokker som <em>legger til</em> kompleksitet for tablet/desktop (flerkolonne-layout, horisontal nav).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A — det er ingen egen fil; det handler om strategi for én og samme CSS. C beskriver det motsatte (desktop-first med <code>max-width</code>). D er konfabulasjon — det samme HTML-treet leveres til alle skjermer.</p>
+          <p class="ref">Pensum: <a href="../../kap6/">Kap. 6 — Responsivt webdesign</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION B — OUTPUT (5 oppgaver, 18 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section B — Find result of code (~18 %)</h2>
+  <p class="part-intro">Forutsi hva koden returnerer eller skriver ut. Skriv svaret i input-feltet og trykk <em>Sjekk</em>. Forklaringen viser hvilken <em>mekanisme</em> som driver outputen.</p>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 11</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Math-runding</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(Math.ceil(-2.3));</code></pre>
+      <div class="exam-q__answer">
+        <label for="q11-input">Ditt svar:</label>
+        <input type="text" id="q11-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="-2">Riktig svar: -2</span>
+          <p><strong>Mekanisme:</strong> <code>Math.ceil</code> avrunder <em>oppover</em> på tallinjen — alltid mot positiv side. For negative tall betyr "oppover" mot null. <code>-2.3</code> avrundes opp til <code>-2</code> (ikke til <code>-3</code>).</p>
+          <p><strong>Sammenligning som ofte forvirrer:</strong></p>
+          <ul>
+            <li><code>Math.ceil(-2.3)</code> → <code>-2</code> (oppover mot 0)</li>
+            <li><code>Math.floor(-2.3)</code> → <code>-3</code> (nedover, vekk fra 0)</li>
+            <li><code>Math.round(-2.3)</code> → <code>-2</code> (vanlig avrunding)</li>
+            <li><code>Math.round(-2.5)</code> → <code>-2</code> (JS runder mot positiv ved 0.5!)</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Math</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 12</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — parseFloat</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(parseFloat("3.14abc"));</code></pre>
+      <div class="exam-q__answer">
+        <label for="q12-input">Ditt svar:</label>
+        <input type="text" id="q12-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="3.14">Riktig svar: 3.14</span>
+          <p><strong>Mekanisme:</strong> <code>parseFloat</code> leser tegn fra venstre og fortsetter så lenge tegnet kan inngå i et flyttall (siffer, punktum, e for eksponent). Den stopper ved første ugyldige tegn (her: <code>a</code>) og returnerer det den har lest så langt.</p>
+          <p><strong>Kontrast — <code>Number()</code>:</strong> <code>Number("3.14abc")</code> → <code>NaN</code> fordi <code>Number</code> krever at <em>hele</em> strengen er et gyldig tall — ingen "tilgir og fortsett"-oppførsel.</p>
+          <p><strong>Andre tilfeller:</strong></p>
+          <ul>
+            <li><code>parseFloat("  3.14")</code> → <code>3.14</code> (whitespace foran tillates)</li>
+            <li><code>parseFloat("abc3.14")</code> → <code>NaN</code> (ingen gyldige tegn først)</li>
+            <li><code>parseFloat("")</code> → <code>NaN</code></li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Typer og coercion</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 13</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — null vs undefined</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(null == undefined, null === undefined);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q13-input">Ditt svar:</label>
+        <input type="text" id="q13-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="true false">Riktig svar: true false</span>
+          <p><strong>Mekanisme:</strong></p>
+          <ul>
+            <li><code>null == undefined</code> → <code>true</code>. Loose-equality (<code>==</code>) har en <em>spesialregel</em>: <code>null</code> og <code>undefined</code> er "like" til hverandre (men ingen andre verdier).</li>
+            <li><code>null === undefined</code> → <code>false</code>. Strict-equality (<code>===</code>) krever samme type — <code>null</code> er type <code>object</code> (kjent JS-bug), <code>undefined</code> er type <code>undefined</code>.</li>
+          </ul>
+          <p><strong>Praktisk konsekvens:</strong> Vil du sjekke "verdi er <em>enten</em> null eller undefined", kan du skrive <code>x == null</code> (én sjekk dekker begge). Vil du skille dem, må du bruke <code>===</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Data og variabler</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 14</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Array.map / filter</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut? (svar med array-syntaks, f.eks. <code>[1,2]</code> eller <code>[1, 2]</code>)</p>
+      <pre><code>let tall = [1, 2, 3];
+let svar = tall.map(x =&gt; x * 2).filter(x =&gt; x &gt; 2);
+console.log(svar);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q14-input">Ditt svar:</label>
+        <input type="text" id="q14-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="[4, 6]" data-answer-alts="[4,6]|[ 4, 6 ]">Riktig svar: [4, 6]</span>
+          <p><strong>Mekanisme — chained array-metoder:</strong></p>
+          <ol>
+            <li><code>tall.map(x =&gt; x * 2)</code> dobler hvert element: <code>[2, 4, 6]</code>.</li>
+            <li><code>.filter(x =&gt; x &gt; 2)</code> beholder bare de som er strengt større enn 2: <code>[4, 6]</code> (verdien 2 droppes fordi <code>2 &gt; 2</code> er falskt).</li>
+          </ol>
+          <p>Begge metoder returnerer et <em>nytt</em> array — de muterer ikke det opprinnelige. Det er en av styrkene ved funksjonell array-API: du kan kjede dem trygt uten å bekymre deg for sideeffekter.</p>
+          <p><strong>Vanlig feil:</strong> Tro at <code>x &gt; 2</code> inkluderer 2 (det er <em>strengt</em> større, så 2 selv er ekskludert).</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 15</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — String.repeat</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log("ha".repeat(3) + "!");</code></pre>
+      <div class="exam-q__answer">
+        <label for="q15-input">Ditt svar:</label>
+        <input type="text" id="q15-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="hahaha!" data-answer-alts="'hahaha!'|&quot;hahaha!&quot;">Riktig svar: hahaha!</span>
+          <p><strong>Mekanisme:</strong> <code>"str".repeat(n)</code> returnerer strengen gjentatt <code>n</code> ganger. <code>"ha".repeat(3)</code> = <code>"hahaha"</code>. Deretter konkatenerer <code>+</code> strengen <code>"!"</code> på slutten: <code>"hahaha!"</code>.</p>
+          <p><strong>Edge cases:</strong></p>
+          <ul>
+            <li><code>"x".repeat(0)</code> → <code>""</code> (tom streng)</li>
+            <li><code>"x".repeat(-1)</code> → kastet <code>RangeError</code></li>
+            <li><code>"x".repeat(2.7)</code> → <code>"xx"</code> (avrundes nedover, fungerer som om man skrev <code>repeat(2)</code>)</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Strings</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION C — KORTSVAR (5 oppgaver, 17 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section C — Kortsvar (~17 %)</h2>
+  <p class="part-intro">Skriv prosa-svar i textarea-feltet. Når du er ferdig, klikk <em>Vis fasit og vurder</em> — sammenlign mot rubrikken, og bruk knappene under fasit til å gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 16</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 6 — Mobile-first</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <strong>mobile-first</strong> og <strong>desktop-first</strong> CSS-strategi. Hvorfor anbefales mobile-first i moderne webdesign? Nevn minst to konkrete grunner.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> Mobile-first: default-CSS designes for mobil, og <code>@media (min-width: …)</code>-blokker utvider for større skjermer. Desktop-first: default-CSS er for desktop, og <code>@media (max-width: …)</code>-blokker reduserer ned.</li>
+            <li><strong>1 poeng:</strong> Grunn 1 — <em>progressiv enrichment</em>: mobil er det enkleste tilfellet med færrest ressurser; det er enklere å legge til kompleksitet enn å fjerne den.</li>
+            <li><strong>1 poeng:</strong> Grunn 2 — <em>ytelse på mobil</em>: mobile nettverk er ofte tregere. Mobile-first laster typisk mindre CSS før render, fordi advanced styles ligger bak media queries.</li>
+            <li><strong>1 poeng:</strong> Bonus-grunn: <em>flertallet bruker mobil</em>. Statistikk viser at over 50 % av webtrafikken kommer fra mobile enheter — det gir mening å designe for "primary"-tilfellet først.</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap6/">Kap. 6 — Responsivt webdesign</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 poeng</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 17</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — TCP/IP-lag</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Beskriv kort hva hver av de fire lagene i <strong>TCP/IP-modellen</strong> gjør, og nevn <em>én eksempel-protokoll</em> per lag.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng — 0.75 per lag):</strong></p>
+          <ul>
+            <li><strong>Application layer</strong> — kommunikasjon med applikasjoner og brukere. Eksempler: HTTP, HTTPS, SMTP, FTP, DNS.</li>
+            <li><strong>Transport layer</strong> — pålitelig (eller upålitelig) endepunkt-til-endepunkt-overføring; deler opp data i pakker og styrer flyten. Eksempler: TCP (pålitelig), UDP (forbindelsesløs).</li>
+            <li><strong>Network/Internet layer</strong> — adressering og ruting av pakker mellom nettverk. Eksempler: IP, ICMP.</li>
+            <li><strong>Link/Physical layer</strong> — selve fysiske mediet og dataoverføringen over kabel/radio. Eksempler: Ethernet, WiFi (IEEE 802.11).</li>
+          </ul>
+          <p><strong>Vanlig forveksling:</strong> OSI-modellen har 7 lag; TCP/IP-modellen 4. Det er TCP/IP som er sentral i pensum her.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 lag forklart med eksempel</button>
+            <button type="button" data-grade="0.66">3 av 4 lag</button>
+            <button type="button" data-grade="0.33">1-2 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 18</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 3 — CSS-plassering</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <strong>external</strong>, <strong>internal</strong> og <strong>inline</strong> CSS. Når brukes hva, og hvilken regel "vinner" hvis det er konflikt mellom dem?</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> Tre stedene definert riktig:
+              <ul>
+                <li><em>External:</em> egen <code>.css</code>-fil linket via <code>&lt;link rel="stylesheet" href="..."&gt;</code> i <code>&lt;head&gt;</code>.</li>
+                <li><em>Internal:</em> CSS-regler i en <code>&lt;style&gt;</code>-blokk i <code>&lt;head&gt;</code>.</li>
+                <li><em>Inline:</em> <code>style="color: red"</code> som attributt direkte på enkeltelementer.</li>
+              </ul>
+            </li>
+            <li><strong>1 poeng:</strong> Bruksområder — external er standard for produksjon (kan caches, gjenbruk på tvers av sider, separasjon av structure/presentation). Internal brukes for sidespesifikk styling. Inline brukes typisk bare for dynamisk overstyring fra JS eller spesielle unntakstilfeller.</li>
+            <li><strong>1 poeng:</strong> Specificity-rekkefølge: inline (specificity 1000) "vinner" over both internal og external — de to siste har samme specificity, så regelen som kommer <em>sist</em> i kilden vinner. <code>!important</code> overstyrer alt uansett kilde.</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> Inline-CSS bryter med "separation of concerns" og er vanskelig å vedlikeholde — derfor unngås det i moderne kodebaser.</p>
+          <p class="ref">Pensum: <a href="../../kap3/forsta-css/">Kap. 3 — Forstå CSS</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 19</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Flexbox vs Grid</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar hovedforskjellen mellom <strong>Flexbox</strong> og <strong>CSS Grid</strong>. Når foretrekker du det ene framfor det andre? Gi <strong>ett eksempel</strong> på et layout-problem som passer best for Flexbox og <strong>ett</strong> som passer best for Grid.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (4 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> Hovedforskjell — Flexbox er <em>én-dimensjonal</em> (kontrollerer enten rad eller kolonne om gangen), Grid er <em>to-dimensjonal</em> (rader og kolonner samtidig).</li>
+            <li><strong>1 poeng:</strong> Flexbox er <em>innholds-drevet</em>: barna bestemmer størrelsen sin og flex-en fordeler det. Grid er <em>layout-drevet</em>: containeren definerer et rutenett, og barna plasseres inn i det.</li>
+            <li><strong>1 poeng:</strong> Flexbox-eksempel — en horisontal navigasjonsmeny der lenkene fordeles med <code>justify-content</code>; en knapperad; en form-row med label og input. Alt som er én linje med variabel innholdsbredde.</li>
+            <li><strong>1 poeng:</strong> Grid-eksempel — en hovedside-layout med header / sidebar / hovedinnhold / footer; et galleri av kort i et auto-fyllt rutenett; en kalender. Alt som har struktur i begge dimensjoner.</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> De kan brukes sammen — en Grid-container kan ha et Flexbox-barn (eller omvendt). I praksis bruker man begge.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 poeng</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 20</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — Semantisk HTML</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva betyr "semantisk HTML", og hvorfor er det bedre å bruke <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;footer&gt;</code> osv. enn å bruke <code>&lt;div&gt;</code> til alt? Nevn minst to konkrete fordeler.</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng:</strong> Definisjon — semantisk HTML bruker tags som <em>beskriver hva innholdet er</em> (ikke bare hvordan det ser ut). <code>&lt;article&gt;</code> sier "selvstendig artikkel", <code>&lt;nav&gt;</code> sier "navigasjon" — i motsetning til <code>&lt;div&gt;</code> som er meningstomt.</li>
+            <li><strong>1 poeng:</strong> Fordel 1 — <em>tilgjengelighet</em>: screenreaders kan hoppe direkte til <code>&lt;main&gt;</code>, lese opp lister av <code>&lt;nav&gt;</code>-elementer, og gi en mening-rik leseopplevelse. <code>&lt;div&gt;</code> formidler ingen struktur.</li>
+            <li><strong>1 poeng:</strong> Fordel 2 — <em>SEO og maskinforståelse</em>: søkemotorer og parsere kan tolke siden bedre. <code>&lt;article&gt;</code> indikerer at innholdet kan stå alene; <code>&lt;time datetime="..."&gt;</code> markerer datoer.</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> Også <em>vedlikehold</em> — semantiske tags gjør koden lettere å forstå for andre utviklere. En CSS-fil som har <code>article.post</code> er mer leselig enn <code>div.post-container-outer-wrapper</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap2/semantics.html">Kap. 2 — Semantikk</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION D — KODING (5 oppgaver, 40 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section D — Koding (~40 %)</h2>
+  <p class="part-intro">Skriv kode i tre felt (HTML/CSS/JS). Klikk <em>Kjør i sandbox</em> for å se resultatet i forhåndsvisning. Klikk <em>Vis fasit og vurder</em> for å se referanseløsning + rubrikk og gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 21</span>
+      <span class="exam-q__points">10 poeng</span>
+      <span class="exam-q__topic">Kap. 5 — Flexbox-layout</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt. Skriv <strong>kun CSS</strong> som lager en typisk sidelayout med Flexbox:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> <code>&lt;header&gt;</code> og <code>&lt;footer&gt;</code> tar full bredde med blå (<code>#3b6ea8</code>) bakgrunn og hvit tekst, og 16px padding.</li>
+        <li><strong>(4 poeng)</strong> <code>.midt</code> er en flex-container der <code>&lt;aside&gt;</code> tar ~30 % av bredden (venstre side) og <code>&lt;main&gt;</code> tar resterende ~70 % (høyre side). Bruk <code>flex</code>-egenskapen, ikke fastsatt bredde.</li>
+        <li><strong>(2 poeng)</strong> <code>&lt;aside&gt;</code> har grå bakgrunn (<code>#eee</code>) og 12px padding; <code>&lt;main&gt;</code> har hvit bakgrunn og 12px padding.</li>
+        <li><strong>(2 poeng)</strong> Hele <code>body</code> skal ha minst <code>100vh</code> høyde, og <code>footer</code> skal "klistre" til bunnen selv om innholdet er kort. (Tips: gjør <code>body</code> til flex-column.)</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="12">&lt;header&gt;&lt;h1&gt;Min nettside&lt;/h1&gt;&lt;/header&gt;
+&lt;div class="midt"&gt;
+  &lt;aside&gt;
+    &lt;h2&gt;Sidemeny&lt;/h2&gt;
+    &lt;p&gt;Lenke 1&lt;/p&gt;
+    &lt;p&gt;Lenke 2&lt;/p&gt;
+  &lt;/aside&gt;
+  &lt;main&gt;
+    &lt;h2&gt;Hovedinnhold&lt;/h2&gt;
+    &lt;p&gt;Litt tekst her.&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+&lt;footer&gt;&lt;p&gt;© 2026&lt;/p&gt;&lt;/footer&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="12" placeholder="/* skriv din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig her)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>* { box-sizing: border-box; margin: 0; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header, footer {
+  background: #3b6ea8;
+  color: white;
+  padding: 16px;
+}
+
+.midt {
+  display: flex;
+  flex: 1;          /* tar all gjenstående høyde mellom header og footer */
+}
+
+aside {
+  flex: 0 0 30%;    /* ingen voks, ingen krympe, basis 30% */
+  background: #eee;
+  padding: 12px;
+}
+
+main {
+  flex: 1;          /* tar resten */
+  background: white;
+  padding: 12px;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong><code>body</code> som flex-column + <code>min-height: 100vh</code>:</strong> Gjør at hele body fyller skjermen vertikalt, og <code>.midt</code> med <code>flex: 1</code> tar all overflødig høyde — så footer alltid synker til bunnen ("sticky footer"-mønsteret).</li>
+            <li><strong><code>flex: 0 0 30%</code> vs <code>width: 30%</code>:</strong> Begge fungerer i mange tilfeller. <code>flex: 0 0 30%</code> er mer eksplisitt: "ikke voks, ikke krymp, start på 30 % bredde". Det er det rette i flexbox-kontekst.</li>
+            <li><strong><code>flex: 1</code> på main:</strong> Stenografi for <code>flex: 1 1 0%</code> — vokse fritt, krympe fritt, basis 0. Resultat: tar resten av plassen.</li>
+            <li><strong>box-sizing: border-box:</strong> Sørger for at padding ikke legger seg utenpå <code>flex-basis</code>-bredden og brekker layouten.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>width: 30%</code> uten <code>flex-shrink: 0</code> — kan krympes uventet. Glemme <code>min-height: 100vh</code> så footer ikke synker. Bruke <code>float: left</code> — det er en pre-flexbox-teknikk som er erstattet av Flexbox/Grid for layout.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 22</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 6 — Responsiv navigasjon</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er gitt: en navigasjonsmeny som <em>default</em> er vertikal (mobil-first). Skriv CSS som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Default — på mobil: lenkene stables vertikalt, hver lenke har 10px padding, ingen list-style-bullet.</li>
+        <li><strong>(4 poeng)</strong> På skjermer som er <strong>600 px eller bredere</strong> (bruk en media query med <code>min-width</code>): lenkene ligger horisontalt med 20px mellom seg (bruk Flexbox eller justify-content).</li>
+        <li><strong>(1 poeng)</strong> Lenkenes farge: mørk grå default, rød ved hover.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="7">&lt;nav&gt;
+  &lt;ul class="meny"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Hjem&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Om oss&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="14" placeholder="/* skriv din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>/* Default — mobil */
+.meny {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.meny li a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+}
+.meny li a:hover {
+  color: red;
+}
+
+/* Desktop — 600px og oppover */
+@media (min-width: 600px) {
+  .meny {
+    display: flex;
+    gap: 20px;
+  }
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Mobile-first prinsipp:</strong> Den vertikale stylingen står utenfor noen media query — den er default for alle skjermer. Media-querien legger på horisontal flex bare når viewport er stor nok.</li>
+            <li><strong><code>display: block</code> på lenkene:</strong> Gjør at hele padding-arealet blir klikkbart, ikke bare teksten. Bedre touch-target på mobil.</li>
+            <li><strong><code>gap: 20px</code>:</strong> Moderne måte å mellom-romme flex-barn. Alternativet er <code>.meny li:not(:last-child) { margin-right: 20px; }</code>, men det er mer skriving.</li>
+            <li><strong>Test responsiviteten:</strong> Endre vindusbredde og se overgangen ved 600 px.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Skrive desktop-CSS som default og bruke <code>max-width: 599px</code> for mobil (desktop-first — fungerer, men ikke mobile-first). Glemme <code>list-style: none</code> så punktene henger igjen. Sette padding på <code>li</code> i stedet for <code>a</code> — da er det bare teksten som er klikkbar.</p>
+          <p class="ref">Pensum: <a href="../../kap6/">Kap. 6 — Responsivt webdesign</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 23</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 7+10 — Custom videospiller</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under inneholder en <code>&lt;video&gt;</code>-tag <em>uten</em> <code>controls</code>-attributtet, samt to knapper. Skriv JavaScript som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Klikk på <code>#play</code> starter avspilling (<code>video.play()</code>).</li>
+        <li><strong>(3 poeng)</strong> Klikk på <code>#pause</code> pauser (<code>video.pause()</code>).</li>
+        <li><strong>(2 poeng)</strong> Mens videoen spilles, deaktiver <code>#play</code>-knappen (sett <code>disabled = true</code>) — og motsatt ved pause. Tips: lytt på <code>play</code> og <code>pause</code> events på <em>video-elementet</em>.</li>
+      </ol>
+      <p><em>Merk: I sandbox-iframen er det ikke garantert at videoen kan spilles av (autoplay-policy, format-støtte). Fokuser på at koden er korrekt strukturert — logikken er det viktige, ikke at du ser bevegelse.</em></p>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="6">&lt;video id="film" width="320" muted&gt;
+  &lt;source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+&lt;br&gt;
+&lt;button id="play"&gt;Spill av&lt;/button&gt;
+&lt;button id="pause"&gt;Pause&lt;/button&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="12" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const film = document.getElementById("film");
+const playBtn = document.getElementById("play");
+const pauseBtn = document.getElementById("pause");
+
+playBtn.addEventListener("click", function () {
+  film.play();
+});
+
+pauseBtn.addEventListener("click", function () {
+  film.pause();
+});
+
+film.addEventListener("play", function () {
+  playBtn.disabled = true;
+  pauseBtn.disabled = false;
+});
+
+film.addEventListener("pause", function () {
+  playBtn.disabled = false;
+  pauseBtn.disabled = true;
+});
+
+// Initialiser: før noe spiller, pause-knappen er deaktivert
+pauseBtn.disabled = true;</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Video som DOM-objekt:</strong> <code>&lt;video&gt;</code>-elementet har et rikt API: <code>.play()</code>, <code>.pause()</code>, <code>.currentTime</code>, <code>.duration</code>, <code>.volume</code>, og events som <code>play</code>, <code>pause</code>, <code>ended</code>, <code>timeupdate</code>.</li>
+            <li><strong>Hvorfor lytte på video, ikke på knappene:</strong> Hvis vi bare bytter <code>disabled</code> ved klikk på <em>knappen</em>, fungerer det ikke hvis videoen pauses av en annen grunn (ferdig, feil, brukeren skiftet fane). Ved å lytte på selve videoen er UI-en alltid synkronisert med videoens reelle tilstand.</li>
+            <li><strong>Autoplay og muted:</strong> HTML-en har <code>muted</code> — det er ofte nødvendig for at <code>play()</code> skal lykkes uten brukerinteraksjon i moderne nettlesere. Uten muted kan promise fra <code>.play()</code> avvises.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Endre <code>disabled</code> bare i klikk-handleren, ikke i event-handleren — så UI-en kan komme ut av synk. Glemme initial-tilstand så begge knappene er aktive før noe spilles. Bruke <code>onclick</code>-attribute inline i HTML — fungerer, men oppgaven antyder addEventListener-mønsteret.</p>
+          <p class="ref">Pensum: <a href="../../kap7/video-audio.html">Kap. 7 — Video og audio</a>, <a href="../../kap10/">Kap. 10 — DOM</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 24</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Date + funksjoner</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Skriv en JavaScript-funksjon <code>dagerTilJul()</code> som regner ut <strong>antall dager til 24. desember</strong> i inneværende år (eller neste år hvis 24. desember allerede er passert). Vis resultatet i en alert sammen med en sjekk på om dette antallet er et <em>primtall</em>:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Bruk <code>new Date()</code> for å hente nåværende dato, og lag en ny <code>Date</code> for 24. desember. Hvis 24. desember er passert, lag for neste år.</li>
+        <li><strong>(2 poeng)</strong> Konverter forskjellen til hele dager: del på <code>1000 * 60 * 60 * 24</code> og avrund med <code>Math.ceil</code>.</li>
+        <li><strong>(2 poeng)</strong> Skriv en hjelpefunksjon <code>erPrimtall(n)</code> som returnerer <code>true</code> hvis <code>n</code> er primtall (≥ 2, kun delelig på 1 og seg selv).</li>
+        <li><strong>(1 poeng)</strong> Vis alert med begge deler, f.eks. "<em>42 dager til jul — 42 er ikke primtall.</em>" Bind funksjonen til knappens click-event.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="3">&lt;button id="sjekk"&gt;Hvor lenge til jul?&lt;/button&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="16" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>function erPrimtall(n) {
+  if (n &lt; 2) return false;
+  for (let i = 2; i * i &lt;= n; i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+
+function dagerTilJul() {
+  const naa = new Date();
+  let jul = new Date(naa.getFullYear(), 11, 24);  // måned 11 = desember
+  if (naa &gt; jul) {
+    jul = new Date(naa.getFullYear() + 1, 11, 24);
+  }
+  const ms = jul - naa;
+  const dager = Math.ceil(ms / (1000 * 60 * 60 * 24));
+  const tekst = erPrimtall(dager)
+    ? dager + " dager til jul — " + dager + " er primtall."
+    : dager + " dager til jul — " + dager + " er ikke primtall.";
+  alert(tekst);
+}
+
+document.getElementById("sjekk").addEventListener("click", dagerTilJul);</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Måneds-indeks:</strong> JS bruker 0-indekserte måneder, så desember = <code>11</code> (ikke 12). Klassisk feil.</li>
+            <li><strong>Sammenligning av Date:</strong> <code>naa &gt; jul</code> sammenligner via implisitt valueOf() til millisekunder siden epoch — virker som forventet.</li>
+            <li><strong>Primtall-sjekk:</strong> Optimaliseringen <code>i * i &lt;= n</code> i stedet for <code>i &lt;= n</code> sparer mye tid på store n (vi trenger bare sjekke opp til kvadratroten). For pedagogiske formål er <code>i &lt;= Math.sqrt(n)</code> like korrekt.</li>
+            <li><strong>Avrunding:</strong> <code>Math.ceil</code> sørger for at hvis det er 0.3 dager til midnatt (under et døgn), får vi "1 dag" — ikke 0. For "X dager igjen"-formuleringen er det vanligvis ønsket.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke måned 12 (= januar neste år, off-by-one). Glemme å håndtere det at jul kan være passert. Skrive primtall-sjekken med <code>i &lt; n / 2</code> — fungerer, men ineffektivt. Skrive en versjon som kraker på <code>n = 1</code> eller <code>n = 0</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Date og Math</a>, <a href="../../kap9/funksjoner-og-json/">Kap. 9 — Funksjoner</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 25</span>
+      <span class="exam-q__points">6 poeng</span>
+      <span class="exam-q__topic">Kap. 5+6 — Responsivt kort-grid</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under inneholder seks "kort". Skriv CSS som lager et <strong>responsivt grid</strong> av disse uten media queries — la antall kolonner justere seg automatisk basert på tilgjengelig bredde:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Bruk <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code> slik at hver kort er minst 200 px bredt, og det blir så mange kolonner som plassen tillater.</li>
+        <li><strong>(2 poeng)</strong> 16 px mellomrom mellom kortene (<code>gap</code>).</li>
+        <li><strong>(1 poeng)</strong> Hvert kort har lys grå bakgrunn (<code>#f4f4f4</code>), 12 px padding og 4 px border-radius.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="9">&lt;div class="grid"&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 1&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 2&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 3&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 4&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 5&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="kort"&gt;&lt;h3&gt;Kort 6&lt;/h3&gt;&lt;p&gt;Litt tekst.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="8" placeholder="/* skriv din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.kort {
+  background: #f4f4f4;
+  padding: 12px;
+  border-radius: 4px;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong><code>auto-fit</code> vs <code>auto-fill</code>:</strong> Begge fyller raden med så mange kolonner som passer. Forskjellen: hvis det er <em>færre</em> elementer enn maks-antall kolonner, gjør <code>auto-fit</code> at de eksisterende elementene strekker seg ut til å fylle raden, mens <code>auto-fill</code> beholder dem på 200 px og lar tomme spor stå igjen. <code>auto-fit</code> er oftest mer naturlig.</li>
+            <li><strong><code>minmax(200px, 1fr)</code>:</strong> Hver kolonne er minst 200 px bredt, men kan vokse til <code>1fr</code> av tilgjengelig plass. Resultat: smale skjermer får én eller to kolonner, brede skjermer får 3-6 kolonner — automatisk uten media queries.</li>
+            <li><strong>Hvorfor dette mønsteret er populært:</strong> En enkelt linje CSS lager et grid som responder elegant på alle skjermstørrelser. Mye enklere enn en serie av <code>@media</code>-blokker.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>repeat(3, 1fr)</code> — gir alltid 3 kolonner uansett bredde, ikke responsivt. Glemme <code>minmax</code> og skrive bare <code>auto-fit</code> — gyldig syntaks, men kolonnene kan bli ekstremt smale uten en minimums-bredde. Bruke <code>justify-content: space-between</code> i stedet for <code>gap</code> — kan fungere, men <code>gap</code> er den idiomatiske måten i grid/flex.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Grid</a>, <a href="../../kap6/">Kap. 6 — Responsivt design</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 deloppgaver løst</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<script src="exam.js"></script>
+</body>
+</html>

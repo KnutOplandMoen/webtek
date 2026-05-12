@@ -10,12 +10,18 @@
    Felles for alle: poengtelleren nederst til høyre summerer
    oppnådde poeng × maks-poeng. Egenvurderte oppgaver bruker
    data-grade-multiplikator (1.0 / 0.66 / 0.33 / 0).
+
+   Persistens: alle svar (MC-valg, output-tekst, essay-tekst,
+   kode-felt, fasit-visning, selvvurdering) lagres fortløpende
+   i localStorage, nøklet på sidens pathname, slik at refresh
+   ikke mister besvarelsen. "Nullstill"-knappen tømmer lageret.
    ============================================================ */
 
 (function () {
   'use strict';
 
   const ANSWER_RE = /Riktig svar:\s*([A-D])/i;
+  const STORAGE_KEY = 'it2805-exam:v1:' + location.pathname;
 
   const state = {
     totalPoints: 0,
@@ -24,6 +30,42 @@
     answered: 0,
     fullyCorrect: 0,
   };
+
+  /* ---------- storage ---------- */
+
+  let cache = null;
+
+  function loadAll() {
+    if (cache !== null) return cache;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      cache = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      cache = {};
+    }
+    return cache;
+  }
+
+  function flush() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cache));
+    } catch (e) { /* quota / private mode — silently ignore */ }
+  }
+
+  function getQ(idx) {
+    return loadAll()[idx] || null;
+  }
+
+  function patchQ(idx, patch) {
+    const all = loadAll();
+    all[idx] = Object.assign({}, all[idx] || {}, patch);
+    flush();
+  }
+
+  function clearAll() {
+    cache = {};
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
 
   /* ---------- utilities ---------- */
 
@@ -37,8 +79,16 @@
   function buildScoreboard() {
     const el = document.createElement('div');
     el.className = 'exam-score';
-    el.innerHTML = '<span class="score-text"></span>';
+    el.innerHTML =
+      '<span class="score-text"></span>' +
+      '<button type="button" class="score-reset" title="Tøm lagrede svar">Nullstill</button>';
     document.body.appendChild(el);
+    const resetBtn = el.querySelector('.score-reset');
+    resetBtn.addEventListener('click', () => {
+      if (!confirm('Slette alle lagrede svar på denne siden og laste på nytt?')) return;
+      clearAll();
+      location.reload();
+    });
     return el;
   }
 
@@ -73,12 +123,31 @@
     return match[1].toUpperCase().charCodeAt(0) - 65;
   }
 
-  function attachMc(q, board, points) {
+  function attachMc(q, board, points, idx) {
     const correct = correctMcIndex(q);
     const options = Array.from(q.querySelectorAll('.exam-q__opts > li'));
     if (correct < 0 || correct >= options.length || !options.length) return;
 
     hideSummary(q);
+
+    function applyChoice(i, fromRestore) {
+      options.forEach((other, j) => {
+        other.classList.add('is-locked');
+        other.setAttribute('aria-disabled', 'true');
+        other.removeAttribute('tabindex');
+        if (j === correct) other.classList.add('is-correct');
+        if (j === i && i !== correct) other.classList.add('is-wrong');
+      });
+      q.classList.add(i === correct ? 'is-answered' : 'is-answered-wrong');
+      openFasit(q);
+      state.answered += 1;
+      if (i === correct) {
+        state.earnedPoints += points;
+        state.fullyCorrect += 1;
+      }
+      refreshScoreboard(board);
+      if (!fromRestore) patchQ(idx, { type: 'mc', picked: i });
+    }
 
     options.forEach((li, i) => {
       li.setAttribute('role', 'button');
@@ -87,21 +156,7 @@
 
       const choose = () => {
         if (li.classList.contains('is-locked')) return;
-        options.forEach((other, j) => {
-          other.classList.add('is-locked');
-          other.setAttribute('aria-disabled', 'true');
-          other.removeAttribute('tabindex');
-          if (j === correct) other.classList.add('is-correct');
-          if (j === i && i !== correct) other.classList.add('is-wrong');
-        });
-        q.classList.add(i === correct ? 'is-answered' : 'is-answered-wrong');
-        openFasit(q);
-        state.answered += 1;
-        if (i === correct) {
-          state.earnedPoints += points;
-          state.fullyCorrect += 1;
-        }
-        refreshScoreboard(board);
+        applyChoice(i, false);
       };
 
       li.addEventListener('click', choose);
@@ -112,6 +167,13 @@
         }
       });
     });
+
+    const saved = getQ(idx);
+    if (saved && saved.type === 'mc' &&
+        typeof saved.picked === 'number' &&
+        saved.picked >= 0 && saved.picked < options.length) {
+      applyChoice(saved.picked, true);
+    }
   }
 
   /* ---------- OUTPUT (find result of code) ---------- */
@@ -124,7 +186,7 @@
     return t;
   }
 
-  function attachOutput(q, board, points) {
+  function attachOutput(q, board, points, idx) {
     const fasit = q.querySelector('.fasit-correct');
     const input = q.querySelector('.exam-q__input');
     const button = q.querySelector('.exam-q__check');
@@ -139,9 +201,9 @@
     const accepted = [primary, ...altsRaw.split('|').filter(Boolean)]
       .map((a) => normalizeAnswer(a, strict));
 
-    const submit = () => {
-      if (input.disabled) return;
-      const user = normalizeAnswer(input.value, strict);
+    function applySubmit(value, fromRestore) {
+      input.value = value;
+      const user = normalizeAnswer(value, strict);
       const ok = accepted.includes(user);
       input.disabled = true;
       button.disabled = true;
@@ -154,6 +216,12 @@
         state.fullyCorrect += 1;
       }
       refreshScoreboard(board);
+      if (!fromRestore) patchQ(idx, { type: 'output', value: value, submitted: true });
+    }
+
+    const submit = () => {
+      if (input.disabled) return;
+      applySubmit(input.value, false);
     };
 
     button.addEventListener('click', submit);
@@ -163,46 +231,91 @@
         submit();
       }
     });
+    input.addEventListener('input', () => {
+      if (input.disabled) return;
+      patchQ(idx, { type: 'output', value: input.value, submitted: false });
+    });
+
+    const saved = getQ(idx);
+    if (saved && saved.type === 'output') {
+      if (saved.submitted) {
+        applySubmit(saved.value || '', true);
+      } else if (typeof saved.value === 'string') {
+        input.value = saved.value;
+      }
+    }
   }
 
   /* ---------- SELF-GRADE (essay + code) ---------- */
 
-  function attachSelfGrade(q, board, points) {
+  function attachSelfGrade(q, board, points, idx, type) {
     const buttons = Array.from(q.querySelectorAll('.self-grade button[data-grade]'));
-    if (!buttons.length) return;
+    if (!buttons.length) return null;
     let used = false;
+
+    function applyGrade(grade, btn, fromRestore) {
+      if (used) return;
+      used = true;
+      const earned = points * grade;
+      buttons.forEach((other) => { other.disabled = true; });
+      if (btn) btn.classList.add('is-chosen');
+      q.classList.add(grade > 0 ? 'is-answered' : 'is-answered-wrong');
+      state.answered += 1;
+      state.earnedPoints += earned;
+      if (grade >= 0.99) state.fullyCorrect += 1;
+      refreshScoreboard(board);
+      if (!fromRestore) patchQ(idx, { type: type, grade: grade });
+    }
+
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (used) return;
-        used = true;
         const grade = parseFloat(btn.getAttribute('data-grade')) || 0;
-        const earned = points * grade;
-        buttons.forEach((other) => { other.disabled = true; });
-        btn.classList.add('is-chosen');
-        q.classList.add(grade > 0 ? 'is-answered' : 'is-answered-wrong');
-        state.answered += 1;
-        state.earnedPoints += earned;
-        if (grade >= 0.99) state.fullyCorrect += 1;
-        refreshScoreboard(board);
+        applyGrade(grade, btn, false);
       });
     });
+
+    const saved = getQ(idx);
+    if (saved && typeof saved.grade === 'number') {
+      const target = buttons.find((b) =>
+        parseFloat(b.getAttribute('data-grade')) === saved.grade
+      );
+      applyGrade(saved.grade, target, true);
+    }
+
+    return applyGrade;
   }
 
   /* ---------- ESSAY ---------- */
 
-  function attachEssay(q, board, points) {
+  function attachEssay(q, board, points, idx) {
     const reveal = q.querySelector('.exam-q__reveal');
     const textarea = q.querySelector('.exam-q__textarea');
     if (!reveal) return;
 
-    reveal.addEventListener('click', () => {
+    function applyReveal(fromRestore) {
       if (textarea) textarea.disabled = true;
       reveal.disabled = true;
       reveal.textContent = 'Fasit vist — egenvurder under';
       openFasit(q);
-    });
+      if (!fromRestore) patchQ(idx, { type: 'essay', revealed: true });
+    }
 
-    attachSelfGrade(q, board, points);
+    reveal.addEventListener('click', () => applyReveal(false));
+
+    if (textarea) {
+      textarea.addEventListener('input', () => {
+        if (textarea.disabled) return;
+        patchQ(idx, { type: 'essay', text: textarea.value });
+      });
+    }
+
+    const saved = getQ(idx);
+    if (saved && saved.type === 'essay') {
+      if (textarea && typeof saved.text === 'string') textarea.value = saved.text;
+      if (saved.revealed) applyReveal(true);
+    }
+
+    attachSelfGrade(q, board, points, idx, 'essay');
   }
 
   /* ---------- CODE (editor + sandbox iframe) ---------- */
@@ -250,7 +363,7 @@
     });
   }
 
-  function attachCode(q, board, points) {
+  function attachCode(q, board, points, idx) {
     const reveal = q.querySelector('.exam-q__reveal');
     const run = q.querySelector('.exam-q__run');
     const clear = q.querySelector('.exam-q__clear');
@@ -261,6 +374,19 @@
 
     [htmlField, cssField, jsField].forEach((field) => {
       if (field) attachTabIndent(field);
+    });
+
+    function persistFields() {
+      patchQ(idx, {
+        type: 'code',
+        html: htmlField ? htmlField.value : '',
+        css: cssField ? cssField.value : '',
+        js: jsField ? jsField.value : '',
+      });
+    }
+
+    [htmlField, cssField, jsField].forEach((field) => {
+      if (field) field.addEventListener('input', persistFields);
     });
 
     if (preview) preview.classList.add('is-empty');
@@ -282,15 +408,26 @@
       });
     }
 
-    if (reveal) {
-      reveal.addEventListener('click', () => {
-        reveal.disabled = true;
-        reveal.textContent = 'Fasit vist — egenvurder under';
-        openFasit(q);
-      });
+    function applyReveal(fromRestore) {
+      reveal.disabled = true;
+      reveal.textContent = 'Fasit vist — egenvurder under';
+      openFasit(q);
+      if (!fromRestore) patchQ(idx, { type: 'code', revealed: true });
     }
 
-    attachSelfGrade(q, board, points);
+    if (reveal) {
+      reveal.addEventListener('click', () => applyReveal(false));
+    }
+
+    const saved = getQ(idx);
+    if (saved && saved.type === 'code') {
+      if (htmlField && typeof saved.html === 'string') htmlField.value = saved.html;
+      if (cssField && typeof saved.css === 'string') cssField.value = saved.css;
+      if (jsField && typeof saved.js === 'string') jsField.value = saved.js;
+      if (saved.revealed && reveal) applyReveal(true);
+    }
+
+    attachSelfGrade(q, board, points, idx, 'code');
   }
 
   /* ---------- DISPATCH ---------- */
@@ -309,17 +446,17 @@
     if (!questions.length) return;
     const board = buildScoreboard();
 
-    questions.forEach((q) => {
+    questions.forEach((q, idx) => {
       const type = detectType(q);
       const points = pointsForQuestion(q);
       state.questions += 1;
       state.totalPoints += points;
 
       switch (type) {
-        case 'mc':     attachMc(q, board, points); break;
-        case 'output': attachOutput(q, board, points); break;
-        case 'essay':  attachEssay(q, board, points); break;
-        case 'code':   attachCode(q, board, points); break;
+        case 'mc':     attachMc(q, board, points, idx); break;
+        case 'output': attachOutput(q, board, points, idx); break;
+        case 'essay':  attachEssay(q, board, points, idx); break;
+        case 'code':   attachCode(q, board, points, idx); break;
       }
     });
 
