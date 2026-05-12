@@ -1,0 +1,590 @@
+/* ============================================================
+   IT2805 — øvingseksamen
+   Felles styling for interaktive flervalgs-eksamener.
+   Bygd over CSS-variablene i ../../style.css, men kan stå alene.
+   ============================================================ */
+
+:root {
+  --paper:        #f4f1ea;
+  --paper-dark:   #e8e3d6;
+  --paper-darker: #ddd5c4;
+  --ink:          #1a1612;
+  --ink-soft:     #3d3832;
+  --ink-faded:    #6b6257;
+  --ink-ghost:    #a39886;
+  --rust:         #1f4e79;
+  --rust-dark:    #163758;
+  --green:        #3d6b3a;
+  --green-soft:   #d8e5d4;
+  --red:          #a23b2a;
+  --red-soft:     #f0d9d3;
+  --ochre:        #c68a1f;
+  --line:         #c9c0ae;
+  --line-soft:    #ddd5c4;
+  --serif:        'Newsreader', Georgia, serif;
+  --mono:         'IBM Plex Mono', Menlo, monospace;
+  --sans:         'IBM Plex Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  padding: 0 0 80px;
+}
+
+/* ---------- TOPPMAL ---------- */
+
+.exam-head {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 32px 24px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.exam-head h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  letter-spacing: -0.01em;
+}
+.exam-head p {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  margin: 0 0 0.4em;
+  letter-spacing: 0.02em;
+}
+.exam-head p.exam-meta {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: 0.8em;
+  letter-spacing: 0;
+}
+
+/* ---------- SEKSJONSHEAD ---------- */
+
+.exam-part {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 32px 8px;
+}
+.exam-part h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin: 0 0 0.4em;
+  color: var(--ink);
+}
+.exam-part h2::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: var(--rust);
+  margin-right: 12px;
+  vertical-align: middle;
+  transform: translateY(-4px);
+}
+.exam-part .part-intro {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--ink-faded);
+  margin: 0 0 1.2em;
+}
+
+/* ---------- OPPGAVE-KORT ---------- */
+
+.exam-q {
+  max-width: 880px;
+  margin: 18px auto;
+  padding: 22px 26px;
+  background: var(--paper-dark);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  border-left: 4px solid var(--ink-ghost);
+}
+.exam-q.is-answered { border-left-color: var(--green); }
+.exam-q.is-answered-wrong { border-left-color: var(--red); }
+
+.exam-q__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line-soft);
+}
+.exam-q__num {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rust);
+}
+.exam-q__points {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  background: var(--paper);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line-soft);
+}
+.exam-q__topic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-faded);
+  margin-left: auto;
+}
+
+.exam-q__body { padding-top: 4px; }
+
+.q-text {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  color: var(--ink);
+  margin: 0 0 0.9em;
+  line-height: 1.55;
+}
+.q-text code,
+.exam-q__opts code,
+.fasit-body code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--paper);
+  padding: 1px 5px;
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+}
+.q-text pre,
+.exam-q__opts pre,
+.fasit-body pre {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  line-height: 1.5;
+  margin: 0.6em 0;
+}
+
+/* ---------- ALTERNATIVER ---------- */
+
+.exam-q__opts {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+.exam-q__opts li {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px 12px 14px;
+  margin: 6px 0;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  transition: background 0.12s, border-color 0.12s, transform 0.06s;
+}
+.exam-q__opts li:hover:not(.is-locked) {
+  background: var(--paper-darker);
+  border-color: var(--ink-ghost);
+}
+.exam-q__opts li:focus { outline: 2px solid var(--rust); outline-offset: 2px; }
+.exam-q__opts li:active:not(.is-locked) { transform: translateY(1px); }
+
+.opt-label {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--paper-darker);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* etter klikk */
+.exam-q__opts li.is-correct {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--ink);
+}
+.exam-q__opts li.is-correct .opt-label {
+  background: var(--green);
+  color: var(--paper);
+  border-color: var(--green);
+}
+.exam-q__opts li.is-wrong {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--ink);
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+}
+.exam-q__opts li.is-wrong .opt-label {
+  background: var(--red);
+  color: var(--paper);
+  border-color: var(--red);
+  text-decoration: none;
+}
+.exam-q__opts li.is-locked {
+  cursor: default;
+  pointer-events: none;
+}
+.exam-q__opts li.is-locked:not(.is-correct):not(.is-wrong) {
+  opacity: 0.55;
+}
+
+/* ---------- TEKST-INPUT (Section B — output) ---------- */
+
+.exam-q__answer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+}
+.exam-q__answer label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.exam-q__input {
+  flex: 1 1 200px;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.12s, background 0.12s;
+}
+.exam-q__input:focus { border-color: var(--rust); }
+.exam-q__input.is-correct-input {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+.exam-q__input.is-wrong-input {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+.exam-q__input:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* ---------- TEXTAREA (Section C — kortsvar) ---------- */
+
+.exam-q__textarea {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 12px 14px;
+  margin: 0 0 12px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.12s;
+}
+.exam-q__textarea:focus { border-color: var(--rust); }
+.exam-q__textarea:disabled { opacity: 0.85; }
+
+/* ---------- KODE-EDITOR (Section D — koding) ---------- */
+
+.q-tasklist {
+  margin: 0 0 1em;
+  padding-left: 22px;
+  font-family: var(--serif);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+.q-tasklist li { margin: 0 0 4px; }
+
+.exam-q__editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+}
+.editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.editor-field label {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.editor-field label small {
+  text-transform: none;
+  font-size: 0.72rem;
+  font-weight: 400;
+  margin-left: 6px;
+  color: var(--ink-ghost);
+}
+.editor-field textarea {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper-darker);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 10px 12px;
+  outline: none;
+  resize: vertical;
+  tab-size: 2;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+.editor-field textarea:focus { border-color: var(--rust); }
+.editor-field textarea:disabled { opacity: 0.85; }
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.code-preview {
+  width: 100%;
+  min-height: 160px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-top: 4px;
+}
+.code-preview.is-empty {
+  background: var(--paper-darker);
+  min-height: 60px;
+}
+
+/* ---------- KNAPPER (Sjekk / Vis fasit / Kjør / Tøm) ---------- */
+
+.exam-q__check,
+.exam-q__reveal,
+.exam-q__run,
+.exam-q__clear {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+  background: var(--rust);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.06s;
+}
+.exam-q__check:hover,
+.exam-q__reveal:hover,
+.exam-q__run:hover { background: var(--rust-dark); }
+.exam-q__check:active,
+.exam-q__reveal:active,
+.exam-q__run:active,
+.exam-q__clear:active { transform: translateY(1px); }
+
+.exam-q__clear {
+  background: var(--paper-darker);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.exam-q__clear:hover { background: var(--line-soft); }
+
+.exam-q__check:disabled,
+.exam-q__reveal:disabled,
+.exam-q__run:disabled {
+  background: var(--ink-ghost);
+  cursor: default;
+  opacity: 0.7;
+}
+
+.exam-q__reveal {
+  display: block;
+  margin: 0 0 10px;
+  background: var(--ochre);
+}
+.exam-q__reveal:hover { background: #a47315; }
+
+/* ---------- EGENVURDERING (rubrikk-knapper) ---------- */
+
+.self-grade {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1em;
+  padding-top: 0.8em;
+  border-top: 1px dashed var(--line-soft);
+}
+.self-grade__label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+  margin-right: 4px;
+}
+.self-grade button {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.self-grade button:hover { background: var(--paper-darker); border-color: var(--ink-ghost); }
+.self-grade button.is-chosen {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--ink);
+  font-weight: 500;
+}
+.self-grade button:disabled {
+  cursor: default;
+}
+.self-grade button:not(.is-chosen):disabled {
+  opacity: 0.4;
+}
+
+/* ---------- FASIT ---------- */
+
+.fasit-details {
+  margin-top: 12px;
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+.fasit-details summary {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--rust);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+.fasit-details[open] summary { color: var(--ink-faded); }
+.fasit-details summary.is-hidden { display: none; }
+
+.fasit-body {
+  padding: 6px 0 0;
+  font-family: var(--serif);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.fasit-body p { margin: 0 0 0.6em; }
+.fasit-body p:last-child { margin-bottom: 0; }
+
+.fasit-correct {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  background: var(--green);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 0.8em;
+}
+.fasit-body .ref {
+  margin-top: 0.6em;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+}
+.fasit-body .ref a {
+  color: var(--rust);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--rust);
+}
+.fasit-body .ref a:hover { color: var(--rust-dark); border-bottom-style: solid; }
+
+/* ---------- POENG-TELLER (valgfri JS-injisert) ---------- */
+
+.exam-score {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  letter-spacing: 0.04em;
+  z-index: 100;
+  display: none;
+}
+.exam-score.is-active { display: block; }
+.exam-score strong {
+  color: var(--ochre);
+  font-weight: 700;
+}
+
+/* ---------- RESPONSIV ---------- */
+
+@media (max-width: 640px) {
+  .exam-head { padding: 28px 18px 16px; }
+  .exam-part { padding: 22px 18px 4px; }
+  .exam-q { padding: 16px 18px; margin: 14px 12px; }
+  .exam-q__topic { margin-left: 0; flex-basis: 100%; }
+  .exam-head h1 { font-size: 1.8rem; }
+}
