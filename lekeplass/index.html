@@ -219,7 +219,7 @@
     background: white;
     min-width: 0;
   }
-  .pg-preview header {
+  .pg-preview > header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -233,7 +233,7 @@
     letter-spacing: 0.08em;
     color: var(--ink-faded);
   }
-  .pg-preview header .pg-status {
+  .pg-preview > header .pg-status {
     color: var(--ink-ghost);
     text-transform: none;
     letter-spacing: 0;
@@ -244,6 +244,89 @@
     border: none;
     background: white;
   }
+
+  /* ---------- Console ---------- */
+  .pg-console {
+    display: none;
+    flex-direction: column;
+    height: 200px;
+    background: #1e1b18;
+    color: #e8e3d6;
+    border-top: 1px solid #000;
+    min-height: 0;
+  }
+  .pg-console.is-open { display: flex; }
+  .pg-console header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    background: #2a2622;
+    border-bottom: 1px solid #000;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #a39886;
+  }
+  .pg-console header .spacer { flex: 1; }
+  .pg-console header button {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: transparent;
+    color: #a39886;
+    border: 1px solid #444;
+    border-radius: 3px;
+    padding: 2px 8px;
+    cursor: pointer;
+  }
+  .pg-console header button:hover { color: #fff; border-color: #777; }
+  .pg-console-body {
+    flex: 1;
+    overflow-y: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.45;
+    padding: 4px 0;
+  }
+  .pg-console-line {
+    padding: 3px 12px;
+    border-bottom: 1px solid #2a2622;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .pg-console-line.level-log   { color: #e8e3d6; }
+  .pg-console-line.level-info  { color: #8fc1e8; }
+  .pg-console-line.level-warn  { color: #e8c987; background: #38301a; }
+  .pg-console-line.level-error { color: #ff9a8a; background: #3a201c; }
+  .pg-console-line.level-debug { color: #888; }
+  .pg-console-line .lvl {
+    display: inline-block;
+    width: 42px;
+    color: #6b6257;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+  }
+  .pg-console-empty {
+    padding: 14px;
+    color: #6b6257;
+    font-style: italic;
+  }
+  /* Liten badge på toggle-knappen når det er nye logger */
+  #pg-console-toggle.has-new {
+    border-color: var(--rust);
+    color: var(--rust);
+  }
+  #pg-console-toggle .pg-badge {
+    display: none;
+    margin-left: 6px;
+    background: var(--rust);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 0 6px;
+    font-size: 0.65rem;
+  }
+  #pg-console-toggle.has-new .pg-badge { display: inline-block; }
 
   /* ---------- Loading state ---------- */
   .pg-loading {
@@ -388,6 +471,9 @@
           <div class="pg-tools">
             <button type="button" class="pg-btn-run" id="pg-run">Kjør &#9654;</button>
             <label><input type="checkbox" id="pg-auto" checked> Auto-kjør</label>
+            <button type="button" class="pg-btn-ghost" id="pg-console-toggle">
+              Konsoll<span class="pg-badge" id="pg-console-badge">0</span>
+            </button>
             <button type="button" class="pg-btn-ghost" id="pg-cheat-toggle">Jukseark</button>
             <button type="button" class="pg-btn-ghost" id="pg-reset">Tilbakestill</button>
             <button type="button" class="pg-btn-ghost" id="pg-clear">Tøm alt</button>
@@ -422,6 +508,17 @@
             <span class="pg-status" id="pg-status">&nbsp;</span>
           </header>
           <iframe id="pg-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+          <div class="pg-console" id="pg-console">
+            <header>
+              <span>Konsoll</span>
+              <span class="spacer"></span>
+              <button type="button" id="pg-console-clear">Tøm</button>
+              <button type="button" id="pg-console-close">Lukk</button>
+            </header>
+            <div class="pg-console-body" id="pg-console-body">
+              <div class="pg-console-empty">Ingen output ennå. Skriv f.eks. <code>console.log("hei")</code> i JS-fila og kjør.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -530,11 +627,42 @@
     const errStyle =
       'color:#a23b2a;font:13px monospace;background:#f0d9d3;' +
       'padding:8px;border-radius:4px;margin-top:8px;white-space:pre-wrap;';
+    // Konsoll-hijack: omdiriger console.log/info/warn/error/debug + window.onerror
+    // til parent via postMessage, slik at lekeplassens konsoll-panel kan vise dem.
+    const consoleHijack =
+      '(function(){' +
+        'function fmt(a){' +
+          'if(a===null)return"null";' +
+          'if(a===undefined)return"undefined";' +
+          'if(typeof a==="string")return a;' +
+          'if(typeof a==="function")return a.toString();' +
+          'if(a instanceof Error)return a.stack||a.message||String(a);' +
+          'try{var seen=new WeakSet();return JSON.stringify(a,function(k,v){' +
+            'if(typeof v==="object"&&v!==null){if(seen.has(v))return"[circular]";seen.add(v);}' +
+            'if(typeof v==="function")return"[function]";' +
+            'return v;' +
+          '},2);}catch(e){return String(a);}' +
+        '}' +
+        'function send(level,args){try{parent.postMessage({source:"pg-console",level:level,args:args.map(fmt)},"*");}catch(e){}}' +
+        '["log","info","warn","error","debug"].forEach(function(lvl){' +
+          'var orig=console[lvl]?console[lvl].bind(console):function(){};' +
+          'console[lvl]=function(){send(lvl,[].slice.call(arguments));orig.apply(console,arguments);};' +
+        '});' +
+        'window.addEventListener("error",function(e){' +
+          'var msg=e.message||"Error";' +
+          'if(e.filename)msg+=" @ "+e.filename+":"+e.lineno;' +
+          'send("error",[msg]);' +
+        '});' +
+        'window.addEventListener("unhandledrejection",function(e){' +
+          'send("error",["Unhandled promise rejection: "+(e.reason&&e.reason.message?e.reason.message:String(e.reason))]);' +
+        '});' +
+      '})();';
     return (
       '<!doctype html>\n' +
       '<html><head><meta charset="utf-8"><style>\n' +
       c + '\n' +
       '</style></head><body>\n' +
+      '<script>' + consoleHijack + '<\/script>\n' +
       h + '\n' +
       '<script>\n' +
       'window.addEventListener("error", function (e) {\n' +
@@ -550,6 +678,7 @@
       '  p.style.cssText = ' + JSON.stringify(errStyle) + ';\n' +
       '  p.textContent = (e && e.message) ? e.message : String(e);\n' +
       '  document.body.appendChild(p);\n' +
+      '  console.error(e && e.message ? e.message : String(e));\n' +
       '}\n' +
       '<\/script>\n' +
       '</body></html>'
@@ -560,6 +689,7 @@
     const h = editors.html.getValue();
     const c = editors.css.getValue();
     const j = editors.js.getValue();
+    if (window.__pgConsole) window.__pgConsole.reset();
     preview.srcdoc = buildSrcdoc(h, c, j);
     const t = new Date();
     const pad = (n) => String(n).padStart(2, '0');
@@ -653,6 +783,72 @@
   } else {
     init();
   }
+})();
+
+/* ---------- Konsoll-panel ---------- */
+(function () {
+  'use strict';
+  const panel  = document.getElementById('pg-console');
+  const body   = document.getElementById('pg-console-body');
+  const toggle = document.getElementById('pg-console-toggle');
+  const badge  = document.getElementById('pg-console-badge');
+  const clear  = document.getElementById('pg-console-clear');
+  const close  = document.getElementById('pg-console-close');
+  let count = 0;
+  let empty = true;
+
+  function isOpen() { return panel.classList.contains('is-open'); }
+
+  function setEmpty() {
+    body.innerHTML = '<div class="pg-console-empty">Ingen output ennå. Skriv f.eks. <code>console.log("hei")</code> i JS-fila og kjør.</div>';
+    empty = true;
+  }
+
+  function append(level, args) {
+    if (empty) { body.innerHTML = ''; empty = false; }
+    const line = document.createElement('div');
+    line.className = 'pg-console-line level-' + level;
+    const lvl = document.createElement('span');
+    lvl.className = 'lvl';
+    lvl.textContent = level;
+    line.appendChild(lvl);
+    line.appendChild(document.createTextNode(args.join('  ')));
+    body.appendChild(line);
+    body.scrollTop = body.scrollHeight;
+    count += 1;
+    if (!isOpen()) {
+      toggle.classList.add('has-new');
+      badge.textContent = String(count);
+    }
+  }
+
+  function open() {
+    panel.classList.add('is-open');
+    toggle.classList.remove('has-new');
+    count = 0;
+  }
+  function shut() { panel.classList.remove('is-open'); }
+  function toggleOpen() { isOpen() ? shut() : open(); }
+
+  function reset() {
+    setEmpty();
+    count = 0;
+    toggle.classList.remove('has-new');
+    badge.textContent = '0';
+  }
+
+  toggle.addEventListener('click', toggleOpen);
+  close.addEventListener('click', shut);
+  clear.addEventListener('click', reset);
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || e.data.source !== 'pg-console') return;
+    if (!Array.isArray(e.data.args)) return;
+    append(e.data.level || 'log', e.data.args);
+  });
+
+  // Eksponer reset for run()
+  window.__pgConsole = { reset: reset };
 })();
 
 /* ---------- Jukseark-panel ---------- */
