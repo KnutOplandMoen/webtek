@@ -79,6 +79,209 @@
   }
   .exam-card:hover .ec-cta { color: var(--rust-dark); }
 
+  /* ----- progresjons-badge på exam-card ----- */
+  .exam-card .ec-progress {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    border-radius: 5px;
+  }
+  .ec-progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .ec-progress-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faded);
+  }
+  .ec-progress-score {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--rust);
+  }
+  .ec-progress-bar {
+    height: 6px;
+    background: var(--paper-darker);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .ec-progress-bar > span {
+    display: block;
+    height: 100%;
+    background: var(--rust);
+    transition: width 0.3s;
+  }
+  .ec-progress-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-faded);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ----- tracker-seksjon ----- */
+  .tracker-empty {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    background: var(--paper-dark);
+    border: 1px dashed var(--line-soft);
+    border-radius: 5px;
+    padding: 22px;
+    text-align: center;
+  }
+  .tracker-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 1em 0 1.4em;
+  }
+  .tstat {
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-left: 4px solid var(--rust);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .tstat-num {
+    font-family: var(--mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--rust);
+    line-height: 1.1;
+  }
+  .tstat-lbl {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faded);
+    margin-top: 4px;
+  }
+
+  .tracker-chart-wrap {
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    padding: 18px;
+    margin: 0 0 1.4em;
+  }
+  .tracker-chart {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+  }
+  .tracker-chart .pt-axis        { stroke: var(--ink-faded); stroke-width: 1; }
+  .tracker-chart .pt-grid        { stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 3 3; }
+  .tracker-chart .pt-ylabel      { font-family: var(--mono); font-size: 10px; fill: var(--ink-faded); text-anchor: end; }
+  .tracker-chart .pt-xlabel      { font-family: var(--mono); font-size: 10px; fill: var(--ink-soft); text-anchor: middle; }
+  .tracker-chart .pt-pctlabel    { font-family: var(--mono); font-size: 10px; font-weight: 700; fill: var(--rust); text-anchor: middle; }
+  .tracker-chart .pt-axis-label  { font-family: var(--mono); font-size: 10px; fill: var(--ink-faded); text-anchor: middle; }
+  .tracker-chart .pt-line        { fill: none; stroke: var(--rust); stroke-width: 2; }
+  .tracker-chart .pt-area        { fill: var(--rust); opacity: 0.08; }
+  .tracker-chart .pt-dot         { fill: var(--rust); stroke: var(--paper); stroke-width: 2; }
+
+  .tracker-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1em;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .tracker-list a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper-dark);
+    border: 1px solid var(--line-soft);
+    border-left: 4px solid var(--rust);
+    border-radius: 4px;
+    padding: 12px 16px;
+    transition: border-color 0.12s, transform 0.12s;
+  }
+  .tracker-list a:hover {
+    border-color: var(--rust-dark);
+    transform: translateX(2px);
+  }
+  .tl-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .tl-num {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+    font-weight: 700;
+  }
+  .tl-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink);
+    flex: 1;
+  }
+  .tl-score {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .tl-score em {
+    font-style: normal;
+    color: var(--rust);
+  }
+  .tl-bar {
+    height: 6px;
+    background: var(--paper);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--line-soft);
+  }
+  .tl-bar > span {
+    display: block;
+    height: 100%;
+    background: var(--rust);
+  }
+  .tl-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-faded);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .tracker-clear {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: transparent;
+    color: var(--ink-faded);
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s;
+  }
+  .tracker-clear:hover {
+    color: var(--rust);
+    border-color: var(--rust);
+  }
+
   .format-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -243,9 +446,28 @@
     </div>
   </section>
 
+  <section id="progresjon">
+    <div class="container">
+      <div class="section-badge">03 · Din progresjon</div>
+      <h2>Score fra <em>dine besvarelser</em></h2>
+      <p class="section-intro">
+        Etter hvert som du svarer på oppgaver i settene over, lagres poengene
+        lokalt i nettleseren — automatisk, uten innlogging. Her ser du
+        progresjonen fra sett 1 og oppover, hvor god du er i snitt, og hvilket
+        sett som har gått best så langt.
+      </p>
+
+      <div id="progress-tracker">
+        <div class="tracker-body">
+          <p class="tracker-empty">Laster progresjon…</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="bruksanvisning">
     <div class="container">
-      <div class="section-badge">03 · Slik øver du</div>
+      <div class="section-badge">04 · Slik øver du</div>
       <h2>Hvordan <em>bruke settene</em></h2>
 
       <div class="callout-blue">
@@ -286,7 +508,7 @@
 
   <section id="lage-nye">
     <div class="container">
-      <div class="section-badge">04 · Lage flere sett</div>
+      <div class="section-badge">05 · Lage flere sett</div>
       <h2>Mal og <em>retningslinjer</em></h2>
       <p>
         Når du (eller AI-en) lager et nytt sett, følg
@@ -318,5 +540,6 @@
 <script src="../../nav-search.js"></script>
 <script src="../../chat-widget.js"></script>
 <script src="../cheat-toggle.js" data-cheat-src="../a4-jukseark.html"></script>
+<script src="progress-tracker.js"></script>
 </body>
 </html>

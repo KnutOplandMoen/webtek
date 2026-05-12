@@ -22,6 +22,7 @@
 
   const ANSWER_RE = /Riktig svar:\s*([A-D])/i;
   const STORAGE_KEY = 'it2805-exam:v1:' + location.pathname;
+  const INDEX_KEY = 'it2805-exam-index:v1';
 
   const state = {
     totalPoints: 0,
@@ -65,6 +66,47 @@
   function clearAll() {
     cache = {};
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    removeFromIndex();
+  }
+
+  function loadIndex() {
+    try {
+      const raw = localStorage.getItem(INDEX_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+
+  function saveIndex(idx) {
+    try { localStorage.setItem(INDEX_KEY, JSON.stringify(idx)); } catch (e) {}
+  }
+
+  function updateIndex() {
+    const idx = loadIndex();
+    if (state.answered === 0) {
+      if (idx[location.pathname]) {
+        delete idx[location.pathname];
+        saveIndex(idx);
+      }
+      return;
+    }
+    idx[location.pathname] = {
+      title: document.title,
+      earned: Math.round(state.earnedPoints * 10) / 10,
+      total: state.totalPoints,
+      questions: state.questions,
+      answered: state.answered,
+      fullyCorrect: state.fullyCorrect,
+      updatedAt: Date.now(),
+    };
+    saveIndex(idx);
+  }
+
+  function removeFromIndex() {
+    const idx = loadIndex();
+    if (idx[location.pathname]) {
+      delete idx[location.pathname];
+      saveIndex(idx);
+    }
   }
 
   /* ---------- utilities ---------- */
@@ -101,6 +143,7 @@
       '<strong>' + earned + '</strong>' +
       ' / ' + state.totalPoints + ' poeng' +
       ' &middot; ' + state.answered + ' av ' + state.questions + ' besvart';
+    updateIndex();
   }
 
   function openFasit(q) {
