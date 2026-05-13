@@ -1,0 +1,1163 @@
+<!doctype html>
+<!--
+  Øvingseksamen 07 — IT2805 Webteknologi
+  Laget: 2026-05-12.
+  Fokus: TCP/IP-dybde + HTML-semantikk + JS-grunnlag (DOM,
+  funksjoner). Hovedseksjonen i C er en full forklaring av
+  TCP/IP-lagene — direkte øving på et kjerne-essay-spørsmål.
+  Ingen oppgave er en kopi av sett 01–06 eller ex2–ex5.
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>Øvingseksamen 07 — IT2805</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+
+<header class="exam-head">
+  <h1>Øvingseksamen 07 — IT2805</h1>
+  <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
+  <p class="exam-meta">
+    Hovedfokus: TCP/IP-dybde (HTTPS, stateless, full lag-forklaring),
+    HTML-semantikk og DOM-grunnlag (innerHTML vs textContent, removeChild),
+    JS-grunnlag (fibonacci, quiz, real-time validering).
+  </p>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section A — Flervalg (~25 %)</h2>
+  <p class="part-intro">Klikk på alternativet du tror er korrekt. Riktig svar fargelegges grønt, feil rødt — forklaring vises automatisk.</p>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 1</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — HTTPS vs HTTP</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedforskjellen mellom HTTP og HTTPS?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> HTTPS bruker en raskere protokoll, HTTP er den eldre tregere.</li>
+        <li><span class="opt-label">B</span> HTTPS krypterer trafikken mellom klient og server via TLS, HTTP sender alt i klartekst.</li>
+        <li><span class="opt-label">C</span> HTTPS støttes kun av moderne nettlesere; HTTP fungerer overalt.</li>
+        <li><span class="opt-label">D</span> HTTPS bruker port 80; HTTP bruker port 443.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>HTTPS = HTTP over TLS (eller eldre SSL). Trafikken krypteres slik at noen som "lytter" på linja (på offentlig WiFi, hos ISP-en, osv.) bare ser krøllete bytes — ikke passord, cookies eller innhold. HTTP sender alt i klartekst.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er feil — HTTPS er litt <em>tregere</em> pga. ekstra TLS-handshake (men neglisjerbar i praksis med HTTP/2). C er feil — alle moderne nettlesere har støttet HTTPS i over 20 år. D <em>snur</em> portene: HTTP=80, HTTPS=443.</p>
+          <p><strong>Praktisk konsekvens:</strong> Browsere markerer HTTP-sider med "Not Secure" og blokkerer enkelte API-er (geolocation, kamera, service workers). Anbefalt praksis: alltid HTTPS, selv for offentlige sider uten innlogging.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 2</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — HTTP er stateless</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva betyr det at HTTP er en <em>stateless</em> (tilstandsløs) protokoll?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Klienten må alltid sende request to ganger for å garantere levering.</li>
+        <li><span class="opt-label">B</span> Hver request behandles uavhengig — serveren "husker" ikke tidligere requests fra samme klient.</li>
+        <li><span class="opt-label">C</span> Serveren har ingen tilgang til database — alle data må sendes med hver request.</li>
+        <li><span class="opt-label">D</span> Klienten må starte en ny TCP-tilkobling for hver eneste request.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>"Stateless" betyr at hver HTTP-request er <em>isolert</em> — serveren tar ikke automatisk med kontekst fra tidligere requests. Hver request må selv inneholde alt som trengs for å behandles.</p>
+          <p><strong>Hvordan handler man "innlogging" da?</strong> Klienten sender en <em>cookie</em> (eller token i header) på hver request. Serveren slår opp hvilken session/bruker den hører til. State <em>finnes</em> — den ligger bare ikke i protokollen, men i applikasjonslaget over.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er konfabulering. C er feil — serveren har sine egne databaser; "stateless" handler om protokollen, ikke serveren generelt. D er feil — HTTP/1.1 introduserte "keep-alive" så samme TCP kan brukes til mange requests.</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 3</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — Heading-nivåer</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er den anbefalte praksisen for HTML-headinger (<code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>) på en side?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Bruk så mange <code>&lt;h1&gt;</code> som du vil for å gjøre teksten større.</li>
+        <li><span class="opt-label">B</span> Bruk én <code>&lt;h1&gt;</code> som sidens hovedtittel, og bruk h2–h6 for å reflektere hierarkiet av seksjoner.</li>
+        <li><span class="opt-label">C</span> Start alltid med <code>&lt;h6&gt;</code> og jobb deg oppover.</li>
+        <li><span class="opt-label">D</span> Hopp over h2–h5 og bruk direkte h1 → h6 for å spare plass.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Heading-tags er <em>semantiske</em> — de beskriver hierarkiet i innholdet, ikke utseendet. Én <code>&lt;h1&gt;</code> per side er konvensjon (sidens hoved-emne). Under den følger h2 for hver hovedseksjon, h3 for underseksjoner under h2, osv.</p>
+          <p><strong>Hvorfor det er viktig:</strong></p>
+          <ul>
+            <li><strong>SEO:</strong> Søkemotorer prioriterer tekst i h1 og strukturen i h-tagene.</li>
+            <li><strong>Tilgjengelighet:</strong> Skjermlesere lar brukeren navigere via heading-hierarki (hopp til neste h2). Bryter du hierarkiet ved å hoppe fra h1 til h4, blir det forvirrende.</li>
+            <li><strong>Outlining:</strong> Verktøy som genererer innholdsfortegnelse baserer seg på h-strukturen.</li>
+          </ul>
+          <p><strong>Tips:</strong> Bruk CSS for å styre størrelse/farge — ikke velg h-tag basert på hvor stort du vil at det skal se ut.</p>
+          <p class="ref">Pensum: <a href="../../kap2/">Kap. 2 — HTML</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 4</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — innerHTML vs textContent</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du har en variabel <code>navn = "&lt;b&gt;Ola&lt;/b&gt;"</code>. Hva skjer hvis du setter <code>elem.innerHTML = navn</code> sammenlignet med <code>elem.textContent = navn</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Begge gjør samme — viser teksten "&lt;b&gt;Ola&lt;/b&gt;" som vanlig.</li>
+        <li><span class="opt-label">B</span> <code>innerHTML</code> tolker stringen som HTML — "Ola" vises i fet skrift. <code>textContent</code> viser den som ren tekst, inkludert &lt; og &gt; tegn.</li>
+        <li><span class="opt-label">C</span> <code>innerHTML</code> viser som ren tekst; <code>textContent</code> tolker som HTML.</li>
+        <li><span class="opt-label">D</span> Begge kaster en feil fordi <code>&lt;b&gt;</code> er en åpen tag uten lukkende.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>innerHTML</code> <em>tolker</em> stringen som HTML — så <code>&lt;b&gt;</code>-tagger blir faktiske bold-tagger og rendres som fet tekst. <code>textContent</code> behandler stringen som <em>ren tekst</em> — vinkelparentesene escapes og vises som "&lt;b&gt;Ola&lt;/b&gt;" bokstavelig.</p>
+          <p><strong>Sikkerhetshensyn:</strong> Hvis <code>navn</code> kommer fra brukerinput, kan en angriper sende <code>&lt;script&gt;alert(1)&lt;/script&gt;</code>. Med <code>innerHTML</code> blir scriptet eksekvert (XSS-sårbarhet!). Med <code>textContent</code> vises bare den uskadelige teksten.</p>
+          <p><strong>Tommelfingerregel:</strong> Bruk <code>textContent</code> hvis du bare skal sette tekst. Bruk <code>innerHTML</code> bare når du har <em>full kontroll</em> over innholdet (ingen brukerdata).</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 5</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — removeChild via parent</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du har <code>const x = document.getElementById("mål");</code>. Hva er den klassiske måten å fjerne <code>x</code> fra DOM-en?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>x.delete();</code></li>
+        <li><span class="opt-label">B</span> <code>document.removeElementById("mål");</code></li>
+        <li><span class="opt-label">C</span> <code>x.parentNode.removeChild(x);</code></li>
+        <li><span class="opt-label">D</span> <code>x.style.display = "none";</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p><code>removeChild</code> er en metode på <em>forelderen</em>, ikke på elementet selv. Klassisk syntaks: <code>elementet.parentNode.removeChild(elementet)</code> — vi går opp til forelderen og ber den fjerne barnet.</p>
+          <p><strong>Moderne alternativ:</strong> <code>x.remove()</code> (uten parentNode-tur) er enklere og fungerer i alle moderne nettlesere. Bare ikke i IE11 eller eldre.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er konfabulering. B finnes ikke — det er <code>getElementById</code>, ingen <code>removeElementById</code>. D skjuler bare, fjerner ikke fra DOM-en — elementet finnes fortsatt og tar plass i hukommelsen.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 6</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — typeof array</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva returnerer <code>typeof [1, 2, 3]</code>?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>"array"</code></li>
+        <li><span class="opt-label">B</span> <code>"object"</code></li>
+        <li><span class="opt-label">C</span> <code>"number"</code></li>
+        <li><span class="opt-label">D</span> <code>"list"</code></li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Array er teknisk sett et <em>spesielt objekt</em> i JavaScript, og <code>typeof</code> returnerer derfor <code>"object"</code>. Det samme gjelder <code>{}</code>, <code>null</code>, og dato-objekter.</p>
+          <p><strong>For å sjekke om noe er en array:</strong> Bruk <code>Array.isArray(x)</code> — den er definitivt riktig. <code>x instanceof Array</code> fungerer også, men kan feile mellom iframes (forskjellige Array-konstruktører).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er logisk forventet, men det er ikke en typeof-verdi (de tilgjengelige er <code>undefined</code>, <code>boolean</code>, <code>number</code>, <code>string</code>, <code>object</code>, <code>function</code>, <code>symbol</code>, <code>bigint</code>). C ville krevd at uttrykket faktisk var et tall. D er konfabulering.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Data og variabler</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 7</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — HTML5 sectioning vs div</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva er hovedfordelen med <code>&lt;article&gt;</code> over <code>&lt;div&gt;</code> når du markerer en blog-post på en side?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>&lt;article&gt;</code> har innebygd CSS-styling som <code>&lt;div&gt;</code> mangler.</li>
+        <li><span class="opt-label">B</span> <code>&lt;article&gt;</code> gir <em>semantisk informasjon</em> til søkemotorer og skjermlesere om at innholdet er selvstendig og gjenbrukbart.</li>
+        <li><span class="opt-label">C</span> <code>&lt;article&gt;</code> krever ikke lukkende tag.</li>
+        <li><span class="opt-label">D</span> <code>&lt;article&gt;</code> rendres som inline-element i motsetning til <code>&lt;div&gt;</code> som er block.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>HTML5 introduserte semantiske tags som <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code> for å beskrive innholdets <em>rolle</em>. Visuelt er de like som <code>&lt;div&gt;</code> by default, men semantisk forteller de søkemotorer, skjermlesere og andre verktøy hva delene betyr.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er feil — ingen innebygd CSS. C er feil — alle har lukkende tag. D er feil — begge er <code>display: block</code> default.</p>
+          <p><strong>Når bruke article:</strong> Innhold som ville gi mening alene (kunne kopieres til et annet sted). Eksempler: blog-post, nyhet, forum-innlegg, produktkort. <em>Ikke</em> for generisk innpakning — der er <code>&lt;div&gt;</code> riktig valg.</p>
+          <p class="ref">Pensum: <a href="../../kap2/">Kap. 2 — HTML</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 8</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — createElement</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du vil lage et nytt <code>&lt;li&gt;</code> via JavaScript og legge det inn i en eksisterende <code>&lt;ul&gt;</code>. Hva er den riktige sekvensen?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> <code>document.createTagName("li")</code> deretter <code>ul.append(li)</code>.</li>
+        <li><span class="opt-label">B</span> <code>document.createElement("li")</code>; sett <code>li.textContent = "..."</code>; deretter <code>ul.appendChild(li)</code>.</li>
+        <li><span class="opt-label">C</span> <code>document.newLi("...")</code> direkte.</li>
+        <li><span class="opt-label">D</span> <code>ul.innerHTML = "&lt;li&gt;..."</code> — det er den eneste måten.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Klassisk DOM-API for å lage og legge til et element:</p>
+          <ol>
+            <li><code>const li = document.createElement("li");</code> — lager en frittstående node (ikke i DOM ennå).</li>
+            <li><code>li.textContent = "Tekst";</code> — setter innhold.</li>
+            <li><code>ul.appendChild(li);</code> — legger den inn på slutten av <code>ul</code>.</li>
+          </ol>
+          <p><strong>Moderne alternativ:</strong> <code>ul.append(li)</code> — fungerer også for tekst-strenger (<code>ul.append("Tekst")</code>) og flere argumenter. <code>appendChild</code> krever en node.</p>
+          <p><strong>Hvorfor ikke innerHTML:</strong> D fungerer men <em>fjerner</em> alle eksisterende <code>&lt;li&gt;</code>-elementer (overskriver hele innholdet). Også har det XSS-risiko hvis tekstet kommer fra brukerinput.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A bruker oppdiktet metode (<code>createTagName</code> finnes ikke). C bruker oppdiktet metode (<code>newLi</code> finnes ikke).</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 9</span>
+      <span class="exam-q__points">2 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — Klient-server-modell</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">I klient-server-modellen for web, hvem initierer alltid kommunikasjonen?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Serveren — den "pusher" innhold til klienten.</li>
+        <li><span class="opt-label">B</span> Klienten — den sender en request, serveren svarer med en response.</li>
+        <li><span class="opt-label">C</span> Det avhenger av om det er HTTP/1.1 eller HTTP/2.</li>
+        <li><span class="opt-label">D</span> Begge initierer samtidig via en handshake.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>I HTTP er det <em>alltid klienten</em> (typisk en nettleser) som starter — sender request, venter på response. Serveren kan ikke "ringe opp" klienten av seg selv. Dette er en kjernekvalitet ved request/response-modellen.</p>
+          <p><strong>Unntak:</strong> WebSockets bryter denne modellen — etter en initial handshake kan begge sider sende meldinger fritt. Men det er ikke "ekte HTTP" lenger.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er feil for HTTP. C er feil — selv HTTP/2 og HTTP/3 starter klient-initiert, selv om serveren kan "pushe" ekstra ressurser etterpå. D er feil — TCP-handshaken er klient-initiert (klienten sender SYN først).</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--mc">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 10</span>
+      <span class="exam-q__points">1 poeng</span>
+      <span class="exam-q__topic">Kap. 4 — display: flex på inline</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hvis du setter <code>display: flex</code> på et <code>&lt;span&gt;</code>-element, hvordan oppfører det seg?</p>
+      <ul class="exam-q__opts">
+        <li><span class="opt-label">A</span> Ingenting endrer seg — <code>display: flex</code> krever et <code>&lt;div&gt;</code>.</li>
+        <li><span class="opt-label">B</span> Spannet blir en flex-container, og dets barn legges ut i flex-layout. Spannet selv beholder en form for "block"-oppførsel.</li>
+        <li><span class="opt-label">C</span> Spannet kollapser til 0×0 piksler.</li>
+        <li><span class="opt-label">D</span> Spannet blir automatisk konvertert til en <code>&lt;div&gt;</code> i DOM-en.</li>
+      </ul>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p><code>display: flex</code> fungerer på <em>alle</em> elementer — span inkludert. Element-typen (inline vs block) styrer ikke om flex fungerer. Når du setter <code>display: flex</code>, blir elementet en flex-container uansett hva det var før.</p>
+          <p><strong>Detalj:</strong> <code>display: flex</code> gjør elementet til block-level (tar opp hele bredden). <code>display: inline-flex</code> beholder inline-oppførselen utad, men barna er fortsatt flex.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er feil — flex fungerer på alle elementer. C er konfabulering. D er feil — CSS endrer ikke HTML-strukturen, bare visningen.</p>
+          <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION B — OUTPUT (5 oppgaver, 18 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section B — Find result of code (~18 %)</h2>
+  <p class="part-intro">Forutsi hva koden returnerer eller skriver ut. Skriv svaret i input-feltet og trykk <em>Sjekk</em> (anførselstegn og whitespace ignoreres).</p>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 11</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — String.substring negativ</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log("WEBDESIGN".substring(3, -2));</code></pre>
+      <div class="exam-q__answer">
+        <label for="q11-input">Ditt svar:</label>
+        <input type="text" id="q11-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="WEB" data-answer-alts='"WEB"'>Riktig svar: WEB</span>
+          <p><strong>Mekanisme — to triks i ett:</strong></p>
+          <ul>
+            <li><code>substring</code> behandler negative argumenter som <code>0</code>. Så <code>-2</code> blir <code>0</code>.</li>
+            <li><code>substring</code> bytter også argumentene hvis <code>start &gt; end</code>. Etter konverteringen er vi på <code>substring(3, 0)</code> → byttes til <code>substring(0, 3)</code>.</li>
+          </ul>
+          <p>Resultat: tegnene fra indeks 0 til (ikke inklusivt) 3 = <code>"WEB"</code>.</p>
+          <p><strong>Kontrast med slice:</strong> <code>slice</code> tolker negative argumenter som "tell fra slutten". <code>"WEBDESIGN".slice(3, -2)</code> ville gitt "DESI" (fra indeks 3 til 2 før slutt).</p>
+          <p><strong>Klassisk eksamens-felle</strong> — krever at man husker disse to spesielle reglene for <code>substring</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — String-API</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 12</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Array.push return</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let a = [1, 2, 3];
+let r = a.push(4, 5);
+console.log(r);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q12-input">Ditt svar:</label>
+        <input type="text" id="q12-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="5">Riktig svar: 5</span>
+          <p><strong>Mekanisme:</strong> <code>push()</code> returnerer den <em>nye lengden</em> til arrayet — ikke det som ble lagt til, og ikke arrayet selv. Etter <code>push(4, 5)</code> har vi <code>[1, 2, 3, 4, 5]</code> med lengde 5.</p>
+          <p><strong>Vanlig feil:</strong> Tro at <code>push</code> returnerer det lagt-til elementet (det gjør <code>pop</code>). Eller tro at det returnerer arrayet selv (det gjør ikke det — kan brukes til kjede via lengden).</p>
+          <p><strong>Return-verdier å huske:</strong></p>
+          <ul>
+            <li><code>push(x)</code>: ny lengde</li>
+            <li><code>unshift(x)</code>: ny lengde</li>
+            <li><code>pop()</code>: fjernet element</li>
+            <li><code>shift()</code>: fjernet element</li>
+            <li><code>splice()</code>: array med fjernede elementer</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Arrays</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 13</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — String.concat</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log("Hei ".concat("verden", "!").length);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q13-input">Ditt svar:</label>
+        <input type="text" id="q13-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="11">Riktig svar: 11</span>
+          <p><strong>Mekanisme:</strong> <code>concat</code> setter sammen flere strenger til én. <code>"Hei ".concat("verden", "!")</code> = <code>"Hei verden!"</code>, som er 11 tegn (H-e-i-space-v-e-r-d-e-n-!).</p>
+          <p><strong>concat vs +:</strong> Begge gir samme resultat. <code>+</code> er mer vanlig i praksis — <code>concat</code> brukes sjelden, men finnes i API-et.</p>
+          <p><strong>Method chaining:</strong> Siden <code>concat</code> returnerer en string, kan vi kalle <code>.length</code> umiddelbart etter. Mye JS er skrevet i denne kjedeformen: <code>"  abc  ".trim().toUpperCase().split("")</code>.</p>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Strings</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 14</span>
+      <span class="exam-q__points">4 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — Switch fall-through</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>let x = 2;
+switch (x) {
+  case 1:
+    console.log("en");
+  case 2:
+    console.log("to");
+  case 3:
+    console.log("tre");
+    break;
+  case 4:
+    console.log("fire");
+}</code></pre>
+      <div class="exam-q__answer">
+        <label for="q14-input">Ditt svar (skill med komma hvis flere linjer):</label>
+        <input type="text" id="q14-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="to,tre" data-answer-alts='to, tre|to tre|"to","tre"'>Riktig svar: to, tre</span>
+          <p><strong>Mekanisme — switch fall-through:</strong> I JavaScript "renner" execution videre til neste case hvis det ikke er en eksplisitt <code>break</code>. Her starter vi på <code>case 2</code> (treffer x=2) og skriver "to". Det er ingen <code>break</code>, så vi fortsetter inn i <code>case 3</code> og skriver "tre". Der er det <code>break</code>, så vi stopper.</p>
+          <p>Vi traff <em>aldri</em> <code>case 1</code> — case 1 ble hoppet over fordi x ≠ 1.</p>
+          <p><strong>Hvorfor utviklere ofte bruker break overalt:</strong> Default fall-through-oppførselen er en av de vanligste kildene til subtile bugs. Det er gode use-cases (gruppere cases som skal gjøre samme), men de bør være eksplisitt kommentert.</p>
+          <p class="ref">Pensum: <a href="../../kap9/kontrollflyt/">Kap. 9 — Kontrollflyt</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--output">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 15</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 9 — null-coercion</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Hva skriver dette ut?</p>
+      <pre><code>console.log(null + 5);</code></pre>
+      <div class="exam-q__answer">
+        <label for="q15-input">Ditt svar:</label>
+        <input type="text" id="q15-input" class="exam-q__input" autocomplete="off">
+        <button type="button" class="exam-q__check">Sjekk</button>
+      </div>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <span class="fasit-correct" data-answer="5">Riktig svar: 5</span>
+          <p><strong>Mekanisme:</strong> Ved aritmetikk konverteres <code>null</code> til <code>0</code>. Så <code>null + 5</code> = <code>0 + 5</code> = <code>5</code>.</p>
+          <p><strong>Inkonsistens med undefined:</strong> <code>undefined + 5</code> derimot er <code>NaN</code>, fordi <code>undefined</code> ikke har en numerisk konvertering. Disse to "tomme" verdiene oppfører seg forskjellig — en av JavaScripts klassiske quirks.</p>
+          <p><strong>Andre eksempler:</strong></p>
+          <ul>
+            <li><code>null + null</code> → <code>0</code></li>
+            <li><code>null + "5"</code> → <code>"null5"</code> (string-konkat, ikke aritmetikk)</li>
+            <li><code>null == undefined</code> → <code>true</code> (særskilt regel)</li>
+            <li><code>null === undefined</code> → <code>false</code> (strict, ulike typer)</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap9/data-og-variabler/">Kap. 9 — Typer og coercion</a></p>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION C — KORTSVAR (5 oppgaver, 17 poeng)                   -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section C — Kortsvar (~17 %)</h2>
+  <p class="part-intro">Skriv prosa-svar i textarea-feltet. Når du er ferdig, klikk <em>Vis fasit og vurder</em> — sammenlign mot rubrikken, og bruk knappene under fasit til å gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 16</span>
+      <span class="exam-q__points">5 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — Full TCP/IP-modell</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar de <strong>fire lagene i TCP/IP-modellen</strong>. For hvert lag: hva er rollen, og gi <em>to konkrete protokoll-eksempler</em>. Dette er et tier-1-spørsmål som dukker opp i nesten alle gamle eksamener.</p>
+      <textarea class="exam-q__textarea" rows="10" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (5 poeng — ca. 1.2 poeng per lag, pluss helhetsvurdering):</strong></p>
+          <ul>
+            <li><strong>1. Applikasjonslag (Application layer) — øverst:</strong> Hvor selve nettverks-applikasjonene kommuniserer. Protokoller som tolkes av nettlesere, mail-klienter, etc. <em>Eksempler:</em> HTTP, HTTPS, SMTP, FTP, DNS, IMAP, SSH, POP3.</li>
+            <li><strong>2. Transportlag (Transport layer):</strong> Bryter data opp i pakker, sørger for at de når frem og settes sammen igjen i riktig rekkefølge. Tilbyr porter for å skille mellom applikasjoner. <em>Eksempler:</em> TCP (pålitelig, ordnet, krever forbindelse), UDP (rask, upålitelig, ingen forbindelse — brukes for streaming, DNS-oppslag).</li>
+            <li><strong>3. Nettverkslag (Network/Internet layer):</strong> Rutet pakker mellom maskiner basert på IP-adresser. "Hvordan kommer denne pakken fra min maskin til serveren i USA?" <em>Eksempler:</em> IP (versjon 4 og 6), ICMP (brukt av ping).</li>
+            <li><strong>4. Fysisk/Link-lag (Physical/Link layer) — nederst:</strong> Den faktiske maskinvaren — hvordan bits sendes som elektriske signaler, radiosignaler, lysblink i fiber. <em>Eksempler:</em> Ethernet, WiFi (802.11), Bluetooth, fiber.</li>
+          </ul>
+          <p><strong>Husk-trick:</strong> Akronymer som "ATNF" (Applikasjon, Transport, Nettverk, Fysisk) eller bruk hverdagseksempler: en HTTP-request reiser ned gjennom alle fire lagene på din maskin, over kabel/luft, opp gjennom de samme fire lagene på serveren. Hvert lag legger til sin "konvolutt" på vei ned, og fjerner den på vei opp.</p>
+          <p><strong>Bonus:</strong> Forskjellen mellom TCP og UDP er ofte verdt å trekke fram — TCP er som en telefonsamtale (forbindelse, ordnet), UDP er som postkort (du sender og håper).</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 lag med protokoller</button>
+            <button type="button" data-grade="0.75">3 av 4 godt dekket</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Manglet poenget</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 17</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 1 — POST vs GET (ekstra dybde)</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Du oppdaterer en bruker-profil — endrer telefonnummer fra "999..." til "888...". Hvilken HTTP-metode er <em>mest semantisk korrekt</em>: <code>GET</code>, <code>POST</code>, <code>PUT</code>, eller <code>PATCH</code>? Forklar med <strong>tre punkter</strong>.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Akseptable svar: PATCH (mest spesifikk) eller PUT (også vanlig). POST er gangbart i praksis. GET er feil.</strong></p>
+          <p><strong>Rubrikk (3 poeng — 1 per godt poeng):</strong></p>
+          <ul>
+            <li><strong>GET er feil:</strong> GET er for å <em>lese</em> data, ikke endre. Det er idempotent og kan caches — uegnet for noe som muterer state på serveren. Stryk GET fra listen.</li>
+            <li><strong>PATCH er mest spesifikk:</strong> PATCH er ment for <em>delvis oppdatering</em> — du sender bare det som har endret seg (telefonnummeret), ikke hele bruker-objektet. PATCH er ikke garantert idempotent generelt (avhengig av spec), men semantisk fritt fra "skap ny".</li>
+            <li><strong>PUT er en god alternativ:</strong> PUT betyr "erstatt hele ressursen med dette". Hvis du sender hele bruker-objektet med oppdatert telefonnummer, er PUT idiomatisk. PUT <em>er</em> idempotent — å sende samme PUT to ganger gir samme resultat.</li>
+            <li><strong>POST i praksis:</strong> Mange API-er bruker POST for alt fordi nettlesere historisk kun støttet GET og POST. Pragmatisk, men ikke semantisk perfekt — POST betyr "skap ny ressurs".</li>
+          </ul>
+          <p><strong>Bonus:</strong> Den ekte forskjellen handler om <em>idempotens</em>. Idempotent: GET, PUT, DELETE. Ikke idempotent: POST. (PATCH er gråsone.)</p>
+          <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Riktig valg + 3 gode argumenter</button>
+            <button type="button" data-grade="0.66">Riktig valg + 2 argumenter</button>
+            <button type="button" data-grade="0.33">Riktig valg, men svake argumenter</button>
+            <button type="button" data-grade="0">Feil valg (GET)</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 18</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — innerHTML vs textContent vs innerText</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar forskjellen mellom <code>element.innerHTML</code>, <code>element.textContent</code> og <code>element.innerText</code>. Gi <em>ett scenario hvor du foretrekker hver av dem</em>.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>innerHTML:</strong> Returnerer/setter HTML-strukturen som string, inkludert tagger. Set-versjonen <em>parser</em> stringen som HTML. <em>Foretrekkes når:</em> du vil sette HTML-fragmenter du har full kontroll over (f.eks. mal som du bygger som template literal).</li>
+            <li><strong>textContent:</strong> Returnerer/setter ren tekst — ingen HTML-parsing, ingen skjult tekst-filtering. Returnerer også tekst i hidden elementer (display:none). <em>Foretrekkes når:</em> du setter brukerinput eller andre untrusted strings; eller når du vil ha all tekst inkludert skjult.</li>
+            <li><strong>innerText:</strong> Som textContent, men respekterer CSS — returnerer kun <em>synlig</em> tekst. Hvis et element er <code>display: none</code>, inkluderes ikke teksten. Mer tregt fordi det krever layout-beregning. <em>Foretrekkes når:</em> du vil ha akkurat det brukeren ser, f.eks. "kopier til utklippstavle"-funksjonalitet.</li>
+          </ul>
+          <p><strong>Tommelfingerregel:</strong></p>
+          <ul>
+            <li>Bytt tekst → <code>textContent</code> (raskeste, tryggeste)</li>
+            <li>Bygg HTML-struktur fra mal → <code>innerHTML</code> (sjekk for XSS)</li>
+            <li>Få det brukeren ser → <code>innerText</code> (sjelden brukt)</li>
+          </ul>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 med scenarioer</button>
+            <button type="button" data-grade="0.66">2 av 3 godt</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 19</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 2 — DOM-tre</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Forklar hva <strong>DOM (Document Object Model)</strong> er, og hvordan en HTML-side blir til et tre. Bruk et minimalt eksempel:</p>
+      <pre><code>&lt;p&gt;Hei &lt;b&gt;verden&lt;/b&gt;!&lt;/p&gt;</code></pre>
+      <p class="q-text">Tegn/beskriv DOM-treet for dette utdraget, og forklar hva en JS-kode som <code>document.querySelector("b").textContent</code> ville returnere.</p>
+      <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng):</strong></p>
+          <ul>
+            <li><strong>1 poeng — Definisjon:</strong> DOM er en strukturert <em>tre-representasjon</em> av et HTML-dokument, som nettleseren oppretter ved parsing. JavaScript kan navigere og manipulere dette treet via <code>document</code>-objektet.</li>
+            <li><strong>1 poeng — Tre-skiss:</strong>
+              <pre><code>p
+├── tekstnode "Hei "
+├── b
+│   └── tekstnode "verden"
+└── tekstnode "!"</code></pre>
+              Hver tag (<code>p</code>, <code>b</code>) er en <em>element-node</em>. Tekst mellom tagger er <em>tekstnoder</em>. Tekstnoder kan ikke ha barn.
+            </li>
+            <li><strong>1 poeng — Kode-eksempel:</strong> <code>document.querySelector("b")</code> finner b-elementet. <code>.textContent</code> returnerer all tekst inni — bare strengen <code>"verden"</code>. Hvis vi hadde brukt <code>document.querySelector("p").textContent</code>, ville vi fått <code>"Hei verden!"</code> (alt tekstinnhold konkatenert).</li>
+          </ul>
+          <p><strong>Bonus å nevne:</strong> Forskjellen mellom <em>nodeType</em>: 1 = Element, 3 = Tekstnode. Det er fordi mange JS-folk lurer på hvorfor <code>p.childNodes.length</code> er 3 (Hei , b, !) men <code>p.children.length</code> er 1 (bare b — children inkluderer kun elementer).</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 3 punkter</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Manglet poenget</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--essay">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 20</span>
+      <span class="exam-q__points">3 poeng</span>
+      <span class="exam-q__topic">Kap. 3+4 — CSS-selektorer på gitt DOM</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Gitt følgende HTML:</p>
+      <pre><code>&lt;nav class="meny"&gt;
+  &lt;a href="#" class="aktiv"&gt;Hjem&lt;/a&gt;
+  &lt;a href="#"&gt;Om&lt;/a&gt;
+  &lt;a href="#"&gt;Kontakt&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+      <p class="q-text">Skriv <strong>tre forskjellige CSS-selektorer</strong> som hver vil treffe kun den første lenken (<code>Hjem</code>). Hver selektor bør bruke en annen teknikk. Forklar kort hva hver gjør.</p>
+      <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Rubrikk (3 poeng — 1 per god selektor):</strong></p>
+          <ul>
+            <li><strong><code>.meny .aktiv</code></strong> — Bruker class-selektoren <code>.aktiv</code>, scope-et til <code>.meny</code>. Treffer kun lenker med <code>class="aktiv"</code>.</li>
+            <li><strong><code>.meny a:first-child</code></strong> — Bruker <code>:first-child</code>-pseudo-klasse. Treffer det <em>første barnet</em> av <code>.meny</code> som tilfeldigvis er et a-element. (Hadde det vært en heading først, ville denne ikke truffet en lenke i det hele tatt.)</li>
+            <li><strong><code>.meny a:first-of-type</code></strong> — Treffer den første <code>a</code> blant <code>.meny</code>'s barn, uavhengig av hva ellers er der.</li>
+            <li><strong><code>.meny &gt; a:nth-child(1)</code></strong> — Bruker <code>:nth-child(1)</code> som er ekvivalent med <code>:first-child</code>, men eksplisitt.</li>
+            <li><strong><code>nav.meny a[class="aktiv"]</code></strong> — Attribute-selektor. Treffer a med <em>nøyaktig</em> <code>class="aktiv"</code> (ikke f.eks. "aktiv hover").</li>
+          </ul>
+          <p><strong>Beste valg i praksis:</strong> <code>.meny .aktiv</code> er mest semantisk — det navngir hvorfor lenken er spesiell ("aktiv" sier hva, ikke hvor den er i listen). De andre er mer fragile (de bryter hvis HTML-strukturen endres).</p>
+          <p class="ref">Pensum: <a href="../../kap3/selektorer/">Kap. 3 — Selektorer</a>, <a href="../../kap3/pseudo-klasser/">Kap. 3 — Pseudo-klasser</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">3 gyldige selektorer med forklaring</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION D — KODING (5 oppgaver, 40 poeng)                     -->
+<!-- ============================================================ -->
+<section class="exam-part">
+  <h2>Section D — Koding (~40 %)</h2>
+  <p class="part-intro">Skriv kode i tre felt (HTML/CSS/JS). Klikk <em>Kjør i sandbox</em> for å se resultatet i forhåndsvisning. Klikk <em>Vis fasit og vurder</em> for å se referanseløsning + rubrikk og gi deg selv delpoeng.</p>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 21</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — HTML-tabell + JS: legg til rader</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har en tabell med en header-rad og to inputfelt. Skriv kode som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Når brukeren klikker «Legg til», lager du en ny rad i <code>&lt;tbody&gt;</code> med to celler — den ene fra navn-input, den andre fra alder-input.</li>
+        <li><strong>(2 poeng)</strong> Tøm inputfeltene etter at raden er lagt til.</li>
+        <li><strong>(2 poeng)</strong> Hvis enten navn eller alder er tomt, ikke legg til raden — vis en advarsel i alert.</li>
+        <li><strong>(1 poeng)</strong> Bruk <code>createElement</code> + <code>appendChild</code>, ikke <code>innerHTML +=</code>.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="10">&lt;input type="text" id="navn" placeholder="Navn"&gt;
+&lt;input type="number" id="alder" placeholder="Alder"&gt;
+&lt;button id="legg"&gt;Legg til&lt;/button&gt;
+&lt;table border="1"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Navn&lt;/th&gt;&lt;th&gt;Alder&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody id="tbody"&gt;&lt;/tbody&gt;
+&lt;/table&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="3">table { margin-top: 10px; border-collapse: collapse; }
+th, td { padding: 6px 12px; }</textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="14" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const navnInput = document.getElementById("navn");
+const alderInput = document.getElementById("alder");
+const tbody = document.getElementById("tbody");
+
+document.getElementById("legg").addEventListener("click", function () {
+  const navn = navnInput.value.trim();
+  const alder = alderInput.value.trim();
+
+  if (navn === "" || alder === "") {
+    alert("Begge felter må fylles ut");
+    return;
+  }
+
+  const tr = document.createElement("tr");
+  const tdNavn = document.createElement("td");
+  const tdAlder = document.createElement("td");
+  tdNavn.textContent = navn;
+  tdAlder.textContent = alder;
+  tr.appendChild(tdNavn);
+  tr.appendChild(tdAlder);
+  tbody.appendChild(tr);
+
+  // tøm input-feltene
+  navnInput.value = "";
+  alderInput.value = "";
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>trim() før sjekk:</strong> "   " skal ikke regnes som gyldig input. <code>trim()</code> fjerner kantverdig whitespace.</li>
+            <li><strong>createElement-mønsteret:</strong> Lag noden, sett innholdet, append til forelderen. For mer komplekse strukturer er det vanlig å lage en helper-funksjon.</li>
+            <li><strong>textContent vs innerHTML:</strong> Vi bruker <code>textContent</code> for å unngå at brukerinput som "&lt;script&gt;..." får tolket som HTML.</li>
+            <li><strong>Hvorfor ikke innerHTML +=:</strong> Hver gang du gjør <code>tbody.innerHTML += "..."</code>, parses hele innholdet på nytt. Hvis det er event-listeners på eksisterende rader, går de tapt. Bedre å appende noder eksplisitt.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>trim()</code>, så " " teller som gyldig. Bruke <code>tbody.innerHTML += "&lt;tr&gt;..."</code> — fungerer, men er fragilt. Glemme å tømme inputfeltene.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 22</span>
+      <span class="exam-q__points">8 poeng</span>
+      <span class="exam-q__topic">Kap. 9+10 — Fibonacci-funksjon</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">Skriv en JavaScript-funksjon <code>fib(n)</code> som returnerer det n-te Fibonacci-tallet (0-indeksert). Reglene: <code>fib(0) = 0</code>, <code>fib(1) = 1</code>, <code>fib(n) = fib(n-1) + fib(n-2)</code>. Knytt funksjonen til knappen i HTML-en.</p>
+      <ol class="q-tasklist">
+        <li><strong>(4 poeng)</strong> Skriv en <strong>iterativ</strong> implementasjon (med løkke). Riktig: <code>fib(6) = 8</code>, <code>fib(10) = 55</code>.</li>
+        <li><strong>(2 poeng)</strong> Knytt funksjonen til knappen — les <code>n</code> fra input, vis resultatet i <code>&lt;span id="ut"&gt;</code>.</li>
+        <li><strong>(1 poeng)</strong> Håndter ugyldig input (negativ, ikke-tall) med feilmelding.</li>
+        <li><strong>(1 poeng)</strong> Bruk <code>parseInt</code> for å konvertere input.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="5">&lt;input type="text" id="n" placeholder="Skriv n, f.eks. 10" value="10"&gt;
+&lt;button id="kjor"&gt;Beregn Fibonacci&lt;/button&gt;
+&lt;p&gt;Fib(n) = &lt;span id="ut"&gt;–&lt;/span&gt;&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="14" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning (iterativ):</strong></p>
+          <pre><code>function fib(n) {
+  if (n === 0) return 0;
+  if (n === 1) return 1;
+  let a = 0;
+  let b = 1;
+  for (let i = 2; i &lt;= n; i++) {
+    const ny = a + b;
+    a = b;
+    b = ny;
+  }
+  return b;
+}
+
+document.getElementById("kjor").addEventListener("click", function () {
+  const n = parseInt(document.getElementById("n").value, 10);
+  const ut = document.getElementById("ut");
+  if (isNaN(n) || n &lt; 0) {
+    ut.textContent = "Ugyldig — skriv et heltall ≥ 0";
+    return;
+  }
+  ut.textContent = fib(n);
+});</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Hvorfor iterativ over rekursiv:</strong> En naiv rekursiv <code>fib</code> (uten memoisering) har eksponensiell kjøretid — <code>fib(40)</code> tar flere sekunder. Iterativ er O(n) lineær tid. For Fibonacci anbefales iterativ.</li>
+            <li><strong>Rolling sum med to variabler:</strong> Vi trenger bare de <em>to siste</em> tallene, ikke hele historikken. <code>a</code> og <code>b</code> holder de to forrige; <code>ny</code> er det neste.</li>
+            <li><strong>Base-cases:</strong> Vi sjekker <code>n === 0</code> og <code>n === 1</code> opp front. Uten dem ville løkkas <code>for i=2; i&lt;=n</code> aldri kjørt for <code>n &lt; 2</code>, men <code>b</code> ville være tilstandig 1 — feil svar for n=0.</li>
+            <li><strong>Alternativ rekursiv (men sakte):</strong>
+              <pre><code>function fib(n) {
+  if (n &lt; 2) return n;
+  return fib(n-1) + fib(n-2);
+}</code></pre>
+              Fungerer korrekt, men dør på store n.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme base-case for n=0 (returnerer 1 i stedet for 0). Bytte rekkefølge av <code>a = b</code> og <code>b = ny</code> — da blir <code>a</code> det nye, ikke det forrige. Bruke rekursjon uten å innse at det blir tregt for n &gt; 35.</p>
+          <p class="ref">Pensum: <a href="../../kap9/funksjoner/">Kap. 9 — Funksjoner</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 23</span>
+      <span class="exam-q__points">10 poeng</span>
+      <span class="exam-q__topic">Kap. 8+10 — Real-time skjema-validering</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har et passord-felt og en bekreft-passord-felt. Skriv kode som validerer <em>fortløpende</em> (på hvert tastetrykk):</p>
+      <ol class="q-tasklist">
+        <li><strong>(3 poeng)</strong> Vis "For kort" hvis passordet er under 8 tegn, "OK" ellers, i <code>&lt;span id="p1Status"&gt;</code>.</li>
+        <li><strong>(3 poeng)</strong> Vis "Stemmer" hvis bekreftelses-feltet er likt passordet, "Stemmer ikke" ellers, i <code>&lt;span id="p2Status"&gt;</code>.</li>
+        <li><strong>(2 poeng)</strong> Endre tekstfargen: "OK"/"Stemmer" i grønt, "For kort"/"Stemmer ikke" i rødt.</li>
+        <li><strong>(2 poeng)</strong> Knappen «Send» skal være <code>disabled</code> hvis passordet er ugyldig eller bekreftelsen ikke stemmer.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="9">&lt;label&gt;Passord: &lt;input type="password" id="p1"&gt;&lt;/label&gt;
+&lt;span id="p1Status"&gt;–&lt;/span&gt;&lt;br&gt;
+&lt;label&gt;Bekreft: &lt;input type="password" id="p2"&gt;&lt;/label&gt;
+&lt;span id="p2Status"&gt;–&lt;/span&gt;&lt;br&gt;
+&lt;button id="send" disabled&gt;Send&lt;/button&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="3"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="20" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const p1 = document.getElementById("p1");
+const p2 = document.getElementById("p2");
+const p1Status = document.getElementById("p1Status");
+const p2Status = document.getElementById("p2Status");
+const sendBtn = document.getElementById("send");
+
+function valider() {
+  // sjekk lengde
+  const lengdeOk = p1.value.length &gt;= 8;
+  if (lengdeOk) {
+    p1Status.textContent = "OK";
+    p1Status.style.color = "green";
+  } else {
+    p1Status.textContent = "For kort";
+    p1Status.style.color = "crimson";
+  }
+
+  // sjekk match
+  const matchOk = p1.value === p2.value && p2.value !== "";
+  if (matchOk) {
+    p2Status.textContent = "Stemmer";
+    p2Status.style.color = "green";
+  } else {
+    p2Status.textContent = "Stemmer ikke";
+    p2Status.style.color = "crimson";
+  }
+
+  // styr knappen
+  sendBtn.disabled = !(lengdeOk && matchOk);
+}
+
+p1.addEventListener("input", valider);
+p2.addEventListener("input", valider);</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>input-event:</strong> Trigges på hvert tastetrykk, paste, autocomplete. Bedre enn <code>keyup</code> her fordi det fanger også paste-operasjoner.</li>
+            <li><strong>Felles valider-funksjon:</strong> Begge inputs trigger samme funksjon. Vi sjekker både felter hver gang, slik at endring i p1 også oppdaterer match-statusen i p2.</li>
+            <li><strong>Sjekk på p2.value !== "":</strong> Uten denne ville matchen være "true" når begge felter er tomme — misvisende. Vi krever at p2 har <em>noe</em> innhold før vi sier "Stemmer".</li>
+            <li><strong>disabled-property:</strong> En boolean. <code>!(lengdeOk && matchOk)</code> betyr "ikke begge OK". Brukeren kan ikke klikke knappen før alt stemmer.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Bruke <code>change</code>-event — trigges først ved blur, ikke i sanntid. Glemme tom-string-sjekken så "" og "" matcher. Sette <code>style.color</code> bare ved feil, så ved retting fortsetter den å være rød.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a>, <a href="../../kap8/validering.html">Kap. 8 — Validering</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 24</span>
+      <span class="exam-q__points">7 poeng</span>
+      <span class="exam-q__topic">Kap. 3+4 — CSS-selektorer på menystruktur</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under er en nestet navmeny. Skriv CSS som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Skjuler standard liste-styling: ingen punktum, ingen padding/margin på <code>&lt;ul&gt;</code>.</li>
+        <li><strong>(2 poeng)</strong> Plasserer toppnivå-lenker horisontalt (Flexbox eller display: inline-block).</li>
+        <li><strong>(2 poeng)</strong> Den aktive lenken (klasse <code>aktiv</code>) skal være rød og fet.</li>
+        <li><strong>(1 poeng)</strong> Lenker skal vise understrek <em>kun ved hover</em>.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="7">&lt;nav&gt;
+  &lt;ul class="meny"&gt;
+    &lt;li&gt;&lt;a href="#" class="aktiv"&gt;Hjem&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Pensum&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Eksamen&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS</label>
+          <textarea class="code-css" rows="12" placeholder="/* din CSS her */"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript <small>(ikke nødvendig)</small></label>
+          <textarea class="code-js" rows="2"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>.meny {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 18px;
+}
+
+.meny a {
+  text-decoration: none;
+  color: #333;
+}
+
+.meny a:hover {
+  text-decoration: underline;
+}
+
+.meny a.aktiv {
+  color: red;
+  font-weight: bold;
+}</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>list-style: none:</strong> Fjerner standard-bullets (●). Brukt sammen med <code>padding: 0</code> for å fjerne også innrykket nettleseren legger til.</li>
+            <li><strong>display: flex på ul:</strong> Gjør at li-barna legger seg horisontalt. <code>gap: 18px</code> setter mellomrom uten å bruke margin på hver li. Alternativ: <code>li { display: inline-block; }</code> — mer gammel, men fungerer.</li>
+            <li><strong>Specificity for aktiv:</strong> <code>.meny a.aktiv</code> har specificity 0,2,1 (to class + en element). Det slår <code>.meny a:hover</code> som har 0,1,2 — derfor får aktiv-fargen <em>også</em> ved hover. Hvis du vil at hover skal vinne over aktiv, må man være mer eksplisitt.</li>
+            <li><strong>Default underline:</strong> Lenker har <code>text-decoration: underline</code> by default — derfor må vi eksplisitt fjerne det og legge tilbake bare ved hover.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>padding: 0</code> på <code>ul</code> — får innrykk fra venstre. Sette hover på <code>li</code> i stedet for <code>a</code> — fungerer, men understreket gjelder hele list-itemen. Glemme å overstyre default underline.</p>
+          <p class="ref">Pensum: <a href="../../kap3/selektorer/">Kap. 3 — Selektorer</a>, <a href="../../kap5/">Kap. 5 — Flexbox</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <article class="exam-q exam-q--code">
+    <header class="exam-q__head">
+      <span class="exam-q__num">Spørsmål 25</span>
+      <span class="exam-q__points">7 poeng</span>
+      <span class="exam-q__topic">Kap. 10 — Klassisk kalkulator (mini)</span>
+    </header>
+    <div class="exam-q__body">
+      <p class="q-text">HTML-en under har to inputfelt og fire knapper for de fire grunnregningene. Skriv JavaScript som:</p>
+      <ol class="q-tasklist">
+        <li><strong>(2 poeng)</strong> Hver knapp leser de to tallene fra inputfeltene og gjør riktig operasjon (+, -, *, /).</li>
+        <li><strong>(2 poeng)</strong> Resultatet vises i <code>&lt;span id="res"&gt;</code>.</li>
+        <li><strong>(2 poeng)</strong> Hvis brukeren prøver å dele på 0, vis "Kan ikke dele på null".</li>
+        <li><strong>(1 poeng)</strong> Bruk <code>parseFloat</code> for å håndtere desimaltall.</li>
+      </ol>
+      <div class="exam-q__editor">
+        <div class="editor-field">
+          <label>HTML <small>(gitt — ikke endre)</small></label>
+          <textarea class="code-html" rows="8">&lt;input type="number" id="a" value="6"&gt;
+&lt;input type="number" id="b" value="3"&gt;
+&lt;button id="pluss"&gt;+&lt;/button&gt;
+&lt;button id="minus"&gt;-&lt;/button&gt;
+&lt;button id="gange"&gt;*&lt;/button&gt;
+&lt;button id="del"&gt;/&lt;/button&gt;
+&lt;p&gt;Resultat: &lt;span id="res"&gt;–&lt;/span&gt;&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-field">
+          <label>CSS <small>(valgfritt)</small></label>
+          <textarea class="code-css" rows="2"></textarea>
+        </div>
+        <div class="editor-field">
+          <label>JavaScript</label>
+          <textarea class="code-js" rows="14" placeholder="// din JS her"></textarea>
+        </div>
+        <div class="editor-actions">
+          <button type="button" class="exam-q__run">Kjør i sandbox</button>
+          <button type="button" class="exam-q__clear">Tøm preview</button>
+        </div>
+        <iframe class="code-preview" sandbox="allow-scripts" title="Sandbox-preview"></iframe>
+      </div>
+      <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
+      <details class="fasit-details">
+        <summary>Vis fasit</summary>
+        <div class="fasit-body">
+          <p><strong>Referanseløsning:</strong></p>
+          <pre><code>const aFelt = document.getElementById("a");
+const bFelt = document.getElementById("b");
+const res = document.getElementById("res");
+
+function regn(op) {
+  const a = parseFloat(aFelt.value);
+  const b = parseFloat(bFelt.value);
+  if (isNaN(a) || isNaN(b)) {
+    res.textContent = "Ugyldig input";
+    return;
+  }
+  let svar;
+  switch (op) {
+    case "+": svar = a + b; break;
+    case "-": svar = a - b; break;
+    case "*": svar = a * b; break;
+    case "/":
+      if (b === 0) { res.textContent = "Kan ikke dele på null"; return; }
+      svar = a / b;
+      break;
+  }
+  res.textContent = svar;
+}
+
+document.getElementById("pluss").addEventListener("click", () =&gt; regn("+"));
+document.getElementById("minus").addEventListener("click", () =&gt; regn("-"));
+document.getElementById("gange").addEventListener("click", () =&gt; regn("*"));
+document.getElementById("del").addEventListener("click", () =&gt; regn("/"));</code></pre>
+          <p><strong>Kommentarer:</strong></p>
+          <ul>
+            <li><strong>Felles regn-funksjon:</strong> Vi unngår å duplikere parseFloat-logikken fire ganger. Hver knapp er bare en tynn wrapper som spesifiserer hvilken operasjon.</li>
+            <li><strong>parseFloat over parseInt:</strong> Brukeren kan skrive 2.5 / 4.7 etc. parseInt ville kuttet desimalene.</li>
+            <li><strong>Division by zero:</strong> JS returnerer faktisk <code>Infinity</code> for a/0 (eller -Infinity), ikke en feil. Men semantisk er det ugyldig — så vi sjekker eksplisitt.</li>
+            <li><strong>Arrow functions for handlere:</strong> <code>() =&gt; regn("+")</code> er ekvivalent med <code>function() { regn("+"); }</code> men kortere. Vi trenger ikke <code>this</code>-kontroll her.</li>
+          </ul>
+          <p><strong>Vanlige feil:</strong> Glemme <code>parseFloat</code> — <code>"6" + "3"</code> blir <code>"63"</code>. Bruke samme handler-funksjon på alle knappene uten å vite hvilken som ble klikket. Glemme division-by-zero-sjekken.</p>
+          <p class="ref">Pensum: <a href="../../kap10/">Kap. 10 — DOM og events</a>, <a href="../../kap9/">Kap. 9 — JavaScript</a></p>
+          <div class="self-grade">
+            <span class="self-grade__label">Egenvurdering:</span>
+            <button type="button" data-grade="1.0">Alle 4 deloppgaver løst</button>
+            <button type="button" data-grade="0.75">3 av 4</button>
+            <button type="button" data-grade="0.5">2 av 4</button>
+            <button type="button" data-grade="0.25">1 av 4</button>
+            <button type="button" data-grade="0">Ingen</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </article>
+</section>
+
+<script src="exam.js"></script>
+<script src="../cheat-toggle.js" data-cheat-src="../a4-jukseark.html"></script>
+</body>
+</html>
