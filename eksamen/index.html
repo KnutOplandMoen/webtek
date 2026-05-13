@@ -232,11 +232,12 @@
       <div class="priority-grid">
         <div class="priority-card likely">
           <div class="pc-label">2/3 sett · 6–10 %</div>
-          <div class="pc-title">Event propagation &amp; bubbling</div>
+          <div class="pc-title">Bubbling (foreleserens eksempel)</div>
           <div class="pc-body">
-            Forklar capturing-, target- og bubbling-fasen. Bruk eksempel med
-            nestede divs og <code>addEventListener(..., useCapture)</code>.
-            <code>stopPropagation()</code> bør med. Se <a href="../kap10/">Kap 10</a>.
+            Forklar bubbling med nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>:
+            klikk på <code>p</code> kjører <em>først</em> p-handler, så div-handler.
+            Capture-fasen, <code>stopPropagation</code>, <code>preventDefault</code>
+            er ikke i pensum. Se <a href="../kap10/">Kap 10</a>.
           </div>
         </div>
         <div class="priority-card likely">
@@ -266,8 +267,10 @@
           <div class="pc-title">Form med JS-validering</div>
           <div class="pc-body">
             Skriv et HTML-skjema og en JS-funksjon som validerer
-            (positive tall, regex på passord, alder ≥ 18, ingen tall i navn).
-            Vis feil i <code>alert()</code>. Se <a href="../kap8/">Kap 8</a>.
+            (positive tall, alder ≥ 18, tom-felt-sjekk, e-post via
+            <code>indexOf("@")</code>). Vis feil i <code>alert()</code> og
+            <code>return false;</code>. Pensum dekker ikke regex i JS.
+            Se <a href="../kap8/">Kap 8</a>.
           </div>
         </div>
         <div class="priority-card likely">
@@ -346,7 +349,7 @@
           <tr class="tier-3"><td>position default (static)</td><td><a href="../kap4/">Kap 4</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>border-width 4-verdier (top/right/bottom/left)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
           <tr class="tier-3"><td>Math.floor / Math.ceil / Math.round</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Lav</span></td></tr>
-          <tr class="tier-3"><td>prompt() returnerer string (string + 1 = "181")</td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-must">Må kunne</span></td></tr>
+          <tr class="tier-3 out-of-pensum"><td>prompt() returnerer string — <em>ikke i pensum</em></td><td><a href="../kap9/">Kap 9</a></td><td class="center freq">1/3</td><td>MCQ 2 %</td><td><span class="badge-pill badge-low">Utenfor</span></td></tr>
           <tr class="tier-3"><td>Relative URLs (../, ./)</td><td><a href="../kap2/">Kap 2</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
           <tr class="tier-3"><td>External / Internal / Inline CSS</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
           <tr class="tier-3"><td>CSS specificity (forklaring)</td><td><a href="../kap3/">Kap 3</a></td><td class="center freq">1/3</td><td>Langsvar 6 %</td><td><span class="badge-pill badge-likely">Trolig</span></td></tr>
@@ -491,13 +494,12 @@ div ~ p        /* gen sib */
 ::first-line</pre>
         </div>
         <div>
-          <h4>CSS Specificity</h4>
+          <h4>Kaskade / spesifisitet</h4>
           <ul>
-            <li>inline = 1000</li>
-            <li>id = 100</li>
-            <li>class/attr/pseudo-class = 10</li>
-            <li>element/pseudo-element = 1</li>
             <li><code>!important</code> overstyrer alt</li>
+            <li>Inline <code>style=""</code> &gt; <code>&lt;style&gt;</code> &gt; ekstern .css</li>
+            <li>Mer spesifikk vinner: <code>#id</code> &gt; <code>.class</code> &gt; tag &gt; <code>*</code></li>
+            <li>Siste regel vinner ved likhet</li>
           </ul>
         </div>
         <div>
@@ -526,7 +528,6 @@ div ~ p        /* gen sib */
             <li><strong>relative</strong> — flyttes fra normalpos</li>
             <li><strong>absolute</strong> — relativ til nærmeste posisjonerte forelder</li>
             <li><strong>fixed</strong> — relativ til viewport</li>
-            <li><strong>sticky</strong> — relative til scroll passerer</li>
             <li><code>z-index</code> styrer stable-rekkefølge</li>
           </ul>
         </div>
@@ -553,17 +554,17 @@ div ~ p        /* gen sib */
         <div>
           <h4>POST vs GET (cheat)</h4>
           <ul>
-            <li>GET: data i URL, idempotent, cache-bar, &lt; 2K</li>
-            <li>POST: data i body, ikke idempotent, ikke cachet, ubegrenset</li>
+            <li>GET: data i URL, cache-bar, bookmark-bar, &lt; 2K</li>
+            <li>POST: data i body, ikke cachet, ubegrenset</li>
             <li>POST for sensitive/store data</li>
           </ul>
         </div>
         <div>
           <h4>TCP/IP-lag → protokoll</h4>
           <ul>
-            <li>Application: HTTP, HTTPS, FTP, SMTP, DNS</li>
+            <li>Application: HTTP, FTP, DNS, telnet, VoIP</li>
             <li>Transport: TCP, UDP</li>
-            <li>Network: IP, ICMP</li>
+            <li>Network: IP</li>
             <li>Physical/Link: WiFi, Ethernet</li>
           </ul>
         </div>
@@ -576,23 +577,23 @@ div ~ p        /* gen sib */
           <pre>"abcde".substring(2,4) // "cd"
 "abcde".slice(-3,-1)   // "cd"
 "abcde".charAt(2)      // "c"
-[1,2,3].push(4)        // [1,2,3,4]
+"abc".toUpperCase()    // "ABC"
+"a-b-c".split("-")
+[1,2,3].push(4)
 arr.pop() / shift() / unshift(x)
-arr[100]=x // length=101
 arr.splice(i, n, ...)
-arr.indexOf(x)
-arr.includes(x)
-arr.sort() / reverse()</pre>
+arr.indexOf(x), arr.includes(x)
+arr.sort() / reverse() / join(",")</pre>
         </div>
         <div>
-          <h4>JS-feller</h4>
+          <h4>Type-coercion (i pensum)</h4>
           <ul>
-            <li><code>5 + "9"</code> = "59" (string)</li>
+            <li><code>5 + "9"</code> = "59" (string-konkat)</li>
             <li><code>5 - "9"</code> = -4 (tall)</li>
-            <li><code>prompt()</code> returnerer string</li>
-            <li><code>arr[100]=x</code> → length = 101</li>
-            <li><code>==</code> coerce, <code>===</code> streng</li>
-            <li><code>typeof null</code> = "object"</li>
+            <li><code>"5" * "2"</code> = 10</li>
+            <li><code>"" == 0</code> = <code>true</code></li>
+            <li><code>"" === 0</code> = <code>false</code></li>
+            <li>Bruk <code>===</code> for å unngå overraskelser</li>
           </ul>
         </div>
         <div>
@@ -615,45 +616,50 @@ let days = Math.ceil(
 &lt;input onsubmit="return v()"&gt;</pre>
         </div>
         <div>
-          <h4>Regex-mønstre</h4>
-          <ul>
-            <li><code>/\d/</code> — siffer</li>
-            <li><code>/[A-Z]/</code> — stor bokstav</li>
-            <li><code>/[!@#$%^&amp;*]/</code> — spesial</li>
-            <li><code>/^.{8,}$/</code> — min 8 tegn</li>
-          </ul>
+          <h4>HTML5-validering (i form)</h4>
+          <pre>&lt;input required&gt;
+&lt;input type="email"&gt;
+&lt;input type="number"
+       min="0" max="100"&gt;
+&lt;input pattern="[A-Za-z]{3}"&gt;
+&lt;input maxlength="20"
+       placeholder="…"&gt;</pre>
         </div>
         <div>
-          <h4>DOM &amp; events</h4>
+          <h4>DOM &amp; events (i pensum)</h4>
           <pre>document.getElementById("x")
 document.getElementsByClassName("c")
 document.getElementsByTagName("p")
 document.querySelector("div p")
-document.querySelectorAll("li")
 
-el.addEventListener("click",fn)
-el.addEventListener("click",fn,true) // capture
-e.stopPropagation()
-e.preventDefault()</pre>
+el.innerText = "hei"
+el.value      // for input
+
+el.addEventListener("click",
+  function(e){ ... });
+
+// inline:
+&lt;button onclick="f()"&gt;X&lt;/button&gt;</pre>
         </div>
         <div>
-          <h4>Event-fasene (for forklaring)</h4>
-          <ul>
-            <li>1. Capturing — fra window ned</li>
-            <li>2. Target — på selve element</li>
-            <li>3. Bubbling — opp til root</li>
-            <li>3rd arg <code>true</code> → capture</li>
-          </ul>
+          <h4>Bubbling (foreleserens eksempel)</h4>
+          <pre>&lt;div onclick="console.log('div')"&gt;
+ &lt;p onclick="console.log('p')"&gt;
+  Klikk!
+ &lt;/p&gt;
+&lt;/div&gt;
+// Klikk på p → først "p",
+// så "div" (boblet opp)</pre>
         </div>
         <div>
-          <h4>Math &amp; tall</h4>
+          <h4>Math (i pensum)</h4>
           <ul>
             <li><code>Math.floor(3.8) = 3</code></li>
             <li><code>Math.ceil(3.2) = 4</code></li>
             <li><code>Math.round(3.5) = 4</code></li>
             <li><code>Math.random()</code> 0–1</li>
             <li><code>Math.PI</code>, <code>Math.pow(x,n)</code></li>
-            <li><code>parseInt(s)</code>, <code>parseFloat(s)</code>, <code>Number(s)</code></li>
+            <li><code>Math.abs/min/max/sqrt</code></li>
           </ul>
         </div>
       </div>
@@ -687,15 +693,15 @@ e.preventDefault()</pre>
         <li><span class="qmeta">Forklar · 6 %</span> Hva er forskjellen mellom POST og GET når du sender form-data?</li>
         <li><span class="qmeta">Forklar · 8 %</span> Forklar TCP/IP-lagene og gi to protokoll-eksempler per lag.</li>
         <li><span class="qmeta">Forklar · 6 %</span> Forklar forskjellen mellom <code>display:none</code>, <code>display:inline</code>, <code>display:block</code> og <code>visibility:hidden</code>.</li>
-        <li><span class="qmeta">Forklar · 10 %</span> Hva er event propagation og event bubbling? Bruk eksempel.</li>
-        <li><span class="qmeta">Forklar · 6 %</span> Forklar CSS specificity. Gi eksempel der id slår class.</li>
-        <li><span class="qmeta">JS · 9 %</span> Skriv en form med Fornavn, Etternavn, Alder og Passord. Valider: alder ≥ 18, navnefelt uten tall, passord ≥ 1 stor + 1 spesialtegn + 1 tall. Vis feil i alert.</li>
+        <li><span class="qmeta">Forklar · 10 %</span> Forklar bubbling med foreleserens eksempel: nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code> — hva logges når brukeren klikker på p, og hvorfor?</li>
+        <li><span class="qmeta">Forklar · 6 %</span> Forklar CSS-kaskade og spesifisitet. Gi eksempel der id slår class.</li>
+        <li><span class="qmeta">JS · 9 %</span> Skriv en form med Fornavn, Alder og e-post (som <code>type="text"</code>). Valider: alder ≥ 18, navn ikke tomt, e-post må inneholde <code>@</code> og <code>.</code>. Vis feil i alert og <code>return false</code>.</li>
         <li><span class="qmeta">MCQ-trace · 3 %</span> Hva blir output: <code>"Scaler".substring(2,4)</code>?</li>
-        <li><span class="qmeta">MCQ-trace · 3 %</span> Hva blir output: <code>let a=5+"9"; document.write(a);</code>?</li>
-        <li><span class="qmeta">MCQ-trace · 4 %</span> <code>let book=[1,2,3,4,5,6,7,8]; book[10]=10; document.write(book.length);</code> Hva er output?</li>
+        <li><span class="qmeta">MCQ-trace · 3 %</span> Hva blir verdien av <code>a</code>: <code>let a = 5 + "9"; console.log(a);</code>?</li>
+        <li><span class="qmeta">MCQ-trace · 4 %</span> Hva blir output: <code>let arr=[1,2,3]; arr.push(4); console.log(arr.length);</code>?</li>
         <li><span class="qmeta">MCQ · 2 %</span> Hva er default-verdien for <code>position</code>-property?</li>
         <li><span class="qmeta">MCQ · 2 %</span> Hva regner <code>Math.floor(3.8)</code> til?</li>
-        <li><span class="qmeta">MCQ · 2 %</span> Hva blir alert: <code>let age=prompt("Alder?"); alert(age+1);</code> hvis bruker skriver 18?</li>
+        <li><span class="qmeta">MCQ · 2 %</span> Hva blir verdien: <code>let s = "Humbug"; console.log(s == "humbug");</code>?</li>
       </ol>
 
       <div class="callout-good">

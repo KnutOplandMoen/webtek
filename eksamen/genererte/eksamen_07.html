@@ -5,6 +5,8 @@
   Fokus: TCP/IP-dybde + HTML-semantikk + JS-grunnlag (DOM,
   funksjoner). Hovedseksjonen i C er en full forklaring av
   TCP/IP-lagene — direkte øving på et kjerne-essay-spørsmål.
+  Oppdatert 2026-05-13: byttet ut HTTPS/stateless/PUT-PATCH-oppgavene
+  (utenfor pensum per kap1) med pensum-temaer.
   Ingen oppgave er en kopi av sett 01–06 eller ex2–ex5.
 -->
 <html lang="nb">
@@ -19,11 +21,19 @@
   <h1>Øvingseksamen 07 — IT2805</h1>
   <p>Tidsramme: 3 timer · Hjelpemidler: 2 A4 dobbeltsidig · Totalt: 100 poeng</p>
   <p class="exam-meta">
-    Hovedfokus: TCP/IP-dybde (HTTPS, stateless, full lag-forklaring),
+    Hovedfokus: TCP/IP-modellen (full lag-forklaring), URL-anatomi,
     HTML-semantikk og DOM-grunnlag (innerHTML vs textContent, removeChild),
     JS-grunnlag (fibonacci, quiz, real-time validering).
   </p>
 </header>
+
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
 
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
@@ -36,23 +46,22 @@
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 1</span>
       <span class="exam-q__points">3 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — HTTPS vs HTTP</span>
+      <span class="exam-q__topic">Kap. 1 — URL-anatomi</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hva er hovedforskjellen mellom HTTP og HTTPS?</p>
+      <p class="q-text">Gitt URL-en <code>https://www.example.com/news/article.html?id=42&amp;lang=no#kommentarer</code>. Hvilken del er <strong>spørringsstrengen</strong> (query string)?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> HTTPS bruker en raskere protokoll, HTTP er den eldre tregere.</li>
-        <li><span class="opt-label">B</span> HTTPS krypterer trafikken mellom klient og server via TLS, HTTP sender alt i klartekst.</li>
-        <li><span class="opt-label">C</span> HTTPS støttes kun av moderne nettlesere; HTTP fungerer overalt.</li>
-        <li><span class="opt-label">D</span> HTTPS bruker port 80; HTTP bruker port 443.</li>
+        <li><span class="opt-label">A</span> <code>www.example.com</code></li>
+        <li><span class="opt-label">B</span> <code>/news/article.html</code></li>
+        <li><span class="opt-label">C</span> <code>?id=42&amp;lang=no</code></li>
+        <li><span class="opt-label">D</span> <code>#kommentarer</code></li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <span class="fasit-correct">Riktig svar: B</span>
-          <p>HTTPS = HTTP over TLS (eller eldre SSL). Trafikken krypteres slik at noen som "lytter" på linja (på offentlig WiFi, hos ISP-en, osv.) bare ser krøllete bytes — ikke passord, cookies eller innhold. HTTP sender alt i klartekst.</p>
-          <p><strong>Hvorfor de andre er feil:</strong> A er feil — HTTPS er litt <em>tregere</em> pga. ekstra TLS-handshake (men neglisjerbar i praksis med HTTP/2). C er feil — alle moderne nettlesere har støttet HTTPS i over 20 år. D <em>snur</em> portene: HTTP=80, HTTPS=443.</p>
-          <p><strong>Praktisk konsekvens:</strong> Browsere markerer HTTP-sider med "Not Secure" og blokkerer enkelte API-er (geolocation, kamera, service workers). Anbefalt praksis: alltid HTTPS, selv for offentlige sider uten innlogging.</p>
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>Query string-en starter med <code>?</code> og består av <code>nøkkel=verdi</code>-par separert med <code>&amp;</code>. Den brukes til å sende parametere til serveren — typisk fra GET-skjemaer eller for å filtrere/søke.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er domenenavnet. B er stien til ressursen (path). D er anker-fragmentet — det navigerer til et bestemt sted <em>i</em> dokumentet og sendes ikke til serveren.</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
       </details>
@@ -63,23 +72,22 @@
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 2</span>
       <span class="exam-q__points">3 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — HTTP er stateless</span>
+      <span class="exam-q__topic">Kap. 1 — IP-adresser</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hva betyr det at HTTP er en <em>stateless</em> (tilstandsløs) protokoll?</p>
+      <p class="q-text">Hva er en <strong>IP-adresse</strong> i konteksten av Internett?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> Klienten må alltid sende request to ganger for å garantere levering.</li>
-        <li><span class="opt-label">B</span> Hver request behandles uavhengig — serveren "husker" ikke tidligere requests fra samme klient.</li>
-        <li><span class="opt-label">C</span> Serveren har ingen tilgang til database — alle data må sendes med hver request.</li>
-        <li><span class="opt-label">D</span> Klienten må starte en ny TCP-tilkobling for hver eneste request.</li>
+        <li><span class="opt-label">A</span> Et menneskelig-lesbart domenenavn som <code>ntnu.no</code>.</li>
+        <li><span class="opt-label">B</span> En unik numerisk identifikator for hver datamaskin på nettet — fire tall mellom 0 og 255.</li>
+        <li><span class="opt-label">C</span> Et passord som klienten må sende ved hver HTTP-forespørsel.</li>
+        <li><span class="opt-label">D</span> En type protokoll for å sende e-post mellom servere.</li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <span class="fasit-correct">Riktig svar: B</span>
-          <p>"Stateless" betyr at hver HTTP-request er <em>isolert</em> — serveren tar ikke automatisk med kontekst fra tidligere requests. Hver request må selv inneholde alt som trengs for å behandles.</p>
-          <p><strong>Hvordan handler man "innlogging" da?</strong> Klienten sender en <em>cookie</em> (eller token i header) på hver request. Serveren slår opp hvilken session/bruker den hører til. State <em>finnes</em> — den ligger bare ikke i protokollen, men i applikasjonslaget over.</p>
-          <p><strong>Hvorfor de andre er feil:</strong> A er konfabulering. C er feil — serveren har sine egne databaser; "stateless" handler om protokollen, ikke serveren generelt. D er feil — HTTP/1.1 introduserte "keep-alive" så samme TCP kan brukes til mange requests.</p>
+          <p>Hver maskin på Internett har en unik IP-adresse — fire tall i området 0–255, separert med punktum (f.eks. <code>129.241.160.102</code> for ntnu.no). Adressen brukes av rutere til å bestemme hvor pakkene skal sendes. DNS oversetter mellom domenenavn (A) og IP-adresse (B).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er domenenavnet — det DNS oversetter <em>fra</em>. C er konfabulasjon. D er SMTP (e-postprotokoll), ikke en adresse.</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
       </details>
@@ -510,7 +518,7 @@ switch (x) {
         <div class="fasit-body">
           <p><strong>Rubrikk (5 poeng — ca. 1.2 poeng per lag, pluss helhetsvurdering):</strong></p>
           <ul>
-            <li><strong>1. Applikasjonslag (Application layer) — øverst:</strong> Hvor selve nettverks-applikasjonene kommuniserer. Protokoller som tolkes av nettlesere, mail-klienter, etc. <em>Eksempler:</em> HTTP, HTTPS, SMTP, FTP, DNS, IMAP, SSH, POP3.</li>
+            <li><strong>1. Applikasjonslag (Application layer) — øverst:</strong> Hvor selve nettverks-applikasjonene kommuniserer. Protokoller som tolkes av nettlesere, mail-klienter, etc. <em>Eksempler:</em> HTTP, FTP, DNS, telnet, VoIP, SMTP/IMAP/POP3.</li>
             <li><strong>2. Transportlag (Transport layer):</strong> Bryter data opp i pakker, sørger for at de når frem og settes sammen igjen i riktig rekkefølge. Tilbyr porter for å skille mellom applikasjoner. <em>Eksempler:</em> TCP (pålitelig, ordnet, krever forbindelse), UDP (rask, upålitelig, ingen forbindelse — brukes for streaming, DNS-oppslag).</li>
             <li><strong>3. Nettverkslag (Network/Internet layer):</strong> Rutet pakker mellom maskiner basert på IP-adresser. "Hvordan kommer denne pakken fra min maskin til serveren i USA?" <em>Eksempler:</em> IP (versjon 4 og 6), ICMP (brukt av ping).</li>
             <li><strong>4. Fysisk/Link-lag (Physical/Link layer) — nederst:</strong> Den faktiske maskinvaren — hvordan bits sendes som elektriske signaler, radiosignaler, lysblink i fiber. <em>Eksempler:</em> Ethernet, WiFi (802.11), Bluetooth, fiber.</li>
@@ -535,31 +543,29 @@ switch (x) {
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 17</span>
       <span class="exam-q__points">3 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — POST vs GET (ekstra dybde)</span>
+      <span class="exam-q__topic">Kap. 1 — Reisen fra URL til side</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Du oppdaterer en bruker-profil — endrer telefonnummer fra "999..." til "888...". Hvilken HTTP-metode er <em>mest semantisk korrekt</em>: <code>GET</code>, <code>POST</code>, <code>PUT</code>, eller <code>PATCH</code>? Forklar med <strong>tre punkter</strong>.</p>
+      <p class="q-text">Beskriv hva som skjer i hovedtrekk når brukeren skriver <code>https://ntnu.no</code> i adresselinja og trykker Enter — fra tastetrykk til siden er på skjermen. Bruk <strong>tre punkter</strong> som tar med begrepene DNS, klient/tjener og HTTP.</p>
       <textarea class="exam-q__textarea" rows="7" placeholder="Skriv ditt svar her..."></textarea>
       <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <p><strong>Akseptable svar: PATCH (mest spesifikk) eller PUT (også vanlig). POST er gangbart i praksis. GET er feil.</strong></p>
           <p><strong>Rubrikk (3 poeng — 1 per godt poeng):</strong></p>
           <ul>
-            <li><strong>GET er feil:</strong> GET er for å <em>lese</em> data, ikke endre. Det er idempotent og kan caches — uegnet for noe som muterer state på serveren. Stryk GET fra listen.</li>
-            <li><strong>PATCH er mest spesifikk:</strong> PATCH er ment for <em>delvis oppdatering</em> — du sender bare det som har endret seg (telefonnummeret), ikke hele bruker-objektet. PATCH er ikke garantert idempotent generelt (avhengig av spec), men semantisk fritt fra "skap ny".</li>
-            <li><strong>PUT er en god alternativ:</strong> PUT betyr "erstatt hele ressursen med dette". Hvis du sender hele bruker-objektet med oppdatert telefonnummer, er PUT idiomatisk. PUT <em>er</em> idempotent — å sende samme PUT to ganger gir samme resultat.</li>
-            <li><strong>POST i praksis:</strong> Mange API-er bruker POST for alt fordi nettlesere historisk kun støttet GET og POST. Pragmatisk, men ikke semantisk perfekt — POST betyr "skap ny ressurs".</li>
+            <li><strong>DNS-oppslag:</strong> Nettleseren har bare et domenenavn (<code>ntnu.no</code>), men trenger IP-adressen for å rute trafikken. Den spør en DNS-tjener, som svarer med IP-en (f.eks. <code>129.241.160.102</code>).</li>
+            <li><strong>HTTP-forespørsel:</strong> Nettleseren (klienten) åpner en forbindelse til IP-en og sender en HTTP-forespørsel (GET / HTTP/1.1) til tjeneren.</li>
+            <li><strong>HTTP-svar og rendering:</strong> Tjeneren svarer med HTML-fila. Nettleseren leser HTML-en, oppdager referanser til CSS/JS/bilder, henter dem i nye HTTP-forespørsler, og rendrer siden i vinduet.</li>
           </ul>
-          <p><strong>Bonus:</strong> Den ekte forskjellen handler om <em>idempotens</em>. Idempotent: GET, PUT, DELETE. Ikke idempotent: POST. (PATCH er gråsone.)</p>
+          <p><strong>Bonus:</strong> Alt dette går gjennom TCP/IP-stakken — Application (HTTP) → Transport (TCP) → Network (IP) → Physical (Ethernet/WiFi).</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
           <div class="self-grade">
             <span class="self-grade__label">Egenvurdering:</span>
-            <button type="button" data-grade="1.0">Riktig valg + 3 gode argumenter</button>
-            <button type="button" data-grade="0.66">Riktig valg + 2 argumenter</button>
-            <button type="button" data-grade="0.33">Riktig valg, men svake argumenter</button>
-            <button type="button" data-grade="0">Feil valg (GET)</button>
+            <button type="button" data-grade="1.0">3 gode punkter inkl. DNS, klient/tjener, HTTP</button>
+            <button type="button" data-grade="0.66">2 av 3 punkter</button>
+            <button type="button" data-grade="0.33">1 punkt</button>
+            <button type="button" data-grade="0">Manglet poenget</button>
           </div>
         </div>
       </details>

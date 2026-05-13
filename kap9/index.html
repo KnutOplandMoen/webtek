@@ -48,34 +48,37 @@
         <h3 class="ef-title">Kodelesing + Christmas-funksjon = sikre poeng</h3>
         <p style="margin-top:0;">
           JS-grunnlag dukker opp i hvert sett: kodelesings-MCQ-er,
-          variable trace-oppgaver, og — på 2 av 3 sett — den karakteristiske
-          funksjonen som regner dager til neste jul. I tillegg er klassiske
-          feller (string + tall, array.length, prompt() returnerer string)
-          sikre småpoeng.
+          variable trace-oppgaver, og — fra foreleserens eksamensgjennomgang —
+          den karakteristiske funksjonen som regner dager til neste jul.
+          Type-coercion på <code>+</code>/<code>-</code> mellom string og tall er klassiske feller.
         </p>
         <div class="ef-grid">
           <div class="ef-block must">
-            <h4>Må kunne</h4>
+            <h4>Må kunne (i pensum)</h4>
             <ul>
-              <li><strong>Type-coercion</strong>: <code>5 + "9"</code> = "59", <code>5 - "9"</code> = -4, <code>prompt()</code> returnerer string</li>
-              <li><strong>Array-fakta</strong>: <code>arr[100]=x</code> setter length til 101, sparse arrays</li>
-              <li><strong>Array-metoder</strong>: <code>push/pop/shift/unshift</code>, <code>slice</code>, <code>splice</code>, <code>indexOf</code></li>
-              <li><strong>String-metoder</strong>: <code>substring(s,e)</code>, <code>slice</code>, <code>charAt</code>, <code>length</code></li>
+              <li><strong>Type-coercion</strong>: <code>5 + "9"</code> = <code>"59"</code> (string-konkat), <code>5 - "9"</code> = <code>-4</code> (numerisk)</li>
+              <li><strong><code>==</code> vs <code>===</code></strong>: <code>"" == 0</code> er <code>true</code>, <code>"" === 0</code> er <code>false</code></li>
+              <li><strong>String-metoder</strong>: <code>charAt</code>, <code>substring(s,e)</code>, <code>slice</code>, <code>indexOf</code>, <code>length</code>, <code>toUpperCase/toLowerCase</code>, <code>trim</code>, <code>split</code>, <code>concat</code>, <code>replace</code>, <code>includes</code>, <code>startsWith/endsWith</code></li>
+              <li><strong>Array-metoder</strong>: <code>push/pop/shift/unshift</code>, <code>slice</code>, <code>splice</code>, <code>indexOf</code>, <code>join</code>, <code>sort</code>, <code>reverse</code>, <code>concat</code>, <code>at</code></li>
               <li><strong>Date til jul</strong>: <code>new Date()</code>, <code>new Date(year, 11, 25)</code> (måned 0-indeksert!), differanse i ms / (1000·60·60·24)</li>
-              <li><strong>Math</strong>: <code>floor/ceil/round</code> med eksempler</li>
-              <li><strong>Loops</strong>: <code>for</code>, <code>while</code>, <code>for...in</code> — kunne skrive løkker som teller eller manipulerer array</li>
-              <li><strong>Funksjoner</strong>: definere, kalle, returnere — basis for alle kode-oppgaver</li>
+              <li><strong>Math</strong>: <code>floor/ceil/round</code>, <code>abs/min/max</code>, <code>pow/sqrt</code>, <code>random</code>, <code>PI</code></li>
+              <li><strong>Loops</strong>: <code>for</code>, <code>while</code>, <code>for...in</code></li>
+              <li><strong>Funksjoner</strong>: definere, kalle, returnere; arrow-syntax</li>
+              <li><strong>Objekter</strong>: literal, dot/bracket-access, <code>delete</code>, metode i objekt, konstruktørfunksjon med <code>this</code></li>
             </ul>
           </div>
           <div class="ef-block skip">
-            <h4>Kan nedprioriteres</h4>
+            <h4>Utenfor pensum / kan nedprioriteres</h4>
             <ul>
+              <li><code>typeof null</code> = <code>"object"</code> — ikke i forelesning</li>
+              <li><code>null == undefined</code> = <code>true</code> — ikke i forelesning</li>
+              <li><code>NaN === NaN</code> = <code>false</code> — ikke i forelesning</li>
+              <li><code>arr[100]=x</code> length-quirk og sparse arrays — ikke i forelesning</li>
+              <li><code>prompt()</code> / <code>confirm()</code> / <code>document.write</code> — ikke i forelesning</li>
+              <li><code>parseInt</code>, <code>parseFloat</code>, <code>Number()</code>, <code>toFixed</code> — ikke i forelesning</li>
               <li>BigInt og tall-presisjons-detaljer</li>
               <li>Math-konstanter (LN2, SQRT2, LOG2E osv.)</li>
-              <li>String <code>padStart/padEnd/repeat/trimStart</code></li>
-              <li>Date i UTC/ISO-formater og timezones</li>
-              <li>Object-konstruktører (<code>function Teacher(...)</code>) og <code>this</code></li>
-              <li>Closures, IIFE, arrow-funksjoner i dybden</li>
+              <li>Closures, IIFE i dybden</li>
             </ul>
           </div>
         </div>
@@ -199,7 +202,7 @@
       <div class="fact-card"><div class="fc-key">==</div><div class="fc-val">Likhet med automatisk type-koersjon.</div></div>
       <div class="fact-card"><div class="fc-key">===</div><div class="fc-val">Streng likhet — samme verdi <em>og</em> samme type.</div></div>
       <div class="fact-card"><div class="fc-key">undefined</div><div class="fc-val">Variabel deklarert, ikke tildelt verdi.</div></div>
-      <div class="fact-card"><div class="fc-key">null</div><div class="fc-val">Bevisst tom verdi. <code>typeof null === "object"</code>.</div></div>
+      <div class="fact-card"><div class="fc-key">null</div><div class="fc-val">Bevisst tom verdi (i motsetning til <code>undefined</code>, som er fravær av tildeling).</div></div>
       <div class="fact-card"><div class="fc-key">NaN</div><div class="fc-val">«Not a Number». F.eks. <code>0/0</code>.</div></div>
       <div class="fact-card"><div class="fc-key">Infinity</div><div class="fc-val">Større enn alle tall. <code>Infinity + 1</code> er <code>Infinity</code>.</div></div>
       <div class="fact-card"><div class="fc-key">% (modulo)</div><div class="fc-val">Resten av en divisjon. <code>7 % 5 === 2</code>.</div></div>
@@ -260,7 +263,6 @@
     <div class="callout-warn"><div class="label">Pass på</div>
       <ul>
         <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code>, men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> hvis du ikke har en grunn til å la JS gjøre type-koersjon.</li>
-        <li><strong><code>typeof null</code> er <code>"object"</code>:</strong> en kjent egenart i språket. Sjekk for <code>null</code> eksplisitt.</li>
         <li><strong>Referere et HTML-element før det er rendret:</strong> hvis scriptet ligger i <code>&lt;head&gt;</code> over elementet, finnes elementet ikke ennå. Legg scriptet nederst i <code>&lt;body&gt;</code> eller bruk <code>window.onload</code>.</li>
         <li><strong>Glemme <code>let</code>/<code>var</code>/<code>const</code>:</strong> uten keyword (og uten <code>"use strict"</code>) blir variabelen automatisk global — det er nesten alltid feil.</li>
         <li><strong>Tro at <code>const</code> betyr immutable:</strong> en <code>const</code>-array kan fortsatt endres med <code>.push()</code> — det er bare referansen som er låst.</li>
@@ -301,14 +303,14 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">Lett · Datatyper</div>
-      <div class="q-text">Hva returnerer <code>typeof null</code>?</div>
+      <div class="q-text">Hva returnerer <code>typeof "hei"</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt">"null"</li>
-        <li class="mcq-opt">"undefined"</li>
-        <li class="mcq-opt" data-correct="1">"object"</li>
-        <li class="mcq-opt">"boolean"</li>
+        <li class="mcq-opt">"text"</li>
+        <li class="mcq-opt" data-correct="1">"string"</li>
+        <li class="mcq-opt">"char"</li>
+        <li class="mcq-opt">"object"</li>
       </ul>
-      <div class="mcq-feedback"><code>typeof null</code> er <code>"object"</code> — en kjent egenart i JS. <code>typeof undefined</code> er <code>"undefined"</code>. Pensum 1.11.6.</div>
+      <div class="mcq-feedback"><code>typeof</code> returnerer en streng som beskriver typen — for tekst er det <code>"string"</code>. Andre verdier: <code>"number"</code>, <code>"boolean"</code>, <code>"undefined"</code>, <code>"object"</code>, <code>"function"</code>. Pensum 1.11.4.</div>
     </div>
 
     <div class="quiz mcq" data-quiz>
@@ -388,7 +390,7 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
       <div class="q-text">Forklar forskjellen på <code>undefined</code> og <code>null</code>.</div>
       <div class="quiz-reveal">
         <button class="reveal-btn">Se svar</button>
-        <div class="answer"><code>undefined</code> betyr at en variabel er deklarert, men ikke tildelt en verdi. <code>null</code> er en bevisst tom verdi som programmerer har satt. <code>undefined == null</code> gir <code>true</code> (samme «verdi»), men <code>undefined === null</code> gir <code>false</code> (ulik type — <code>typeof undefined</code> er <code>"undefined"</code>, mens <code>typeof null</code> er <code>"object"</code>). Pensum 1.11.6.</div>
+        <div class="answer"><code>undefined</code> betyr at en variabel er deklarert, men ikke tildelt en verdi. <code>null</code> er en bevisst tom verdi som programmerer har satt eksplisitt. Begge representerer «fravær av data», men kommer fra forskjellig kilde. Pensum 1.11.6.</div>
       </div>
     </div>
 
@@ -564,18 +566,18 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · null</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · null</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>typeof null</code>?</p></div>
-          <div class="flashcard__back"><p><code>"object"</code>. Dette er en kjent egenart i språket. <code>null</code> er en bevisst tom verdi som programmereren har satt.</p></div>
+          <div class="flashcard__front"><p class="fc-question">Forskjellen på <code>undefined</code> og <code>null</code>?</p></div>
+          <div class="flashcard__back"><p><code>undefined</code> = variabelen er deklarert, men ikke tildelt en verdi (JS satte den). <code>null</code> = programmereren har satt verdien til «ingenting» bevisst.</p></div>
         </div>
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.6 · Likhet null/undefined</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.4 · Likhet</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva returnerer <code>undefined == null</code> og <code>undefined === null</code>?</p></div>
-          <div class="flashcard__back"><p><code>undefined == null</code> er <code>true</code> — begge representerer «ingen verdi».</p><p><code>undefined === null</code> er <code>false</code> — de har ulik type.</p></div>
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>"" == 0</code> og <code>"" === 0</code>?</p></div>
+          <div class="flashcard__back"><p><code>"" == 0</code> er <code>true</code> — <code>==</code> gjør type-koersjon (begge evalueres til <code>false</code>-ish).</p><p><code>"" === 0</code> er <code>false</code> — <code>===</code> krever <em>samme type</em>, og string ≠ number.</p></div>
         </div>
       </div>
 

@@ -25,6 +25,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
 <!-- ============================================================ -->
@@ -62,22 +70,22 @@
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 2</span>
       <span class="exam-q__points">2 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — Statuskoder</span>
+      <span class="exam-q__topic">Kap. 1 — Klient/tjener</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hva betyr HTTP-statuskode <code>500</code>?</p>
+      <p class="q-text">I klient-tjener-modellen for web — hvem <strong>initierer</strong> en HTTP-kommunikasjon?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> Klient-feil: ressursen finnes ikke.</li>
-        <li><span class="opt-label">B</span> Server-feil: noe gikk galt på server-siden.</li>
-        <li><span class="opt-label">C</span> Suksess: ressurs flyttet permanent.</li>
-        <li><span class="opt-label">D</span> Klient-feil: ugyldig request-syntaks.</li>
+        <li><span class="opt-label">A</span> Tjeneren sender HTML automatisk når noe endrer seg.</li>
+        <li><span class="opt-label">B</span> Klienten (nettleseren) sender en forespørsel; tjeneren svarer.</li>
+        <li><span class="opt-label">C</span> DNS-tjeneren starter alltid kommunikasjonen.</li>
+        <li><span class="opt-label">D</span> Begge parter sender samtidig over en åpen forbindelse.</li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <span class="fasit-correct">Riktig svar: B</span>
-          <p><code>500 Internal Server Error</code> er den generelle "noe gikk galt på server-siden"-meldingen — feks ukastet exception i backend. 5xx-gruppen er alltid server-feil; 4xx-gruppen er alltid klient-feil; 3xx er redirects; 2xx er suksess.</p>
-          <p><strong>Hvorfor de andre er feil:</strong> A er <code>404 Not Found</code>. C er <code>301</code>. D er <code>400 Bad Request</code>.</p>
+          <p>I klient-tjener-modellen er det alltid klienten (nettleseren) som starter — den sender en HTTP-forespørsel, og tjeneren svarer med f.eks. en HTML-fil. Tjeneren kan ikke "spørre" nettleseren av seg selv.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A er feil — tjeneren venter passivt på forespørsler. C er feil — DNS er bare en oppslags-tjeneste klienten kontakter underveis. D beskriver ikke HTTP, som er en request/response-protokoll.</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
       </details>
@@ -515,7 +523,7 @@ console.log(svar);</code></pre>
         <div class="fasit-body">
           <p><strong>Rubrikk (3 poeng — 0.75 per lag):</strong></p>
           <ul>
-            <li><strong>Application layer</strong> — kommunikasjon med applikasjoner og brukere. Eksempler: HTTP, HTTPS, SMTP, FTP, DNS.</li>
+            <li><strong>Application layer</strong> — kommunikasjon med applikasjoner og brukere. Eksempler: HTTP, FTP, DNS, telnet, VoIP, SMTP/IMAP/POP3.</li>
             <li><strong>Transport layer</strong> — pålitelig (eller upålitelig) endepunkt-til-endepunkt-overføring; deler opp data i pakker og styrer flyten. Eksempler: TCP (pålitelig), UDP (forbindelsesløs).</li>
             <li><strong>Network/Internet layer</strong> — adressering og ruting av pakker mellom nettverk. Eksempler: IP, ICMP.</li>
             <li><strong>Link/Physical layer</strong> — selve fysiske mediet og dataoverføringen over kabel/radio. Eksempler: Ethernet, WiFi (IEEE 802.11).</li>

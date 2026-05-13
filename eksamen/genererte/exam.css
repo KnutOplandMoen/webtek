@@ -153,6 +153,29 @@ body {
 
 .exam-q__body { padding-top: 4px; }
 
+/* ---------- IKKE-I-PENSUM-VARSEL ---------- */
+.exam-q__warn {
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  background: #fdf4ef;
+  border: 1px solid #d9a892;
+  border-left: 4px solid #b14a2e;
+  border-radius: 4px;
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.exam-q__warn strong {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a3422;
+  display: inline-block;
+  margin-right: 6px;
+}
+
 .q-text {
   font-family: var(--serif);
   font-size: 1.02rem;

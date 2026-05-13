@@ -24,6 +24,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
 <!-- ============================================================ -->
@@ -49,7 +57,7 @@
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <span class="fasit-correct">Riktig svar: C</span>
-          <p>SMTP (Simple Mail Transfer Protocol) er en applikasjonsprotokoll for sending av e-post. Andre applikasjons-protokoller: HTTP, HTTPS, FTP, DNS, IMAP, POP3.</p>
+          <p>SMTP (Simple Mail Transfer Protocol) er en applikasjonsprotokoll for sending av e-post. Andre applikasjons-protokoller: HTTP, FTP, DNS, telnet, VoIP.</p>
           <p><strong>Hvorfor de andre er feil:</strong> Ethernet er fysisk/link-laget (nederst). IP er nettverkslaget (rutet pakker). TCP er transportlaget (pålitelig levering).</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
@@ -314,6 +322,7 @@
       <span class="exam-q__topic">Kap. 9 — Spread og Array.from</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> Spread-operatoren <code>...</code> og <code>Array.from</code> er ikke gjennomgått i forelesningene. For å konkatenere arrays bruk <code>a.concat([4, 5])</code> (i pensum). Hopp over hvis du øver til eksamen.</div>
       <p class="q-text">Hva skriver dette ut?</p>
       <pre><code>let a = [1, 2, 3];
 let b = [...a, 4, 5];
@@ -515,7 +524,7 @@ console.log(r);</code></pre>
       <span class="exam-q__topic">Kap. 1 — POST vs GET (caching og bookmarks)</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Forklar hvorfor <strong>GET-forespørsler kan caches og bookmarkes</strong>, mens <strong>POST-forespørsler typisk ikke kan det</strong>. Begrunn med begrepet <em>idempotens</em>.</p>
+      <p class="q-text">Forklar hvorfor <strong>GET-forespørsler kan caches og bookmarkes</strong>, mens <strong>POST-forespørsler typisk ikke kan det</strong>. Gi <strong>tre konkrete argumenter</strong>.</p>
       <textarea class="exam-q__textarea" rows="6" placeholder="Skriv ditt svar her..."></textarea>
       <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
       <details class="fasit-details">
@@ -523,9 +532,9 @@ console.log(r);</code></pre>
         <div class="fasit-body">
           <p><strong>Rubrikk (3 poeng):</strong></p>
           <ul>
-            <li><strong>1 poeng — Idempotens-definisjon:</strong> En operasjon er idempotent hvis å kalle den N ganger har samme effekt som å kalle den 1 gang. GET er idempotent — å hente en side endrer ikke serveren. POST er <em>ikke</em> idempotent — to like POST-er kan opprette to like rader (f.eks. to identiske ordre).</li>
-            <li><strong>1 poeng — Caching:</strong> Siden GET er idempotent og kun leser data, kan nettleseren og mellomliggende proxies trygt caches resultatet. Ved gjentatt forespørsel kan vi returnere cachen i stedet for å gå til serveren. POST kan ikke caches fordi gjentakelsen <em>endrer state</em> — vi må snakke med serveren hver gang.</li>
-            <li><strong>1 poeng — Bookmarks:</strong> URL-en for en GET inneholder alle parameterne (etter <code>?</code>) — så den er en komplett "oppskrift" som kan lagres som bookmark og kjøres på nytt. POST-data ligger i request-body som ikke er en del av URL-en — det er ingenting å bookmarke.</li>
+            <li><strong>1 poeng — GET er en henteoperasjon:</strong> GET er ment for å lese data uten å endre noe på serveren. Siden samme GET-forespørsel skal gi samme resultat, kan nettleseren og mellomliggende proxies trygt mellomlagre svaret og levere det igjen uten å spørre serveren på nytt.</li>
+            <li><strong>1 poeng — POST endrer state:</strong> POST brukes til å sende inn data som <em>endrer</em> tilstanden på serveren (f.eks. legge inn en ordre, opprette en bruker). Gjentar man en POST kan man opprette to like rader/ordrer, så nettleseren caches normalt ikke svaret — den må gå til serveren hver gang.</li>
+            <li><strong>1 poeng — Bookmarks:</strong> URL-en for en GET inneholder alle parameterne (etter <code>?</code>) — det er en komplett "oppskrift" som kan lagres som bookmark og kjøres på nytt. POST-data ligger i request-body, som ikke er en del av URL-en — det er ingenting å bookmarke.</li>
           </ul>
           <p><strong>Bonus å nevne:</strong> Hvis du prøver å reload en POST-side i nettleseren, får du typisk en advarsel: "Forespørselen kan ikke gjentas — fortsette?" Det er fordi POST ikke skal gjentas implisitt.</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a>, <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>

@@ -54,23 +54,25 @@
         </p>
         <div class="ef-grid">
           <div class="ef-block must">
-            <h4>Må kunne</h4>
+            <h4>Må kunne (i pensum)</h4>
             <ul>
               <li><strong>POST vs GET</strong> — minst tre forskjeller (URL-synlighet, idempotens, størrelse, caching, sikkerhet)</li>
               <li><strong>Form-skjelett</strong>: <code>&lt;form action method&gt;</code> + <code>&lt;input type name id&gt;</code> + submit-knapp</li>
-              <li><strong>Input-typer</strong>: text, number, password, email, checkbox, radio, submit, button</li>
-              <li><strong>JS-validering</strong>: lese verdier med <code>document.getElementById("x").value</code>, sjekke med regex / <code>parseInt</code></li>
-              <li><strong>Validerings-mønstre</strong>: alder &gt; 18, navn uten siffer (<code>/\d/</code>), passord med stor + spesial + tall</li>
-              <li><strong>Vise feil i alert</strong>: <code>alert("feilmelding"); return false;</code></li>
-              <li><strong>Kalkulator-form-mønster</strong>: to inputs + 2 knapper med <code>onclick</code> + <code>&lt;span id="result"&gt;</code> for output</li>
+              <li><strong>Input-typer</strong>: text, password, email, url, search, number, date, file, checkbox, radio, submit, button, hidden, image</li>
+              <li><strong>HTML5-validering</strong>: <code>required</code>, <code>pattern="..."</code>, <code>min</code>/<code>max</code>, <code>maxlength</code>, <code>placeholder</code> — pensum 1.9</li>
+              <li><strong>Struktur</strong>: <code>fieldset</code> + <code>legend</code> for gruppering, <code>label for="id"</code> for tilgjengelighet</li>
+              <li><strong>JS-validering</strong>: lese verdier med <code>document.getElementById("x").value</code>, sammenligne (<code>n.length === 0</code>, <code>a &lt; 18</code>, <code>str.indexOf("@") === -1</code>), <code>alert("feil"); return false;</code></li>
+              <li><strong>Foreleser-mønster</strong>: hvis oppgaven forbyr <code>type="email"</code>, må du sjekke selv i JS — bruk <code>indexOf</code>/<code>includes</code> (regex er ikke i pensum)</li>
+              <li><strong>Kalkulator-form-mønster</strong>: to inputs + 2 knapper med <code>onclick</code> + <code>&lt;span id="result"&gt;</code> for output; bruk <code>* / -</code> for å tvinge tall-typen</li>
             </ul>
           </div>
           <div class="ef-block skip">
-            <h4>Kan nedprioriteres</h4>
+            <h4>Utenfor pensum / nedprioriter</h4>
             <ul>
-              <li><code>fieldset</code>, <code>legend</code>, <code>label</code> — bra praksis, ikke testet</li>
-              <li>HTML5-validering (<code>required</code>, <code>pattern</code>, <code>min/max</code>) — eksamen forventer JS-validering</li>
-              <li>multipart/form-data og fil-opplasting</li>
+              <li>JS regex (<code>/\d/</code>, <code>.test()</code>, <code>.match()</code>) — <em>ikke</em> i pensum (regex finnes bare i HTML5 <code>pattern</code>-attributtet)</li>
+              <li><code>parseInt</code>, <code>parseFloat</code>, <code>Number()</code>, <code>toFixed</code> — ikke i pensum</li>
+              <li><code>e.preventDefault()</code> for å avbryte submit — ikke i pensum (bruk <code>onsubmit="return val()"</code> som returnerer <code>false</code>)</li>
+              <li>multipart/form-data og fil-opplasting i detalj</li>
               <li>Server-side-håndtering (det er backend-kurs)</li>
             </ul>
           </div>

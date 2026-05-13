@@ -330,16 +330,14 @@ input:checked</pre>
     </div>
 
     <div class="box fact">
-      <h4>CSS-spesifisitet</h4>
-      <div class="kv">
-        <b>inline</b><span>1000</span>
-        <b>#id</b><span>100</span>
-        <b>.class / [attr] / :hover</b><span>10</span>
-        <b>tag / ::pseudo-el</b><span>1</span>
-        <b>*</b><span>0</span>
-      </div>
-      <p style="margin-top:1mm;font-size:7.4pt;"><code>!important</code> slår alt. Ved likhet: siste regel vinner.</p>
-      <p style="font-size:7.2pt;color:#444;">Eks: <code>#a .b p</code> = 111, <code>div p:hover</code> = 12</p>
+      <h4>Kaskade og spesifisitet</h4>
+      <p style="font-size:7.4pt;">Rangering når flere regler treffer samme element:</p>
+      <ol style="margin:0.5mm 0 0.6mm;padding-left:3mm;">
+        <li><code>!important</code> slår alt</li>
+        <li>inline <code>style=""</code> &gt; <code>&lt;style&gt;</code> &gt; ekstern <code>.css</code></li>
+        <li>mer spesifikk selektor vinner (<code>p</code> &gt; <code>*</code>, <code>p b</code> &gt; <code>p</code>, <code>#id</code> &gt; <code>.class</code> &gt; tag)</li>
+        <li>siste regel vinner ved likhet</li>
+      </ol>
     </div>
 
     <div class="box must">
@@ -376,9 +374,8 @@ input:checked</pre>
         <li><b>relative</b> — flyttes fra normalposisjon</li>
         <li><b>absolute</b> — relativ til nærmeste posisjonerte forelder</li>
         <li><b>fixed</b> — relativ til viewport</li>
-        <li><b>sticky</b> — relative til scroll passerer</li>
       </ul>
-      <p style="font-size:6.8pt;"><code>z-index</code> virker kun når position ≠ static</p>
+      <p style="font-size:6.8pt;"><code>z-index</code> virker kun når position ≠ static. Brukes med <code>top/right/bottom/left</code>.</p>
     </div>
 
     <div class="box must">
@@ -548,18 +545,15 @@ background: #fff url(x.png)
   <div class="cols">
 
     <div class="box must">
-      <h4>Type-feller (MCQ-favoritter)</h4>
+      <h4>== vs === og type-konvertering</h4>
       <ul>
-        <li><code>5 + "9"</code> → <code>"59"</code> (string-konkat)</li>
+        <li><code>5 + "9"</code> → <code>"59"</code> (én er string → konkat)</li>
         <li><code>5 - "9"</code> → <code>-4</code> (numerisk)</li>
         <li><code>"5" * "2"</code> → <code>10</code></li>
-        <li><code>prompt()</code> returnerer alltid <b>string</b></li>
-        <li><code>let a=prompt(); a+1</code> → <code>"181"</code></li>
-        <li><code>arr[100]=x</code> → <code>arr.length</code> = 101</li>
-        <li><code>typeof null</code> → <code>"object"</code></li>
-        <li><code>NaN === NaN</code> → <code>false</code></li>
-        <li><code>==</code> coerce, <code>===</code> streng</li>
-        <li><code>null == undefined</code> → <code>true</code></li>
+        <li><code>==</code> konverterer typer; <code>===</code> sjekker både verdi og type</li>
+        <li><code>"" == 0</code> → <code>true</code>; <code>"" === 0</code> → <code>false</code></li>
+        <li><code>"Humbug" == "humbug"</code> → <code>false</code> (case-sensitive)</li>
+        <li>Bruk alltid <code>===</code> for å unngå overraskelser</li>
       </ul>
     </div>
 
@@ -601,14 +595,14 @@ a.shift()          // tar første
 a.slice(1,3)       // KOPI, [2,3]
 a.splice(1,1)      // MUTERER, fjerner
 a.indexOf(2)       // 1
+a.lastIndexOf(2)
 a.includes(2)      // true
 a.sort()           // alfabetisk!
 a.reverse()
 a.join("-")        // "1-2-3"
 a.concat([4,5])
-[1,2,3].forEach(fn)
-[1,2,3].map(x =&gt; x*2)
-[1,2,3].filter(x =&gt; x&gt;1)</pre>
+a.at(-1)           // siste el
+a[100] = "x"       // length=101</pre>
     </div>
 
     <div class="box">
@@ -648,16 +642,17 @@ let dgr = Math.ceil(
     </div>
 
     <div class="box">
-      <h4>Tall-konvertering</h4>
-      <ul>
-        <li><code>parseInt("12px")</code> → <code>12</code></li>
-        <li><code>parseFloat("3.14m")</code> → <code>3.14</code></li>
-        <li><code>Number("12")</code> → <code>12</code></li>
-        <li><code>Number("12x")</code> → <code>NaN</code></li>
-        <li><code>+"5"</code> → <code>5</code> (rask cast)</li>
-        <li><code>String(5)</code> / <code>(5).toString()</code> → <code>"5"</code></li>
-        <li><code>(3.14159).toFixed(2)</code> → <code>"3.14"</code></li>
-      </ul>
+      <h4>String-metoder (utvidet)</h4>
+<pre>"abc".startsWith("a")   // true
+"abc".endsWith("c")     // true
+"abc".repeat(3)         // "abcabcabc"
+"abc".padStart(5,"0")   // "00abc"
+"abc".padEnd(5,"-")     // "abc--"
+"abc".replaceAll("a","X")
+"abc".search("b")       // 1
+"abc".at(-1)            // "c"
+"abc".charCodeAt(0)     // 97
+"a-b-c".split("-")      // ["a","b","c"]</pre>
     </div>
 
     <div class="box">
@@ -668,35 +663,35 @@ else { ... }
 
 switch (x) {
  case 1: ...; break;
+ case 2: ...; break;
  default: ...
 }
 
 for (let i=0; i&lt;n; i++) { ... }
-for (let v of arr) { ... }
 for (let k in obj) { ... }
+for (let i in arr) { ... }
 while (cond) { ... }
-do { ... } while (cond);
 
 break;  continue;</pre>
     </div>
 
     <div class="box">
-      <h4>Funksjoner</h4>
-<pre>function add(a, b) {
-  return a + b;
+      <h4>Objekt-konstruktør</h4>
+<pre>// konstruktørfunksjon
+function Person(navn, alder){
+  this.navn = navn;
+  this.alder = alder;
 }
+let p = new Person("Ada", 25);
+console.log(p.navn);  // "Ada"
 
-// funksjons-uttrykk
-const sub = function(a,b){
-  return a-b;
-};
-
-// arrow
-const mul = (a,b) =&gt; a*b;
-const sq  = x =&gt; x*x;
-
-// default-param
-function greet(n="Knut"){...}</pre>
+// metode i konstruktør
+function P(n){
+  this.navn = n;
+  this.hei = function(){
+    return "Hei " + this.navn;
+  };
+}</pre>
     </div>
 
     <div class="box">
@@ -714,13 +709,13 @@ Object.keys(p)   // ["name","age",...]</pre>
     </div>
 
     <div class="box fact">
-      <h4>I/O — print til side</h4>
+      <h4>Skope (global / lokal / leksikalsk)</h4>
       <ul>
-        <li><code>alert("x")</code> — modal popup</li>
-        <li><code>prompt("?")</code> — input-popup (string!)</li>
-        <li><code>confirm("?")</code> — OK/Avbryt → boolean</li>
-        <li><code>console.log(x)</code> — devtools</li>
-        <li><code>document.write("...")</code> — skriv til side; <b>overskriver hele siden</b> hvis kalt etter onload</li>
+        <li><b>Global:</b> variabler erklært utenfor funksjoner — tilgang overalt.</li>
+        <li><b>Lokal:</b> erklært inne i en funksjon — kun synlig der.</li>
+        <li><b>Leksikalsk:</b> indre funksjoner ser variabler i ytre.</li>
+        <li><code>let</code>/<code>const</code> = blokk-scope (<code>{ }</code>); <code>var</code> = funksjonsscope.</li>
+        <li><code>alert(x)</code> / <code>console.log(x)</code> for utskrift.</li>
       </ul>
     </div>
 
@@ -728,51 +723,59 @@ Object.keys(p)   // ["name","age",...]</pre>
       <h4>DOM-tilgang</h4>
 <pre>// hent
 document.getElementById("x")
-document.getElementsByClassName("c") // HTMLCollection
+document.getElementsByClassName("c")
 document.getElementsByTagName("p")
-document.querySelector("div p")      // én
-document.querySelectorAll("li")      // NodeList
+document.querySelector("div p")  // én
 
-// les / skriv
-el.innerHTML  = "&lt;b&gt;hei&lt;/b&gt;";
-el.textContent = "ren tekst";
-el.value       = "input-felt";
-el.style.color = "red";
-el.className   = "ny";
-el.classList.add("on");
-el.setAttribute("src","x.png");
-el.getAttribute("href");</pre>
+// les / skriv tekst
+el.innerText   = "ren tekst"
+console.log(el.innerText)
+
+// inputfelt
+el.value = "noe"
+
+// merk: getElementsBy*
+// returnerer en liste,
+// så bruk [0] eller løkke</pre>
     </div>
 
     <div class="box code">
       <h4>DOM-mutering</h4>
-<pre>let p = document.createElement("p");
-p.textContent = "Hei";
-p.className = "ny";
+<pre>// lag og legg til
+let p = document.createElement("p");
+p.innerText = "Hei";
 parent.appendChild(p);
 
-// fjern
-parent.removeChild(child);
-el.remove();         // moderne
-
-// erstatt
-parent.replaceChild(ny, gml);
-
-// klone
-let kopi = el.cloneNode(true);</pre>
+// fjern: pek på parent og child
+let liste = document
+  .getElementsByTagName("ul")[0];
+let første = liste.firstChild;
+liste.removeChild(første);</pre>
+      <p style="font-size:6.8pt;">Mønster fra pensum: <code>createElement</code> → <code>appendChild</code>; for fjerning, finn forelder og bruk <code>removeChild</code>.</p>
     </div>
 
     <div class="box">
-      <h4>DOM-navigasjon</h4>
-      <div class="kv">
-        <b>el.parentNode</b><span>forelder</span>
-        <b>el.children</b><span>barn (HTMLColl.)</span>
-        <b>el.firstChild</b><span>første (inkl. tekst)</span>
-        <b>el.firstElementChild</b><span>første elem</span>
-        <b>el.lastChild</b><span>siste</span>
-        <b>el.nextSibling</b><span>neste søsken</span>
-        <b>el.previousSibling</b><span>forrige</span>
-      </div>
+      <h4>Funksjoner</h4>
+<pre>// deklarasjon
+function pluss(a, b){
+  return a + b;
+}
+pluss(2, 3);   // 5
+
+// metode i objekt
+let obj = {
+  navn: "K",
+  init: function(){
+    return this.navn.charAt(0);
+  }
+};
+obj.init();    // "K"
+
+// objekt-konstruktør
+function Bil(merke){
+  this.merke = merke;
+}
+let v = new Bil("Volvo");</pre>
     </div>
 
     <div class="box must">
@@ -782,7 +785,7 @@ let id = setTimeout(fn, 2000);
 clearTimeout(id);
 
 // kjør hvert sekund
-let iv = setInterval(() =&gt; {
+let iv = setInterval(function(){
   console.log("tick");
 }, 1000);
 clearInterval(iv);</pre>
@@ -793,40 +796,44 @@ clearInterval(iv);</pre>
       <h4>Keyboard-events</h4>
       <div class="kv">
         <b>keydown</b><span>tast trykkes</span>
+        <b>keypress</b><span>tegn-event</span>
         <b>keyup</b><span>tast slippes</span>
-        <b>keypress</b><span>(deprecated)</span>
-        <b>e.key</b><span>"a", "Enter", "ArrowUp"</span>
-        <b>e.keyCode</b><span>tall (gammel)</span>
+        <b>e.keyCode</b><span>tall, identifiserer tasten</span>
       </div>
-      <p style="font-size:6.8pt;"><b>KeyCodes:</b> 37/38/39/40 = ←↑→↓, 13 = Enter, 27 = Esc, 32 = mellomrom, 65–90 = A–Z, 48–57 = 0–9.</p>
+      <p style="font-size:6.8pt;">Fra pensum: <b>37 = ←, 38 = ↑, 39 = →, 40 = ↓</b>, bokstaver <code>a=65, b=66, c=67…</code>, funksjonstaster <code>F1=112, F2=113</code>.</p>
+<pre>document.addEventListener(
+ "keydown", function(e){
+  if (e.keyCode &gt; 36 &amp;&amp; e.keyCode &lt; 41){
+    alert("piltast!");
+  }
+});</pre>
     </div>
 
     <div class="box code">
       <h4>Events</h4>
-<pre>el.addEventListener("click", fn);
-el.addEventListener("click", fn, true); // capture
-el.removeEventListener("click", fn);
-
-// inline HTML
+<pre>// inline (HTML-attributt)
 &lt;button onclick="f()"&gt;X&lt;/button&gt;
 
-function f(e){
-  e.target          // klikket element
-  e.currentTarget   // listener-element
-  e.stopPropagation();
-  e.preventDefault();
-}</pre>
-      <p style="font-size:7.4pt;">Vanlige: <code>click, dblclick, mouseover, mouseout, focus, blur, submit, change, keydown, keyup, load</code>.</p>
+// JS — addEventListener
+let knapp = document
+  .getElementById("knapp");
+knapp.addEventListener(
+  "click",
+  function(event){
+    alert("klikket!");
+  }
+);</pre>
+      <p style="font-size:7.4pt;">Vanlige: <code>click, mouseover, focus, blur, submit, change, keydown, keyup, load</code>. Hendelse-objektet sendes som argument.</p>
     </div>
 
     <div class="box must">
-      <h4>Event-fasene</h4>
-      <ol>
-        <li><b>Capturing</b> — fra <code>window</code> nedover treet</li>
-        <li><b>Target</b> — på selve elementet</li>
-        <li><b>Bubbling</b> — opp til <code>document</code></li>
-      </ol>
-      <p style="font-size:7.4pt;">3. arg <code>true</code> = lytt i capture-fasen. <code>stopPropagation()</code> stopper videre. Bubbling slår av med <code>e.stopPropagation()</code>.</p>
+      <h4>Bubbling (foreleserens eksempel)</h4>
+<pre>&lt;div onclick="console.log('div')"&gt;
+ &lt;p onclick="console.log('p')"&gt;
+  Klikk her!
+ &lt;/p&gt;
+&lt;/div&gt;</pre>
+      <p style="font-size:7.4pt;">Klikk på <b>p</b> → først <code>p</code>, så <code>div</code>. Hendelsen forplanter seg oppover treet til foreldreelementer.</p>
     </div>
 
     <div class="box warn">
@@ -872,34 +879,32 @@ function f(e){
     <div class="box must">
       <h4>Form med JS-validering</h4>
 <pre>&lt;form onsubmit="return val()"&gt;
- &lt;input id="nm" type="text"
-   placeholder="Navn"&gt;
- &lt;input id="al" type="number"
-   placeholder="Alder"&gt;
- &lt;input id="pw" type="password"&gt;
+ &lt;input id="nm" type="text"&gt;
+ &lt;input id="al" type="number"&gt;
+ &lt;input id="ep" type="text"&gt;
  &lt;input type="submit"&gt;
 &lt;/form&gt;
 &lt;script&gt;
 function val(){
  let n = document
    .getElementById("nm").value;
- let a = +document
+ let a = document
    .getElementById("al").value;
- let p = document
-   .getElementById("pw").value;
+ let ep = document
+   .getElementById("ep").value;
 
- if (/\d/.test(n)){
-   alert("Navn uten tall");
+ if (n.length === 0){
+   alert("Navn er påkrevd");
    return false;
  }
  if (a &lt; 18){
    alert("Må være 18+");
    return false;
  }
- if (!/[A-Z]/.test(p) ||
-     !/\d/.test(p)    ||
-     !/[!@#$%]/.test(p)){
-   alert("Passord svakt");
+ // e-post: må inneholde @ og .
+ if (ep.indexOf("@") === -1 ||
+     ep.indexOf(".") === -1){
+   alert("Ugyldig e-post");
    return false;
  }
  return true;
@@ -929,27 +934,31 @@ function val(){
 <pre>&lt;input id="a" type="number"&gt;
 &lt;input id="b" type="number"&gt;
 &lt;button onclick="mult()"&gt;×&lt;/button&gt;
-&lt;button onclick="div()" &gt;÷&lt;/button&gt;
+&lt;button onclick="del()" &gt;÷&lt;/button&gt;
 &lt;span id="r"&gt;&lt;/span&gt;
 &lt;script&gt;
-function read(id){
-  return +document
-    .getElementById(id).value;
-}
 function mult(){
-  let r = read("a") * read("b");
+  let a = document
+    .getElementById("a").value;
+  let b = document
+    .getElementById("b").value;
+  // string * string → JS gjør tall
   document.getElementById("r")
-    .innerHTML = r;
+    .innerText = a * b;
 }
-function div(){
-  let b = read("b");
-  if (b === 0){
+function del(){
+  let a = document
+    .getElementById("a").value;
+  let b = document
+    .getElementById("b").value;
+  if (b == 0){
     alert("÷ med 0"); return;
   }
   document.getElementById("r")
-    .innerHTML = read("a") / b;
+    .innerText = a / b;
 }
 &lt;/script&gt;</pre>
+      <p style="font-size:6.8pt;">Operatorer <code>* / -</code> tvinger string-input til tall automatisk; bruk <code>+</code> for å unngå konkatenering bare hvis du er sikker på typer.</p>
     </div>
 
     <div class="box code">
@@ -993,67 +1002,59 @@ input[type="text"] {
 &lt;script&gt;
 document.getElementById("ut")
  .addEventListener("click",
-  () =&gt; console.log("YTRE"));
+  function(){ console.log("YTRE"); });
 document.getElementById("inn")
  .addEventListener("click",
-  (e) =&gt; {
-    console.log("INDRE");
-    // e.stopPropagation();
-  });
+  function(){ console.log("INDRE"); });
 &lt;/script&gt;</pre>
-      <p style="font-size:7.4pt;">Klikk på <code>#inn</code> → "INDRE" så "YTRE" (bubbling). Med <code>stopPropagation()</code> bare "INDRE".</p>
+      <p style="font-size:7.4pt;">Klikk på <code>#inn</code> → "INDRE" så "YTRE" (hendelsen bobler oppover gjennom forelderen).</p>
     </div>
 
     <div class="box">
       <h4>Skriv tabell-celle dynamisk</h4>
-<pre>let tds =
- document.getElementsByTagName("td");
-for (let i=0; i&lt;tds.length; i++){
-  tds[i].innerHTML = i*i;
-}
-// eller med querySelectorAll:
-document.querySelectorAll("td")
-  .forEach((td,i) =&gt;
-    td.textContent = i*i);</pre>
+<pre>let tds = document
+  .getElementsByTagName("td");
+for (let i = 0; i &lt; tds.length; i++){
+  tds[i].innerText = i * i;
+}</pre>
+      <p style="font-size:6.8pt;"><code>getElementsByTagName</code> gir en HTMLCollection — gå gjennom med løkke og <code>[i]</code>.</p>
     </div>
 
     <div class="box">
-      <h4>Toggle CSS-klasse</h4>
-<pre>&lt;button onclick="t()"&gt;Toggle&lt;/button&gt;
-&lt;div id="x" class="boks"&gt;...&lt;/div&gt;
+      <h4>Endre stil/innhold på element</h4>
+<pre>&lt;button onclick="bytt()"&gt;Bytt&lt;/button&gt;
+&lt;p id="m"&gt;Hei&lt;/p&gt;
 &lt;script&gt;
-function t(){
-  let d = document
-    .getElementById("x");
-  d.classList.toggle("aktiv");
+function bytt(){
+  let p = document
+    .getElementById("m");
+  p.innerText = "Endret!";
+  p.style.color = "red";
+  p.style.fontWeight = "bold";
 }
-&lt;/script&gt;
-&lt;style&gt;
-.boks { background:#fff; }
-.aktiv { background:#ff0; }
-&lt;/style&gt;</pre>
+&lt;/script&gt;</pre>
+      <p style="font-size:6.8pt;">CSS-property med bindestrek skrives med camelCase i JS: <code>background-color</code> → <code>backgroundColor</code>.</p>
     </div>
 
     <div class="box must">
-      <h4>Tastatur-styring (piltaster)</h4>
-<pre>&lt;div id="b" style="position:absolute;
-  left:50px;top:50px;width:40px;
-  height:40px;background:red"&gt;&lt;/div&gt;
-&lt;script&gt;
-document.addEventListener(
- "keydown", (e) =&gt; {
-  let b = document.getElementById("b");
-  let l = parseInt(b.style.left);
-  let t = parseInt(b.style.top);
-  if (e.key === "ArrowLeft")  l -= 10;
-  if (e.key === "ArrowRight") l += 10;
-  if (e.key === "ArrowUp")    t -= 10;
-  if (e.key === "ArrowDown")  t += 10;
-  b.style.left = l + "px";
-  b.style.top  = t + "px";
-});
-&lt;/script&gt;</pre>
-      <p style="font-size:6.8pt;">Alt: <code>e.keyCode</code> 37/38/39/40.</p>
+      <h4>Tastatur — varsle på piltast</h4>
+<pre>document.addEventListener(
+ "keydown", function(e){
+  // 37=←  38=↑  39=→  40=↓
+  if (e.keyCode === 37){
+    alert("Venstre piltast");
+  }
+  if (e.keyCode === 38){
+    alert("Opp piltast");
+  }
+  if (e.keyCode === 39){
+    alert("Høyre piltast");
+  }
+  if (e.keyCode === 40){
+    alert("Ned piltast");
+  }
+});</pre>
+      <p style="font-size:6.8pt;">Pensum-mønster: <code>addEventListener</code> + <code>keydown</code> + numeriske <code>keyCode</code>.</p>
     </div>
 
     <div class="box must">
@@ -1062,8 +1063,11 @@ document.addEventListener(
 &lt;script&gt;
 function vis(){
   let d = new Date();
+  let t = d.getHours() + ":"
+    + d.getMinutes() + ":"
+    + d.getSeconds();
   document.getElementById("ur")
-   .textContent = d.toLocaleTimeString();
+    .innerText = t;
 }
 setInterval(vis, 1000);
 vis();   // første gang straks
@@ -1071,9 +1075,9 @@ vis();   // første gang straks
 
 // nedtelling fra 10
 let n = 10;
-let id = setInterval(() =&gt; {
-  console.log(n--);
-  if (n &lt; 0) clearInterval(id);
+setInterval(function(){
+  console.log(n);
+  n = n - 1;
 }, 1000);</pre>
     </div>
 
@@ -1087,7 +1091,7 @@ function add(){
   let v = document
     .getElementById("in").value;
   let li = document.createElement("li");
-  li.textContent = v;
+  li.innerText = v;
   document.getElementById("ls")
     .appendChild(li);
 }
@@ -1095,34 +1099,28 @@ function add(){
     </div>
 
     <div class="box code">
-      <h4>Regex — vanlige mønstre</h4>
-      <div class="kv">
-        <b>/\d/</b><span>siffer (0-9)</span>
-        <b>/\D/</b><span>ikke-siffer</span>
-        <b>/\w/</b><span>bokstav/siffer/_</span>
-        <b>/\s/</b><span>whitespace</span>
-        <b>/[A-Z]/</b><span>stor bokstav</span>
-        <b>/[a-z]/</b><span>liten bokstav</span>
-        <b>/[!@#$%]/</b><span>spesialtegn</span>
-        <b>/^.{8,}$/</b><span>min 8 tegn</span>
-        <b>/^\d{4}$/</b><span>nøyaktig 4 siffer</span>
-        <b>.test(str)</b><span>→ true/false</span>
-        <b>.match(re)</b><span>→ array/null</span>
-      </div>
+      <h4>HTML5-validering (i form)</h4>
+<pre>&lt;input type="text" required&gt;
+&lt;input type="email" required&gt;
+&lt;input type="number" min="0" max="100"&gt;
+&lt;input type="text" pattern="[A-Za-z]{3}"
+       title="Tre bokstaver"&gt;
+&lt;input type="text" maxlength="20"&gt;
+&lt;input type="text" placeholder="Skriv …"&gt;</pre>
+      <p style="font-size:7.0pt;"><b>pattern</b> bruker en regex i selve HTML — du trenger ikke kunne regex i JS for eksamen. <code>required</code>, <code>min</code>/<code>max</code>, <code>maxlength</code>, <code>type="email"</code> gir innebygd validering.</p>
     </div>
 
     <div class="box must">
       <h4>Find result of code — slik forklarer du</h4>
       <p style="font-size:7.6pt;">1 poeng for riktig svar, <b>2 for forklaringen</b>. Forklar i termer av <b>mekanismer</b>, ikke linje-for-linje:</p>
       <ul>
-        <li><b>Hoisting</b> — <code>var</code> heves, ikke <code>let</code>/<code>const</code></li>
-        <li><b>Scope</b> — blokk- vs funksjonsscope</li>
-        <li><b>Event-fase</b> — capture / target / bubble</li>
-        <li><b>Type-coercion</b> — <code>+</code> vs <code>-</code></li>
-        <li><b>Referanse vs verdi</b> — array/objekt deler ref</li>
-        <li><b>Mutering</b> — push/pop/sort endrer; slice/map ikke</li>
+        <li><b>Scope</b> — global / lokal / leksikalsk; <code>let</code>/<code>const</code> blokk, <code>var</code> funksjon</li>
+        <li><b>Type-coercion</b> — <code>+</code> konkat vs <code>-/*/</code>div; <code>==</code> vs <code>===</code></li>
+        <li><b>Event-bubbling</b> — handler på barn kjøres før forelder</li>
+        <li><b>Array-mutering</b> — push/pop/sort/splice/reverse endrer; slice/concat lager ny</li>
+        <li><b>Referanse vs verdi</b> — array/objekt deler referanse</li>
       </ul>
-      <p style="font-size:7.4pt;">Eks: «Output er 5 fordi <code>setTimeout</code>-callback legges i kø og <code>i</code> er <code>let</code>-bundet til hver iterasjon».</p>
+      <p style="font-size:7.4pt;">Eks: «<code>5 + "9"</code> gir <code>"59"</code> fordi når én operand er string, gjør <code>+</code> string-konkatenering».</p>
     </div>
 
     <div class="box warn">
@@ -1167,15 +1165,15 @@ function add(){
     <div class="box must">
       <h4>TCP/IP-modellen (4 lag)</h4>
       <table class="mini-table">
-        <thead><tr><th>Lag</th><th>Protokoller</th></tr></thead>
+        <thead><tr><th>Lag</th><th>Hva / protokoller</th></tr></thead>
         <tbody>
-          <tr><td><b>Application</b></td><td>HTTP, HTTPS, FTP, SMTP, POP3, IMAP, DNS, SSH, Telnet</td></tr>
-          <tr><td><b>Transport</b></td><td>TCP (pålitelig), UDP (rask, upålitelig)</td></tr>
-          <tr><td><b>Network</b></td><td>IP, ICMP, ARP</td></tr>
-          <tr><td><b>Physical / Link</b></td><td>Ethernet, WiFi, Bluetooth</td></tr>
+          <tr><td><b>Application</b></td><td>Definerer protokollene apper bruker — <b>HTTP</b>, FTP, e-post, telnet, VoIP</td></tr>
+          <tr><td><b>Transport</b></td><td>Sikrer at hele meldinga kommer fram ende-til-ende — <b>TCP</b>, <b>UDP</b></td></tr>
+          <tr><td><b>Internet</b></td><td>Ruter pakker fra ett sted til et annet — <b>IP</b></td></tr>
+          <tr><td><b>Physical</b></td><td>Sender bitene over fysisk medium — <b>Ethernet</b>, WiFi</td></tr>
         </tbody>
       </table>
-      <p style="font-size:7.4pt;">Hver pakke "innpakkes" lag for lag (encapsulation), pakkes ut på mottakersiden.</p>
+      <p style="font-size:7.4pt;">Hver pakke pakkes inn lag for lag (header på header), pakkes ut på mottakersiden i motsatt rekkefølge.</p>
     </div>
 
     <div class="box must">
@@ -1187,36 +1185,35 @@ function add(){
           <tr><td>Synlig</td><td>ja</td><td>nei</td></tr>
           <tr><td>Bokmerke</td><td>ja</td><td>nei</td></tr>
           <tr><td>Cache</td><td>ja</td><td>nei</td></tr>
+          <tr><td>Historikk</td><td>ja</td><td>nei</td></tr>
           <tr><td>Størrelse</td><td>&lt; 2 KB</td><td>ubegrenset</td></tr>
-          <tr><td>Idempotent</td><td>ja</td><td>nei</td></tr>
           <tr><td>Sensitive</td><td>nei</td><td>ja</td></tr>
         </tbody>
       </table>
-      <p style="font-size:7.4pt;">GET for å hente, POST for å endre tilstand. Sensitive: <b>alltid POST + HTTPS</b>.</p>
+      <p style="font-size:7.4pt;">GET for å hente, POST for å endre tilstand. Sensitive data eller mye data → <b>POST</b>.</p>
     </div>
 
     <div class="box">
-      <h4>HTTP-grunnleggende</h4>
+      <h4>HTTP og DNS</h4>
       <ul>
-        <li>Klient sender forespørsel, server svarer (request/response)</li>
-        <li>Statuskode: 2xx OK · 3xx redirect · 4xx klientfeil · 5xx serverfeil</li>
-        <li>200 OK, 301 moved, 404 not found, 500 server error</li>
-        <li>HTTPS = HTTP over TLS/SSL (kryptert)</li>
-        <li>Stateless — cookies/session for tilstand</li>
+        <li>Klient (nettleser) sender forespørsel, server svarer (request / response).</li>
+        <li>HTTP er applikasjonslag-protokollen som bærer forespørsel og svar.</li>
+        <li><b>DNS</b> (Domain Name Server) — slår opp domenenavn (<code>ntnu.no</code>) til en IP-adresse, fordi maskiner snakker sammen over IP-adresser.</li>
+        <li>IP-adresse: fire tall 0–255, f.eks. <code>129.241.160.102</code>; entydig per maskin.</li>
       </ul>
     </div>
 
     <div class="box fact">
-      <h4>Hva nettleseren gjør</h4>
-      <ol>
-        <li>DNS slår opp domene → IP</li>
-        <li>TCP-handshake til server</li>
-        <li>HTTP-forespørsel sendes</li>
-        <li>HTML lastes, parses → DOM</li>
-        <li>CSS lastes → CSSOM</li>
-        <li>Render-tre bygges, layout, paint</li>
-        <li>JS lastes &amp; kjøres (kan endre DOM)</li>
-      </ol>
+      <h4>URL-anatomi</h4>
+<pre>http://example.com/sti/fil.html
+       ?key1=value1&amp;key2=value2
+       #anker
+
+protokoll : //
+domenenavn : / sti
+? key=verdi (GET-parametre)
+# anker (lokal posisjon)</pre>
+      <p style="font-size:6.8pt;">Relative URL-er: <code>./fil</code> samme mappe, <code>../</code> opp ett nivå, <code>/fra-root</code>.</p>
     </div>
 
     <div class="box">
@@ -1384,18 +1381,18 @@ function add(){
     <div class="box warn">
       <h4>Vanlige eksamen-feller</h4>
       <ul>
-        <li><code>document.write()</code> etter <code>onload</code> sletter siden</li>
-        <li><code>onclick="alert(x)"</code> — bruk anførselstegn riktig</li>
-        <li>Glemte <code>;</code> eller <code>{}</code> — sjekk på slutten</li>
-        <li>Ikke lukket HTML-tagg → resten brytes</li>
-        <li>JS-fil før HTML-elementet → <code>getElementById</code> = null</li>
+        <li><code>getElementById</code> — bare <b>én</b> ID (kun første treff i DOM)</li>
+        <li><code>getElementsByClassName</code>/<code>TagName</code> — gir <b>liste</b>, må indekseres <code>[0]</code></li>
+        <li>JS-script kjøres oppe i &lt;head&gt; → DOM ikke ferdig → <code>getElementById</code> blir <code>null</code></li>
+        <li>Glemt <code>;</code> eller <code>{}</code> — sjekk parentes-balansen</li>
+        <li>Ikke lukket HTML-tagg → resten av siden brytes</li>
         <li>CSS-feil: glemt enheter (<code>10</code> vs <code>10px</code>)</li>
       </ul>
     </div>
 
     <div class="box code">
       <h4>Forklaringssvar-mal (Bubbling)</h4>
-      <p style="font-size:7.6pt;">Event propagation har tre faser: capturing (fra <code>window</code> ned til target), target-fasen (på selve elementet), bubbling (oppover treet til <code>document</code>). Som standard kjører handlere i bubbling-fasen. Med <code>addEventListener(..., true)</code> kjører den i capture-fasen. <code>e.stopPropagation()</code> stopper videre forplantning. Eksempel: klikk på en knapp inni en div trigger først knapp-handler, så div-handler (med mindre stopProp kalles).</p>
+      <p style="font-size:7.6pt;">Når et element ligger inne i et annet og begge har en klikk-handler, kjører handleren på <b>det indre elementet først</b>, deretter handleren på forelder. Hendelsen forplanter seg oppover DOM-treet til foreldreelementer. Eksempel: <code>&lt;div onclick=&quot;…&quot;&gt;&lt;p onclick=&quot;…&quot;&gt;Klikk!&lt;/p&gt;&lt;/div&gt;</code> — klikker man på <code>p</code> kjører <i>først</i> <code>p</code>-handleren, så <code>div</code>-handleren.</p>
     </div>
 
   </div>

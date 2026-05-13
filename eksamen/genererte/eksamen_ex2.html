@@ -32,6 +32,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (9 oppgaver, 30 poeng)                   -->
 <!-- ============================================================ -->
@@ -305,9 +313,9 @@ document.write(a);</code></pre>
           <p><strong>Rubrikk (4 poeng — 1 poeng per godt punkt, maks 4):</strong></p>
           <ul>
             <li><strong>Plassering:</strong> GET legger parametere i URL-en (etter <code>?</code>); POST legger dem i request-body.</li>
-            <li><strong>Idempotens / caching:</strong> GET er idempotent og kan caches/bookmarks; POST er ikke idempotent og caches normalt ikke.</li>
+            <li><strong>Caching / bookmarks:</strong> GET kan caches og bookmarkes (GET er en henteoperasjon, så gjentakelse er trygg); POST caches normalt ikke fordi POST endrer state på serveren.</li>
             <li><strong>Størrelse:</strong> GET har URL-grense (~2 KB i praksis); POST har ingen praktisk grense.</li>
-            <li><strong>Synlighet/sikkerhet:</strong> GET vises i URL/history/logger — uegnet for sensitive data; POST skjuler dem i body (ikke kryptert uten HTTPS).</li>
+            <li><strong>Synlighet/sikkerhet:</strong> GET vises i URL/history/logger — uegnet for sensitive data; POST skjuler dem i body.</li>
             <li><strong>Bruksområder:</strong> GET for henting/lesing (søk, filtre); POST for å endre serverens tilstand (registrering, opplasting).</li>
           </ul>
           <p class="ref">Pensum: <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>

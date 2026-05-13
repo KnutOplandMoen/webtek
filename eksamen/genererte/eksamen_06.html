@@ -25,6 +25,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
 <!-- ============================================================ -->
@@ -146,6 +154,7 @@
       <span class="exam-q__topic">Kap. 9 — Hoisting med var</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> «Hoisting» som konsept (deklarasjoner heves til toppen av scope) er ikke gjennomgått i forelesningene. Slidesene nevner kun at <code>var</code> tillater re-deklarasjon — derfor bruk <code>let</code>. Hopp over hvis du øver til eksamen.</div>
       <p class="q-text">Hva skriver dette ut?</p>
       <pre><code>console.log(x);
 var x = 5;
@@ -297,6 +306,7 @@ console.log(x);   // 5</code></pre>
       <span class="exam-q__topic">Kap. 9 — Arrow function this</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> Arrow functions (<code>() =&gt; {}</code>) og <code>this</code>-binding er ikke gjennomgått i forelesningene. Slidesene viser kun <code>function f() {}</code>-deklarasjoner og objekt-konstruktører. Hopp over hvis du øver til eksamen.</div>
       <p class="q-text">Hva er den viktigste forskjellen mellom en <em>arrow function</em> (<code>() =&gt; {}</code>) og en vanlig <em>function expression</em> (<code>function() {}</code>) når det gjelder <code>this</code>?</p>
       <ul class="exam-q__opts">
         <li><span class="opt-label">A</span> Ingen forskjell — <code>this</code> oppfører seg identisk i begge.</li>
@@ -337,6 +347,7 @@ btn.addEventListener("click", () =&gt; {
       <span class="exam-q__topic">Kap. 9 — Array.find</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> <code>Array.find</code> er ikke nevnt i forelesningene eller læreboka 1.13.1 (som dekker <code>filter/map/some/every/forEach</code>). Hopp over hvis du øver til eksamen — bruk en for-løkke + early return for å oppnå samme.</div>
       <p class="q-text">Hva skriver dette ut?</p>
       <pre><code>let folk = [
   { navn: "Ola", alder: 22 },
@@ -439,6 +450,7 @@ console.log(s.trim().length);</code></pre>
       <span class="exam-q__topic">Kap. 9 — Default-parametere</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> Default-parametere (<code>function f(x = "verdi")</code>) er ikke gjennomgått i forelesningene. Slidesene viser kun vanlige funksjoner uten defaults. Hopp over hvis du øver til eksamen.</div>
       <p class="q-text">Hva skriver dette ut?</p>
       <pre><code>function hils(navn = "Verden") {
   return "Hei, " + navn + "!";
@@ -514,6 +526,7 @@ console.log(x + 1);</code></pre>
       <span class="exam-q__topic">Kap. 9 — Funksjons-uttrykk vs deklarasjon</span>
     </header>
     <div class="exam-q__body">
+      <div class="exam-q__warn"><strong>Ikke i pensum</strong> Function expressions (<code>const f = function() {}</code>) og hoisting-forskjellen er ikke gjennomgått i forelesningene — slidesene viser kun function declarations (<code>function f() {}</code>) og objekt-konstruktører. Hopp over hvis du øver til eksamen.</div>
       <p class="q-text">Forklar <strong>forskjellen mellom function declaration og function expression</strong> i JavaScript. Inkluder:
         (a) syntaks-eksempel for hver,
         (b) hvordan hoisting fungerer ulikt for de to,
@@ -563,9 +576,9 @@ console.log(x + 1);</code></pre>
         <div class="fasit-body">
           <p><strong>Rubrikk (3 poeng):</strong></p>
           <ul>
-            <li><strong>1 poeng — Søk = GET:</strong> Henter data uten å endre noe på serveren (idempotent). Søke-URL-en kan bookmarkes ("min favorittsøking") og deles via lenke. Caching kan returnere identiske resultater raskt. Parameterne er synlige i URL-en, men det er greit her — søkeord er ikke sensitivt.</li>
-            <li><strong>1 poeng — Opplasting = POST:</strong> Endrer state på serveren (skaper en ny oppskrift). Skal <em>ikke</em> være idempotent — to like POST-er bør gi to like oppskrifter. POST-data ligger i body — viktig hvis oppskrifts-data er stor (full tekst, ingredienser, instruksjoner), siden GET har URL-lengde-begrensning.</li>
-            <li><strong>1 poeng — Helhetlig forståelse:</strong> Kandidaten viser at "GET for lesing, POST for skriving" er hovedregelen, og knytter det til konkrete egenskaper (caching, URL-lengde, idempotens).</li>
+            <li><strong>1 poeng — Søk = GET:</strong> Henter data uten å endre noe på serveren. Søke-URL-en kan bookmarkes ("min favorittsøking") og deles via lenke. Caching kan returnere identiske resultater raskt. Parameterne er synlige i URL-en, men det er greit her — søkeord er ikke sensitivt.</li>
+            <li><strong>1 poeng — Opplasting = POST:</strong> Endrer state på serveren (skaper en ny oppskrift). POST-data ligger i body — viktig hvis oppskrifts-data er stor (full tekst, ingredienser, instruksjoner), siden GET har URL-lengde-begrensning.</li>
+            <li><strong>1 poeng — Helhetlig forståelse:</strong> Kandidaten viser at "GET for lesing, POST for skriving" er hovedregelen, og knytter det til konkrete egenskaper (caching, URL-lengde, sensitivitet).</li>
           </ul>
           <p class="ref">Pensum: <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>
           <div class="self-grade">

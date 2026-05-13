@@ -389,6 +389,41 @@
         nøye.
       </p>
 
+      <div class="callout-warn">
+        <div class="label">Merk — flere oppgaver tester ting utenfor pensum</div>
+        <p>
+          Settene er generert ut fra mønstre i tidligere eksamenssett, og
+          enkelte oppgaver bruker temaer foreleseren <em>ikke</em> har dekket i
+          forelesningene. Foreleser sa selv om de gamle settene at «Canvas er
+          ute, ignorer den oppgaven» — samme prinsipp gjelder her.
+        </p>
+        <p>
+          <strong>Utenfor pensum, ignorer disse oppgavene:</strong>
+          numerisk CSS-spesifisitet (1000/100/10/1), <code>position: sticky</code>,
+          den formelle capturing/target/bubbling-modellen,
+          <code>addEventListener(…, true)</code> for capture,
+          <code>event.stopPropagation</code>/<code>preventDefault</code>,
+          <code>e.target</code>/<code>e.key</code> som string,
+          <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code>,
+          <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code>,
+          JS-regex (<code>.test()</code> osv.),
+          <code>document.write</code>, <code>prompt()</code>-strengtrick,
+          HTTP-statuskoder (200/301/404/500, 2xx–5xx),
+          TLS/SSL/cookies-detaljer, <code>typeof null</code>-quirk,
+          <code>NaN === NaN</code>, <code>null == undefined</code>,
+          sparse arrays (<code>arr[100]=x</code>-lengde),
+          <code>for…of</code>/<code>do…while</code>, hoisting/TDZ-formalisme.
+        </p>
+        <p>
+          Det som <em>er</em> i pensum: foreleserens
+          <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet
+          <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>), DOM via
+          <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>,
+          <code>addEventListener("click", …)</code> og <code>"keydown"</code> med
+          numerisk <code>keyCode</code>, og type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.
+        </p>
+      </div>
+
       <div class="exam-list">
         <a href="eksamen_01.html" class="exam-card">
           <span class="ec-num">Sett 01</span>
@@ -430,7 +465,7 @@
           <h3 class="ec-title">Responsivt &amp; layout-fokus</h3>
           <div class="ec-meta">Laget 2026-05-12 · 3 timer anbefalt</div>
           <p class="ec-focus">
-            UDP vs TCP, statuskode 500, viewport-meta, vw-enheter, srcset,
+            UDP vs TCP, klient/tjener-modellen, viewport-meta, vw-enheter, srcset,
             mobile-first, Math.ceil-fellen for negative tall, null vs undefined,
             sticky-footer-layout med flex, responsiv navmeny via media query,
             custom videospiller, dager-til-jul + primtall, auto-fit-grid.
@@ -448,7 +483,7 @@
           <h3 class="ec-title">Bred prediksjon #2 — DNS, semantikk, factorial</h3>
           <div class="ec-meta">Laget 2026-05-12 · 3 timer anbefalt</div>
           <p class="ec-focus">
-            DNS-rolle, URL-anatomi, 403-statuskode, semantiske HTML5-tags,
+            DNS-rolle, URL-anatomi, TCP/IP-lag, semantiske HTML5-tags,
             !important, position default, align-items, alt=&quot;&quot; for dekor,
             const vs let, reverse-mutasjon, parseInt 0x-hex, tabell-styling
             med :nth-child, sorter liste ved klikk, factorial rekursivt,
@@ -507,12 +542,13 @@
           <h3 class="ec-title">TCP/IP-dybde, HTML-semantikk, JS-grunnlag</h3>
           <div class="ec-meta">Laget 2026-05-12 · 3 timer anbefalt</div>
           <p class="ec-focus">
-            HTTPS vs HTTP, stateless-protokoll, h1-hierarki, innerHTML vs
+            URL-anatomi, IP-adresser, h1-hierarki, innerHTML vs
             textContent, removeChild via parent, typeof array, article vs div,
             createElement-mønsteret, klient-server-modellen, full 4-lags
-            TCP/IP-essay (tier 1!), substring negativ-felle, push() return,
-            switch fall-through, null+5, fibonacci iterativt, tabell-rader,
-            real-time passord-match, kalkulator med ÷/0-sjekk.
+            TCP/IP-essay (tier 1!), reisen fra URL til side, substring
+            negativ-felle, push() return, switch fall-through, null+5,
+            fibonacci iterativt, tabell-rader, real-time passord-match,
+            kalkulator med ÷/0-sjekk.
           </p>
           <div class="ec-stats">
             <span class="ec-stat">25 oppgaver</span>

@@ -24,6 +24,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
 <!-- ============================================================ -->
@@ -38,19 +46,19 @@
       <span class="exam-q__topic">Kap. 1 — HTTP-metoder</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hvilken av følgende HTTP-metoder er <strong>idempotent</strong> — altså gir samme tilstand på serveren uansett hvor mange ganger den kalles?</p>
+      <p class="q-text">Hvilken av følgende beskriver <strong>POST</strong>-metoden riktig?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> POST</li>
-        <li><span class="opt-label">B</span> GET</li>
-        <li><span class="opt-label">C</span> CONNECT</li>
-        <li><span class="opt-label">D</span> PATCH</li>
+        <li><span class="opt-label">A</span> Parameterne legges synlig i URL-en etter <code>?</code>, og forespørselen kan bookmarkes.</li>
+        <li><span class="opt-label">B</span> Brukes typisk for å hente data fra serveren uten å endre tilstand.</li>
+        <li><span class="opt-label">C</span> Data sendes som en separat melding (i request-body), ikke i URL-en.</li>
+        <li><span class="opt-label">D</span> Har samme URL-lengdebegrensning som GET (ca. 2 KB).</li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <span class="fasit-correct">Riktig svar: B</span>
-          <p>GET er idempotent — å hente samme ressurs ti ganger endrer ikke tilstanden på serveren. Det samme gjelder PUT og DELETE (kall N ganger gir samme resultat som ett kall).</p>
-          <p><strong>Hvorfor de andre er feil:</strong> POST oppretter typisk en ny ressurs hver gang (to like POST-er kan lage to like rader). PATCH endrer delvis og er ikke garantert idempotent. CONNECT brukes til tunneler og er ikke idempotent.</p>
+          <span class="fasit-correct">Riktig svar: C</span>
+          <p>POST sender data som en egen melding i body-en, ikke i URL-en. Dette gjør POST egnet for sensitive data (passord, kredittkort) og for store mengder data — det er ingen praktisk URL-lengdebegrensning. POST caches ikke og kan ikke bookmarkes.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A beskriver GET. B beskriver GET (hente-operasjoner). D er feil — POST har ikke URL-lengdebegrensning siden data ikke ligger i URL-en.</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
       </details>
@@ -612,28 +620,27 @@ console.log(arr.length);</code></pre>
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 20</span>
       <span class="exam-q__points">3 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — HTTP-metoder</span>
+      <span class="exam-q__topic">Kap. 1 — GET vs POST</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Beskriv kort hva de fire HTTP-metodene <code>GET</code>, <code>POST</code>, <code>PUT</code> og <code>DELETE</code> brukes til. Bruk gjerne én setning per metode.</p>
+      <p class="q-text">Forklar kort forskjellen mellom HTTP-metodene <code>GET</code> og <code>POST</code>. Nevn <strong>tre konkrete punkter</strong> (f.eks. hvor data legges, bookmarking/caching, hva som er egnet bruk).</p>
       <textarea class="exam-q__textarea" rows="5" placeholder="Skriv ditt svar her..."></textarea>
       <button type="button" class="exam-q__reveal">Vis fasit og vurder</button>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <p><strong>Rubrikk (3 poeng — 0.75 per metode):</strong></p>
+          <p><strong>Rubrikk (3 poeng — 1 per punkt):</strong></p>
           <ul>
-            <li><strong>GET</strong> — hente en ressurs uten å endre serveren. Idempotent. Brukes for lesning/visning (f.eks. åpning av en nettside, søk, filtre).</li>
-            <li><strong>POST</strong> — sende data for å <em>opprette</em> en ny ressurs eller utløse en handling. Ikke idempotent (to POST-er = to nye rader). Brukes for skjema-innsending, ny bruker, nytt innlegg.</li>
-            <li><strong>PUT</strong> — <em>erstatte</em> en ressurs helt med en ny versjon. Idempotent: samme PUT N ganger gir samme tilstand. Brukes for full oppdatering.</li>
-            <li><strong>DELETE</strong> — slette en ressurs. Idempotent: slett-én-gang gir samme resultat som slett-N-ganger (ressursen er borte uansett).</li>
+            <li><strong>Plassering:</strong> GET legger parameterne i URL-en (etter <code>?</code> som <code>name=value</code>-par). POST sender data som en separat melding i request-body — usynlig i URL.</li>
+            <li><strong>Caching/bookmarking/historikk:</strong> GET kan caches, bookmarkes og lagres i nettleser-historikk. POST normalt ikke.</li>
+            <li><strong>Bruksområde og sensitivitet:</strong> GET egner seg for henting/lesing (søk, filtre). POST for å sende data som endrer tilstand (skjema-innsending, registrering) eller for sensitive data (passord) og store mengder (over URL-grensen på ~2 KB).</li>
           </ul>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
           <div class="self-grade">
             <span class="self-grade__label">Egenvurdering:</span>
-            <button type="button" data-grade="1.0">Alle 4 dekket godt</button>
-            <button type="button" data-grade="0.66">2-3 av 4</button>
-            <button type="button" data-grade="0.33">1 av 4</button>
+            <button type="button" data-grade="1.0">Alle 3 punkter dekket</button>
+            <button type="button" data-grade="0.66">2 av 3</button>
+            <button type="button" data-grade="0.33">1 av 3</button>
             <button type="button" data-grade="0">Ingen</button>
           </div>
         </div>

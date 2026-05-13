@@ -24,6 +24,14 @@
   </p>
 </header>
 
+<!-- Pensum-grense varsel — lagt til etter etterprøving mot forelesninger/pensum.md -->
+<aside class="pensum-warning" style="margin: 18px auto 24px; max-width: 880px; padding: 14px 18px; background: #fdf4ef; border-left: 4px solid #b14a2e; border-radius: 4px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5;">
+  <p style="margin: 0 0 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: #b14a2e;">Merk: dette settet inneholder oppgaver utenfor pensum</p>
+  <p style="margin: 0 0 6px;">Settet er generert fra mønstre i tidligere eksamenssett. <strong>Foreleser sa om gamle sett: «Canvas er ute, ignorer den oppgaven» — samme prinsipp gjelder her.</strong></p>
+  <p style="margin: 0 0 6px;"><strong>Hopp over eller behandle som ekstra trening:</strong> numerisk CSS-spesifisitet (1000/100/10/1) · <code>position: sticky</code> · capturing/target/bubbling-formelt · <code>addEventListener(..., true)</code> · <code>stopPropagation</code>/<code>preventDefault</code> · <code>e.target</code>/<code>e.key</code> som string · <code>classList</code>/<code>setAttribute</code>/<code>getAttribute</code> · <code>parseInt</code>/<code>parseFloat</code>/<code>Number()</code>/<code>toFixed</code> · JS-regex (<code>.test()</code>) · <code>document.write</code> · <code>prompt()</code>-strengtrick · HTTP-statuskoder (200/301/404/500, 2xx–5xx) · TLS/SSL/cookies-detaljer · <code>typeof null</code>-quirk · <code>NaN === NaN</code> · <code>null == undefined</code> · sparse arrays (<code>arr[100]=x</code>) · <code>for…of</code>/<code>do…while</code> · hoisting/TDZ.</p>
+  <p style="margin: 0;">I pensum: <a href="../../kap10/#propagation">bubbling-eksempel</a> (nestet <code>&lt;div onclick&gt;&lt;p onclick&gt;</code>); DOM via <code>getElementById</code>/<code>querySelector</code>/<code>createElement</code>/<code>appendChild</code>/<code>removeChild</code>/<code>innerText</code>; <code>addEventListener("click", …)</code>/<code>"keydown"</code> med numerisk <code>keyCode</code>; type-coercion i <code>+</code>/<code>-</code>/<code>==</code>/<code>===</code>.</p>
+</aside>
+
 <!-- ============================================================ -->
 <!-- SECTION A — FLERVALG (10 oppgaver, 25 poeng)                  -->
 <!-- ============================================================ -->
@@ -61,22 +69,22 @@
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 2</span>
       <span class="exam-q__points">2 poeng</span>
-      <span class="exam-q__topic">Kap. 1 — HTTP-statuskoder</span>
+      <span class="exam-q__topic">Kap. 1 — DNS</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hva er forskjellen mellom HTTP-statuskode <code>301</code> og <code>302</code>?</p>
+      <p class="q-text">Hva er hovedoppgaven til en <strong>DNS-tjener</strong> (Domain Name Server) i kommunikasjonen mellom nettleser og webtjener?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> 301 er permanent redirect; 302 er midlertidig redirect.</li>
-        <li><span class="opt-label">B</span> 301 betyr "Forbidden"; 302 betyr "Not Found".</li>
-        <li><span class="opt-label">C</span> 301 er midlertidig redirect; 302 er permanent redirect.</li>
-        <li><span class="opt-label">D</span> 301 brukes ved POST; 302 brukes ved GET.</li>
+        <li><span class="opt-label">A</span> Den lagrer en kopi av websidens HTML for raskere visning.</li>
+        <li><span class="opt-label">B</span> Den oversetter domenenavn (f.eks. <code>ntnu.no</code>) til en numerisk IP-adresse.</li>
+        <li><span class="opt-label">C</span> Den sjekker at brukeren har lov til å besøke siden før HTML sendes.</li>
+        <li><span class="opt-label">D</span> Den krypterer trafikken mellom klient og server.</li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <span class="fasit-correct">Riktig svar: A</span>
-          <p>301 ("Moved Permanently") forteller nettleseren at ressursen er flyttet for godt, og at bookmarks/lenker bør oppdateres. 302 ("Found"/midlertidig) sier at ressursen er flyttet akkurat nå, men kan komme tilbake — bookmarks skal ikke oppdateres.</p>
-          <p><strong>Hvorfor de andre er feil:</strong> B blander 301/302 med 403/404. C har snudd betydningene. D er en konfabulering — redirect-typen er uavhengig av request-metoden.</p>
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>DNS er "telefonkatalogen" på Internett: den oversetter menneskelig-lesbare domenenavn til IP-adresser som rutere faktisk bruker for å sende pakker. Nettleseren slår opp DNS før den åpner TCP-forbindelsen.</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A beskriver en cache. C beskriver autorisering på server-siden. D er en helt annen funksjon (kryptering).</p>
           <p class="ref">Pensum: <a href="../../kap1/">Kap. 1 — Web og Internett</a></p>
         </div>
       </details>
@@ -498,9 +506,9 @@ console.log(arr.length);</code></pre>
           <p><strong>Sensor leter etter minst tre av disse punktene (1 poeng per godt punkt, maks 3):</strong></p>
           <ul>
             <li><strong>Plassering:</strong> GET legger parameterne i URL-en (etter <code>?</code>), POST legger dem i request-body — usynlige i URL.</li>
-            <li><strong>Idempotens og caching:</strong> GET er idempotent og kan caches/bookmarks/legges i browser-historikk. POST er ikke idempotent og caches normalt ikke.</li>
+            <li><strong>Caching og bookmarks:</strong> GET kan caches, bookmarkes og lagres i nettleser-historikk. POST normalt ikke (siden POST endrer state på serveren).</li>
             <li><strong>Størrelse:</strong> GET er praktisk begrenset til ~2 KB (URL-lengde-grense i nettlesere/servere). POST har ingen praktisk grense.</li>
-            <li><strong>Synlighet:</strong> GET-data vises i URL, history, server-logger — uegnet for sensitive data. POST-data er skjult i body (men ikke kryptert med mindre HTTPS brukes).</li>
+            <li><strong>Synlighet:</strong> GET-data vises i URL, history, server-logger — uegnet for sensitive data. POST-data ligger skjult i body.</li>
             <li><strong>Bruksområder:</strong> GET for henting/lesing (søk, filtre); POST for å endre serverens tilstand (registrering, sending av skjema).</li>
           </ul>
           <p class="ref">Pensum: <a href="../../kap8/form-elementet.html">Kap. 8 — Form-elementet</a></p>

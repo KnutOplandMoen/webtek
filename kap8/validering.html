@@ -361,10 +361,17 @@ input:valid {
         e-postvalidering i JavaScript — og <strong>oppgaveteksten kan kreve at
         du <em>ikke</em> bruker <code>type="email"</code></strong>. Bruker du
         det likevel, får du 0 poeng for den deloppgaven, selv om resten av
-        koden er riktig. Les oppgaveteksten nøye: hvis e-post-input står som
-        <code>type="text"</code>, må du validere selv med regex (f.eks.
-        <code>/.+@.+\..+/.test(verdi)</code>).
+        koden er riktig.
       </p>
+      <p>
+        Pensum dekker ikke JavaScript-regex. Sjekk i stedet for de delene en
+        e-postadresse må ha med rene string-metoder:
+      </p>
+<pre><code>let ep = document.getElementById("ep").value;
+if (ep.indexOf("@") === -1 || ep.indexOf(".") === -1) {
+  alert("Ugyldig e-post");
+  return false;
+}</code></pre>
     </div>
   </div></section>
 

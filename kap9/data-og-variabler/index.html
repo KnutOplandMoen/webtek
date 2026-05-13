@@ -104,8 +104,8 @@ console.log("Hei " + navn + "!"); // Hei Anna!</code></pre>
 
     <h3>Numbers — spesielle verdier</h3>
     <ul>
-      <li><code>NaN</code> («Not a Number») — returneres ved umulige beregninger som <code>0/0</code> eller <code>Number("abc")</code>. Pussig nok er <code>typeof NaN === "number"</code>.</li>
-      <li><code>Infinity</code> — større enn alle vanlige tall. <code>Infinity + 1</code> er fortsatt <code>Infinity</code>.</li>
+      <li><code>NaN</code> («Not a Number») — returneres ved umulige beregninger som <code>0/0</code>.</li>
+      <li><code>Infinity</code> — større enn alle vanlige tall. <code>Infinity + 1</code> er fortsatt <code>Infinity</code>. <code>5/0</code> gir <code>Infinity</code>.</li>
       <li><code>%</code> (modulo) — resten etter heltallsdivisjon. <code>7 % 5</code> er <code>2</code>.</li>
     </ul>
 
@@ -318,28 +318,10 @@ let x = 5; // OK</code></pre>
 let b = null;      // b er bevisst tom
 
 const obj = { navn: "Anna" };
-obj.alder;         // undefined (property fins ikke)
+obj.alder;         // undefined (property fins ikke)</code></pre>
 
-typeof undefined;  // "undefined"
-typeof null;       // "object"   ← klassisk egenart i språket
-
-undefined == null;   // true
-undefined === null;  // false (ulik type)</code></pre>
-
-    <div class="callout-warn"><div class="label">Egenart</div>
-      <p><code>typeof null === "object"</code> er en gammel feil i språket som aldri ble fikset. Sjekk for <code>null</code> eksplisitt med <code>x === null</code>.</p>
-    </div>
-
-    <div class="quiz mcq" data-quiz>
-      <div class="q-label">MCQ · 1.11.6</div>
-      <div class="q-text">Hva returnerer <code>typeof null</code>?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt" data-correct="0"><code>"null"</code></li>
-        <li class="mcq-opt" data-correct="0"><code>"undefined"</code></li>
-        <li class="mcq-opt" data-correct="1"><code>"object"</code></li>
-        <li class="mcq-opt" data-correct="0"><code>"boolean"</code></li>
-      </ul>
-      <div class="mcq-feedback"><code>typeof null</code> er <code>"object"</code> — en kjent egenart i JS.</div>
+    <div class="callout"><div class="label">Forskjellen</div>
+      <p><code>undefined</code> oppstår når JS selv ikke har en verdi å gi (ikke-tildelt variabel, property som ikke fins). <code>null</code> setter du selv eksplisitt for å si «her er det ingen verdi, og det er meningen».</p>
     </div>
 
     <div class="quiz mcq" data-quiz>
