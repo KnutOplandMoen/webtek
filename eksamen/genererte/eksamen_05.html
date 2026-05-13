@@ -706,25 +706,26 @@ console.log(r);</code></pre>
           <p><strong>Referanseløsning:</strong></p>
           <pre><code>.layout {
   display: flex;
-  gap: 12px;
 }
 
 .venstre, .hoyre {
   flex: 0 0 200px;       /* grow=0, shrink=0, basis=200px */
   background: #e7e3d4;
   padding: 12px;
+  margin: 6px;
 }
 
 .senter {
   flex: 1;               /* eller flex-grow: 1; */
   background: #faf3df;
   padding: 12px;
+  margin: 6px;
 }</code></pre>
           <p><strong>Kommentarer:</strong></p>
           <ul>
             <li><strong>flex: 0 0 200px:</strong> Shorthand for "grow=0, shrink=0, basis=200px" — låser bredden til 200px og hindrer at den vokser eller krymper. Alternativ: bare <code>width: 200px; flex-shrink: 0;</code>.</li>
             <li><strong>flex: 1:</strong> Shorthand for "grow=1, shrink=1, basis=0%". Tilsvarer "ta opp den resterende plassen".</li>
-            <li><strong>gap:</strong> Den moderne måten å sette avstand mellom flex-barn — alternativet er <code>margin</code> på hvert barn, som er tungvint.</li>
+            <li><strong>Mellomrom:</strong> <code>margin</code> på hvert barn gir avstand mellom flex-itemene.</li>
           </ul>
           <p><strong>Vanlige feil:</strong> Bruke <code>width: 200px</code> uten <code>flex-shrink: 0</code> — Flexbox kan krympe barna under deres bredde-verdi hvis det blir trangt. Bruke <code>justify-content: space-between</code> for å fordele bredden — det fungerer bare hvis de tre boksene har lik bredde. Glemme <code>display: flex</code> på forelderen.</p>
           <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
@@ -795,7 +796,7 @@ console.log(r);</code></pre>
   grid-template-areas:
     "header header"
     "aside main";
-  gap: 12px;
+  grid-gap: 12px;
 }
 
 .g-head  { grid-area: header; background: #4a2c2a; color: white; padding: 16px; }

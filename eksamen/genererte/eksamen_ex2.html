@@ -503,7 +503,7 @@ document.write(arrayOfOddNumbers.length);</code></pre>
       <div class="exam-q__editor">
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
-          <textarea class="code-html" rows="5">&lt;input type="number" id="tall" placeholder="Skriv et heltall"&gt;
+          <textarea class="code-html" rows="5">&lt;input type="text" id="tall" placeholder="Skriv et heltall"&gt;
 &lt;button id="sjekk"&gt;Sjekk&lt;/button&gt;
 &lt;p id="utskrift"&gt;&lt;/p&gt;</textarea>
         </div>
@@ -734,9 +734,9 @@ document.getElementById("vis").addEventListener("click", dagerTilNesteJul);</cod
     <div class="exam-q__body">
       <p class="q-text">Skriv et HTML-skjema med to tall-input og en knapp. Når knappen klikkes, skal JavaScript regne ut <em>summen</em> og <em>produktet</em> av tallene og vise begge resultater i en utskrifts-paragraf. <strong>Valider</strong> at brukeren bare har skrevet inn positive tall (≥ 0).</p>
       <ol class="q-tasklist">
-        <li><strong>(2 poeng)</strong> HTML: to <code>&lt;input type="number"&gt;</code>, én knapp, og et utskriftsfelt med <code>id="resultat"</code>.</li>
-        <li><strong>(3 poeng)</strong> JS: les inn verdiene med <code>parseFloat</code>, regn sum og produkt, og skriv til utskriftsfeltet.</li>
-        <li><strong>(2 poeng)</strong> Validering: hvis et felt er negativt eller ikke et tall, vis <code>alert("Bare positive tall")</code> og avbryt.</li>
+        <li><strong>(2 poeng)</strong> HTML: to <code>&lt;input type="text"&gt;</code>, én knapp, og et utskriftsfelt med <code>id="resultat"</code>.</li>
+        <li><strong>(3 poeng)</strong> JS: les <code>.value</code> fra begge feltene, regn sum og produkt med <code>*</code>/<code>-</code> for å tvinge tall-type, og skriv til utskriftsfeltet.</li>
+        <li><strong>(2 poeng)</strong> Validering: hvis et felt er negativt eller tomt, vis <code>alert("Bare positive tall")</code> og avbryt.</li>
         <li><strong>(2 poeng)</strong> Bruk <code>addEventListener</code>, ikke inline <code>onclick</code>.</li>
       </ol>
       <div class="exam-q__editor">
@@ -764,33 +764,34 @@ document.getElementById("vis").addEventListener("click", dagerTilNesteJul);</cod
         <div class="fasit-body">
           <p><strong>Referanseløsning:</strong></p>
           <pre><code>&lt;!-- HTML --&gt;
-&lt;label&gt;Tall 1: &lt;input type="number" id="a"&gt;&lt;/label&gt;&lt;br&gt;
-&lt;label&gt;Tall 2: &lt;input type="number" id="b"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;Tall 1: &lt;input type="text" id="a"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;Tall 2: &lt;input type="text" id="b"&gt;&lt;/label&gt;&lt;br&gt;
 &lt;button id="regn"&gt;Regn&lt;/button&gt;
 &lt;p id="resultat"&gt;&lt;/p&gt;
 
 // JS
-document.getElementById("regn").addEventListener("click", () =&gt; {
-  const a = parseFloat(document.getElementById("a").value);
-  const b = parseFloat(document.getElementById("b").value);
+document.getElementById("regn").addEventListener("click", function() {
+  let a = document.getElementById("a").value;
+  let b = document.getElementById("b").value;
 
-  if (isNaN(a) || isNaN(b) || a &lt; 0 || b &lt; 0) {
+  if (a === "" || b === "" || a &lt; 0 || b &lt; 0) {
     alert("Bare positive tall");
     return;
   }
 
-  const sum = a + b;
-  const prod = a * b;
-  document.getElementById("resultat").textContent =
+  // a*1 tvinger tall-type, a+b alene gir string-konkat
+  let sum = a*1 + b*1;
+  let prod = a * b;
+  document.getElementById("resultat").innerText =
     "Sum: " + sum + ", Produkt: " + prod;
 });</code></pre>
-          <p><strong>Kommentarer:</strong></p>
+          <p><strong>Kommentarer (uten parseFloat — det er ikke i pensum):</strong></p>
           <ul>
-            <li><strong>parseFloat vs Number:</strong> Begge konverterer string til tall. <code>parseFloat("12abc")</code> blir 12; <code>Number("12abc")</code> blir <code>NaN</code>. <code>parseFloat</code> er mer "tilgivende".</li>
-            <li><strong>NaN-sjekk:</strong> <code>isNaN(a)</code> fanger tomme inputs eller ikke-numeriske verdier. Uten denne ville sum = <code>NaN</code> ved tom input.</li>
-            <li><strong>parseFloat-fellen:</strong> Uten <code>parseFloat</code> ville <code>"3" + "5"</code> blitt <code>"35"</code> (konkatenering). Et veldig vanlig bug i kalkulator-oppgaver.</li>
+            <li><strong>String → tall:</strong> <code>.value</code> returnerer alltid en string. Aritmetiske operatorer <code>*</code>, <code>-</code>, <code>/</code> tvinger automatisk til tall. <code>+</code> derimot gjør konkatenering — <code>"3" + "5"</code> blir <code>"35"</code>, ikke 8.</li>
+            <li><strong>Fix for +:</strong> <code>a*1 + b*1</code> — gang med 1 først så JS gjør tall ut av begge før addisjonen.</li>
+            <li><strong>Validering:</strong> <code>a === ""</code> fanger tomme felt; <code>a &lt; 0</code> sammenligner med tall-coercion på <code>&lt;</code>.</li>
           </ul>
-          <p><strong>Vanlige feil:</strong> Glemme <code>parseFloat</code> — sum blir streng-konkatenering. Bruke <code>type="text"</code> (godtatt, men <code>type="number"</code> hjelper med tastatur på mobil). Bruke inline <code>onclick</code>.</p>
+          <p><strong>Vanlige feil:</strong> Bruke <code>+</code> for å summere uten å tvinge tall først — får string-konkatenering. Glemme tom-streng-sjekk.</p>
           <p class="ref">Pensum: <a href="../../kap8/">Kap. 8 — Forms</a>, <a href="../../kap9/">Kap. 9 — JS</a></p>
           <div class="self-grade">
             <span class="self-grade__label">Egenvurdering:</span>

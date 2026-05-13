@@ -27,14 +27,15 @@
 <main data-chapter="Kap 8.3: Form-validering">
   <header class="hero">
     <div class="container">
-      <div class="eyebrow">Kapittel 8 · Underside C · Pensum 1.9.3</div>
+      <div class="eyebrow">Kapittel 8 · Underside C · Slides forms.md</div>
       <h1>Form-<em>validering</em></h1>
       <p class="lede">
-        Hvordan nettleseren hjelper deg å fange feil før innsending —
-        og hvorfor du <em>fortsatt</em> må validere på serveren.
+        HTML5-validering med <code>required</code> og riktig
+        <code>type</code> — og JavaScript-validering, slik foreleser
+        understreker at det fortsatt gjøres i kurset og på eksamen.
       </p>
       <div class="pill-row">
-        <span class="pill">1.9.3 Form validation</span>
+        <span class="pill">Slides: HTML5 Form Validation</span>
       </div>
     </div>
   </header>
@@ -43,45 +44,36 @@
     <div class="container">
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#hvorfor">Hvorfor validere klientside?</a></li>
-        <li><span class="toc-num">02</span><a href="#html5">HTML5-attributter</a></li>
-        <li><span class="toc-num">03</span><a href="#css">:valid og :invalid</a></li>
-        <li><span class="toc-num">04</span><a href="#server">Klient vs server</a></li>
-        <li><span class="toc-num">05</span><a href="#feller">Vanlige feller</a></li>
-        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
+        <li><span class="toc-num">02</span><a href="#html5">HTML5-validering</a></li>
+        <li><span class="toc-num">03</span><a href="#js">JavaScript-validering</a></li>
+        <li><span class="toc-num">04</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">05</span><a href="#mcq">Test deg selv</a></li>
       </ol>
     </div>
   </nav>
 
   <section id="hvorfor"><div class="container">
     <div class="section-badge">01 · Hvorfor</div>
-    <h2>Hvorfor <em>validere</em> klientside?</h2>
+    <h2>Hvorfor <em>validere</em>?</h2>
     <p class="section-intro">
-      Pensum 1.9.3 åpner med en regel og en grunn:
+      Slides forms.md har én slide om validering — den heter
+      «HTML5: Form Validation» og åpner med to setninger:
     </p>
 
     <div class="callout">
-      <div class="label">Pensum-sitat</div>
+      <div class="label">Slides forms.md</div>
       <p>
-        «You should always validate data on your server. But validating
-        the data before the user gets to send it ensures that the data
-        sent is what you're asking for, and can handle. Also, it gives
-        the user feedback earlier that they need to fix something with
-        their input.»
+        «Validation ensures that user enters information that server will
+        be able to understand.»<br>
+        «Validation has been performed using JS.»
       </p>
     </div>
 
     <p>
-      Det er altså to grunner til å validere i nettleseren:
-    </p>
-    <ul>
-      <li><strong>Brukeropplevelse:</strong> brukeren får rask tilbakemelding uten å måtte vente på en runde-tur til serveren.</li>
-      <li><strong>Færre feil i innsendingen:</strong> serveren slipper å håndtere åpenbare feil — bare reelle datafeil må behandles.</li>
-    </ul>
-
-    <p>
-      Det HTML5 gir deg «gratis» dekker det meste: type-validering,
-      påkrevde felt, mønstre, tall- og dato-grenser. For grunnleggende
-      sjekker trenger du <em>ikke</em> JavaScript.
+      Foreleser nevner altså to spor: HTML5-attributter som
+      <code>required</code>, og JavaScript-validering. Sistnevnte er det
+      du oftest skriver på eksamen (typisk e-postvalidering uten å bruke
+      <code>type="email"</code>).
     </p>
   </div></section>
 
@@ -89,17 +81,18 @@
     <div class="section-badge">02 · HTML5-validering</div>
     <h2>HTML5-<em>attributter</em></h2>
     <p class="section-intro">
-      Fem attributter (pluss riktig <code>type</code>) dekker det meste
-      av valideringen pensum nevner.
+      Slides viser <code>required</code> på input-elementer, og at riktig
+      <code>type</code> gir gratis format-sjekk for e-post, URL og dato.
+      <code>maxlength</code> brukes på login-eksempelet. Det er det
+      forelesningen nevner.
     </p>
 
     <div class="def-box">
       <div class="def-label">A · type</div>
       <p>
-        Selve <code>type</code>-attributtet er den viktigste valideringen.
         <code>type="email"</code> krever en gyldig e-postadresse.
-        <code>type="url"</code> krever en gyldig URL. <code>type="number"</code>
-        krever et tall. Hvis verdien ikke matcher type-en, vil ikke
+        <code>type="url"</code> krever en gyldig URL. <code>type="date"</code>
+        krever en gyldig dato. Hvis verdien ikke matcher type-en, vil ikke
         skjemaet kunne submit-es.
       </p>
     </div>
@@ -107,69 +100,37 @@
     <div class="def-box">
       <div class="def-label">B · required</div>
       <p>
-        Boolean. Feltet må fylles ut før submit. Hvis det er tomt, viser
-        nettleseren en innebygd melding («Please fill out this field»)
-        og hindrer innsendingen.
+        Slides bruker syntaksen <code>required="required"</code>. Feltet må
+        fylles ut før submit. Hvis det er tomt, viser nettleseren en
+        innebygd melding og hindrer innsendingen.
       </p>
     </div>
 
     <div class="def-box">
-      <div class="def-label">C · pattern</div>
+      <div class="def-label">C · maxlength</div>
       <p>
-        Et regulært uttrykk. Verdien må matche mønsteret. Skrives uten
-        omsluttende skråstreker. Bruk <code>title</code> for å gi brukeren
-        et hint om hva som forventes.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Postnummer (4 siffer)</div>
-<pre>&lt;input type="text" name="zip"
-       pattern="[0-9]{4}"
-       title="Fire siffer"&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">D · min, max, step</div>
-      <p>
-        For numeriske og dato-typer. Verdien må ligge i intervallet
-        [<code>min</code>, <code>max</code>] og være et multiplum av
-        <code>step</code> (regnet fra <code>min</code>).
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Mengde 1–10, hele tall</div>
-<pre>&lt;input type="number" name="qty"
-       min="1" max="10" step="1"&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">E · maxlength</div>
-      <p>
-        Maks antall tegn for tekst-typer. Brukeren kan ikke skrive flere
-        tegn — input-en stopper rett og slett å akseptere mer.
+        Maks antall tegn for tekst-input. Brukeren kan ikke skrive flere
+        tegn. Slides bruker dette på login-eksempelet: <code>maxlength="30"</code>.
       </p>
     </div>
 
     <div class="code-result">
       <div class="pane">
-        <div class="pane-label">Komplett valideringsskjema (fra pensum)</div>
-<pre>&lt;form&gt;
-  &lt;label for="email"&gt;E-post:&lt;/label&gt;
-  &lt;input type="email" id="email" name="email" required&gt;
-  &lt;button&gt;Submit&lt;/button&gt;
+        <div class="pane-label">Forelesningens valideringseksempel</div>
+<pre>&lt;form action="http://www.example.com/login/" method="post"&gt;
+  &lt;label for="username"&gt;Username:&lt;/label&gt;
+  &lt;input type="text" name="username" required="required"&gt;&lt;br&gt;
+  &lt;label for="password"&gt;Password:&lt;/label&gt;
+  &lt;input type="password" name="password" required="required"&gt;
+  &lt;input type="submit" value="Submit"&gt;
 &lt;/form&gt;</pre>
       </div>
     </div>
 
     <p>
-      Skjemaet over kan ikke submit-es før <code>email</code>-feltet
-      både er fylt ut <em>og</em> inneholder noe som ser ut som en gyldig
-      e-postadresse. Begge sjekkene skjer i nettleseren — uten en eneste
-      linje JavaScript.
+      Skjemaet kan ikke submit-es før begge feltene er fylt ut. Hvis du
+      bytter <code>type</code> til <code>email</code> får du i tillegg
+      format-validering — uten en eneste linje JavaScript.
     </p>
 
     <div class="quiz mcq">
@@ -185,172 +146,98 @@
     </div>
   </div></section>
 
-  <section id="css"><div class="container">
-    <div class="section-badge">03 · CSS</div>
-    <h2>:valid og <em>:invalid</em></h2>
-    <p>
-      For å vise brukeren <em>hvor</em> feilen er, kan du bruke to CSS-pseudoklasser:
+  <section id="js"><div class="container">
+    <div class="section-badge">03 · JavaScript-validering</div>
+    <h2>Validering med <em>JavaScript</em></h2>
+    <p class="section-intro">
+      Slides sier eksplisitt at «Validation has been performed using JS.»
+      På eksamen er det typisk dette du må skrive — særlig
+      <strong>e-postvalidering uten <code>type="email"</code></strong>.
+      Regex er <em>ikke</em> i pensum; bruk <code>indexOf</code>.
     </p>
 
-    <div class="def-box">
-      <div class="def-label">:valid</div>
+    <div class="callout">
+      <div class="label">Foreleser-mønster</div>
       <p>
-        Matcher <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>,
-        <code>&lt;select&gt;</code> og <code>&lt;form&gt;</code> hvis
-        verdien tilfredsstiller alle valideringsreglene
-        (<code>type</code>, <code>required</code>, <code>pattern</code>,
-        <code>min</code>/<code>max</code>, …).
+        En typisk eksamensoppgave gir deg HTML for et skjema og ber deg
+        skrive JS som leser verdier, sjekker dem og melder fra ved feil.
+        Lest opp av foreleser: «email validation … they may forbid
+        <code>type="email"</code>; if forbidden and you use it, you get 0
+        for that part.»
       </p>
     </div>
 
-    <div class="def-box">
-      <div class="def-label">:invalid</div>
-      <p>
-        Matcher de samme elementene hvis verdien <em>bryter</em> minst
-        én valideringsregel.
-      </p>
-    </div>
+    <div class="code-result">
+      <div class="pane">
+        <div class="pane-label">JS-validering uten regex</div>
+<pre>&lt;form onsubmit="return val()"&gt;
+  &lt;input id="nm" type="text"&gt;
+  &lt;input id="al" type="text"&gt;
+  &lt;input id="ep" type="text"&gt;
+  &lt;input type="submit"&gt;
+&lt;/form&gt;
+&lt;script&gt;
+function val(){
+  let n  = document.getElementById("nm").value;
+  let a  = document.getElementById("al").value;
+  let ep = document.getElementById("ep").value;
 
-    <div class="code-result two-col">
-      <div class="pane">
-        <div class="pane-label">HTML</div>
-<pre>&lt;form&gt;
-  &lt;label for="email"&gt;E-post:&lt;/label&gt;
-  &lt;input type="email" id="email"
-         name="email" required&gt;
-  &lt;button&gt;Submit&lt;/button&gt;
-&lt;/form&gt;</pre>
-      </div>
-      <div class="pane">
-        <div class="pane-label">CSS</div>
-<pre>input:invalid {
-  border: 1px solid red;
+  if (n.length === 0){
+    alert("Navn er påkrevd"); return false;
+  }
+  if (a &lt; 18){
+    alert("Må være 18+"); return false;
+  }
+  if (ep.indexOf("@") === -1 || ep.indexOf(".") === -1){
+    alert("Ugyldig e-post"); return false;
+  }
+  return true;
 }
-input:valid {
-  border: 1px solid green;
-}</pre>
+&lt;/script&gt;</pre>
       </div>
     </div>
 
-    <div class="callout-warn">
-      <div class="label">:invalid på sidelast</div>
-      <p>
-        Et tomt obligatorisk felt er teknisk «invalid» med en gang siden
-        lastes — så et rødt rammeverk vises før brukeren har skrevet
-        noe. Vil du unngå det, kombiner med <code>:placeholder-shown</code>
-        eller bruk <code>:user-invalid</code> (nyere). Pensum tar ikke
-        opp dette nyanse-problemet, men det er en typisk klage på
-        <code>:valid</code>/<code>:invalid</code>.
-      </p>
-    </div>
+    <p>
+      Returnerer <code>val()</code> <code>false</code>, kanselleres submit
+      av <code>onsubmit="return val()"</code>. Returnerer den
+      <code>true</code>, går skjemaet videre. Dette er mønsteret som
+      passer både kalkulator-skjemaer og e-postsjekk på eksamen.
+    </p>
 
     <div class="quiz mcq">
       <div class="q-label">Sjekk · Middels</div>
-      <div class="q-text">Hvilken CSS-regel rammer kun input-felter med ugyldig innhold?</div>
+      <div class="q-text">Oppgaven forbyr <code>type="email"</code>. Hvordan sjekker du at strengen inneholder en <code>@</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>input.error { … }</code></li>
-        <li class="mcq-opt"><span class="opt-label">B</span> <code>input:required { … }</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> <code>input:invalid { … }</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>input[invalid] { … }</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>/[a-z]@/.test(ep)</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>ep.indexOf("@") !== -1</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>ep.contains("@")</code> — finnes ikke i JS</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>type="email"</code> — gir 0 poeng på den deloppgaven</li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. <code>:invalid</code> matcher kontroller som bryter minst én valideringsregel (<code>type</code>, <code>required</code>, <code>pattern</code>, …).</div>
-    </div>
-  </div></section>
-
-  <section id="server"><div class="container">
-    <div class="section-badge">04 · Klient vs server</div>
-    <h2>Hvorfor server-validering <em>uansett</em>?</h2>
-    <p class="section-intro">
-      Klientside-validering er for brukeropplevelsen — ikke for
-      sikkerhet. Den kan slås av, omgås eller manipuleres. Den eneste
-      validering som <em>må</em> stoles på er den som kjører på serveren.
-    </p>
-
-    <div class="compare-grid">
-      <div class="compare-cell good">
-        <div class="label">Klient (HTML5/JS)</div>
-        <ul>
-          <li>Rask tilbakemelding</li>
-          <li>Færre runde-turer til server</li>
-          <li>Bedre brukeropplevelse</li>
-          <li><strong>Kan slås av</strong> (Inspect-element, deaktivert JS)</li>
-          <li><strong>Kan omgås</strong> (curl, Postman, manipulert request)</li>
-        </ul>
-      </div>
-      <div class="compare-cell bad">
-        <div class="label">Server</div>
-        <ul>
-          <li>Eneste autoritative kilde</li>
-          <li>Beskytter mot ondsinnet trafikk</li>
-          <li>Ingen tilbakemelding før requesten har gått frem og tilbake</li>
-          <li><strong>Må alltid være på plass</strong></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="callout-warn">
-      <div class="label">Tankeeksperiment</div>
-      <p>
-        En angriper kan åpne nettleserkonsollen og fjerne
-        <code>required</code> fra alle inputs med ett kommando, eller
-        sende request-en direkte med <code>curl</code> uten å bry seg
-        om HTML-en i det hele tatt. Server-validering er den eneste
-        tingen som kan stoppe det.
-      </p>
-    </div>
-
-    <div class="quiz mcq">
-      <div class="q-label">Sjekk · Vanskelig</div>
-      <div class="q-text">Hvorfor er klientside-validering ikke en sikkerhetsmekanisme?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Den krypterer ikke data</li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Den kan slås av eller omgås — angriper kan sende vilkårlige data direkte</li>
-        <li class="mcq-opt"><span class="opt-label">C</span> Den kjører for sakte til å være effektiv</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Den fungerer bare i moderne nettlesere</li>
-      </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Klientside-validering kan deaktiveres eller helt omgås (curl, Postman). Serveren må alltid validere.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>indexOf</code> returnerer <code>-1</code> hvis tegnet ikke finnes. Regex (A) er ikke i pensum. Bruker du <code>type="email"</code> mot oppgaveinstruksen, mister du poeng.</div>
     </div>
   </div></section>
 
   <section id="feller"><div class="container">
-    <div class="section-badge">05 · Vanlige feller</div>
+    <div class="section-badge">04 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
 
     <div class="callout-warn">
-      <div class="label">Felle 1 — å stole på klientside-validering</div>
-      <p>
-        Klientside-validering er for brukeropplevelsen, ikke for
-        sikkerhet. Hvis du ikke validerer på serveren også, åpner du
-        opp for ugyldige eller ondsinnede data.
-      </p>
-    </div>
-
-    <div class="callout-warn">
-      <div class="label">Felle 2 — pattern med skråstreker</div>
-      <p>
-        <code>pattern="/^\d{4}$/"</code> matcher faktisk
-        <em>strengen</em> «/0000/», ikke fire siffer. RegEx i HTML-attributter
-        skal ikke ha skråstreker rundt seg: <code>pattern="\d{4}"</code>.
-      </p>
-    </div>
-
-    <div class="callout-warn">
-      <div class="label">Felle 3 — :invalid på siden ved last</div>
-      <p>
-        Et tomt obligatorisk felt er invalid fra første sekund. Hvis du
-        styler <code>input:invalid</code> rødt vises det som en feil
-        før brukeren engang har prøvd å skrive noe. Vurder
-        <code>:placeholder-shown</code> eller <code>:user-invalid</code>
-        for å unngå det.
-      </p>
-    </div>
-
-    <div class="callout-warn">
-      <div class="label">Felle 4 — feil type, ingen sjekk</div>
+      <div class="label">Felle 1 — feil type, ingen sjekk</div>
       <p>
         <code>type="text"</code> validerer ikke noe — det godtar alt.
         Hvis du forventer en e-postadresse, bruk <code>type="email"</code>.
-        Da får du gratis format-validering uten ekstra arbeid.
+        Da får du gratis format-validering uten ekstra arbeid (når
+        oppgaven tillater det).
+      </p>
+    </div>
+
+    <div class="callout-warn">
+      <div class="label">Felle 2 — glemt return false ved feil</div>
+      <p>
+        Returnerer JS-funksjonen <code>true</code> uansett, sendes
+        skjemaet selv om sjekken slo ut. Husk <code>return false;</code>
+        etter <code>alert</code>-en og <code>onsubmit="return val()"</code>
+        på form-elementet — da kan submit faktisk avbrytes.
       </p>
     </div>
 
@@ -376,7 +263,7 @@ if (ep.indexOf("@") === -1 || ep.indexOf(".") === -1) {
   </div></section>
 
   <section id="mcq"><div class="container">
-    <div class="section-badge">06 · Test deg selv</div>
+    <div class="section-badge">05 · Test deg selv</div>
     <h2>Multiple <em>choice</em></h2>
 
     <div class="quiz mcq">
@@ -388,7 +275,7 @@ if (ep.indexOf("@") === -1 || ep.indexOf(".") === -1) {
         <li class="mcq-opt"><span class="opt-label">C</span> <code>validate</code></li>
         <li class="mcq-opt"><span class="opt-label">D</span> <code>not-empty</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>required</code> er den standard HTML5-måten å markere et felt som obligatorisk.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>required</code> er den standard HTML5-måten å markere et felt som obligatorisk. Slides bruker syntaksen <code>required="required"</code>.</div>
     </div>
 
     <div class="quiz mcq">
@@ -405,50 +292,50 @@ if (ep.indexOf("@") === -1 || ep.indexOf(".") === -1) {
 
     <div class="quiz mcq">
       <div class="q-label">3 · Middels</div>
-      <div class="q-text">Du vil tillate verdier 1–100 i steg på 5. Hva skriver du?</div>
+      <div class="q-text">Oppgaven ber deg validere e-post i JS uten å bruke <code>type="email"</code>. Hvilken sjekk er <em>tilstrekkelig</em> for å fange opp at <code>@</code> mangler?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>type="number" range="1-100" step="5"</code></li>
-        <li class="mcq-opt"><span class="opt-label">B</span> <code>type="number" min="1" max="100" interval="5"</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> <code>type="number" min="1" max="100" step="5"</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>type="number" pattern="[1-100]" step="5"</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>if (ep === "")</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>if (ep.indexOf("@") === -1)</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>if (ep.length &gt; 0)</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>if (/[a-z]/.test(ep))</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. <code>min</code> og <code>max</code> setter grensene; <code>step</code> styrer tillatte intervaller.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>indexOf</code> returnerer <code>-1</code> hvis tegnet ikke finnes. Regex (D) er ikke i pensum.</div>
     </div>
 
     <div class="quiz mcq">
       <div class="q-label">4 · Middels</div>
-      <div class="q-text">Hvordan skriver du et <code>pattern</code> som krever fire siffer?</div>
+      <div class="q-text">Hvilken syntaks bruker slides for <code>required</code> på et felt?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>pattern="/\d{4}/"</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>pattern="\d{4}"</code></li>
-        <li class="mcq-opt"><span class="opt-label">C</span> <code>pattern="^\d{4}$/g"</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>pattern="0000"</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>required=true</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>required="required"</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>required={1}</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>required: yes</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Ingen skråstreker rundt regex i HTML, og pattern matcher implicit hele verdien.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Slides forms.md bruker <code>required="required"</code>. (Det er også gyldig HTML å bare skrive <code>required</code> uten verdi.)</div>
     </div>
 
     <div class="quiz mcq">
       <div class="q-label">5 · Vanskelig</div>
-      <div class="q-text">Hvorfor må du validere på serveren selv om HTML5-validering er på?</div>
+      <div class="q-text">Hvorfor sier foreleser at validering kan/bør gjøres i JavaScript selv om HTML5 har <code>required</code> og <code>type</code>-validering?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> HTML5-validering er bare for mobil</li>
-        <li class="mcq-opt"><span class="opt-label">B</span> HTML5-validering er for sakte</li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Klientside-validering kan slås av eller omgås — en angriper kan sende vilkårlige data direkte</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Server-validering er kun nødvendig for sensitive data</li>
+        <li class="mcq-opt"><span class="opt-label">A</span> HTML5-validering fungerer ikke i Chrome</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Slides sier eksplisitt at validering «has been performed using JS», og eksamen krever ofte at du skriver JS-sjekk (f.eks. e-post uten <code>type="email"</code>)</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> JavaScript er raskere enn HTML5</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Det er ikke lov å bruke HTML5-validering i kurset</li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. Inspect-element, deaktivert JavaScript, curl-requests — alt omgår klientside-validering. Serveren må være siste forsvarslinje.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. JS-validering er kursets hovedmønster og det eksamen typisk tester.</div>
     </div>
 
     <div class="quiz mcq">
       <div class="q-label">6 · Vanskelig</div>
-      <div class="q-text">Hva matcher <code>:valid</code>?</div>
+      <div class="q-text">Hva skjer i nettleseren hvis valideringsfunksjonen <code>val()</code> returnerer <code>false</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Bare felt med <code>required</code></li>
-        <li class="mcq-opt"><span class="opt-label">B</span> Bare felt med <code>type="email"</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Inputs/textarea/select/form hvor verdien tilfredsstiller alle valideringsregler (<code>type</code>, <code>required</code>, <code>pattern</code>, …)</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Bare felt brukeren har trykket Tab gjennom</li>
+        <li class="mcq-opt"><span class="opt-label">A</span> Skjemaet sendes uansett</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Submit avbrytes (forutsatt at form-elementet har <code>onsubmit="return val()"</code>)</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Siden lastes på nytt</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Alle felt tømmes</li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. <code>:valid</code> matcher når verdien oppfyller alle valideringsreglene som er satt på elementet.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>onsubmit="return val()"</code> kobler returverdien til submit-handlingen — <code>false</code> kansellerer.</div>
     </div>
   </div></section>
 </main>

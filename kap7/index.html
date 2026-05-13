@@ -45,33 +45,52 @@
     <div class="container">
       <div class="exam-focus">
         <div class="ef-label">Eksamensfokus · Kap 7 <span class="ef-prio low">Lav prioritet</span></div>
-        <h3 class="ef-title">Bare som småbits-MCQ</h3>
+        <h3 class="ef-title">Bare som småbits-MCQ — og forelesning dekket kun bilder</h3>
         <p style="margin-top:0;">
-          Multimedia testes utelukkende som korte MCQ-spørsmål, typisk
-          om HTML5-API-er som lar deg vise multimedia uten plug-ins, eller
-          om SVG-formatet. Aldri en hel oppgave dedikert til lyd/video. Du
-          klarer deg fint med faktastikkord på A4-arket.
+          Foreleser brukte slidesen <code>basics_html.md</code> (linjene
+          221–289) til å gå gjennom <em>bilder</em>. Video, audio,
+          <code>&lt;source&gt;</code>, PNG, SVG og format-tabeller står i
+          pensumboka 1.8, men ble ikke direkte gjennomgått i slides. SVG er
+          eksplisitt plassert i «The Way Ahead (IT2810)» i
+          <code>exam_info.md</code> — altså neste kurs.
+        </p>
+        <p>
+          Eksamenshistorikken viser at multimedia testes som korte MCQ
+          (typisk HTML5 uten plug-ins eller en attributt-spørsmål). Aldri
+          en hel oppgave dedikert til lyd/video.
         </p>
         <div class="ef-grid">
           <div class="ef-block must">
-            <h4>Må kunne</h4>
+            <h4>Må kunne (fra forelesning)</h4>
             <ul>
-              <li><strong>HTML5-fordel</strong>: man kan vise multimedia uten plug-ins (typisk MCQ)</li>
-              <li><strong>video/audio-tagger</strong>: <code>&lt;video src="x" controls&gt;</code></li>
-              <li>Bilde-formater (jpg, png, gif, svg) — vet hva som passer hvor</li>
+              <li><strong><code>&lt;img&gt;</code>-elementet</strong>: selvlukkende, inline, peker på en separat fil</li>
+              <li><strong>Obligatoriske attributter</strong>: <code>src</code> (sti) og <code>alt</code> (tekstbeskrivelse for tilgjengelighet og indeksering)</li>
+              <li><strong><code>height</code>/<code>width</code></strong> i piksler — slik at nettleseren reserverer plass mens HTML-en lastes (alternativt sette via CSS)</li>
+              <li><strong>Plassering av bilde</strong> i forhold til avsnitt (før, inni eller midt i en <code>&lt;p&gt;</code>)</li>
+              <li><strong>Tre regler for bilder</strong>: riktig format, riktig størrelse, mål i piksler (ikke cm/tomme)</li>
+              <li><strong><code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code></strong> for bilde + bildetekst</li>
+              <li><strong>Format-valg fra forelesning</strong>: JPEG til fotografier, GIF til illustrasjoner/logoer med flate farger</li>
             </ul>
           </div>
           <div class="ef-block skip">
-            <h4>Kan nedprioriteres</h4>
+            <h4>Ikke i forelesning — kun pensumboka 1.8</h4>
             <ul>
-              <li>Kodek-detaljer (H.264, VP9, AAC) — ikke testet</li>
-              <li>Geolocation/Storage/Web Workers-API — er HTML5 men ikke i sett</li>
-              <li>Avansert SVG-syntaks (paths, animations)</li>
+              <li><strong>SVG</strong> — eksplisitt plassert i «The Way Ahead (IT2810)»</li>
+              <li>PNG-detaljer, lossy/lossless og raster/vektor som begreper</li>
+              <li>GIF 256-fargers begrensning, transparens-nivåer</li>
+              <li><code>title</code>-attributtet på <code>&lt;img&gt;</code></li>
+              <li><code>alt=""</code> for dekorative bilder</li>
+              <li>«<code>align</code> er ikke HTML5» som regel</li>
+              <li>«Lagre JPEG flere ganger gir kvalitetstap»</li>
+              <li><code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;source&gt;</code> med alle attributter (<code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>poster</code>)</li>
+              <li>Nettleserstøtte-tabeller for MP4/WebM/Ogg og MP3/Wav/Ogg</li>
+              <li>HTML5 = uten plug-ins som påstand (har vært MCQ historisk, men ikke i slides)</li>
+              <li>Kodek-detaljer (H.264, VP9, AAC)</li>
             </ul>
           </div>
         </div>
         <div class="ef-meta">
-          Forventet vekt 2–4 % via 1–2 MCQ · Se hele <a href="../eksamen/">eksamensanalysen</a>
+          Forventet vekt 2–4 % via 1–2 MCQ · Innholdet under er beholdt som referanse til pensumboka 1.8, men prioritér det som er i forelesningen · Se hele <a href="../eksamen/">eksamensanalysen</a>
         </div>
       </div>
     </div>

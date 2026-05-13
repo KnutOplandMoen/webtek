@@ -47,13 +47,15 @@
     <div class="container">
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#if">if / else if / else</a></li>
-        <li><span class="toc-num">02</span><a href="#arrays">Arrays</a></li>
-        <li><span class="toc-num">03</span><a href="#objekter">Objekter</a></li>
-        <li><span class="toc-num">04</span><a href="#for">for-loop</a></li>
-        <li><span class="toc-num">05</span><a href="#while">while-loop</a></li>
-        <li><span class="toc-num">06</span><a href="#break">break / continue</a></li>
-        <li><span class="toc-num">07</span><a href="#feller">Feller</a></li>
-        <li><span class="toc-num">08</span><a href="#mcq">Test deg selv</a></li>
+        <li><span class="toc-num">02</span><a href="#switch">switch</a></li>
+        <li><span class="toc-num">03</span><a href="#arrays">Arrays</a></li>
+        <li><span class="toc-num">04</span><a href="#objekter">Objekter</a></li>
+        <li><span class="toc-num">05</span><a href="#for">for-loop</a></li>
+        <li><span class="toc-num">06</span><a href="#while">while-loop</a></li>
+        <li><span class="toc-num">07</span><a href="#forin">for...in-loop</a></li>
+        <li><span class="toc-num">08</span><a href="#break">break / continue</a></li>
+        <li><span class="toc-num">09</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">10</span><a href="#mcq">Test deg selv</a></li>
       </ol>
     </div>
   </nav>
@@ -116,8 +118,55 @@ if (alder &gt;= 18) {
     </div>
   </div></section>
 
+  <section id="switch"><div class="container">
+    <div class="section-badge">02 · Pensum 1.11.7</div>
+    <h2><code>switch</code> — <em>velg én av mange</em></h2>
+    <p>
+      Når du sammenligner samme verdi mot mange faste alternativer er
+      <code>switch</code> ofte ryddigere enn en lang <code>if / else if</code>-kjede.
+      Foreleser viser eksemplet med å oversette <code>new Date().getMonth()</code>
+      (som returnerer 0–11) til navn på måneden:
+    </p>
+
+<pre><code>switch (new Date().getMonth()) {
+  case 0:
+    day = "Jan";
+    break;
+  case 1:
+    day = "Feb";
+    break;
+  case 2:
+    day = "Mar";
+    break;
+  // …
+}</code></pre>
+
+    <ul>
+      <li><code>switch</code> tar en verdi i parentes.</li>
+      <li>Hver <code>case</code> sammenlignes med <code>===</code> mot verdien.</li>
+      <li><code>break</code> avslutter <code>switch</code>-blokken. Uten <code>break</code> «faller» kjøringen over til neste <code>case</code> (fall-through).</li>
+      <li><code>default</code> er valgfri «catch all» — kjøres bare hvis ingen <code>case</code> matchet.</li>
+    </ul>
+
+    <div class="callout-warn"><div class="label">Glemt <code>break</code>?</div>
+      <p>Uten <code>break</code> fortsetter kjøringen inn i neste <code>case</code> automatisk. Det er noen ganger nyttig (samle flere <code>case</code> som skal gjøre det samme), men ofte en bug.</p>
+    </div>
+
+    <div class="quiz mcq" data-quiz>
+      <div class="q-label">MCQ · 1.11.7</div>
+      <div class="q-text">Hva skjer hvis du glemmer <code>break</code> etter en <code>case</code>-blokk?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt" data-correct="0">Programmet stopper</li>
+        <li class="mcq-opt" data-correct="0">Det gir SyntaxError</li>
+        <li class="mcq-opt" data-correct="1">Kjøringen «faller» over i neste <code>case</code></li>
+        <li class="mcq-opt" data-correct="0">Bare første <code>case</code> kjører uansett</li>
+      </ul>
+      <div class="mcq-feedback">Fall-through: uten <code>break</code> kjøres neste <code>case</code> også, selv om verdien ikke matcher. Det er JavaScripts oppførsel — sjelden ønsket.</div>
+    </div>
+  </div></section>
+
   <section id="arrays"><div class="container">
-    <div class="section-badge">02 · Pensum 1.11.8</div>
+    <div class="section-badge">03 · Pensum 1.11.8</div>
     <h2><em>Arrays</em> — ordnet liste</h2>
     <p>
       En array er en ordnet samling av verdier. Den deklareres med firkantparenteser, og hvert element har en <strong>indeks</strong> som starter på <code>0</code>:
@@ -168,7 +217,7 @@ farger[farger.length - 1];  // "blå" (siste element)</code></pre>
   </div></section>
 
   <section id="objekter"><div class="container">
-    <div class="section-badge">03 · Pensum 1.11.9</div>
+    <div class="section-badge">04 · Pensum 1.11.9</div>
     <h2><em>Objekter</em> — nøkkel-verdi-par</h2>
     <p>
       Et objekt grupperer relatert data. I motsetning til en array er det ikke
@@ -189,7 +238,10 @@ person.epost;         // undefined (property fins ikke)
 person.epost = "anna@example.com";
 
 // Endre eksisterende:
-person.alder = 23;</code></pre>
+person.alder = 23;
+
+// Fjern en property:
+delete person.student;</code></pre>
 
     <h3>Dot vs bracket</h3>
     <ul>
@@ -223,7 +275,7 @@ person.alder = 23;</code></pre>
   </div></section>
 
   <section id="for"><div class="container">
-    <div class="section-badge">04 · Pensum 1.11.10</div>
+    <div class="section-badge">05 · Pensum 1.11.10</div>
     <h2><code>for</code>-loop</h2>
     <p>
       Når du <em>vet på forhånd</em> hvor mange iterasjoner du trenger,
@@ -261,17 +313,23 @@ for (let i = 0; i &lt; navn.length; i++) {
   </div></section>
 
   <section id="while"><div class="container">
-    <div class="section-badge">04 · Pensum 1.11.10</div>
+    <div class="section-badge">06 · Pensum 1.11.10</div>
     <h2><code>while</code>-loop</h2>
     <p>
       Når du <em>ikke vet</em> hvor mange iterasjoner som trengs, men har en
-      betingelse som skal holde, bruker du en while-loop:
+      betingelse som skal holde, bruker du en while-loop. Foreleser viser
+      eksemplet hvor vi summerer alle tall fra 1 til <code>n</code>:
     </p>
 
-<pre><code>let svar = "";
-while (svar === "") {
-  svar = prompt("Hva heter du?");
-}</code></pre>
+<pre><code>let i = 0;
+let sum = 0;
+const n = 100;
+
+while (i &lt;= n) {
+  sum += i;
+  i++;
+}
+console.log("sum: " + sum);</code></pre>
 
     <p>
       Loopen kjører så lenge betingelsen er <code>true</code>. Hvis betingelsen
@@ -284,8 +342,43 @@ while (svar === "") {
     </div>
   </div></section>
 
+  <section id="forin"><div class="container">
+    <div class="section-badge">07 · Pensum 1.11.10</div>
+    <h2><code>for...in</code>-loop</h2>
+    <p>
+      Når du vil løpe gjennom <em>alle nøklene</em> i et objekt (eller
+      <em>alle indeksene</em> i en array), bruker du <code>for...in</code>.
+      Foreleser viser den både på et objekt og på en array:
+    </p>
+
+<pre><code>const teacher = {
+  firstName: "Kshitij",
+  lastName: "Sharma",
+  course: "IT2805"
+};
+
+let txt = "";
+for (let x in teacher) {
+  txt += teacher[x] + " ";
+}
+console.log(txt); // "Kshitij Sharma IT2805 "</code></pre>
+
+<pre><code>const arr = ["A", "B", "C"];
+let out = "";
+for (let x in arr) {
+  out += arr[x] + " ";
+}
+console.log(out); // "A B C "</code></pre>
+
+    <ul>
+      <li>Variabelen (<code>x</code>) får verdien av <em>nøkkelen</em> (i objekter) eller <em>indeksen</em> (i arrays) — ikke selve verdien.</li>
+      <li>Bruk <code>obj[x]</code> for å hente verdien som hører til.</li>
+      <li>Forskjellen fra en vanlig <code>for</code>-loop: du trenger ikke styre tellevariabel selv.</li>
+    </ul>
+  </div></section>
+
   <section id="break"><div class="container">
-    <div class="section-badge">06 · Pensum 1.11.10</div>
+    <div class="section-badge">08 · Pensum 1.11.10</div>
     <h2><code>break</code> og <code>continue</code></h2>
     <p>Inni en loop kan du styre flyten med to nøkkelord:</p>
 
@@ -321,7 +414,7 @@ while (svar === "") {
   </div></section>
 
   <section id="feller"><div class="container">
-    <div class="section-badge">07 · Vanlige feller</div>
+    <div class="section-badge">09 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
     <div class="callout-warn"><div class="label">Pass på</div>
       <ul>
@@ -335,7 +428,7 @@ while (svar === "") {
   </div></section>
 
   <section id="mcq"><div class="container">
-    <div class="section-badge">08 · Test deg selv</div>
+    <div class="section-badge">10 · Test deg selv</div>
     <h2>Avsluttende <em>spørsmål</em></h2>
 
     <div class="quiz mcq" data-quiz>

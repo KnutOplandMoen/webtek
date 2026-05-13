@@ -801,21 +801,21 @@ footer.meta a:not(:first-child):hover {
       <span class="exam-q__topic">Kap. 8+9 — Form-validering</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">HTML-skjemaet under er gitt. Skriv JavaScript som validerer feltene <strong>når brukeren klikker «Send»</strong>:</p>
+      <p class="q-text">HTML-skjemaet under er gitt. Skriv JavaScript som validerer feltene <strong>når brukeren klikker «Send»</strong>. <em>Oppgaven forbyr <code>type="email"</code>, og regex/<code>parseInt</code>/<code>parseFloat</code> er ikke i pensum — bruk string-metoder og direkte sammenligning.</em></p>
       <ol class="q-tasklist">
-        <li><strong>(3 poeng)</strong> Email må matche en enkel regex som krever et <code>@</code>-tegn med tekst på begge sider og minst ett punktum etter <code>@</code>. Eksempel: <code>kari@ntnu.no</code> godkjennes, <code>kari@no</code> ikke.</li>
-        <li><strong>(3 poeng)</strong> Telefonnummer må være <em>nøyaktig 8 sifre</em>, uten mellomrom eller andre tegn.</li>
-        <li><strong>(2 poeng)</strong> Alder må være et heltall mellom <strong>16 og 100</strong> (inklusive).</li>
-        <li><strong>(2 poeng)</strong> Vis feilmeldinger i <code>alert()</code> og <em>hindre at skjemaet sendes</em> hvis noe er ugyldig.</li>
+        <li><strong>(3 poeng)</strong> Email må inneholde minst ett <code>@</code> <em>og</em> minst ett punktum (<code>.</code>). Eksempel: <code>kari@ntnu.no</code> godkjennes; <code>karino</code> og <code>kari@no</code> uten punktum godkjennes ikke.</li>
+        <li><strong>(3 poeng)</strong> Brukernavn må være ikke-tomt og ha maks 30 tegn (<code>maxlength="30"</code>).</li>
+        <li><strong>(2 poeng)</strong> Alder må være minst 16. Du kan bruke <code>&lt;</code>/<code>&gt;</code> direkte på <code>.value</code>.</li>
+        <li><strong>(2 poeng)</strong> Vis feilmeldinger med <code>alert()</code> og hindre at skjemaet sendes hvis noe er ugyldig. Bruk <code>onsubmit="return val()"</code> som returnerer <code>false</code>.</li>
       </ol>
       <div class="exam-q__editor">
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
-          <textarea class="code-html" rows="9">&lt;form id="reg"&gt;
+          <textarea class="code-html" rows="9">&lt;form onsubmit="return val()"&gt;
+  &lt;label&gt;Brukernavn: &lt;input type="text" id="bn" maxlength="30"&gt;&lt;/label&gt;&lt;br&gt;
   &lt;label&gt;Email: &lt;input type="text" id="email"&gt;&lt;/label&gt;&lt;br&gt;
-  &lt;label&gt;Telefon: &lt;input type="text" id="tel"&gt;&lt;/label&gt;&lt;br&gt;
   &lt;label&gt;Alder: &lt;input type="text" id="alder"&gt;&lt;/label&gt;&lt;br&gt;
-  &lt;button type="submit"&gt;Send&lt;/button&gt;
+  &lt;input type="submit" value="Send"&gt;
 &lt;/form&gt;</textarea>
         </div>
         <div class="editor-field">
@@ -837,39 +837,36 @@ footer.meta a:not(:first-child):hover {
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <p><strong>Referanseløsning:</strong></p>
-          <pre><code>const form = document.getElementById("reg");
-form.addEventListener("submit", function (e) {
-  const email = document.getElementById("email").value;
-  const tel = document.getElementById("tel").value;
-  const alder = parseInt(document.getElementById("alder").value, 10);
+          <pre><code>function val() {
+  let bn = document.getElementById("bn").value;
+  let email = document.getElementById("email").value;
+  let alder = document.getElementById("alder").value;
 
-  const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-  if (!emailRegex.test(email)) {
-    alert("Ugyldig email-adresse");
-    e.preventDefault();
-    return;
+  if (bn.length === 0) {
+    alert("Brukernavn er påkrevd");
+    return false;
   }
 
-  if (!/^\d{8}$/.test(tel)) {
-    alert("Telefon må være nøyaktig 8 sifre");
-    e.preventDefault();
-    return;
+  if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+    alert("Ugyldig email — må inneholde @ og .");
+    return false;
   }
 
-  if (isNaN(alder) || alder &lt; 16 || alder &gt; 100) {
-    alert("Alder må være et heltall mellom 16 og 100");
-    e.preventDefault();
-    return;
+  if (alder &lt; 16) {
+    alert("Alder må være minst 16");
+    return false;
   }
-});</code></pre>
-          <p><strong>Kommentarer:</strong></p>
+
+  return true;
+}</code></pre>
+          <p><strong>Kommentarer (rene pensum-mønstre):</strong></p>
           <ul>
-            <li><strong>Email-regex:</strong> <code>/^[^@\s]+@[^@\s]+\.[^@\s]+$/</code> krever at noe står før <code>@</code>, noe står mellom <code>@</code> og <code>.</code>, og noe etter <code>.</code>. <code>[^@\s]+</code> betyr "ett eller flere tegn som ikke er @ eller whitespace". Det finnes mer presise email-regex-er, men denne er rimelig for en eksamen-besvarelse.</li>
-            <li><strong>Telefon-regex:</strong> <code>/^\d{8}$/</code> krever nøyaktig 8 sifre fra start til slutt. Ankrene <code>^</code> og <code>$</code> er viktige — uten dem ville <code>"12345678ab"</code> også godkjennes.</li>
-            <li><strong>Alder:</strong> <code>parseInt(...)</code> returnerer <code>NaN</code> hvis input ikke kan tolkes som tall. <code>isNaN()</code> fanger det. Sjekk også begge endene av intervallet.</li>
-            <li><strong>preventDefault():</strong> Uten den ville skjemaet faktisk submittes uansett. <code>return false</code> hadde også fungert i en inline-handler, men ikke her med <code>addEventListener</code>.</li>
+            <li><strong>Email uten regex:</strong> <code>indexOf("@") === -1</code> sier «strengen mangler @». Foreleser har eksplisitt anbefalt dette mønsteret når oppgaven forbyr <code>type="email"</code>.</li>
+            <li><strong>Brukernavn-lengde:</strong> <code>maxlength="30"</code> i HTML begrenser maks; <code>bn.length === 0</code> i JS sjekker tomt felt.</li>
+            <li><strong>Alder uten parseInt:</strong> <code>.value</code> er en string, men <code>&lt;</code>/<code>&gt;</code> tvinger tall-coercion. <code>"15" &lt; 16</code> er <code>true</code> fordi JS konverterer.</li>
+            <li><strong>return false avbryter submit:</strong> Sammen med <code>onsubmit="return val()"</code> på form-elementet kanselleres innsendingen. <code>e.preventDefault()</code> er <em>ikke</em> i pensum.</li>
           </ul>
-          <p><strong>Vanlige feil:</strong> Bruke <code>type="email"</code> i HTML (nettleseren validerer selv, men oppgaven krever JS-validering). Glemme <code>preventDefault()</code> — skjemaet sendes likevel. Bruke <code>type="number"</code> for alder (gjør validering enklere, men oppgaven sier text). Email-regex som er for streng eller for slapp.</p>
+          <p><strong>Vanlige feil:</strong> Bruke <code>type="email"</code> mot oppgaveinstruksen (0 poeng for den deloppgaven). Bruke regex (<code>/\d/</code>, <code>.test()</code>) eller <code>parseInt</code>/<code>parseFloat</code> — ikke i pensum. Glemme <code>return false</code> — skjemaet sendes likevel.</p>
           <p class="ref">Pensum: <a href="../../kap8/validering.html">Kap. 8 — Validering</a></p>
           <div class="self-grade">
             <span class="self-grade__label">Egenvurdering:</span>

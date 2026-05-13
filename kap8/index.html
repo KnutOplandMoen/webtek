@@ -54,12 +54,12 @@
         </p>
         <div class="ef-grid">
           <div class="ef-block must">
-            <h4>Må kunne (i pensum)</h4>
+            <h4>Må kunne (fra forelesning)</h4>
             <ul>
-              <li><strong>POST vs GET</strong> — minst tre forskjeller (URL-synlighet, idempotens, størrelse, caching, sikkerhet)</li>
+              <li><strong>POST vs GET</strong> — minst tre forskjeller (URL-synlighet, caching, historikk, størrelse, sensitive data)</li>
               <li><strong>Form-skjelett</strong>: <code>&lt;form action method&gt;</code> + <code>&lt;input type name id&gt;</code> + submit-knapp</li>
-              <li><strong>Input-typer</strong>: text, password, email, url, search, number, date, file, checkbox, radio, submit, button, hidden, image</li>
-              <li><strong>HTML5-validering</strong>: <code>required</code>, <code>pattern="..."</code>, <code>min</code>/<code>max</code>, <code>maxlength</code>, <code>placeholder</code> — pensum 1.9</li>
+              <li><strong>Input-typer fra forelesning</strong>: text, password, email, url, search, date, file, checkbox, radio, submit, button, hidden, image</li>
+              <li><strong>HTML5-validering</strong>: <code>required</code>, <code>maxlength</code>, <code>placeholder</code>, riktig <code>type</code> (<code>email</code>/<code>url</code>) — alt foreleser viste</li>
               <li><strong>Struktur</strong>: <code>fieldset</code> + <code>legend</code> for gruppering, <code>label for="id"</code> for tilgjengelighet</li>
               <li><strong>JS-validering</strong>: lese verdier med <code>document.getElementById("x").value</code>, sammenligne (<code>n.length === 0</code>, <code>a &lt; 18</code>, <code>str.indexOf("@") === -1</code>), <code>alert("feil"); return false;</code></li>
               <li><strong>Foreleser-mønster</strong>: hvis oppgaven forbyr <code>type="email"</code>, må du sjekke selv i JS — bruk <code>indexOf</code>/<code>includes</code> (regex er ikke i pensum)</li>
@@ -67,12 +67,17 @@
             </ul>
           </div>
           <div class="ef-block skip">
-            <h4>Utenfor pensum / nedprioriter</h4>
+            <h4>Ikke i forelesning — utenfor pensum</h4>
             <ul>
-              <li>JS regex (<code>/\d/</code>, <code>.test()</code>, <code>.match()</code>) — <em>ikke</em> i pensum (regex finnes bare i HTML5 <code>pattern</code>-attributtet)</li>
+              <li>JS regex (<code>/\d/</code>, <code>.test()</code>, <code>.match()</code>) — <em>ikke</em> i pensum</li>
+              <li><code>pattern</code>-attributtet og HTML-regex — ble ikke gjennomgått</li>
+              <li><code>min</code>/<code>max</code>/<code>step</code>-attributter — ikke i forelesning</li>
+              <li>Input-typer <code>number</code>, <code>range</code>, <code>tel</code>, <code>time</code>, <code>reset</code>, <code>color</code> — ikke i slides</li>
+              <li><code>output</code>- og <code>datalist</code>-elementene — ikke i forelesning</li>
+              <li><code>autofocus</code>, <code>disabled</code>, <code>tabindex</code>, <code>accept</code>, <code>autocomplete</code> — ikke i forelesning</li>
+              <li>CSS <code>:valid</code>/<code>:invalid</code>-pseudoklasser — ikke i forelesning</li>
               <li><code>parseInt</code>, <code>parseFloat</code>, <code>Number()</code>, <code>toFixed</code> — ikke i pensum</li>
               <li><code>e.preventDefault()</code> for å avbryte submit — ikke i pensum (bruk <code>onsubmit="return val()"</code> som returnerer <code>false</code>)</li>
-              <li>multipart/form-data og fil-opplasting i detalj</li>
               <li>Server-side-håndtering (det er backend-kurs)</li>
             </ul>
           </div>
@@ -215,8 +220,9 @@
       </li>
       <li>
         <strong>Steg 6 — validering.</strong>
-        Sett <code>required</code> på obligatoriske felt og bruk CSS
-        <code>:valid</code>/<code>:invalid</code> til å gi visuell tilbakemelding.
+        Sett <code>required</code> på obligatoriske felt så nettleseren
+        sjekker at de er fylt ut før submit. Bruker du <code>type="email"</code>
+        sjekkes også at verdien ser ut som en e-postadresse.
       </li>
       <li>
         <strong>Steg 7 — submit.</strong>
@@ -253,20 +259,19 @@
     <div class="section-badge">04 · Hovedtemaer</div>
     <h2>Tre <em>undersider</em></h2>
     <p class="section-intro">
-      Pensum 1.9 deler seg i fire deler. Vi har slått sammen de to korte
-      (1.9.1 + 1.9.4) til én side — de tre undersidene under dekker hele
-      pensum med eksempler, attributt-tabell og MCQ.
+      Tre undersider — én for hver del foreleser viet egne slides til:
+      form-elementet og GET/POST, alle widgetene/struktur, og
+      HTML5- + JS-validering.
     </p>
 
     <div class="subpage-card-grid">
       <a class="subpage-card" href="form-elementet.html">
         <div class="sp-icon">A · ELT</div>
-        <div class="sp-title">Form-elementet og skjemadesign</div>
+        <div class="sp-title">Form-elementet</div>
         <div class="sp-desc">
           <code>&lt;form&gt;</code>, <code>action</code>, <code>method</code>,
-          GET vs POST, og fire designattributter (<code>autofocus</code>,
-          <code>disabled</code>, <code>value</code>, <code>tabindex</code>).<br>
-          <strong>Pensum:</strong> 1.9.1 + 1.9.4.
+          GET vs POST i detalj, name/value-par.<br>
+          <strong>Slides:</strong> forms.md — «How Forms Work», «Form Method: GET/POST».
         </div>
       </a>
       <a class="subpage-card" href="struktur.html">
@@ -274,20 +279,19 @@
         <div class="sp-title">Form-struktur</div>
         <div class="sp-desc">
           <code>fieldset</code>, <code>legend</code>, <code>label</code>,
-          <code>output</code>, alle input-typer, alle attributter med
-          eksempler, <code>textarea</code>, <code>select</code>.<br>
-          <strong>Pensum:</strong> 1.9.2.
+          alle input-typer i forelesning, <code>textarea</code>,
+          <code>select</code>/<code>option</code>/<code>optgroup</code>.<br>
+          <strong>Slides:</strong> forms.md — «Form Structure», «Adding Text», «Making Choices».
         </div>
       </a>
       <a class="subpage-card" href="validering.html">
         <div class="sp-icon">C · VAL</div>
         <div class="sp-title">Validering</div>
         <div class="sp-desc">
-          <code>required</code>, <code>pattern</code>,
-          <code>min</code>/<code>max</code>/<code>step</code>, riktig
-          <code>type</code>. CSS <code>:valid</code>/<code>:invalid</code>.
-          Hvorfor server-validering uansett.<br>
-          <strong>Pensum:</strong> 1.9.3.
+          <code>required</code>, <code>maxlength</code>,
+          <code>placeholder</code>, riktig <code>type</code> (email/url/search/date),
+          og JS-validering med <code>indexOf</code>.<br>
+          <strong>Slides:</strong> forms.md — «HTML5: Form Validation».
         </div>
       </a>
     </div>
@@ -300,21 +304,18 @@
       <div class="fact-card"><div class="fc-key">action</div><div class="fc-val">URL-en form-data sendes til.</div></div>
       <div class="fact-card"><div class="fc-key">method</div><div class="fc-val">HTTP-metode: <code>GET</code> (data i URL) eller <code>POST</code> (data i body).</div></div>
       <div class="fact-card"><div class="fc-key">name</div><div class="fc-val">Identifiserer kontrollen i innsendingen. Uten <code>name</code> sendes ikke verdien.</div></div>
+      <div class="fact-card"><div class="fc-key">value</div><div class="fc-val">Verdien som sendes for kontrollen. På <code>radio</code>/<code>checkbox</code> sender <code>name=value</code> for valgte alternativer.</div></div>
       <div class="fact-card"><div class="fc-key">label-for</div><div class="fc-val">Knytter etikett til widget via widgetens <code>id</code>. Klikk på label setter fokus på input.</div></div>
       <div class="fact-card"><div class="fc-key">fieldset / legend</div><div class="fc-val">Grupperer relaterte kontroller. Legend beskriver gruppen for skjermlesere.</div></div>
       <div class="fact-card"><div class="fc-key">required</div><div class="fc-val">HTML5-validering: feltet må fylles ut før submit kan utføres.</div></div>
-      <div class="fact-card"><div class="fc-key">pattern</div><div class="fc-val">RegEx som verdien sjekkes mot. Pattern omsluttes ikke av <code>/</code>.</div></div>
       <div class="fact-card"><div class="fc-key">placeholder</div><div class="fc-val">Hint i feltet. Forsvinner når brukeren begynner å skrive. <em>Ikke</em> en erstatning for label.</div></div>
-      <div class="fact-card"><div class="fc-key">type</div><div class="fc-val">Avgjør hvilken kontroll som rendres: <code>text</code>, <code>email</code>, <code>checkbox</code>, <code>radio</code>, <code>number</code>, <code>file</code>, …</div></div>
+      <div class="fact-card"><div class="fc-key">type</div><div class="fc-val">Avgjør hvilken kontroll som rendres: <code>text</code>, <code>email</code>, <code>url</code>, <code>search</code>, <code>date</code>, <code>password</code>, <code>checkbox</code>, <code>radio</code>, <code>file</code>, …</div></div>
       <div class="fact-card"><div class="fc-key">checked</div><div class="fc-val">Boolean for <code>radio</code> og <code>checkbox</code> — markerer som valgt fra start.</div></div>
-      <div class="fact-card"><div class="fc-key">multiple</div><div class="fc-val">Tillat flere verdier — gyldig for <code>email</code> og <code>file</code>, samt <code>select</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">accept</div><div class="fc-val">For <code>type="file"</code>: hvilke filtyper aksepteres (f.eks. <code>image/*</code>, <code>.jpg, .png</code>).</div></div>
-      <div class="fact-card"><div class="fc-key">min / max / step</div><div class="fc-val">Numeriske og dato-grenser. <code>step</code> styrer tillatte intervaller.</div></div>
-      <div class="fact-card"><div class="fc-key">maxlength</div><div class="fc-val">Maks antall tegn for tekst-typer (<code>text</code>, <code>email</code>, <code>password</code>, …).</div></div>
-      <div class="fact-card"><div class="fc-key">autofocus</div><div class="fc-val">Setter fokus på feltet automatisk ved sidelast.</div></div>
-      <div class="fact-card"><div class="fc-key">disabled</div><div class="fc-val">Feltet er ikke aktivt — kan ikke fylles ut. Fjernes med JavaScript.</div></div>
-      <div class="fact-card"><div class="fc-key">tabindex</div><div class="fc-val">Styrer rekkefølgen for tab-tasten. Negativ = utenfor; 0 = naturlig; positiv = manuell.</div></div>
-      <div class="fact-card"><div class="fc-key">:valid / :invalid</div><div class="fc-val">CSS-pseudoklasser som matcher kontroller hvis verdi tilfredsstiller (eller bryter) reglene.</div></div>
+      <div class="fact-card"><div class="fc-key">selected</div><div class="fc-val">På <code>&lt;option&gt;</code>: markert som valgt fra start.</div></div>
+      <div class="fact-card"><div class="fc-key">multiple</div><div class="fc-val">På <code>&lt;select&gt;</code>: lar brukeren velge flere alternativer samtidig.</div></div>
+      <div class="fact-card"><div class="fc-key">maxlength</div><div class="fc-val">Maks antall tegn for tekst-input. Brukt i forelesningens login-eksempel.</div></div>
+      <div class="fact-card"><div class="fc-key">size</div><div class="fc-val">Visuell bredde på tekst-input, målt i tegn.</div></div>
+      <div class="fact-card"><div class="fc-key">cols / rows</div><div class="fc-val">På <code>&lt;textarea&gt;</code>: synlig bredde og høyde i tegn/linjer.</div></div>
     </div>
   </div></section>
 
@@ -328,11 +329,11 @@
       <span class="recap-pill">koble label til input</span>
       <span class="recap-pill">bruke fieldset og legend</span>
       <span class="recap-pill">velge riktig input-type</span>
-      <span class="recap-pill">bruke required, pattern, min/max</span>
-      <span class="recap-pill">style :valid og :invalid</span>
-      <span class="recap-pill">skrive textarea og select</span>
+      <span class="recap-pill">bruke required, maxlength, placeholder</span>
+      <span class="recap-pill">skrive textarea (cols/rows)</span>
+      <span class="recap-pill">skrive select + option + optgroup</span>
       <span class="recap-pill">forklare radio vs checkbox</span>
-      <span class="recap-pill">bruke autofocus, disabled, tabindex</span>
+      <span class="recap-pill">JS-validering uten regex</span>
     </div>
   </div></section>
 
@@ -414,7 +415,7 @@
       <p>
         «Skriv HTML for et registreringsskjema med følgende felt:
         fullt navn (obligatorisk), e-post (obligatorisk, må være gyldig),
-        passord (obligatorisk, minst 8 tegn), foretrukket
+        passord (obligatorisk, maks 30 tegn), foretrukket
         programmeringsspråk (velg fra Python/JavaScript/Java) og en
         avkrysningsboks for å samtykke til vilkårene. Skjemaet skal sendes
         med POST til <code>/register</code>. Bruk validering der det passer
@@ -435,9 +436,9 @@
     &lt;label for="epost"&gt;E-post:&lt;/label&gt;
     &lt;input type="email" id="epost" name="epost" required&gt;
 
-    &lt;label for="passord"&gt;Passord (min. 8 tegn):&lt;/label&gt;
+    &lt;label for="passord"&gt;Passord:&lt;/label&gt;
     &lt;input type="password" id="passord" name="passord"
-           pattern=".{8,}" required&gt;
+           maxlength="30" required&gt;
 
     &lt;label for="sprak"&gt;Foretrukket språk:&lt;/label&gt;
     &lt;select id="sprak" name="sprak"&gt;
@@ -451,7 +452,7 @@
       Jeg godtar vilkårene
     &lt;/label&gt;
 
-    &lt;button type="submit"&gt;Registrer&lt;/button&gt;
+    &lt;input type="submit" value="Registrer"&gt;
   &lt;/fieldset&gt;
 &lt;/form&gt;</pre>
       </div>
@@ -462,7 +463,7 @@
       <code>action</code>, alle felt har <code>name</code>, alle labels
       enten har <code>for</code> eller omslutter input-en,
       <code>type="email"</code> for e-post, <code>type="password"</code>
-      med <code>pattern=".{8,}"</code>, <code>select</code> med tre
+      med <code>maxlength</code>, <code>select</code> med tre
       <code>option</code>, <code>required</code> der oppgitt.
     </p>
   </div></section>
@@ -571,27 +572,27 @@
     </div>
 
     <div class="quiz mcq">
-      <div class="q-label">10 · Vanskelig</div>
-      <div class="q-text">Hvilken CSS-regel styler kun input-felt der verdien <em>bryter</em> reglene (f.eks. ugyldig e-post)?</div>
+      <div class="q-label">10 · Middels</div>
+      <div class="q-text">Hva er typisk strategi i en eksamensoppgave når oppgaven <em>forbyr</em> <code>type="email"</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>input.error { ... }</code></li>
-        <li class="mcq-opt"><span class="opt-label">B</span> <code>input:required { ... }</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> <code>input:invalid { ... }</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>input:valid { ... }</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> Bruke <code>type="text"</code> og håpe på det beste</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Lese verdien i JS og sjekke at den inneholder <code>@</code> og <code>.</code> med <code>indexOf</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Bruke <code>type="email"</code> uansett — oppgaven mente ikke det</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Lage et regex med <code>.test()</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. <code>:invalid</code> matcher input/form hvis innholdet ikke validerer i henhold til <code>type</code>, <code>required</code>, <code>pattern</code>, osv.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Foreleser har sagt eksplisitt: hvis <code>type="email"</code> er forbudt, sjekk selv i JS. Bruk <code>indexOf("@")</code> og <code>indexOf(".")</code>. Regex er ikke i pensum.</div>
     </div>
 
     <div class="quiz mcq">
       <div class="q-label">11 · Middels</div>
-      <div class="q-text">Hva gjør <code>pattern="[A-Za-z]{3}"</code> på en <code>&lt;input type="text"&gt;</code>?</div>
+      <div class="q-text">Hva sender et <code>&lt;select&gt;</code>-felt til serveren?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Tillater bare tre tegn totalt, alle typer</li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Krever nøyaktig tre bokstaver (a–z eller A–Z), ingen tall eller spesialtegn</li>
-        <li class="mcq-opt"><span class="opt-label">C</span> Konverterer alle tegn til store bokstaver</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Filtrerer ut tall automatisk</li>
+        <li class="mcq-opt"><span class="opt-label">A</span> Hele HTML-en for hele select-elementet</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>value</code>-attributtet til den valgte <code>&lt;option&gt;</code>, eller tekstinnholdet hvis <code>value</code> mangler</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Indeksen til den valgte option-en (0, 1, 2, …)</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Ingenting — select sender ikke noe ved submit</li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Pattern er et regulært uttrykk verdien sjekkes mot. <code>{3}</code> = nøyaktig tre, <code>[A-Za-z]</code> = bokstaver. Ingen <code>/</code> rundt mønsteret.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>value</code>-attributtet brukes hvis satt; ellers fallback til tekstinnholdet i option-en.</div>
     </div>
 
     <div class="quiz" data-quiz>
@@ -781,13 +782,13 @@
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__head"><span class="flashcard__topic">Input-typer</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">Hva er forskjellen på <code>type="number"</code> og <code>type="range"</code>?</p>
+            <p class="fc-question">Hvilken <code>type</code> brukes for et felt der nettleseren validerer at verdien er en URL?</p>
           </div>
           <div class="flashcard__back">
-            <p><code>number</code>: brukeren skriver et tall (eksakt verdi viktig). <code>range</code>: en glidebryter (eksakt verdi <em>ikke</em> viktig).</p>
+            <p><code>type="url"</code>. Sammen med <code>type="email"</code> og <code>type="search"</code> er dette HTML5-typene foreleser viste.</p>
           </div>
         </div>
       </div>
@@ -862,10 +863,10 @@
         <div class="flashcard__head"><span class="flashcard__topic">textarea</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">Hvilke tre attributter styrer størrelse og tekstbryting på <code>&lt;textarea&gt;</code>?</p>
+            <p class="fc-question">Hvilke to attributter styrer størrelsen på <code>&lt;textarea&gt;</code>?</p>
           </div>
           <div class="flashcard__back">
-            <p><code>cols</code> (bredde i tegn), <code>rows</code> (synlige linjer), <code>wrap</code> (<code>soft</code> eller <code>hard</code>).</p>
+            <p><code>cols</code> (bredde i tegn) og <code>rows</code> (synlige linjer) — slik foreleser viste i eksempelet.</p>
           </div>
         </div>
       </div>
@@ -898,22 +899,22 @@
         <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">Hva er <code>pattern</code> og hvordan skriver du verdien?</p>
+            <p class="fc-question">Hva gjør <code>maxlength="30"</code> på en tekst-input?</p>
           </div>
           <div class="flashcard__back">
-            <p>Et regulært uttrykk som verdien sjekkes mot. Skrives <em>uten</em> omsluttende <code>/</code>: <code>pattern="[A-Za-z]{3}"</code>.</p>
+            <p>Begrenser brukeren til maks 30 tegn i feltet. Foreleser brukte dette i login-eksempelet: <code>maxlength="30"</code> for både brukernavn og passord.</p>
           </div>
         </div>
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">Validering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__head"><span class="flashcard__topic">JS-validering</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">Hvilke CSS-pseudoklasser styler valide og invalide kontroller?</p>
+            <p class="fc-question">Hvordan sjekker du i JS at en streng inneholder <code>@</code> uten å bruke regex?</p>
           </div>
           <div class="flashcard__back">
-            <p><code>:valid</code> og <code>:invalid</code>. Matcher <code>&lt;input&gt;</code> og <code>&lt;form&gt;</code> ut fra <code>type</code>, <code>required</code>, <code>pattern</code> osv.</p>
+            <p><code>str.indexOf("@") === -1</code> → ingen <code>@</code>. Bruk dette mønsteret når oppgaven forbyr <code>type="email"</code>.</p>
           </div>
         </div>
       </div>
@@ -943,30 +944,6 @@
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front">
-            <p class="fc-question">Hva gjør <code>autofocus</code>?</p>
-          </div>
-          <div class="flashcard__back">
-            <p>Setter markøren automatisk i feltet når siden lastes. Bruk på det viktigste feltet (f.eks. søk på Google), <em>ikke</em> på små kontaktskjemaer.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front">
-            <p class="fc-question">Hva betyr <code>tabindex="0"</code>?</p>
-          </div>
-          <div class="flashcard__back">
-            <p>Elementet er fokusbart og inngår i tab-rekkefølgen i sin naturlige posisjon (rekkefølgen i HTML-dokumentet).</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="flashcard">
         <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
@@ -982,22 +959,22 @@
         <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">For hvilke <code>type</code>-verdier kan <code>multiple</code> brukes?</p>
+            <p class="fc-question">Hva gjør <code>multiple</code>-attributtet på <code>&lt;select&gt;</code>?</p>
           </div>
           <div class="flashcard__back">
-            <p><code>email</code> (flere e-postadresser) og <code>file</code> (flere filer). Også på <code>&lt;select&gt;</code> for å velge flere alternativer.</p>
+            <p>Lar brukeren velge flere alternativer samtidig — hold Ctrl/Cmd mens du klikker. Slides nevner at nettlesere har dårlig støtte for dette.</p>
           </div>
         </div>
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">Attributter</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__head"><span class="flashcard__topic">file-upload</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front">
-            <p class="fc-question">Hva gjør <code>accept=".jpg, .png"</code> på <code>type="file"</code>?</p>
+            <p class="fc-question">Hvorfor må fil-opplastning bruke <code>method="post"</code>?</p>
           </div>
           <div class="flashcard__back">
-            <p>Filvelgeren viser bare JPG- og PNG-filer som mulige valg. Kan også ta MIME-typer (<code>image/*</code>, <code>audio/*</code>, <code>video/*</code>).</p>
+            <p><code>type="file"</code> kan bare brukes med POST — filer (bilder, video, PDF) passer ikke i URL-en. Foreleser sier eksplisitt: «Type="file" you can use only post method.»</p>
           </div>
         </div>
       </div>

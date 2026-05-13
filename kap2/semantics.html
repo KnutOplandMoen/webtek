@@ -222,8 +222,8 @@
 
   <section id="quotes">
     <div class="container">
-      <div class="section-badge">06 · Sitater</div>
-      <h2>blockquote, q, <em>address</em></h2>
+      <div class="section-badge">06 · Sitater og forkortelser</div>
+      <h2>blockquote, q, abbr, <em>address</em></h2>
       <div class="fact-grid">
         <div class="fact-card">
           <div class="fc-key">&lt;blockquote&gt;</div>
@@ -238,6 +238,10 @@
           <div class="fc-val">Attributt på begge — verdien er en URL til kilden.</div>
         </div>
         <div class="fact-card">
+          <div class="fc-key">&lt;abbr&gt;</div>
+          <div class="fc-val">For forkortelser eller akronymer (NTNU, NASA, Dr.). <code>title</code>-attributtet gir den fulle formen som tooltip: <code>&lt;abbr title="Norwegian University of Science and Technology"&gt;NTNU&lt;/abbr&gt;</code>.</div>
+        </div>
+        <div class="fact-card">
           <div class="fc-key">&lt;address&gt;</div>
           <div class="fc-val">Kontaktopplysninger til forfatteren — fysisk adresse, navn, telefon eller e-post. Ofte brukt med <code>&lt;article&gt;</code>.</div>
         </div>
@@ -245,78 +249,9 @@
     </div>
   </section>
 
-  <section id="input-output">
-    <div class="container">
-      <div class="section-badge">07 · Input og output</div>
-      <h2>input og <em>output</em></h2>
-      <p>
-        Pensum 1.4.9 lister to interaktive elementer som tilhører
-        semantikk-listen, selv om vi går mer i dybden i kapittel 8 om
-        skjema. <code>&lt;input&gt;</code> er et <em>selvlukkende</em>
-        element der <code>type</code>-attributtet bestemmer hva slags
-        input det er.
-      </p>
-      <div class="fact-grid">
-        <div class="fact-card">
-          <div class="fc-key">type="button"</div>
-          <div class="fc-val">En klikkbar knapp.</div>
-        </div>
-        <div class="fact-card">
-          <div class="fc-key">type="file"</div>
-          <div class="fc-val">Filopplasting — åpner filvelger.</div>
-        </div>
-        <div class="fact-card">
-          <div class="fc-key">type="password"</div>
-          <div class="fc-val">Tekstfelt der innholdet vises som prikker.</div>
-        </div>
-        <div class="fact-card">
-          <div class="fc-key">type="submit"</div>
-          <div class="fc-val">Knapp som sender inn skjemaet den ligger i.</div>
-        </div>
-      </div>
-      <p>
-        Tre attributter pensum trekker fram for input:
-      </p>
-      <ul>
-        <li><code>placeholder</code> — hjelpetekst som vises i tomt felt og forsvinner når brukeren begynner å skrive.</li>
-        <li><code>autofocus</code> — gir feltet fokus når siden lastes (kun ett felt per side).</li>
-        <li><code>tabindex</code> — bestemmer rekkefølgen feltene får fokus i når brukeren tabber.</li>
-      </ul>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">input — eksempel</div>
-          <pre>&lt;input type="text" placeholder="Skriv navnet ditt" autofocus tabindex="1"&gt;
-&lt;input type="password" placeholder="Passord" tabindex="2"&gt;
-&lt;input type="submit" value="Send"&gt;</pre>
-        </div>
-      </div>
-      <p>
-        <code>&lt;output&gt;</code> brukes for å vise resultatet av en
-        beregning eller en handling utført på siden — f.eks. summen i
-        en kalkulator. <code>name</code>-attributtet identifiserer
-        hvilket output-felt det er.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">output — eksempel</div>
-          <pre>&lt;output name="result"&gt;60&lt;/output&gt;</pre>
-        </div>
-      </div>
-      <div class="callout-blue">
-        <div class="label">Mer i kap 8</div>
-        <p>
-          Detaljene rundt <code>&lt;form&gt;</code>, alle input-typer
-          og validering hører hjemme i kapittel 8. Her er det nok å
-          vite at pensum 1.4.9 nevner <code>&lt;input&gt;</code> og
-          <code>&lt;output&gt;</code> som semantiske elementer.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section id="quiz">
     <div class="container">
-      <div class="section-badge">08 · Test deg selv</div>
+      <div class="section-badge">07 · Test deg selv</div>
       <h2>Multiple <em>choice</em></h2>
 
       <div class="quiz mcq">
@@ -417,14 +352,14 @@
 
       <div class="quiz mcq">
         <div class="q-label">9 · Middels</div>
-        <div class="q-text">Hvilken kombinasjon av attributter på <code>&lt;input&gt;</code> nevner pensum 1.4.9?</div>
+        <div class="q-text">Hvilken tagg bruker du for forkortelser eller akronymer som NTNU, slik at den fulle formen kan vises som tooltip?</div>
         <ul class="mcq-options">
-          <li class="mcq-opt" data-correct="0"><code>name</code>, <code>action</code>, <code>method</code></li>
-          <li class="mcq-opt" data-correct="1"><code>type</code>, <code>placeholder</code>, <code>autofocus</code>, <code>tabindex</code></li>
-          <li class="mcq-opt" data-correct="0"><code>src</code>, <code>alt</code>, <code>title</code></li>
-          <li class="mcq-opt" data-correct="0"><code>colspan</code>, <code>rowspan</code>, <code>scope</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;short&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;acronym&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;abbr&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;cite&gt;</code></li>
         </ul>
-        <div class="mcq-feedback">Pensum 1.4.9 nevner eksplisitt <code>type</code> (med verdier som button/file/password/submit), samt <code>placeholder</code>, <code>autofocus</code> og <code>tabindex</code> for input-elementet.</div>
+        <div class="mcq-feedback">Forelesning: <code>&lt;abbr title="Norwegian University of Science and Technology"&gt;NTNU&lt;/abbr&gt;</code> — den fulle formen ligger i <code>title</code>-attributtet.</div>
       </div>
     </div>
   </section>

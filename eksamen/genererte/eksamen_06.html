@@ -647,7 +647,7 @@ alert(sum);</code></pre>
         <div class="fasit-body">
           <p><strong>Rubrikk (3 poeng):</strong></p>
           <ul>
-            <li><strong>1 poeng — Klient-side:</strong> Validering som skjer i nettleseren, før data sendes. Eksempler: HTML5-attributter (<code>required</code>, <code>type="email"</code>, <code>pattern</code>), JS-funksjoner som sjekker felter. <em>Fordel:</em> umiddelbar tilbakemelding, sparer server-kall, bedre UX.</li>
+            <li><strong>1 poeng — Klient-side:</strong> Validering som skjer i nettleseren, før data sendes. Slides forms.md viser to mønstre: HTML5-attributtet <code>required</code> (pluss riktig <code>type</code>, f.eks. <code>type="email"</code>), og JavaScript som leser <code>.value</code> og sjekker innholdet. <em>Fordel:</em> umiddelbar tilbakemelding, sparer server-kall, bedre UX.</li>
             <li><strong>1 poeng — Server-side:</strong> Validering som skjer på serveren etter at request kom inn. Sjekker samme regler, eventuelt strengere. Brukes til å beskytte database, business-logikk, autorisasjon. Default-strategi for sikkerhet.</li>
             <li><strong>1 poeng — Hvorfor server alltid må:</strong> Klient-side er kun en <em>UX-forbedring</em>, ikke sikkerhet. Brukeren kan:
               <ul>
@@ -731,8 +731,8 @@ alert(sum);</code></pre>
       <div class="exam-q__editor">
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
-          <textarea class="code-html" rows="7">&lt;label&gt;Høyde (cm): &lt;input type="number" id="hoyde"&gt;&lt;/label&gt;&lt;br&gt;
-&lt;label&gt;Vekt (kg): &lt;input type="number" id="vekt"&gt;&lt;/label&gt;
+          <textarea class="code-html" rows="7">&lt;label&gt;Høyde (cm): &lt;input type="text" id="hoyde"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;Vekt (kg): &lt;input type="text" id="vekt"&gt;&lt;/label&gt;
 &lt;p&gt;BMI: &lt;span id="bmi"&gt;–&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Kategori: &lt;span id="kat"&gt;–&lt;/span&gt;&lt;/p&gt;</textarea>
         </div>
@@ -995,7 +995,7 @@ knapp.addEventListener("click", function () {
       <p class="q-text">Skriv <strong>kun HTML</strong> (ingen CSS/JS nødvendig) for et komplett kontakt-skjema. Følg disse kravene:</p>
       <ol class="q-tasklist">
         <li><strong>(2 poeng)</strong> Et <code>&lt;form&gt;</code> med <code>method="post"</code> og <code>action="/sender"</code>.</li>
-        <li><strong>(2 poeng)</strong> Tre felter med korrekte <code>&lt;label&gt;</code>-elementer koblet via <code>for</code>/<code>id</code>: Navn (tekst, required), Email (email-type, required), Telefon (tel, ikke required).</li>
+        <li><strong>(2 poeng)</strong> Tre felter med korrekte <code>&lt;label&gt;</code>-elementer koblet via <code>for</code>/<code>id</code>: Navn (tekst, required), E-post (email-type, required), Nettside (url-type, ikke required).</li>
         <li><strong>(2 poeng)</strong> Et tekstområde <code>&lt;textarea&gt;</code> for melding, med 4 rader og 40 kolonner, og required.</li>
         <li><strong>(1 poeng)</strong> En submit-knapp med tekst "Send melding".</li>
       </ol>
@@ -1033,8 +1033,8 @@ knapp.addEventListener("click", function () {
     &lt;input type="email" id="email" name="email" required&gt;
   &lt;/p&gt;
   &lt;p&gt;
-    &lt;label for="tel"&gt;Telefon:&lt;/label&gt;
-    &lt;input type="tel" id="tel" name="tel"&gt;
+    &lt;label for="nettside"&gt;Nettside:&lt;/label&gt;
+    &lt;input type="url" id="nettside" name="nettside"&gt;
   &lt;/p&gt;
   &lt;p&gt;
     &lt;label for="melding"&gt;Melding:&lt;/label&gt;&lt;br&gt;
@@ -1046,8 +1046,8 @@ knapp.addEventListener("click", function () {
           <ul>
             <li><strong>name vs id:</strong> <code>name</code> er det som sendes til serveren (<code>navn=Ola&amp;email=...</code>). <code>id</code> er for å koble <code>&lt;label for=...&gt;</code> og for JS. Vanlig praksis: bruk samme verdi for begge.</li>
             <li><strong>type="email" + required:</strong> Nettleseren validerer at feltet er fylt <em>og</em> ligner en email før submit. Bra UX-grunnpakke.</li>
-            <li><strong>type="tel":</strong> Aktiverer numerisk tastatur på mobil. Validerer <em>ikke</em> formatet (telefon-formater varierer globalt). Hvis du vil validere norske telefoner: <code>pattern="\d{8}"</code>.</li>
-            <li><strong>textarea har ikke type:</strong> Andre attributter er <code>rows</code>, <code>cols</code>, <code>maxlength</code>. Innholdet ligger <em>mellom</em> tagene, ikke som <code>value</code>-attributt.</li>
+            <li><strong>type="url":</strong> HTML5-felt for nettstedsadresse — nettleseren sjekker at innholdet ligner en URL før submit. Slides forms.md viser det side om side med <code>type="email"</code>.</li>
+            <li><strong>textarea har ikke type:</strong> Slides viser <code>rows</code>, <code>cols</code>. Innholdet ligger <em>mellom</em> tagene, ikke som <code>value</code>-attributt.</li>
             <li><strong>button type:</strong> <code>type="submit"</code> er default for knapper inni form, så det er teknisk valgfritt — men eksplisitt er tydeligere.</li>
           </ul>
           <p><strong>Vanlige feil:</strong> Glemme <code>name</code> — feltene sendes ikke. Bruke <code>id="..."</code> uten matching <code>for="..."</code> — label-klikk fungerer ikke. Skrive <code>&lt;input type="textarea"&gt;</code> — feil, textarea er en separat tag.</p>
@@ -1082,7 +1082,7 @@ knapp.addEventListener("click", function () {
       <div class="exam-q__editor">
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
-          <textarea class="code-html" rows="5">&lt;input type="number" id="bel" value="250" step="0.01"&gt;
+          <textarea class="code-html" rows="5">&lt;input type="text" id="bel" value="250"&gt;
 &lt;button id="form"&gt;Formater&lt;/button&gt;
 &lt;p&gt;Pris: &lt;span id="ut"&gt;–&lt;/span&gt;&lt;/p&gt;</textarea>
         </div>

@@ -58,13 +58,14 @@
             <ul>
               <li><strong>Type-coercion</strong>: <code>5 + "9"</code> = <code>"59"</code> (string-konkat), <code>5 - "9"</code> = <code>-4</code> (numerisk)</li>
               <li><strong><code>==</code> vs <code>===</code></strong>: <code>"" == 0</code> er <code>true</code>, <code>"" === 0</code> er <code>false</code></li>
-              <li><strong>String-metoder</strong>: <code>charAt</code>, <code>substring(s,e)</code>, <code>slice</code>, <code>indexOf</code>, <code>length</code>, <code>toUpperCase/toLowerCase</code>, <code>trim</code>, <code>split</code>, <code>concat</code>, <code>replace</code>, <code>includes</code>, <code>startsWith/endsWith</code></li>
-              <li><strong>Array-metoder</strong>: <code>push/pop/shift/unshift</code>, <code>slice</code>, <code>splice</code>, <code>indexOf</code>, <code>join</code>, <code>sort</code>, <code>reverse</code>, <code>concat</code>, <code>at</code></li>
-              <li><strong>Date til jul</strong>: <code>new Date()</code>, <code>new Date(year, 11, 25)</code> (måned 0-indeksert!), differanse i ms / (1000·60·60·24)</li>
-              <li><strong>Math</strong>: <code>floor/ceil/round</code>, <code>abs/min/max</code>, <code>pow/sqrt</code>, <code>random</code>, <code>PI</code></li>
-              <li><strong>Loops</strong>: <code>for</code>, <code>while</code>, <code>for...in</code></li>
-              <li><strong>Funksjoner</strong>: definere, kalle, returnere; arrow-syntax</li>
-              <li><strong>Objekter</strong>: literal, dot/bracket-access, <code>delete</code>, metode i objekt, konstruktørfunksjon med <code>this</code></li>
+              <li><strong>String-metoder</strong>: <code>charAt</code>, <code>charCodeAt</code>, <code>at</code>, <code>substring(s,e)</code>, <code>slice</code>, <code>indexOf</code>/<code>lastIndexOf</code>/<code>search</code>, <code>length</code>, <code>toUpperCase/toLowerCase</code>, <code>trim</code>/<code>trimStart</code>/<code>trimEnd</code>, <code>concat</code>, <code>replace</code>/<code>replaceAll</code>, <code>padStart</code>/<code>padEnd</code>, <code>repeat</code>, <code>includes</code>, <code>startsWith/endsWith</code></li>
+              <li><strong>Array-metoder</strong>: <code>push/pop/shift/unshift</code>, <code>slice</code>, <code>splice</code>, <code>indexOf</code>/<code>lastIndexOf</code>, <code>includes</code>, <code>join</code>, <code>sort</code>, <code>reverse</code>, <code>concat</code>, <code>at</code></li>
+              <li><strong>Date til jul</strong>: <code>new Date()</code>, <code>new Date(year, 11, 25)</code> (måned 0-indeksert!), differanse i ms / (1000·60·60·24). Getters: <code>getFullYear/getMonth/getDate/getDay/getHours/getTime</code>.</li>
+              <li><strong>Math</strong>: <code>floor/ceil/round/sign</code>, <code>abs/min/max</code>, <code>pow/sqrt</code>, <code>PI</code> (konstantene <code>E</code>, <code>SQRT2</code>, <code>LN2</code> osv. nevnt i forelesningen)</li>
+              <li><strong>Loops</strong>: <code>for</code>, <code>while</code>, <code>for...in</code> (over objekt eller array)</li>
+              <li><strong>Kontrollflyt</strong>: <code>if</code>/<code>else if</code>/<code>else</code>, <code>switch</code>/<code>case</code>/<code>break</code></li>
+              <li><strong>Funksjoner</strong>: function declaration, function expression, parameter vs argument, <code>return</code></li>
+              <li><strong>Objekter</strong>: literal, dot/bracket-access, <code>delete</code>, metode i objekt (<code>this</code>), konstruktørfunksjon med <code>new</code></li>
             </ul>
           </div>
           <div class="ef-block skip">
@@ -74,10 +75,11 @@
               <li><code>null == undefined</code> = <code>true</code> — ikke i forelesning</li>
               <li><code>NaN === NaN</code> = <code>false</code> — ikke i forelesning</li>
               <li><code>arr[100]=x</code> length-quirk og sparse arrays — ikke i forelesning</li>
-              <li><code>prompt()</code> / <code>confirm()</code> / <code>document.write</code> — ikke i forelesning</li>
-              <li><code>parseInt</code>, <code>parseFloat</code>, <code>Number()</code>, <code>toFixed</code> — ikke i forelesning</li>
+              <li><code>prompt()</code> / <code>confirm()</code> / <code>alert()</code> / <code>document.write</code> — ikke i forelesning</li>
+              <li><code>parseInt</code>, <code>parseFloat</code>, <code>Number()</code>, <code>toFixed</code>, <code>isNaN</code> — ikke i forelesning</li>
+              <li><code>"use strict"</code>, <code>Object.keys</code>, <code>String.split</code>, <code>Math.random</code> — ikke i forelesning</li>
+              <li>Arrow-funksjoner (<code>x =&gt; x*2</code>) — ikke vist i forelesning, bruk <code>function</code></li>
               <li>BigInt og tall-presisjons-detaljer</li>
-              <li>Math-konstanter (LN2, SQRT2, LOG2E osv.)</li>
               <li>Closures, IIFE i dybden</li>
             </ul>
           </div>
@@ -206,7 +208,6 @@
       <div class="fact-card"><div class="fc-key">NaN</div><div class="fc-val">«Not a Number». F.eks. <code>0/0</code>.</div></div>
       <div class="fact-card"><div class="fc-key">Infinity</div><div class="fc-val">Større enn alle tall. <code>Infinity + 1</code> er <code>Infinity</code>.</div></div>
       <div class="fact-card"><div class="fc-key">% (modulo)</div><div class="fc-val">Resten av en divisjon. <code>7 % 5 === 2</code>.</div></div>
-      <div class="fact-card"><div class="fc-key">"use strict"</div><div class="fc-val">Slår på streng modus — fanger blant annet u-deklarerte variabler.</div></div>
       <div class="fact-card"><div class="fc-key">camelCase</div><div class="fc-val">Konvensjon for variabelnavn: <code>myAge</code>.</div></div>
       <div class="fact-card"><div class="fc-key">array</div><div class="fc-val">Ordnet liste i <code>[]</code>, indeks fra 0.</div></div>
       <div class="fact-card"><div class="fc-key">.length</div><div class="fc-val">Antall elementer i en array.</div></div>
@@ -264,7 +265,7 @@
       <ul>
         <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code>, men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> hvis du ikke har en grunn til å la JS gjøre type-koersjon.</li>
         <li><strong>Referere et HTML-element før det er rendret:</strong> hvis scriptet ligger i <code>&lt;head&gt;</code> over elementet, finnes elementet ikke ennå. Legg scriptet nederst i <code>&lt;body&gt;</code> eller bruk <code>window.onload</code>.</li>
-        <li><strong>Glemme <code>let</code>/<code>var</code>/<code>const</code>:</strong> uten keyword (og uten <code>"use strict"</code>) blir variabelen automatisk global — det er nesten alltid feil.</li>
+        <li><strong>Glemme <code>let</code>/<code>const</code>:</strong> uten keyword blir variabelen automatisk global — det er nesten alltid feil.</li>
         <li><strong>Tro at <code>const</code> betyr immutable:</strong> en <code>const</code>-array kan fortsatt endres med <code>.push()</code> — det er bare referansen som er låst.</li>
         <li><strong>Off-by-one i loop:</strong> <code>i &lt;= array.length</code> går én for langt. Skal være <code>i &lt; array.length</code>.</li>
         <li><strong>Lese et element som ikke fins:</strong> en array-indeks utenfor lengden gir feil; en property som ikke fins på et objekt gir <code>undefined</code> (ikke feil).</li>
@@ -542,14 +543,6 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
       </div>
 
       <div class="flashcard">
-        <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · "use strict"</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
-        <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>"use strict";</code> øverst i et script?</p></div>
-          <div class="flashcard__back"><p>Aktiverer streng modus. Det fanger blant annet u-deklarerte variabler (uten <code>var</code>/<code>let</code>/<code>const</code>) og forbyr re-deklarering med <code>let</code>.</p></div>
-        </div>
-      </div>
-
-      <div class="flashcard">
         <div class="flashcard__head"><span class="flashcard__topic">1.11.5 · Navngivning</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front"><p class="fc-question">Hvilke regler gjelder for variabelnavn i JavaScript?</p></div>
@@ -586,6 +579,14 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         <div class="flashcard__inner">
           <div class="flashcard__front"><p class="fc-question">Hvilken rekkefølge evalueres en if/else if/else-kjede?</p></div>
           <div class="flashcard__back"><p>Ovenfra og ned. Den første betingelsen som er <code>true</code> kjører — resten hoppes over. <code>else</code> (uten betingelse) er «catch all» og kjøres bare hvis ingen av de andre var <code>true</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.7 · switch</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>break</code> i en <code>switch</code>-blokk?</p></div>
+          <div class="flashcard__back"><p>Avslutter <code>switch</code>-blokken så ikke neste <code>case</code> kjører også («fall-through»). Hver <code>case</code>-gren trenger sin egen <code>break</code> hvis den ikke skal renne over i neste.</p><p><code>default</code> er valgfri «catch all» når ingen <code>case</code> matchet.</p></div>
         </div>
       </div>
 
@@ -641,7 +642,15 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         <div class="flashcard__head"><span class="flashcard__topic">1.11.10 · while</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
           <div class="flashcard__front"><p class="fc-question">Når bruker man en while-loop fremfor en for-loop?</p></div>
-          <div class="flashcard__back"><p>Når man ikke vet på forhånd hvor mange iterasjoner som trengs, men har en betingelse som skal holde — f.eks. spørre brukeren om navn til hen oppgir noe.</p></div>
+          <div class="flashcard__back"><p>Når man ikke vet på forhånd hvor mange iterasjoner som trengs, men har en betingelse som skal holde — f.eks. summere tall til en grense er nådd.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.10 · for...in</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva itererer en <code>for...in</code>-loop over?</p></div>
+          <div class="flashcard__back"><p>Over <strong>nøklene</strong> i et objekt — eller over <strong>indeksene</strong> i en array. <code>for (let x in obj) { … obj[x] … }</code>. Foreleser viser det både på objekter og arrays.</p></div>
         </div>
       </div>
 
@@ -674,6 +683,66 @@ console.log(summerPositive([3, -1, 4, -2, 5])); // 12</code></pre>
         <div class="flashcard__inner">
           <div class="flashcard__front"><p class="fc-question">Hva gjør <code>return</code> i en funksjon?</p></div>
           <div class="flashcard__back"><p>Returnerer verdien som følger etter <code>return</code> til den som kalte funksjonen. Resten av funksjonen kjøres ikke. Uten <code>return</code> returnerer funksjonen <code>undefined</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · delete</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan fjerner du en property fra et objekt?</p></div>
+          <div class="flashcard__back"><p>Med <code>delete</code>-operatoren: <code>delete obj.alder;</code>. Etterpå er <code>obj.alder</code> <code>undefined</code> — som om property-en aldri fantes.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · Metoder i objekt</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva betyr <code>this</code> i en metode på et objekt?</p></div>
+          <div class="flashcard__back"><p>Referansen til objektet metoden ble kalt på. <code>p.hilsen()</code> → inni <code>hilsen</code> peker <code>this</code> på <code>p</code>, slik at <code>this.navn</code> er <code>p.navn</code>.</p><pre><code>const p = {
+  navn: "Ada",
+  hilsen: function() {
+    return "Hei " + this.navn;
+  }
+};</code></pre></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">1.11.9 · Konstruktørfunksjon</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva gjør <code>new</code> foran en konstruktørfunksjon?</p></div>
+          <div class="flashcard__back"><p>Lager et nytt objekt, setter <code>this</code> til det nye objektet inne i funksjonen, og returnerer objektet automatisk.</p><pre><code>function Teacher(first, last) {
+  this.firstName = first;
+  this.lastName = last;
+}
+const t = new Teacher("K", "S");</code></pre><p>Konvensjon: konstruktørfunksjoner får stor forbokstav.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Date · Konstruktør</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hva er forskjellen på <code>new Date()</code> og <code>new Date(2025, 11, 25)</code>?</p></div>
+          <div class="flashcard__back"><p><code>new Date()</code> gir nåtidspunktet.</p><p><code>new Date(2025, 11, 25)</code> gir 25. desember 2025 — <strong>måned er 0-indeksert</strong>, så <code>11</code> er desember.</p><p>Andre former: <code>new Date("2025-12-25")</code>, <code>new Date(millisekunder)</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Date · Differanse til jul</span><span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvordan regner du antall dager til neste 25. desember?</p></div>
+          <div class="flashcard__back"><p>Subtraher to <code>Date</code>-objekter → får differansen i millisekunder. Del på ms/dag og rund opp:</p><pre><code>const now = new Date();
+const xmas = new Date(now.getFullYear(), 11, 25);
+const ms = xmas - now;
+const dager = Math.ceil(ms / (1000*60*60*24));</code></pre><p>Foreleser har trukket fram dette eksempel for eksamen.</p></div>
+        </div>
+      </div>
+
+      <div class="flashcard">
+        <div class="flashcard__head"><span class="flashcard__topic">Date · Getters</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+        <div class="flashcard__inner">
+          <div class="flashcard__front"><p class="fc-question">Hvilke getter-metoder finnes på et <code>Date</code>-objekt?</p></div>
+          <div class="flashcard__back"><p><code>getFullYear()</code> (yyyy), <code>getMonth()</code> (0–11), <code>getDate()</code> (1–31), <code>getDay()</code> (0–6, søn=0), <code>getHours()</code>, <code>getMinutes()</code>, <code>getSeconds()</code>, <code>getMilliseconds()</code>, <code>getTime()</code> (ms siden 1970).</p></div>
         </div>
       </div>
 

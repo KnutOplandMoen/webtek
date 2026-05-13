@@ -122,6 +122,10 @@
           <div class="fc-key">&lt;br&gt;</div>
           <div class="fc-val">Et «mykt» linjeskift inni samme avsnitt. Void-element — ingen lukketag.</div>
         </div>
+        <div class="fact-card">
+          <div class="fc-key">&lt;hr&gt;</div>
+          <div class="fc-val">En horisontal linje (horizontal rule). Også et void-element — ingen lukketag.</div>
+        </div>
       </div>
       <p>
         <code>&lt;b&gt;</code> og <code>&lt;i&gt;</code> har visuelt
@@ -171,6 +175,27 @@ rommene    skremmer    meg     ikke&lt;/p&gt;</pre>
         <code>&lt;br&gt;</code>. Vil du ha mellomrom mellom to
         avsnitt, bruk to <code>&lt;p&gt;</code>-elementer.
       </p>
+
+      <div class="callout-good">
+        <div class="label">Unntaket: <code>&lt;pre&gt;</code></div>
+        <p>
+          Forelesningen nevner én <em>preformatted</em> tagg som
+          unntak fra white-space-collapsing:
+          <code>&lt;pre&gt;</code> beholder både mellomrom og
+          linjeskift slik de står i kilden. Brukes typisk for
+          kodeeksempler.
+        </p>
+        <div class="code-result">
+          <div class="pane">
+            <div class="pane-label">Pre-formatert</div>
+            <pre>&lt;pre&gt;This is
+preformatted text.
+It preserves both
+spaces
+and line breaks.&lt;/pre&gt;</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -249,6 +274,18 @@ rommene    skremmer    meg     ikke&lt;/p&gt;</pre>
           <li class="mcq-opt" data-correct="0"><code>&lt;low&gt;</code></li>
         </ul>
         <div class="mcq-feedback">Pensum 1.4.3: <code>&lt;sub&gt;</code> for senket skrift (subscript) — passer for kjemiske formler. <code>&lt;sup&gt;</code> er for hevet (eks. eksponenter).</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">7 · Middels</div>
+        <div class="q-text">Hvilken tagg er <em>unntaket</em> fra white-space-collapsing — altså beholder mellomrom og linjeskift slik de står i kilden?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;p&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;br&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;pre&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;code&gt;</code></li>
+        </ul>
+        <div class="mcq-feedback">Forelesning: <code>&lt;pre&gt;</code> (preformatted) beholder både mellomrom og linjeskift fra kilden.</div>
       </div>
     </div>
   </section>

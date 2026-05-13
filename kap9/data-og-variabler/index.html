@@ -49,10 +49,9 @@
         <li><span class="toc-num">01</span><a href="#datatyper">Datatyper</a></li>
         <li><span class="toc-num">02</span><a href="#operatorer">Logiske operatorer</a></li>
         <li><span class="toc-num">03</span><a href="#variabler">var, let, const</a></li>
-        <li><span class="toc-num">04</span><a href="#strict">"use strict"</a></li>
-        <li><span class="toc-num">05</span><a href="#null">undefined vs null</a></li>
-        <li><span class="toc-num">06</span><a href="#feller">Feller</a></li>
-        <li><span class="toc-num">07</span><a href="#mcq">Test deg selv</a></li>
+        <li><span class="toc-num">04</span><a href="#null">undefined vs null</a></li>
+        <li><span class="toc-num">05</span><a href="#feller">Feller</a></li>
+        <li><span class="toc-num">06</span><a href="#mcq">Test deg selv</a></li>
       </ol>
     </div>
   </nav>
@@ -274,32 +273,8 @@ c = 30;          // TypeError: Assignment to constant variable</code></pre>
     </div>
   </div></section>
 
-  <section id="strict"><div class="container">
-    <div class="section-badge">04 · Pensum 1.11.5</div>
-    <h2><code>"use strict"</code> — <em>streng modus</em></h2>
-    <p>
-      Skriver du <code>"use strict";</code> øverst i et script (eller øverst i
-      en funksjon) aktiverer du streng modus. Det fanger flere tabber tidlig:
-    </p>
-    <ul>
-      <li>U-deklarerte variabler (uten <code>var</code>/<code>let</code>/<code>const</code>) blir <em>feil</em> i stedet for global variabel.</li>
-      <li>Re-deklarering i samme blokk gir feil.</li>
-      <li>Visse «silent» feil blir kastet som unntak.</li>
-    </ul>
-
-<pre><code>"use strict";
-
-x = 5;  // ReferenceError: x er ikke deklarert
-
-let x = 5; // OK</code></pre>
-
-    <div class="callout"><div class="label">Hvorfor</div>
-      <p>Uten streng modus blir <code>x = 5</code> automatisk en global variabel. Det er nesten alltid feil — og bugger som er vanskelige å spore. Streng modus tvinger deg til å være tydelig.</p>
-    </div>
-  </div></section>
-
   <section id="null"><div class="container">
-    <div class="section-badge">05 · Pensum 1.11.6</div>
+    <div class="section-badge">04 · Pensum 1.11.6</div>
     <h2>Når noe <em>ikke fins</em></h2>
     <p>JavaScript har to verdier som representerer «ingenting» — og forskjellen er viktig.</p>
 
@@ -338,21 +313,20 @@ obj.alder;         // undefined (property fins ikke)</code></pre>
   </div></section>
 
   <section id="feller"><div class="container">
-    <div class="section-badge">06 · Vanlige feller</div>
+    <div class="section-badge">05 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
     <div class="callout-warn"><div class="label">Pass på</div>
       <ul>
         <li><strong><code>==</code> i stedet for <code>===</code>:</strong> <code>"" == 0</code> er <code>true</code> men <code>"" === 0</code> er <code>false</code>. Bruk <code>===</code> som standard.</li>
         <li><strong>Tro at <code>const</code> betyr immutable:</strong> arrays og objekter kan fortsatt endres innenfra.</li>
-        <li><strong>Glemme <code>let</code>/<code>const</code> uten <code>"use strict"</code>:</strong> variabelen blir global og kan kollidere med annet.</li>
-        <li><strong>Sjekke for <code>null</code> med <code>typeof</code>:</strong> det er <code>"object"</code>, ikke <code>"null"</code>. Bruk <code>x === null</code>.</li>
+        <li><strong>Glemme <code>let</code>/<code>const</code>:</strong> variabelen blir automatisk global og kan kollidere med annet.</li>
         <li><strong>Variabel-navn med bindestrek:</strong> <code>my-age</code> er ikke gyldig — JS tolker <code>-</code> som minus.</li>
       </ul>
     </div>
   </div></section>
 
   <section id="mcq"><div class="container">
-    <div class="section-badge">07 · Test deg selv</div>
+    <div class="section-badge">06 · Test deg selv</div>
     <h2>Avsluttende <em>spørsmål</em></h2>
 
     <div class="quiz mcq" data-quiz>

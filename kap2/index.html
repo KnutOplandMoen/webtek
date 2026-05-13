@@ -59,10 +59,10 @@
             <ul>
               <li><strong>Relative URLs</strong> (../, ./, /) — testet som langsvar 6 %</li>
               <li><strong>Skrive en HTML-tabell</strong> for hånd (<code>table</code>, <code>tr</code>, <code>td</code>, <code>th</code>) — kode 5 %</li>
-              <li><strong>Form-elementet</strong> + viktige attributter (<code>action</code>, <code>method</code>, <code>name</code>)</li>
               <li><strong>Lenker &amp; anker</strong>: <code>&lt;a href="#id"&gt;</code> for hopp i samme side</li>
               <li><strong>Heading-nivåer</strong>: h1–h6 (det er 6, ikke 5)</li>
               <li><strong>class</strong> grupperer flere, <strong>id</strong> identifiserer ett</li>
+              <li><strong>Listetyper</strong>: <code>ol</code> (ordnet), <code>ul</code> (uordnet), <code>dl</code> (definisjon)</li>
             </ul>
           </div>
           <div class="ef-block skip">
@@ -260,13 +260,13 @@
         <a class="subpage-card" href="text.html">
           <div class="sp-icon">C · TXT</div>
           <div class="sp-title">Tekst</div>
-          <div class="sp-desc">h1–h6, <code>p</code>, <code>b</code>, <code>i</code>, <code>sup</code>, <code>sub</code>, <code>br</code> og white-space collapsing.<br><strong>Pensum:</strong> 1.4.3.</div>
+          <div class="sp-desc">h1–h6, <code>p</code>, <code>b</code>, <code>i</code>, <code>sup</code>, <code>sub</code>, <code>br</code>, <code>hr</code>, white-space collapsing og <code>pre</code>-unntaket.<br><strong>Pensum:</strong> 1.4.3.</div>
           <div class="sp-arrow">Åpne &rarr;</div>
         </a>
         <a class="subpage-card" href="lists.html">
           <div class="sp-icon">D · LST</div>
           <div class="sp-title">Lister</div>
-          <div class="sp-desc">Ordnede (<code>ol</code>) og uordnede (<code>ul</code>) lister, <code>li</code>, og nøsting.<br><strong>Pensum:</strong> 1.4.4.</div>
+          <div class="sp-desc">Ordnede (<code>ol</code>), uordnede (<code>ul</code>) og definisjonslister (<code>dl</code> + <code>dt</code>/<code>dd</code>), <code>li</code>, nøsting og <code>list-style-type</code>.<br><strong>Pensum:</strong> 1.4.4.</div>
           <div class="sp-arrow">Åpne &rarr;</div>
         </a>
         <a class="subpage-card" href="links.html">
@@ -290,7 +290,7 @@
         <a class="subpage-card" href="semantics.html">
           <div class="sp-icon">H · SEM</div>
           <div class="sp-title">Kommentarer og semantikk</div>
-          <div class="sp-desc">Kommentar-syntaks, <code>div</code>, semantiske elementer som <code>header</code>, <code>nav</code>, <code>article</code>, <code>section</code>, <code>figure</code>, <code>strong</code>, <code>em</code>, <code>blockquote</code> — pluss <code>input</code> og <code>output</code>.<br><strong>Pensum:</strong> 1.4.8 + 1.4.9.</div>
+          <div class="sp-desc">Kommentar-syntaks, <code>div</code>, semantiske elementer som <code>header</code>, <code>nav</code>, <code>article</code>, <code>section</code>, <code>figure</code>, <code>strong</code>, <code>em</code>, <code>blockquote</code>, <code>q</code>, <code>abbr</code>, <code>address</code>.<br><strong>Pensum:</strong> 1.4.8 + 1.4.9.</div>
           <div class="sp-arrow">Åpne &rarr;</div>
         </a>
         <a class="subpage-card" href="site-structure.html">
@@ -312,7 +312,7 @@
         <div class="fact-card"><div class="fc-key">Tag</div><div class="fc-val">Det som står mellom vinkelparenteser, f.eks. <code>&lt;body&gt;</code>. Lukketaggen har skråstrek foran navnet. Pensum 1.4.</div></div>
         <div class="fact-card"><div class="fc-key">Attributt</div><div class="fc-val">Ekstra informasjon i åpningstaggen: navn = "verdi". Eks: <code>&lt;p lang="no"&gt;</code>. Pensum 1.4.2.</div></div>
         <div class="fact-card"><div class="fc-key">Block vs inline</div><div class="fc-val">Blokkelementer (<code>div</code>, <code>h1</code>–<code>h6</code>, <code>p</code>, <code>form</code>) starter på ny linje og fyller bredden. Inline (<code>span</code>, <code>a</code>, <code>img</code>) gjør ikke det. Pensum 1.4.1.</div></div>
-        <div class="fact-card"><div class="fc-key">Void-element</div><div class="fc-val">Element uten innhold og dermed uten lukketag. Eks: <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;input&gt;</code>. Pensum 1.4 + 1.4.6.</div></div>
+        <div class="fact-card"><div class="fc-key">Void-element</div><div class="fc-val">Element uten innhold og dermed uten lukketag. Eks: <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>. Pensum 1.4 + 1.4.6.</div></div>
         <div class="fact-card"><div class="fc-key">Semantikk</div><div class="fc-val">At elementet beskriver hva innholdet <em>er</em>. <code>&lt;article&gt;</code> bærer mening, <code>&lt;div&gt;</code> gjør ikke. Hjelper søkemotorer og skjermlesere. Pensum 1.4.9.</div></div>
         <div class="fact-card"><div class="fc-key">Dokumenthierarki</div><div class="fc-val"><code>&lt;h1&gt;</code> er viktigst, <code>&lt;h6&gt;</code> minst. Bruk i logisk rekkefølge — ikke hopp over nivåer for å justere størrelse. Pensum 1.4.3.</div></div>
         <div class="fact-card"><div class="fc-key">White-space collapsing</div><div class="fc-val">Flere mellomrom og linjeskift i kilden blir slått sammen til ett mellomrom når siden rendres. Pensum 1.4.3.</div></div>
@@ -333,7 +333,7 @@
         <span class="recap-pill">forklare forskjellen på blokk og inline</span>
         <span class="recap-pill">bruke attributter (lang, id, class, href, src, alt)</span>
         <span class="recap-pill">strukturere tekst med h1–h6, p, b/strong, i/em, sup, sub</span>
-        <span class="recap-pill">lage ordnede og uordnede lister, også nøstede</span>
+        <span class="recap-pill">lage ordnede, uordnede og definisjonslister, også nøstede</span>
         <span class="recap-pill">lenke absolutt, relativt og til id-er på samme side</span>
         <span class="recap-pill">koble inn bilder med src, alt, width, height</span>
         <span class="recap-pill">velge riktig bildeformat (JPEG, PNG, GIF, SVG)</span>
@@ -724,6 +724,14 @@
         </div>
 
         <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hvilken tagg er unntaket fra white-space-collapsing?</p></div>
+            <div class="flashcard__back"><p><code>&lt;pre&gt;</code> (preformatted) beholder både mellomrom og linjeskift slik de står i kilden. Brukes typisk for kodeeksempler.</p><div class="fc-ref">Forelesning</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
           <div class="flashcard__head"><span class="flashcard__topic">1.4 · Tekst</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
           <div class="flashcard__inner">
             <div class="flashcard__front"><p class="fc-question">Hva gjør <code>&lt;br&gt;</code>?</p></div>
@@ -752,6 +760,14 @@
           <div class="flashcard__inner">
             <div class="flashcard__front"><p class="fc-question">Hvordan lager du en nøstet liste?</p></div>
             <div class="flashcard__back"><p>Putt en hel <code>&lt;ol&gt;</code>/<code>&lt;ul&gt;</code> inni en <code>&lt;li&gt;</code>. Husk: åpne og lukk med samme tag, og lukketaggen for ytre <code>&lt;li&gt;</code> kommer etter den indre listen.</p><div class="fc-ref">Pensum 1.4.4</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Lister</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva er en definisjonsliste, og hvilke tagger inngår?</p></div>
+            <div class="flashcard__back"><p><code>&lt;dl&gt;</code> for selve listen, <code>&lt;dt&gt;</code> for term og <code>&lt;dd&gt;</code> for definisjon. Brukes for ord/forklaring-par.</p><div class="fc-ref">Pensum 1.4.4 (forelesning)</div></div>
           </div>
         </div>
 
@@ -896,6 +912,14 @@
           <div class="flashcard__inner">
             <div class="flashcard__front"><p class="fc-question">Hva er <code>&lt;figure&gt;</code> og <code>&lt;figcaption&gt;</code> til?</p></div>
             <div class="flashcard__back"><p><code>&lt;figure&gt;</code> pakker selvstendig innhold (typisk et bilde eller en illustrasjon). <code>&lt;figcaption&gt;</code> er en valgfri bildetekst, plassert som første eller siste barn av <code>&lt;figure&gt;</code>.</p><div class="fc-ref">Pensum 1.4.9</div></div>
+          </div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard__head"><span class="flashcard__topic">1.4 · Semantikk</span><span class="flashcard__diff" data-diff="middels">Middels</span></div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front"><p class="fc-question">Hva brukes <code>&lt;abbr&gt;</code> til, og hvordan vises den fulle formen?</p></div>
+            <div class="flashcard__back"><p>For forkortelser/akronymer (NTNU, NASA, Dr.). Den fulle formen settes i <code>title</code>-attributtet og vises som tooltip: <code>&lt;abbr title="Norwegian University of Science and Technology"&gt;NTNU&lt;/abbr&gt;</code>.</p><div class="fc-ref">Forelesning</div></div>
           </div>
         </div>
 

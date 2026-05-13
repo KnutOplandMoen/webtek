@@ -44,13 +44,16 @@
 
   <section id="ol-ul">
     <div class="container">
-      <div class="section-badge">01 · ol vs ul</div>
-      <h2>Ordnet og <em>uordnet</em></h2>
+      <div class="section-badge">01 · ol vs ul vs dl</div>
+      <h2>Tre <em>listetyper</em></h2>
       <p>
-        Pensum 1.4.4 sier at vi har to typer lister i HTML, og at
-        forskjellen ligger i hvordan listepunktene markeres:
-        <strong>ordnede lister</strong> bruker tall, mens
-        <strong>uordnede lister</strong> bruker kuler.
+        Forelesningen lister tre typer lister i HTML:
+        <strong>ordnede</strong> (<code>&lt;ol&gt;</code>, nummerert),
+        <strong>uordnede</strong> (<code>&lt;ul&gt;</code>, kulepunkter)
+        og <strong>definisjon</strong> (<code>&lt;dl&gt;</code>, for
+        ord/forklaring-par). Ordnede og uordnede bruker
+        <code>&lt;li&gt;</code> for hvert punkt; definisjonslister
+        bruker <code>&lt;dt&gt;</code> og <code>&lt;dd&gt;</code>.
       </p>
       <div class="code-result">
         <div class="pane">
@@ -80,9 +83,59 @@
     </div>
   </section>
 
+  <section id="dl">
+    <div class="container">
+      <div class="section-badge">02 · Definisjonsliste</div>
+      <h2>Definisjons<em>liste</em></h2>
+      <p>
+        En definisjonsliste (<code>&lt;dl&gt;</code>) er for
+        ord/forklaring-par. <code>&lt;dt&gt;</code> markerer
+        <strong>termen</strong>, og <code>&lt;dd&gt;</code> markerer
+        <strong>definisjonen</strong> av termen.
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Definisjonsliste</div>
+          <pre>&lt;dl&gt;
+  &lt;dt&gt;Coffee&lt;/dt&gt;
+  &lt;dd&gt;Black hot drink&lt;/dd&gt;
+  &lt;dt&gt;Milk&lt;/dt&gt;
+  &lt;dd&gt;White cold drink&lt;/dd&gt;
+&lt;/dl&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="styling">
+    <div class="container">
+      <div class="section-badge">03 · Styling</div>
+      <h2>Bytte <em>punkt-stilen</em></h2>
+      <p>
+        Du kan endre stilen på punktene med
+        <code>list-style-type</code>. Forelesningen viser eksempelet
+        <code>upper-roman</code> for romertall i en ordnet liste:
+      </p>
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Romertall i ordnet liste</div>
+          <pre>&lt;ol style="list-style-type:upper-roman"&gt;
+  &lt;li&gt;Apples&lt;/li&gt;
+  &lt;li&gt;Bananas&lt;/li&gt;
+&lt;/ol&gt;</pre>
+        </div>
+        <div class="pane">
+          <div class="pane-label">Resultat</div>
+          <pre>I. Apples
+II. Bananas</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="nosting">
     <div class="container">
-      <div class="section-badge">02 · Nøsting</div>
+      <div class="section-badge">04 · Nøsting</div>
       <h2>Lister inni <em>lister</em></h2>
       <p>
         Du kan nøste én liste inni en annen ved å putte en hel
@@ -116,7 +169,7 @@
 
   <section id="quiz">
     <div class="container">
-      <div class="section-badge">03 · Test deg selv</div>
+      <div class="section-badge">05 · Test deg selv</div>
       <h2>Multiple <em>choice</em></h2>
 
       <div class="quiz mcq">
@@ -177,6 +230,18 @@
           <li class="mcq-opt" data-correct="0">Bare hvis du oppgir <code>type</code>-attributtet</li>
         </ul>
         <div class="mcq-feedback">Pensum 1.4.4: «You can also mix list types, just remember to open and close with the same tags.»</div>
+      </div>
+
+      <div class="quiz mcq">
+        <div class="q-label">6 · Middels</div>
+        <div class="q-text">Hvilke to tagger bruker du inni en <code>&lt;dl&gt;</code> for å markere termen og dens definisjon?</div>
+        <ul class="mcq-options">
+          <li class="mcq-opt" data-correct="0"><code>&lt;li&gt;</code> og <code>&lt;def&gt;</code></li>
+          <li class="mcq-opt" data-correct="1"><code>&lt;dt&gt;</code> for term, <code>&lt;dd&gt;</code> for definisjon</li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;term&gt;</code> og <code>&lt;desc&gt;</code></li>
+          <li class="mcq-opt" data-correct="0"><code>&lt;dt&gt;</code> for begge</li>
+        </ul>
+        <div class="mcq-feedback">Forelesning: <code>&lt;dt&gt;</code> = definition term, <code>&lt;dd&gt;</code> = definition description.</div>
       </div>
     </div>
   </section>

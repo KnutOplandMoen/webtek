@@ -381,7 +381,7 @@
         </div>
         <div class="fact-card">
           <div class="fc-key">IP-adresse</div>
-          <div class="fc-val">Numerisk adresse som unikt identifiserer en maskin på Internett — pensum 1.1.2.</div>
+          <div class="fc-val">Numerisk adresse som unikt identifiserer en maskin på Internett. Fire tall mellom 0 og 255 — f.eks. <code>129.241.160.102</code> — pensum 1.1.2.</div>
         </div>
         <div class="fact-card">
           <div class="fc-key">Domenenavn</div>
@@ -978,6 +978,22 @@
           </div>
         </div>
 
+        <div class="flashcard">
+          <div class="flashcard__head">
+            <span class="flashcard__topic">Internett</span>
+            <span class="flashcard__diff" data-diff="vanskelig">Vanskelig</span>
+          </div>
+          <div class="flashcard__inner">
+            <div class="flashcard__front">
+              <p class="fc-question">Hva skjer med en HTTP-melding når den sendes nedover TCP/IP-lagene?</p>
+            </div>
+            <div class="flashcard__back">
+              <p>Hvert lag legger sin egen header foran meldingen: applikasjonen lager <code>HTTP-melding</code>, transportlaget pakker den som <code>TCP-hdr + HTTP-melding</code>, nettverkslaget gjør den til <code>IP-hdr + TCP-hdr + HTTP-melding</code>, og det fysiske laget legger til en <code>Ethernet-hdr</code> foran og en <em>checksum</em> bak. På mottakersiden strippes header etter header av i motsatt rekkefølge før applikasjonen leser HTTP-meldingen.</p>
+              <p class="fc-ref">Pensum 1.1.2 · slides basics.md</p>
+            </div>
+          </div>
+        </div>
+
         <!-- DNS -->
 
         <div class="flashcard">
@@ -987,11 +1003,11 @@
           </div>
           <div class="flashcard__inner">
             <div class="flashcard__front">
-              <p class="fc-question">Hva er en IP-adresse?</p>
+              <p class="fc-question">Hva er en IP-adresse, og hvordan ser den ut?</p>
             </div>
             <div class="flashcard__back">
-              <p>En unik numerisk adresse som identifiserer en bestemt datamaskin på Internett. Datamaskiner trenger IP-adresser for å kunne kommunisere — symbolske navn er bare for menneskelig konsum.</p>
-              <p class="fc-ref">Pensum 1.1.2</p>
+              <p>En unik numerisk adresse som identifiserer en bestemt datamaskin på Internett. IP-adressen består av fire tall mellom 0 og 255, f.eks. <code>129.241.160.102</code> (ntnu.no). Datamaskiner trenger IP-adresser for å kunne kommunisere — symbolske navn er bare for menneskelig konsum.</p>
+              <p class="fc-ref">Pensum 1.1.2 · slides basics.md</p>
             </div>
           </div>
         </div>
@@ -1217,11 +1233,11 @@
           </div>
           <div class="flashcard__inner">
             <div class="flashcard__front">
-              <p class="fc-question">Hvilken type verktøy anbefales i kurset for å skrive web-kode, og hvilke tre eksempler nevnes?</p>
+              <p class="fc-question">Hvilken type verktøy anbefales i kurset for å skrive web-kode, og hvilke eksempler nevnes i forelesningen?</p>
             </div>
             <div class="flashcard__back">
-              <p>En tekstredigerer som lar deg skrive koden selv, fremhever nøkkelord og hjelper med autofullføring. Pensum nevner Atom, Sublime og Brackets.</p>
-              <p class="fc-ref">Pensum 1.2</p>
+              <p>En tekstredigerer som lar deg skrive koden selv, fremhever nøkkelord og hjelper med autofullføring. Forelesningen nevner <strong>Atom</strong> og <strong>Visual Studio Code</strong>. (Du kan også teste raskt med jsfiddle.)</p>
+              <p class="fc-ref">Pensum 1.2 · slides intro.md</p>
             </div>
           </div>
         </div>

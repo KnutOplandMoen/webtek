@@ -312,8 +312,7 @@
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <span class="fasit-correct">Riktig svar: B</span>
-          <p><code>display: flex</code> fungerer på <em>alle</em> elementer — span inkludert. Element-typen (inline vs block) styrer ikke om flex fungerer. Når du setter <code>display: flex</code>, blir elementet en flex-container uansett hva det var før.</p>
-          <p><strong>Detalj:</strong> <code>display: flex</code> gjør elementet til block-level (tar opp hele bredden). <code>display: inline-flex</code> beholder inline-oppførselen utad, men barna er fortsatt flex.</p>
+          <p><code>display: flex</code> fungerer på <em>alle</em> elementer — span inkludert. Element-typen (inline vs block) styrer ikke om flex fungerer. Når du setter <code>display: flex</code>, blir elementet en flex-container uansett hva det var før, og det blir block-level (tar opp hele bredden).</p>
           <p><strong>Hvorfor de andre er feil:</strong> A er feil — flex fungerer på alle elementer. C er konfabulering. D er feil — CSS endrer ikke HTML-strukturen, bare visningen.</p>
           <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
         </div>
@@ -719,7 +718,7 @@ switch (x) {
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
           <textarea class="code-html" rows="10">&lt;input type="text" id="navn" placeholder="Navn"&gt;
-&lt;input type="number" id="alder" placeholder="Alder"&gt;
+&lt;input type="text" id="alder" placeholder="Alder"&gt;
 &lt;button id="legg"&gt;Legg til&lt;/button&gt;
 &lt;table border="1"&gt;
   &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Navn&lt;/th&gt;&lt;th&gt;Alder&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
@@ -1030,7 +1029,10 @@ p2.addEventListener("input", valider);</code></pre>
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 18px;
+}
+
+.meny li {
+  margin-right: 18px;
 }
 
 .meny a {
@@ -1049,7 +1051,7 @@ p2.addEventListener("input", valider);</code></pre>
           <p><strong>Kommentarer:</strong></p>
           <ul>
             <li><strong>list-style: none:</strong> Fjerner standard-bullets (●). Brukt sammen med <code>padding: 0</code> for å fjerne også innrykket nettleseren legger til.</li>
-            <li><strong>display: flex på ul:</strong> Gjør at li-barna legger seg horisontalt. <code>gap: 18px</code> setter mellomrom uten å bruke margin på hver li. Alternativ: <code>li { display: inline-block; }</code> — mer gammel, men fungerer.</li>
+            <li><strong>display: flex på ul:</strong> Gjør at li-barna legger seg horisontalt. <code>margin-right: 18px</code> setter mellomrom mellom dem. Alternativ: <code>li { display: inline-block; }</code> — mer gammel, men fungerer.</li>
             <li><strong>Specificity for aktiv:</strong> <code>.meny a.aktiv</code> har specificity 0,2,1 (to class + en element). Det slår <code>.meny a:hover</code> som har 0,1,2 — derfor får aktiv-fargen <em>også</em> ved hover. Hvis du vil at hover skal vinne over aktiv, må man være mer eksplisitt.</li>
             <li><strong>Default underline:</strong> Lenker har <code>text-decoration: underline</code> by default — derfor må vi eksplisitt fjerne det og legge tilbake bare ved hover.</li>
           </ul>
@@ -1085,8 +1087,8 @@ p2.addEventListener("input", valider);</code></pre>
       <div class="exam-q__editor">
         <div class="editor-field">
           <label>HTML <small>(gitt — ikke endre)</small></label>
-          <textarea class="code-html" rows="8">&lt;input type="number" id="a" value="6"&gt;
-&lt;input type="number" id="b" value="3"&gt;
+          <textarea class="code-html" rows="8">&lt;input type="text" id="a" value="6"&gt;
+&lt;input type="text" id="b" value="3"&gt;
 &lt;button id="pluss"&gt;+&lt;/button&gt;
 &lt;button id="minus"&gt;-&lt;/button&gt;
 &lt;button id="gange"&gt;*&lt;/button&gt;

@@ -229,10 +229,10 @@
       <span class="exam-q__topic">Kap. 5 — Grid-span</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Du vil at en grid-celle skal strekke seg over <strong>to kolonner</strong>. Hvilken CSS er korrekt?</p>
+      <p class="q-text">Du vil at en grid-celle skal strekke seg fra kolonnelinje 1 til kolonnelinje 3 (altså over to kolonner). Hvilken CSS er korrekt?</p>
       <ul class="exam-q__opts">
         <li><span class="opt-label">A</span> <code>colspan: 2;</code></li>
-        <li><span class="opt-label">B</span> <code>grid-column: span 2;</code></li>
+        <li><span class="opt-label">B</span> <code>grid-column: 1 / 3;</code></li>
         <li><span class="opt-label">C</span> <code>flex: 2;</code></li>
         <li><span class="opt-label">D</span> <code>width: 200%;</code></li>
       </ul>
@@ -240,7 +240,7 @@
         <summary>Vis fasit</summary>
         <div class="fasit-body">
           <span class="fasit-correct">Riktig svar: B</span>
-          <p><code>grid-column: span 2</code> er kortform for "denne cellen tar 2 kolonner fra der den naturlig plasseres". Ekvivalent <code>grid-column: 1 / 3</code> hvis du vil være eksplisitt om start- og slutt-linje. Tilsvarende <code>grid-row: span 2</code> for høyde.</p>
+          <p><code>grid-column: 1 / 3</code> er kortform for <code>grid-column-start: 1; grid-column-end: 3;</code>. Cellen plasseres mellom kolonnelinje 1 og kolonnelinje 3 — altså over to kolonner. Tilsvarende <code>grid-row: 1 / 3</code> for å strekke over to rader.</p>
           <p><strong>Hvorfor de andre er feil:</strong> A — <code>colspan</code> er et HTML-attributt på <code>&lt;td&gt;</code> i tabeller, ikke CSS. C er flexbox-syntaks (irrelevant i grid). D ville strukket boksen ut over kolonnen, ikke endre grid-layouten.</p>
           <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Flexbox og Grid</a></p>
         </div>
@@ -822,14 +822,16 @@ main {
 @media (min-width: 600px) {
   .meny {
     display: flex;
-    gap: 20px;
+  }
+  .meny li {
+    margin-right: 20px;
   }
 }</code></pre>
           <p><strong>Kommentarer:</strong></p>
           <ul>
             <li><strong>Mobile-first prinsipp:</strong> Den vertikale stylingen står utenfor noen media query — den er default for alle skjermer. Media-querien legger på horisontal flex bare når viewport er stor nok.</li>
             <li><strong><code>display: block</code> på lenkene:</strong> Gjør at hele padding-arealet blir klikkbart, ikke bare teksten. Bedre touch-target på mobil.</li>
-            <li><strong><code>gap: 20px</code>:</strong> Moderne måte å mellom-romme flex-barn. Alternativet er <code>.meny li:not(:last-child) { margin-right: 20px; }</code>, men det er mer skriving.</li>
+            <li><strong>Mellomrom:</strong> <code>margin-right: 20px</code> på <code>li</code> gir luft mellom menyvalgene. Alternativt kan man bruke <code>justify-content: space-between</code> for å spre menyvalgene ut over hele bredden.</li>
             <li><strong>Test responsiviteten:</strong> Endre vindusbredde og se overgangen ved 600 px.</li>
           </ul>
           <p><strong>Vanlige feil:</strong> Skrive desktop-CSS som default og bruke <code>max-width: 599px</code> for mobil (desktop-first — fungerer, men ikke mobile-first). Glemme <code>list-style: none</code> så punktene henger igjen. Sette padding på <code>li</code> i stedet for <code>a</code> — da er det bare teksten som er klikkbar.</p>
@@ -1023,10 +1025,10 @@ document.getElementById("sjekk").addEventListener("click", dagerTilJul);</code><
       <span class="exam-q__topic">Kap. 5+6 — Responsivt kort-grid</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">HTML-en under inneholder seks "kort". Skriv CSS som lager et <strong>responsivt grid</strong> av disse uten media queries — la antall kolonner justere seg automatisk basert på tilgjengelig bredde:</p>
+      <p class="q-text">HTML-en under inneholder seks "kort". Skriv CSS som lager et <strong>responsivt grid</strong> av disse med Grid + media queries:</p>
       <ol class="q-tasklist">
-        <li><strong>(3 poeng)</strong> Bruk <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code> slik at hver kort er minst 200 px bredt, og det blir så mange kolonner som plassen tillater.</li>
-        <li><strong>(2 poeng)</strong> 16 px mellomrom mellom kortene (<code>gap</code>).</li>
+        <li><strong>(3 poeng)</strong> <code>.grid</code> er et Grid. Standard: <strong>én kolonne</strong> (mobil). På <code>min-width: 600px</code> blir det <strong>to kolonner</strong>. På <code>min-width: 900px</code> blir det <strong>tre kolonner</strong>. Bruk <code>grid-template-columns</code> med <code>1fr</code>-verdier.</li>
+        <li><strong>(2 poeng)</strong> 16 px mellomrom mellom kortene (<code>grid-gap</code>).</li>
         <li><strong>(1 poeng)</strong> Hvert kort har lys grå bakgrunn (<code>#f4f4f4</code>), 12 px padding og 4 px border-radius.</li>
       </ol>
       <div class="exam-q__editor">
@@ -1062,8 +1064,20 @@ document.getElementById("sjekk").addEventListener("click", dagerTilJul);</code><
           <p><strong>Referanseløsning:</strong></p>
           <pre><code>.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .kort {
@@ -1073,11 +1087,11 @@ document.getElementById("sjekk").addEventListener("click", dagerTilJul);</code><
 }</code></pre>
           <p><strong>Kommentarer:</strong></p>
           <ul>
-            <li><strong><code>auto-fit</code> vs <code>auto-fill</code>:</strong> Begge fyller raden med så mange kolonner som passer. Forskjellen: hvis det er <em>færre</em> elementer enn maks-antall kolonner, gjør <code>auto-fit</code> at de eksisterende elementene strekker seg ut til å fylle raden, mens <code>auto-fill</code> beholder dem på 200 px og lar tomme spor stå igjen. <code>auto-fit</code> er oftest mer naturlig.</li>
-            <li><strong><code>minmax(200px, 1fr)</code>:</strong> Hver kolonne er minst 200 px bredt, men kan vokse til <code>1fr</code> av tilgjengelig plass. Resultat: smale skjermer får én eller to kolonner, brede skjermer får 3-6 kolonner — automatisk uten media queries.</li>
-            <li><strong>Hvorfor dette mønsteret er populært:</strong> En enkelt linje CSS lager et grid som responder elegant på alle skjermstørrelser. Mye enklere enn en serie av <code>@media</code>-blokker.</li>
+            <li><strong>Mobile-first:</strong> Standard-regelen er én kolonne — det enkleste oppsettet. Media queries med <code>min-width</code> legger til flere kolonner når plassen tillater.</li>
+            <li><strong><code>1fr</code>-enheten:</strong> "Én del av tilgjengelig plass". <code>1fr 1fr</code> = to like brede kolonner; <code>1fr 1fr 1fr</code> = tre like brede.</li>
+            <li><strong><code>grid-gap</code>:</strong> Mellomrom mellom rader og kolonner samtidig (kortform for <code>grid-row-gap</code> + <code>grid-column-gap</code>).</li>
           </ul>
-          <p><strong>Vanlige feil:</strong> Bruke <code>repeat(3, 1fr)</code> — gir alltid 3 kolonner uansett bredde, ikke responsivt. Glemme <code>minmax</code> og skrive bare <code>auto-fit</code> — gyldig syntaks, men kolonnene kan bli ekstremt smale uten en minimums-bredde. Bruke <code>justify-content: space-between</code> i stedet for <code>gap</code> — kan fungere, men <code>gap</code> er den idiomatiske måten i grid/flex.</p>
+          <p><strong>Vanlige feil:</strong> Bruke <code>width: 33%</code> på <code>.kort</code> i stedet for å la grid-systemet bestemme — kombineres dårlig med <code>grid-gap</code>. Glemme mobile-first-rekkefølgen (større skjermer overstyrer mindre via <code>min-width</code>). Skrive <code>display: flex</code> der man vil ha rader-OG-kolonner samtidig — Flexbox er 1D, bruk Grid.</p>
           <p class="ref">Pensum: <a href="../../kap5/">Kap. 5 — Grid</a>, <a href="../../kap6/">Kap. 6 — Responsivt design</a></p>
           <div class="self-grade">
             <span class="self-grade__label">Egenvurdering:</span>

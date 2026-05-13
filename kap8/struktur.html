@@ -27,16 +27,15 @@
 <main data-chapter="Kap 8.2: Form-struktur">
   <header class="hero">
     <div class="container">
-      <div class="eyebrow">Kapittel 8 · Underside B · Pensum 1.9.2</div>
+      <div class="eyebrow">Kapittel 8 · Underside B · Slides forms.md</div>
       <h1>Form-<em>struktur</em></h1>
       <p class="lede">
-        Den største delen av pensum 1.9. Alle widgetene som lever inni
-        <code>&lt;form&gt;</code>: gruppering, etiketter, alle input-typer,
-        alle relevante attributter, tekstområder, nedtrekkslister og
-        utdataelementer.
+        Alle widgetene som lever inni <code>&lt;form&gt;</code>: gruppering
+        med <code>fieldset</code>/<code>legend</code>, etiketter,
+        input-typene foreleser viste, tekstområder og nedtrekkslister.
       </p>
       <div class="pill-row">
-        <span class="pill">1.9.2 Form structure</span>
+        <span class="pill">Slides: Form Structure · Adding Text · Making Choices</span>
       </div>
     </div>
   </header>
@@ -45,14 +44,13 @@
     <div class="container">
       <ol class="chapter-toc-list">
         <li><span class="toc-num">01</span><a href="#gruppering">Gruppering og labels</a></li>
-        <li><span class="toc-num">02</span><a href="#output">output-elementet</a></li>
-        <li><span class="toc-num">03</span><a href="#input">input-elementet</a></li>
-        <li><span class="toc-num">04</span><a href="#input-typer">Alle input-typer</a></li>
-        <li><span class="toc-num">05</span><a href="#attributter">Attributter med eksempler</a></li>
-        <li><span class="toc-num">06</span><a href="#textarea">textarea</a></li>
-        <li><span class="toc-num">07</span><a href="#select">select og option</a></li>
-        <li><span class="toc-num">08</span><a href="#feller">Vanlige feller</a></li>
-        <li><span class="toc-num">09</span><a href="#mcq">Test deg selv</a></li>
+        <li><span class="toc-num">02</span><a href="#input">input-elementet</a></li>
+        <li><span class="toc-num">03</span><a href="#input-typer">Input-typer fra forelesning</a></li>
+        <li><span class="toc-num">04</span><a href="#attributter">Attributter med eksempler</a></li>
+        <li><span class="toc-num">05</span><a href="#textarea">textarea</a></li>
+        <li><span class="toc-num">06</span><a href="#select">select og option</a></li>
+        <li><span class="toc-num">07</span><a href="#feller">Vanlige feller</a></li>
+        <li><span class="toc-num">08</span><a href="#mcq">Test deg selv</a></li>
       </ol>
     </div>
   </nav>
@@ -61,9 +59,10 @@
     <div class="section-badge">01 · fieldset, legend, label</div>
     <h2>Gruppering og <em>labels</em></h2>
     <p class="section-intro">
-      Pensum 1.9.2 starter med tre elementer som strukturerer skjemaet
-      uten å samle data selv: <code>&lt;fieldset&gt;</code>,
-      <code>&lt;legend&gt;</code> og <code>&lt;label&gt;</code>.
+      Forelesningens slides om struktur starter med tre elementer som
+      strukturerer skjemaet uten å samle data selv:
+      <code>&lt;fieldset&gt;</code>, <code>&lt;legend&gt;</code> og
+      <code>&lt;label&gt;</code>.
     </p>
 
     <div class="def-box">
@@ -144,7 +143,7 @@
     &lt;/label&gt;
     &lt;label for="zip"&gt;
       Postnr:
-      &lt;input type="number" id="zip" name="address"&gt;
+      &lt;input type="text" id="zip" name="address"&gt;
     &lt;/label&gt;
   &lt;/fieldset&gt;
 &lt;/form&gt;</pre>
@@ -164,33 +163,8 @@
     </div>
   </div></section>
 
-  <section id="output"><div class="container">
-    <div class="section-badge">02 · output</div>
-    <h2>output-<em>elementet</em></h2>
-    <p>
-      <code>&lt;output&gt;</code> brukes til å vise resultatet av en
-      beregning — gjerne basert på verdier fra andre input-felt. Du
-      kan bruke <code>for</code>-attributtet til å liste opp ID-ene til
-      kontrollene som bidrar til beregningen, atskilt med mellomrom.
-    </p>
-
-    <div class="code-result">
-      <div class="pane">
-        <div class="pane-label">Skatt beregnes fra inntekt</div>
-<pre>&lt;output for="income tax"&gt;&lt;/output&gt;</pre>
-      </div>
-    </div>
-
-    <p>
-      Selve beregningen må du gjøre i JavaScript — <code>&lt;output&gt;</code>
-      er bare beholderen for resultatet. <code>for</code>-attributtet er
-      semantisk: det forteller hjelpemidler hvilke felter som er relevante,
-      uten å automatisk beregne noe.
-    </p>
-  </div></section>
-
   <section id="input"><div class="container">
-    <div class="section-badge">03 · input</div>
+    <div class="section-badge">02 · input</div>
     <h2>input — <em>kjernen</em> i skjemaet</h2>
     <p>
       <code>&lt;input&gt;</code> er det viktigste elementet i et skjema —
@@ -225,108 +199,81 @@
   </div></section>
 
   <section id="input-typer"><div class="container">
-    <div class="section-badge">04 · type-attributtet</div>
-    <h2>Alle <em>input-typer</em></h2>
+    <div class="section-badge">03 · type-attributtet</div>
+    <h2>Input-typer fra <em>forelesningen</em></h2>
     <p class="section-intro">
-      Pensum 1.9.2 grupperer <code>type</code>-verdiene i fire kategorier.
-      Tabellen under er en oppsummering — kolonnen «Relevante attributter»
-      viser hvilke ekstra attributter som har effekt for hver type.
+      Slides forms.md viser akkurat disse <code>type</code>-verdiene. Andre
+      typer (som <code>number</code>, <code>range</code>, <code>tel</code>,
+      <code>time</code>, <code>reset</code>) ble <em>ikke</em> gjennomgått,
+      og er ikke i pensum.
     </p>
 
-    <h3 style="margin-top: 1.6em;">A · Tekstfelt på én linje</h3>
+    <h3 style="margin-top: 1.6em;">A · Tekstfelt (Adding Text-slidene)</h3>
     <div class="fact-grid">
       <div class="fact-card">
         <div class="fc-key"><code>text</code></div>
-        <div class="fc-val">Vanlig tekstfelt. Attr: <code>autocomplete</code>, <code>maxlength</code>, <code>pattern</code>, <code>list</code>, <code>placeholder</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>email</code></div>
-        <div class="fc-val">Felt for én eller flere e-poster. Attr: <code>autocomplete</code>, <code>list</code>, <code>maxlength</code>, <code>multiple</code>, <code>pattern</code>, <code>placeholder</code>, <code>required</code>.</div>
+        <div class="fc-val">Vanlig énlinjes tekstfelt — slides nevner brukstilfeller som e-post, brukernavn osv.</div>
       </div>
       <div class="fact-card">
         <div class="fc-key"><code>password</code></div>
-        <div class="fc-val">Maskerer tegnene som prikker. Attr: <code>autocomplete</code>, <code>list</code>, <code>maxlength</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>search</code></div>
-        <div class="fc-val">Felt for søkestrenger. Attr: <code>autocomplete</code>, <code>list</code>, <code>maxlength</code>, <code>pattern</code>, <code>placeholder</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>tel</code></div>
-        <div class="fc-val">Telefonnummer. Attr: <code>autocomplete</code>, <code>list</code>, <code>maxlength</code>, <code>pattern</code>, <code>placeholder</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>url</code></div>
-        <div class="fc-val">Felt for absolutt URL. Attr: <code>autocomplete</code>, <code>list</code>, <code>maxlength</code>, <code>pattern</code>, <code>placeholder</code>, <code>required</code>.</div>
+        <div class="fc-val">«acts just like a single line input, except that the characters are hidden in the way that someone sees only dots».</div>
       </div>
     </div>
 
-    <h3 style="margin-top: 2em;">B · Kontroller uten tekst-input</h3>
+    <h3 style="margin-top: 2em;">B · Valg (Making Choices)</h3>
     <div class="fact-grid">
       <div class="fact-card">
+        <div class="fc-key"><code>radio</code></div>
+        <div class="fc-val">«Radio button allow users to pick just one of the options.» Gruppen deler <code>name</code>; <code>checked</code> markerer forhåndsvalg.</div>
+      </div>
+      <div class="fact-card">
         <div class="fc-key"><code>checkbox</code></div>
-        <div class="fc-val">Avkrysningsboks. Attr: <code>checked</code>, <code>required</code>.</div>
+        <div class="fc-val">«checkboxes allow users to select (and deselect) one of more.» <code>checked</code> markerer forhåndsvalg.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2em;">C · «Creating Input Boxes»-slidene</h3>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key"><code>image</code></div>
+        <div class="fc-val">«Displays an input image that can be clicked to perform an action.» Trenger <code>src</code>.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key"><code>button</code></div>
+        <div class="fc-val">«Displays a button that can be clicked to perform an action from a script.»</div>
       </div>
       <div class="fact-card">
         <div class="fc-key"><code>file</code></div>
-        <div class="fc-val">Velg lokal fil. Attr: <code>accept</code>, <code>multiple</code>, <code>required</code>.</div>
+        <div class="fc-val">«Displays a browse button to locate and select a file.» Krever <code>method="post"</code>.</div>
       </div>
       <div class="fact-card">
-        <div class="fc-key"><code>number</code></div>
-        <div class="fc-val">Tall, eksakt verdi viktig. Attr: <code>autocomplete</code>, <code>list</code>, <code>min</code>, <code>max</code>, <code>required</code>, <code>step</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>radio</code></div>
-        <div class="fc-val">Bare én radio i samme gruppe kan velges. Attr: <code>checked</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>range</code></div>
-        <div class="fc-val">Glidebryter — eksakt verdi ikke viktig. Attr: <code>autocomplete</code>, <code>list</code>, <code>min</code>, <code>max</code>, <code>required</code>, <code>step</code>.</div>
-      </div>
-    </div>
-
-    <h3 style="margin-top: 2em;">C · Tid og dato</h3>
-    <div class="fact-grid">
-      <div class="fact-card">
-        <div class="fc-key"><code>date</code></div>
-        <div class="fc-val">År, måned, dag. Attr: <code>autocomplete</code>, <code>list</code>, <code>min</code>, <code>max</code>, <code>required</code>.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>time</code></div>
-        <div class="fc-val">Klokkeslett. Attr: <code>autocomplete</code>, <code>list</code>, <code>min</code>, <code>max</code>, <code>required</code>.</div>
-      </div>
-    </div>
-
-    <h3 style="margin-top: 2em;">D · Knapper</h3>
-    <div class="fact-grid">
-      <div class="fact-card">
-        <div class="fc-key"><code>button</code></div>
-        <div class="fc-val">Trykknapp uten standardatferd. Trenger JavaScript for å gjøre noe.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>reset</code></div>
-        <div class="fc-val">Tilbakestiller alle felt i skjemaet til standardverdiene.</div>
+        <div class="fc-key"><code>hidden</code></div>
+        <div class="fc-val">«Creates a hidden field, not viewable on the form.» Slides viser typisk bruk inni <code>&lt;button&gt;</code>-eksempelet.</div>
       </div>
       <div class="fact-card">
         <div class="fc-key"><code>submit</code></div>
-        <div class="fc-val">Sender skjemaet til <code>action</code>-URL-en.</div>
-      </div>
-      <div class="fact-card">
-        <div class="fc-key"><code>image</code></div>
-        <div class="fc-val">Submit-knapp som er et bilde. Trenger <code>src</code> og <code>alt</code>.</div>
+        <div class="fc-val">«the submit button is used to send form to the server.»</div>
       </div>
     </div>
 
-    <div class="quiz mcq">
-      <div class="q-label">Sjekk · Middels</div>
-      <div class="q-text">Forskjellen på <code>type="number"</code> og <code>type="range"</code>?</div>
-      <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Begge er identiske, bare visuelt forskjellige</li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>number</code> brukes når eksakt verdi er viktig; <code>range</code> når den ikke er det (glidebryter)</li>
-        <li class="mcq-opt"><span class="opt-label">C</span> <code>range</code> tillater bare heltall, <code>number</code> tillater desimaler</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>number</code> sender ikke verdi til serveren</li>
-      </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Pensum: «range — A control for entering a number whose exact value is not important.»</div>
+    <h3 style="margin-top: 2em;">D · HTML5-typene (egne slides)</h3>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fc-key"><code>date</code></div>
+        <div class="fc-val">«If you are asking the user for a date, you can use an &lt;input&gt; element and give type="date"».</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key"><code>email</code></div>
+        <div class="fc-val">HTML5-felt for e-postadresser — nettleseren sjekker format.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key"><code>url</code></div>
+        <div class="fc-val">HTML5-felt for nettsteds-adresse — nettleseren sjekker at det ligner en URL.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fc-key"><code>search</code></div>
+        <div class="fc-val">Søkefelt. Brukes typisk med <code>placeholder</code>.</div>
+      </div>
     </div>
 
     <div class="quiz mcq">
@@ -338,59 +285,61 @@
         <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Det fallback-er til <code>type="text"</code></li>
         <li class="mcq-opt"><span class="opt-label">D</span> Det blir automatisk konvertert til <code>type="search"</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>C</strong>. Pensum: «If the browser doesn't support the value in the type attribute, the input field will be rendered as a text input.»</div>
+      <div class="mcq-feedback">Riktig: <strong>C</strong>. Nye HTML5-typer fallback-er til <code>text</code> hvis nettleseren ikke kjenner dem.</div>
+    </div>
+
+    <div class="quiz mcq">
+      <div class="q-label">Sjekk · Middels</div>
+      <div class="q-text">Hvilken kombinasjon brukes for å la brukeren laste opp en fil?</div>
+      <ul class="mcq-options">
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>type="upload"</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>type="file"</code> + <code>method="post"</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>type="file"</code> + <code>method="get"</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>type="image"</code></li>
+      </ul>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Slides forms.md: «Type="file" you can use only post method.»</div>
     </div>
   </div></section>
 
   <section id="attributter"><div class="container">
-    <div class="section-badge">05 · Attributter</div>
+    <div class="section-badge">04 · Attributter</div>
     <h2>Attributter med <em>eksempler</em></h2>
     <p class="section-intro">
-      Hvert attributt under er en del av pensum 1.9.2. Eksemplene viser
-      typisk bruk og hvilke <code>type</code>-verdier attributtet er
-      relevant for.
+      Bare attributter foreleser viste — text-input-eksempelet med
+      <code>name</code>, <code>size</code>, <code>maxlength</code>; HTML5-validering
+      med <code>required</code>; <code>placeholder</code>;
+      <code>checked</code>/<code>selected</code>; <code>multiple</code>.
     </p>
 
     <div class="def-box">
-      <div class="def-label">accept</div>
+      <div class="def-label">name</div>
       <p>
-        For <code>type="file"</code>: hvilke filtyper aksepteres.
-        Verdien er en kommaseparert liste av filendelser eller MIME-typer.
-        Filendelser starter med <code>.</code>; MIME-typer kan være
-        spesifikke eller bruke <code>*</code> for hele kategorier
-        (<code>image/*</code>, <code>audio/*</code>, <code>video/*</code>).
+        <strong>Hver input <em>bør</em> ha et <code>name</code>.</strong>
+        Slides sier: «the server needs to know the name of this information.»
+        Uten <code>name</code> sendes ikke kontrollen.
       </p>
-      <div class="code-result two-col">
-        <div class="pane">
-          <div class="pane-label">Bare bilder</div>
-<pre>&lt;label for="file"&gt;Velg fil:
-  &lt;input type="file" name="file"
-         id="file" accept="image/*"&gt;
-&lt;/label&gt;</pre>
-        </div>
-        <div class="pane">
-          <div class="pane-label">JPG eller PNG</div>
-<pre>&lt;label for="file"&gt;Velg fil:
-  &lt;input type="file" name="file"
-         id="file" accept=".jpg, .png"&gt;
-&lt;/label&gt;</pre>
-        </div>
+      <div class="callout-good">
+        <div class="label">Spesielt for radio</div>
+        <p>
+          Radio-knapper i samme gruppe deler <code>name</code>. Hver
+          knapp har sin egen <code>value</code>. Det som sendes er
+          <code>name=value</code> for den valgte knappen.
+        </p>
       </div>
     </div>
 
     <div class="def-box">
-      <div class="def-label">autocomplete</div>
+      <div class="def-label">size og maxlength</div>
       <p>
-        Indikerer om nettleseren kan auto-fullføre verdien (med tidligere
-        verdier brukeren har skrevet inn).
+        Slides forms.md viser begge på login-eksempelet:
+        <code>size="15"</code> styrer synlig bredde i tegn,
+        <code>maxlength="30"</code> setter maks antall tegn brukeren kan skrive.
       </p>
       <div class="code-result">
         <div class="pane">
-          <div class="pane-label">E-post med autocomplete</div>
-<pre>&lt;label for="e-mail"&gt;E-post:
-  &lt;input type="email" name="e-mail"
-         id="e-mail" autocomplete&gt;
-&lt;/label&gt;</pre>
+          <div class="pane-label">Brukernavn med begrenset lengde</div>
+<pre>&lt;input type="text" name="username"
+       size="15" maxlength="30"&gt;</pre>
         </div>
       </div>
     </div>
@@ -399,211 +348,72 @@
       <div class="def-label">checked</div>
       <p>
         Boolean. For <code>type="radio"</code> eller
-        <code>type="checkbox"</code>: kontrollen er forhåndsvalgt.
-        Ignoreres for andre typer.
+        <code>type="checkbox"</code>: kontrollen er forhåndsvalgt fra start.
+        Slides bruker syntaksen <code>checked="checked"</code>.
       </p>
       <div class="code-result">
         <div class="pane">
-          <div class="pane-label">Forhåndsavkrysset</div>
-<pre>&lt;label for="alligator"&gt;Er du en alligator?
-  &lt;input type="checkbox" name="alligator"
-         id="alligator" checked&gt;
-&lt;/label&gt;</pre>
+          <div class="pane-label">Forhåndsavkrysset radio</div>
+<pre>&lt;input type="radio" name="genre"
+       value="rock" checked="checked"&gt; Rock</pre>
         </div>
       </div>
     </div>
 
     <div class="def-box">
-      <div class="def-label">list</div>
+      <div class="def-label">multiple (på select)</div>
       <p>
-        Identifiserer en liste av forslag som skal vises til brukeren.
-        Verdien er ID-en til et <code>&lt;datalist&gt;</code>-element i
-        samme dokument. Brukes typisk til autofullføring.
+        På <code>&lt;select multiple="multiple"&gt;</code>: brukeren kan
+        velge flere alternativer ved å holde Ctrl/Cmd. Slides advarer at
+        nettlesere har «not very good support» for dette.
       </p>
       <div class="code-result">
         <div class="pane">
-          <div class="pane-label">Foreslå språk</div>
-<pre>&lt;label for="language"&gt;Foretrukket språk:
-  &lt;input type="text" name="language" list="prog-lang"&gt;
-&lt;/label&gt;
-&lt;datalist id="prog-lang"&gt;
-  &lt;option value="Python"&gt;&lt;/option&gt;
-  &lt;option value="JavaScript"&gt;&lt;/option&gt;
-  &lt;option value="Java"&gt;&lt;/option&gt;
-  &lt;option value="Elm"&gt;&lt;/option&gt;
-  &lt;option value="Haskell"&gt;&lt;/option&gt;
-&lt;/datalist&gt;</pre>
+          <div class="pane-label">Velg flere instrumenter</div>
+<pre>&lt;select name="instruments" multiple="multiple"&gt;
+  &lt;option value="guitar" selected="selected"&gt;Guitar&lt;/option&gt;
+  &lt;option value="drums"&gt;Drums&lt;/option&gt;
+&lt;/select&gt;</pre>
         </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">max</div>
-      <p>
-        Maks (numerisk eller dato/tid) verdi for kontrollen. Må ikke
-        være mindre enn <code>min</code>.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Klassetrinn maks 5</div>
-<pre>&lt;label for="class"&gt;Hvilket trinn er du i?
-  &lt;input type="number" name="class" id="class" max="5"&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">maxlength</div>
-      <p>
-        For tekst-typer (<code>text</code>, <code>email</code>,
-        <code>search</code>, <code>password</code>, <code>tel</code>,
-        <code>url</code>): maks antall tegn brukeren kan skrive.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">E-post på maks 40 tegn</div>
-<pre>&lt;label for="email"&gt;E-post:
-  &lt;input type="email" name="email"
-         id="email" maxlength="40"&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">min</div>
-      <p>
-        Min (numerisk eller dato/tid) verdi. Må ikke være større enn
-        <code>max</code>.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Trinn minst 1</div>
-<pre>&lt;label for="class"&gt;Trinn:
-  &lt;input type="number" name="class" id="class" min="1"&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">multiple</div>
-      <p>
-        Boolean. Lar brukeren legge inn flere verdier. Gjelder
-        <code>type="email"</code> (flere e-postadresser, kommaseparert)
-        og <code>type="file"</code> (flere filer i samme valg). Også
-        gyldig på <code>&lt;select&gt;</code>.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Velg flere filer</div>
-<pre>&lt;label for="file"&gt;Velg filer:
-  &lt;input type="file" name="file" id="file" multiple&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">pattern</div>
-      <p>
-        Et regulært uttrykk (RegEx) som verdien sjekkes mot. Samme
-        språk som JavaScript RegExp, med implisitt
-        <code>u</code>-flagget. <strong>Pattern omsluttes ikke av
-        skråstreker</strong> (<code>/.../</code>).
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">IATA-flyplasskode (3 bokstaver)</div>
-<pre>&lt;label for="iata"&gt;Flyplasskode:
-  &lt;input type="text" name="iata-code" id="iata"
-         pattern="[A-Za-z]{3}"
-         title="Tre bokstaver IATA-kode"&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-      <p>
-        <code>title</code>-attributtet vises som hint hvis brukeren legger
-        inn noe som ikke matcher pattern.
-      </p>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">placeholder</div>
-      <p>
-        Et hint i feltet om hva som kan skrives. Forsvinner så snart
-        brukeren begynner å skrive. Kan ikke inneholde linjeskift.
-      </p>
-      <div class="code-result">
-        <div class="pane">
-          <div class="pane-label">Hint på e-post</div>
-<pre>&lt;label for="email"&gt;E-post:
-  &lt;input type="email" name="email" id="email"
-         placeholder="ditt@domene.no"&gt;
-&lt;/label&gt;</pre>
-        </div>
-      </div>
-      <div class="callout-warn">
-        <div class="label">Ikke erstatt label</div>
-        <p>
-          Pensum understreker: <em>placeholder erstatter ikke
-          <code>&lt;label&gt;</code></em>. Label beskriver feltets
-          <em>rolle</em>; placeholder er bare et hint om format. I noen
-          tilfeller vises placeholder aldri (f.eks. ved autofullføring).
-        </p>
       </div>
     </div>
 
     <div class="def-box">
       <div class="def-label">required</div>
       <p>
-        Boolean. Brukeren må fylle ut feltet før skjemaet kan submit-es.
+        Boolean (slides bruker <code>required="required"</code>).
+        Brukeren må fylle ut feltet før skjemaet kan submit-es —
+        HTML5-validering.
       </p>
       <div class="code-result">
         <div class="pane">
-          <div class="pane-label">Obligatorisk passord</div>
-<pre>&lt;label for="password"&gt;Passord:
-  &lt;input type="password" name="password"
-         id="password" required&gt;
-&lt;/label&gt;</pre>
+          <div class="pane-label">Obligatorisk brukernavn</div>
+<pre>&lt;input type="text" name="username"
+       required="required"&gt;</pre>
         </div>
       </div>
     </div>
 
     <div class="def-box">
-      <div class="def-label">step</div>
+      <div class="def-label">placeholder</div>
       <p>
-        Sammen med <code>min</code> og <code>max</code>: tillatte
-        intervaller for numeriske eller dato-verdier. Kan være strengen
-        <code>any</code> eller et positivt flyttall. Hvis ikke
-        <code>any</code>, godtas bare verdier som er multiple av step
-        over <code>min</code>.
+        Slides: «<em>placeholder, whose value will be shown in the text box
+        until the user clicks in that area</em>.» Forsvinner når brukeren
+        begynner å skrive.
       </p>
       <div class="code-result">
         <div class="pane">
-          <div class="pane-label">Inntekt i tusen-trinn</div>
-<pre>&lt;label for="income"&gt;Inntekt:
-  &lt;input type="range" name="income" id="income"
-         step="1000" min="0" max="100000"&gt;
-&lt;/label&gt;</pre>
+          <div class="pane-label">Søk med hint</div>
+<pre>&lt;input type="search" name="search"
+       placeholder="Enter keyword"&gt;</pre>
         </div>
       </div>
-    </div>
-
-    <div class="def-box">
-      <div class="def-label">name</div>
-      <p>
-        <strong>Hver input <em>bør</em> ha et <code>name</code>.</strong>
-        Det er navnet som brukes når data sendes med GET eller POST. Uten
-        <code>name</code> sendes kontrollen ikke i det hele tatt.
-      </p>
-      <div class="callout-good">
-        <div class="label">Spesielt for radio</div>
+      <div class="callout-warn">
+        <div class="label">Ikke erstatt label</div>
         <p>
-          Radio-knapper i samme gruppe deler <code>name</code>. Hver
-          knapp har sin egen <code>value</code>. Det som sendes er
-          <code>name=value</code> for den valgte knappen.
+          Placeholder er et <em>hint</em>, ikke en etikett. Slides legger
+          vekt på at <code>&lt;label&gt;</code>-elementet er det som
+          beskriver feltets rolle.
         </p>
       </div>
     </div>
@@ -621,52 +431,44 @@
     </div>
 
     <div class="quiz mcq">
-      <div class="q-label">Sjekk · Vanskelig</div>
-      <div class="q-text">På hvilke <code>type</code>-verdier er <code>multiple</code> gyldig?</div>
+      <div class="q-label">Sjekk · Middels</div>
+      <div class="q-text">På hvilke elementer kan <code>checked</code> brukes?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Bare <code>text</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>email</code> og <code>file</code></li>
-        <li class="mcq-opt"><span class="opt-label">C</span> Alle typer</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Bare <code>checkbox</code> og <code>radio</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> På alle <code>&lt;input&gt;</code>-typer</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Kun på <code>type="radio"</code> og <code>type="checkbox"</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Kun på <code>&lt;option&gt;</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Kun på <code>type="submit"</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>multiple</code> gjelder <code>type="email"</code> (flere e-postadresser) og <code>type="file"</code> (flere filer). Også gyldig på <code>&lt;select&gt;</code>.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>checked</code> markerer en radio eller checkbox som forhåndsvalgt. På <code>&lt;option&gt;</code> heter tilsvarende attributt <code>selected</code>.</div>
     </div>
   </div></section>
 
   <section id="textarea"><div class="container">
-    <div class="section-badge">06 · textarea</div>
+    <div class="section-badge">05 · textarea</div>
     <h2>textarea — flere <em>linjer</em> tekst</h2>
     <p>
-      <code>&lt;textarea&gt;</code> er et tekstfelt med flere linjer. Det
-      oppfører seg som <code>type="text"</code>, men brukeren kan trykke
-      Enter for å lage linjeskift.
+      <code>&lt;textarea&gt;</code> er et tekstfelt med flere linjer.
+      Slides: «is multiline for longer areas of text». «This is not an
+      empty element, it should therefore have an opening and closing tag.»
     </p>
 
     <div class="callout">
-      <div class="label">Tre attributter for layout</div>
+      <div class="label">To attributter foreleser viste</div>
       <table style="width:100%; border-collapse:collapse; margin-top:0.6em;">
         <thead>
           <tr style="text-align:left; border-bottom:1px solid var(--line, #ddd);">
             <th style="padding:0.4em 0.8em;">Attributt</th>
-            <th style="padding:0.4em 0.8em;">Default</th>
             <th style="padding:0.4em 0.8em;">Beskrivelse</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style="padding:0.4em 0.8em;"><code>cols</code></td>
-            <td style="padding:0.4em 0.8em;">20</td>
-            <td style="padding:0.4em 0.8em;">Synlig bredde, målt i gjennomsnittlig tegnbredde.</td>
+            <td style="padding:0.4em 0.8em;">Synlig bredde, målt i tegn (slides bruker <code>cols="20"</code>).</td>
           </tr>
           <tr>
             <td style="padding:0.4em 0.8em;"><code>rows</code></td>
-            <td style="padding:0.4em 0.8em;">—</td>
-            <td style="padding:0.4em 0.8em;">Antall synlige tekstlinjer.</td>
-          </tr>
-          <tr>
-            <td style="padding:0.4em 0.8em;"><code>wrap</code></td>
-            <td style="padding:0.4em 0.8em;"><code>soft</code></td>
-            <td style="padding:0.4em 0.8em;">Hvordan teksten brytes — <code>soft</code> eller <code>hard</code>.</td>
+            <td style="padding:0.4em 0.8em;">Antall synlige tekstlinjer (slides bruker <code>rows="4"</code>).</td>
           </tr>
         </tbody>
       </table>
@@ -678,19 +480,17 @@
         I motsetning til <code>&lt;input&gt;</code> (som er et
         void-element) er <code>&lt;textarea&gt;</code> et vanlig element
         med åpning og lukking. Standardverdi skrives <em>mellom</em>
-        taggene, ikke som <code>value</code>-attributt. HTML/markup i
-        innholdet rendres som ren tekst.
+        taggene, ikke som <code>value</code>-attributt.
       </p>
     </div>
 
     <div class="code-result">
       <div class="pane">
-        <div class="pane-label">Kommentar-tekstområde</div>
-<pre>&lt;form&gt;
-  &lt;label for="text"&gt;Skriv din historie:&lt;/label&gt;
-  &lt;textarea name="text" id="text"
-            rows="8" cols="80" wrap="soft"&gt;
-Dette er min historie, og den handler om webteknologier!
+        <div class="pane-label">Kommentar-tekstområde (slides forms.md)</div>
+<pre>&lt;form action="http://www.example.com/comments.php"&gt;
+  &lt;p&gt;What did you think of this gig?&lt;/p&gt;
+  &lt;textarea name="comments" cols="20" rows="4"&gt;
+Enter your comments...
   &lt;/textarea&gt;
 &lt;/form&gt;</pre>
       </div>
@@ -710,7 +510,7 @@ Dette er min historie, og den handler om webteknologier!
   </div></section>
 
   <section id="select"><div class="container">
-    <div class="section-badge">07 · select, option, optgroup</div>
+    <div class="section-badge">06 · select, option, optgroup</div>
     <h2>select — <em>nedtrekkslister</em></h2>
     <p>
       <code>&lt;select&gt;</code> lager en nedtrekksboks der brukeren
@@ -773,7 +573,7 @@ Dette er min historie, og den handler om webteknologier!
   </div></section>
 
   <section id="feller"><div class="container">
-    <div class="section-badge">08 · Vanlige feller</div>
+    <div class="section-badge">07 · Vanlige feller</div>
     <h2>Vanlige <em>feller</em></h2>
 
     <div class="callout-warn">
@@ -795,18 +595,7 @@ Dette er min historie, og den handler om webteknologier!
     </div>
 
     <div class="callout-warn">
-      <div class="label">Felle 3 — pattern med skråstreker</div>
-      <p>
-        I HTML <code>pattern</code>-attributtet skal du
-        <em>ikke</em> ha skråstreker rundt verdien: skriv
-        <code>pattern="[A-Za-z]{3}"</code>, ikke <code>pattern="/[A-Za-z]{3}/"</code>.
-        <code>^</code> og <code>$</code> er heller ikke nødvendig — pattern
-        sjekkes mot hele verdien.
-      </p>
-    </div>
-
-    <div class="callout-warn">
-      <div class="label">Felle 4 — textarea med value-attributt</div>
+      <div class="label">Felle 3 — textarea med value-attributt</div>
       <p>
         <code>&lt;textarea value="Hei"&gt;&lt;/textarea&gt;</code> gir et
         tomt tekstområde. Standardverdi skal stå <em>mellom</em> taggene:
@@ -815,7 +604,7 @@ Dette er min historie, og den handler om webteknologier!
     </div>
 
     <div class="callout-warn">
-      <div class="label">Felle 5 — label uten kobling</div>
+      <div class="label">Felle 4 — label uten kobling</div>
       <p>
         En <code>&lt;label&gt;</code> uten <code>for</code> og uten å
         omslutte input-en er bare tekst. Klikk på den gjør ingenting,
@@ -825,7 +614,7 @@ Dette er min historie, og den handler om webteknologier!
   </div></section>
 
   <section id="mcq"><div class="container">
-    <div class="section-badge">09 · Test deg selv</div>
+    <div class="section-badge">08 · Test deg selv</div>
     <h2>Multiple <em>choice</em></h2>
 
     <div class="quiz mcq">
@@ -866,26 +655,26 @@ Dette er min historie, og den handler om webteknologier!
 
     <div class="quiz mcq">
       <div class="q-label">4 · Middels</div>
-      <div class="q-text">Hvordan skriver du <code>pattern</code>-verdien for «nøyaktig tre bokstaver»?</div>
+      <div class="q-text">Hva gjør <code>maxlength="30"</code> på et <code>&lt;input type="text"&gt;</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>pattern="/^[A-Za-z]{3}$/"</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>pattern="[A-Za-z]{3}"</code></li>
-        <li class="mcq-opt"><span class="opt-label">C</span> <code>pattern="^[A-Za-z]{3}$"</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>pattern="\w{3}"</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> Setter visuell bredde til 30 tegn</li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> Begrenser brukeren til maks 30 tegn i feltet</li>
+        <li class="mcq-opt"><span class="opt-label">C</span> Krever <em>minst</em> 30 tegn</li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Strekker feltet over 30 linjer</li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Pensum: «The pattern is not surrounded by forward slashes.» Pattern matches hele verdien — ingen <code>^</code>/<code>$</code> nødvendig.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Slides: «You can use maxlength attribute to limit the number of characters a user may enter into the text field.» Visuell bredde styres av <code>size</code>.</div>
     </div>
 
     <div class="quiz mcq">
       <div class="q-label">5 · Middels</div>
-      <div class="q-text">Hvilken kombinasjon gir en glidebryter med min/max og 1000 i steg?</div>
+      <div class="q-text">Hvilket attributt forhåndsmerker en <code>&lt;option&gt;</code> i en <code>&lt;select&gt;</code>?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> <code>type="number" step="1000"</code></li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>type="range" min="0" max="100000" step="1000"</code></li>
-        <li class="mcq-opt"><span class="opt-label">C</span> <code>type="slider" interval="1000"</code></li>
-        <li class="mcq-opt"><span class="opt-label">D</span> <code>type="range" interval="1000"</code></li>
+        <li class="mcq-opt"><span class="opt-label">A</span> <code>checked</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> <code>selected</code></li>
+        <li class="mcq-opt"><span class="opt-label">C</span> <code>active</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> <code>default</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. <code>range</code> = glidebryter, <code>step</code> styrer tillatte intervaller mellom <code>min</code> og <code>max</code>.</div>
+      <div class="mcq-feedback">Riktig: <strong>B</strong>. Slides bruker <code>selected="selected"</code> for forhåndsvalgt option. <code>checked</code> er for radio/checkbox.</div>
     </div>
 
     <div class="quiz mcq">
@@ -902,14 +691,14 @@ Dette er min historie, og den handler om webteknologier!
 
     <div class="quiz mcq">
       <div class="q-label">7 · Vanskelig</div>
-      <div class="q-text">Du har <code>&lt;textarea&gt;</code> uten <code>cols</code> og <code>rows</code> satt. Hva er standard bredde?</div>
+      <div class="q-text">Hvilken syntaksvariant for <code>&lt;label&gt;</code> brukes i forelesningen?</div>
       <ul class="mcq-options">
-        <li class="mcq-opt"><span class="opt-label">A</span> Hele bredden av forelderen</li>
-        <li class="mcq-opt" data-correct="1"><span class="opt-label">B</span> 20 tegn (cols-default)</li>
-        <li class="mcq-opt"><span class="opt-label">C</span> 80 tegn</li>
-        <li class="mcq-opt"><span class="opt-label">D</span> Ingen bredde — feltet blir usynlig</li>
+        <li class="mcq-opt"><span class="opt-label">A</span> Bare <code>&lt;label for="id"&gt;</code> med <code>for</code></li>
+        <li class="mcq-opt"><span class="opt-label">B</span> Bare wrap-stilen <code>&lt;label&gt;...&lt;input&gt;&lt;/label&gt;</code></li>
+        <li class="mcq-opt" data-correct="1"><span class="opt-label">C</span> Begge — slides nevner eksplisitt at <code>&lt;label&gt;</code> kan «wrap around both text description and the form input» <em>eller</em> «indicate which control it is a label for» via <code>for</code></li>
+        <li class="mcq-opt"><span class="opt-label">D</span> Ingen — slides bruker bare <code>placeholder</code></li>
       </ul>
-      <div class="mcq-feedback">Riktig: <strong>B</strong>. Pensum-tabellen: <code>cols</code> har default 20.</div>
+      <div class="mcq-feedback">Riktig: <strong>C</strong>. Slides forms.md viser begge mønstrene side om side.</div>
     </div>
   </div></section>
 </main>

@@ -51,8 +51,7 @@
         <p style="margin-top:0;">
           Forskjellen mellom <code>display:none</code>, <code>display:inline</code>,
           <code>display:block</code> og <code>visibility:hidden</code> har vært
-          langsvarsoppgave på 2 av 3 sett (4–6 %). Padding-spørsmål dukker
-          også opp som MCQ to ganger. I tillegg får du ofte en kort
+          langsvarsoppgave på 2 av 3 sett (4–6 %). I tillegg får du ofte en kort
           posisjoneringsoppgave (relative vs absolute).
         </p>
         <div class="ef-grid">
@@ -61,19 +60,18 @@
             <ul>
               <li><strong>display</strong>: none (fjernet, ingen plass), inline (i tekstflyt), block (full bredde), inline-block</li>
               <li><strong>visibility:hidden</strong> — usynlig MEN beholder plassen (dette er fellen)</li>
-              <li><strong>padding</strong> = mellomrom mellom border og innhold (har vært MCQ to ganger)</li>
               <li><strong>position</strong>: static (default), relative (fra normalpos), absolute (fra forelder), fixed (viewport)</li>
               <li><strong>Skrive CSS</strong> for "20px ned, 30px inn" eller absolutt fra HTML-roten</li>
               <li><strong>z-index</strong> styrer stable-rekkefølge (krever position ≠ static)</li>
+              <li><strong>overflow</strong>: foreleser har matching-MCQ med fem verdier (<code>visible</code>, <code>hidden</code>, <code>scroll</code>, <code>clip</code>, <code>auto</code>)</li>
             </ul>
           </div>
           <div class="ef-block skip">
             <h4>Kan nedprioriteres</h4>
             <ul>
               <li>float-baserte layouter — moderne pensum bruker Flexbox/Grid</li>
-              <li>clear-property og clearfix — ikke i eksamen</li>
-              <li>overflow-detaljer (auto vs scroll vs hidden) — kun i passering</li>
-              <li>Avanserte pseudo-klasser (<code>:not()</code>, <code>:nth-of-type</code>)</li>
+              <li>clear — verdt å kunne <code>clear: both</code>, men ikke noe mer enn det</li>
+              <li>Avanserte pseudo-klasser (<code>:not()</code>, <code>:nth-of-type</code>) — ikke i pensum 1.7.6</li>
             </ul>
           </div>
         </div>
@@ -960,6 +958,7 @@ input:valid {
       <div class="fact-card"><div class="fc-key">visible</div><div class="fc-val">Default. Innholdet klippes ikke — det kan rendres utenfor content-boksen.</div></div>
       <div class="fact-card"><div class="fc-key">hidden</div><div class="fc-val">Innholdet klippes. Ingen scrollbar.</div></div>
       <div class="fact-card"><div class="fc-key">scroll</div><div class="fc-val">Innholdet klippes. Desktop-nettlesere viser scrollbar — uavhengig av om noe faktisk overflows.</div></div>
+      <div class="fact-card"><div class="fc-key">clip</div><div class="fc-val">Som <code>hidden</code>, men forbyr <em>all</em> scrolling (også programmatisk). Foreleser bruker denne verdien i matching-MCQ.</div></div>
       <div class="fact-card"><div class="fc-key">auto</div><div class="fc-val">Avhenger av user agent. Firefox og co. viser scrollbar bare når innholdet overflows.</div></div>
     </div>
     <pre><code>/* Innholdet klippes ikke */
@@ -971,8 +970,20 @@ overflow: hidden;
 /* Innholdet klippes, med scrollbars */
 overflow: scroll;
 
+/* Klippes, ingen scroll i det hele tatt */
+overflow: clip;
+
 /* La nettleseren bestemme */
 overflow: auto;</code></pre>
+    <div class="callout-blue">
+      <div class="label">Foreleserens matching-MCQ</div>
+      <p>
+        Pensum 1.7.7 lister fire verdier (<code>visible</code>, <code>hidden</code>,
+        <code>scroll</code>, <code>auto</code>). I forelesningen om eksamen viste
+        foreleser likevel en matching-oppgave med <strong>fem</strong> verdier —
+        de fire i pensum pluss <code>clip</code>. Vær forberedt på alle fem.
+      </p>
+    </div>
 
     <div class="quiz mcq" data-quiz>
       <div class="q-label">MCQ · 1.7.7</div>
@@ -1589,8 +1600,8 @@ overflow: auto;</code></pre>
       <div class="flashcard">
         <div class="flashcard__head"><span class="flashcard__topic">1.7.7 · Overflow</span><span class="flashcard__diff" data-diff="lett">Lett</span></div>
         <div class="flashcard__inner">
-          <div class="flashcard__front"><p class="fc-question">Hvilke fire verdier kan <code>overflow</code> ta?</p></div>
-          <div class="flashcard__back"><p><code>visible</code> (default), <code>hidden</code>, <code>scroll</code>, <code>auto</code>.</p><p class="fc-ref">Pensum 1.7.7</p></div>
+          <div class="flashcard__front"><p class="fc-question">Hvilke verdier kan <code>overflow</code> ta?</p></div>
+          <div class="flashcard__back"><p>Pensum 1.7.7 lister fire: <code>visible</code> (default), <code>hidden</code>, <code>scroll</code>, <code>auto</code>. Foreleserens matching-MCQ legger til <code>clip</code> som femte verdi.</p><p class="fc-ref">Pensum 1.7.7</p></div>
         </div>
       </div>
 

@@ -324,7 +324,6 @@ div ~ p        /* alle søsken  */
 :first-child :last-child
 ::first-letter /* pseudo-el    */
 ::first-line
-::before ::after
 a:link a:visited
 input:checked</pre>
     </div>
@@ -575,10 +574,10 @@ typeof x      // gir streng</pre>
 "abcde"[2]             // "c"
 "abcde".substring(2,4) // "cd"
 "abcde".slice(-3,-1)   // "cd"
+"abcde".charAt(2)      // "c"
 "abcde".indexOf("c")   // 2
 "abc".toUpperCase()    // "ABC"
 "  a  ".trim()         // "a"
-"a-b-c".split("-")     // ["a","b","c"]
 "abc".concat("de")     // "abcde"
 "abc".replace("b","X") // "aXc"
 "abc".includes("b")    // true</pre>
@@ -601,8 +600,7 @@ a.sort()           // alfabetisk!
 a.reverse()
 a.join("-")        // "1-2-3"
 a.concat([4,5])
-a.at(-1)           // siste el
-a[100] = "x"       // length=101</pre>
+a.at(-1)           // siste el</pre>
     </div>
 
     <div class="box">
@@ -618,9 +616,9 @@ a[100] = "x"       // length=101</pre>
         <b>Math.pow(2,3)</b><span>8</span>
         <b>Math.sqrt(9)</b><span>3</span>
         <b>Math.PI</b><span>3.14…</span>
-        <b>Math.random()</b><span>0–1</span>
+        <b>Math.sign(-3)</b><span>-1</span>
       </div>
-      <p style="font-size:7.4pt;">Tall fra 1–10: <code>Math.floor(Math.random()*10)+1</code></p>
+      <p style="font-size:7.4pt;">Konstanter også: <code>Math.E</code>, <code>Math.SQRT2</code>, <code>Math.LN2</code>.</p>
     </div>
 
     <div class="box">
@@ -650,9 +648,9 @@ let dgr = Math.ceil(
 "abc".padEnd(5,"-")     // "abc--"
 "abc".replaceAll("a","X")
 "abc".search("b")       // 1
+"abc".lastIndexOf("a")  // 0
 "abc".at(-1)            // "c"
-"abc".charCodeAt(0)     // 97
-"a-b-c".split("-")      // ["a","b","c"]</pre>
+"abc".charCodeAt(0)     // 97</pre>
     </div>
 
     <div class="box">
@@ -705,17 +703,17 @@ p.name           // "Ada"
 p["name"]        // "Ada"
 p.age = 26;      // endre
 delete p.age;
-Object.keys(p)   // ["name","age",...]</pre>
+// iterer m/ for...in</pre>
     </div>
 
     <div class="box fact">
-      <h4>Skope (global / lokal / leksikalsk)</h4>
+      <h4>Variabler &amp; scope</h4>
       <ul>
         <li><b>Global:</b> variabler erklært utenfor funksjoner — tilgang overalt.</li>
         <li><b>Lokal:</b> erklært inne i en funksjon — kun synlig der.</li>
-        <li><b>Leksikalsk:</b> indre funksjoner ser variabler i ytre.</li>
         <li><code>let</code>/<code>const</code> = blokk-scope (<code>{ }</code>); <code>var</code> = funksjonsscope.</li>
-        <li><code>alert(x)</code> / <code>console.log(x)</code> for utskrift.</li>
+        <li><code>var</code> kan re-deklareres → bruk <code>let</code> (foreleser-anbefaling).</li>
+        <li><code>console.log(x)</code> for utskrift til devtools.</li>
       </ul>
     </div>
 
@@ -1099,15 +1097,15 @@ function add(){
     </div>
 
     <div class="box code">
-      <h4>HTML5-validering (i form)</h4>
-<pre>&lt;input type="text" required&gt;
-&lt;input type="email" required&gt;
-&lt;input type="number" min="0" max="100"&gt;
-&lt;input type="text" pattern="[A-Za-z]{3}"
-       title="Tre bokstaver"&gt;
-&lt;input type="text" maxlength="20"&gt;
-&lt;input type="text" placeholder="Skriv …"&gt;</pre>
-      <p style="font-size:7.0pt;"><b>pattern</b> bruker en regex i selve HTML — du trenger ikke kunne regex i JS for eksamen. <code>required</code>, <code>min</code>/<code>max</code>, <code>maxlength</code>, <code>type="email"</code> gir innebygd validering.</p>
+      <h4>HTML5-validering (forelesning)</h4>
+<pre>&lt;input type="text" required="required"&gt;
+&lt;input type="email" required="required"&gt;
+&lt;input type="url"&gt;
+&lt;input type="date"&gt;
+&lt;input type="search"
+       placeholder="Enter keyword"&gt;
+&lt;input type="text" maxlength="30"&gt;</pre>
+      <p style="font-size:7.0pt;"><code>required</code> + riktig <code>type</code> (email/url/date) + <code>maxlength</code> + <code>placeholder</code>. Det er det slides viser. <i>Pattern/min/max/step er ikke i forelesning.</i></p>
     </div>
 
     <div class="box must">
@@ -1218,63 +1216,58 @@ domenenavn : / sti
 
     <div class="box">
       <h4>Flexbox (1D)</h4>
-<pre>.container {
+<pre>.container {            /* container */
   display: flex;
   flex-direction: row|column;
-  justify-content:        /* hovedakse */
-    flex-start|center|flex-end
-   |space-between|space-around|space-evenly;
-  align-items:            /* kryssakse */
-    stretch|center|flex-start|flex-end;
   flex-wrap: wrap|nowrap;
-  flex-flow: row wrap;    /* kortform */
-  gap: 10px;
+  flex-flow: row wrap;  /* kortform */
+  justify-content: ...; /* hovedakse */
+  align-items: ...;     /* kryssakse */
+  align-content: ...;   /* flere linjer */
 }
-.item {
-  flex: 1;                /* grow */
-  flex-grow: 1; flex-shrink: 1;
+.item {                 /* item */
+  order: -1;            /* sortering */
+  flex-grow: 1;
+  flex-shrink: 1;
   flex-basis: 200px;
-  order: -1;              /* sortering */
+  flex: 1;              /* grow/shrink/basis */
   align-self: center;
 }</pre>
+      <p style="font-size:6.8pt;">Akser: <code>flex-direction: row</code> → main horisontal, cross vertikal. <code>column</code> → omvendt.</p>
     </div>
 
     <div class="box">
       <h4>Grid (2D)</h4>
-<pre>.grid {
+<pre>.grid {                  /* container */
   display: grid;
-  grid-template-columns:
-    1fr 2fr 1fr;
-  grid-template-rows: 100px auto;
+  grid-template-columns: ...;
+  grid-template-rows: ...;
   grid-template-areas:
     "h h h"
     "s m m";
-  gap: 10px;
-  justify-items: center;  /* horiz */
-  align-items: center;    /* vert */
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-gap: 10px;        /* kortform */
+  justify-items: center; /* per celle */
+  align-items: center;
+  justify-content: ...;  /* hele grid */
+  align-content: ...;
+  grid-auto-flow: row|column;
 }
-.item {
-  grid-column: 1 / 3;     /* fra/til */
-  grid-row: 1 / span 2;
-  grid-area: h;           /* navngitt */
+.item {                  /* item */
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-column: 1 / 3;    /* kortform */
+  grid-row: 1 / 2;
+  grid-area: h;          /* navngitt */
+  justify-self: center;
+  align-self: center;
 }</pre>
-      <p style="font-size:6.8pt;">Flex = 1D. Grid = 2D. <code>fr</code> = del av ledig plass.</p>
-    </div>
-
-    <div class="box code">
-      <h4>Media query — detalj</h4>
-<pre>@media screen and (max-width: 600px){…}
-@media (min-width:601px) and
-       (max-width:900px){…}
-@media (orientation: landscape){…}
-@media print {…}
-@media not screen {…}
-@media only screen and (min-width:900px){…}</pre>
-      <p style="font-size:6.8pt;">Typer: <code>all|screen|print</code>. Features: <code>width</code>, <code>height</code>, <code>orientation</code>, <code>resolution</code> (med <code>min-/max-</code>).</p>
+      <p style="font-size:6.8pt;">Flex = 1D. Grid = 2D. Konsepter: <b>grid line</b> (linje), <b>grid track</b> (rad/kolonne), <b>grid cell</b> (én rute), <b>grid area</b> (flere ruter).</p>
     </div>
 
     <div class="box">
-      <h4>Responsivt design</h4>
+      <h4>Responsivt design <span style="font-size:6.4pt;font-weight:400;opacity:.7;">(Øving 3 — basic @media)</span></h4>
 <pre>&lt;meta name="viewport"
  content="width=device-width,
  initial-scale=1.0"&gt;
@@ -1289,16 +1282,17 @@ domenenavn : / sti
     </div>
 
     <div class="box">
-      <h4>Forms — input-typer</h4>
+      <h4>Forms — input-typer (forelesning)</h4>
       <ul>
-        <li><code>text</code>, <code>password</code>, <code>email</code></li>
-        <li><code>number</code>, <code>tel</code>, <code>url</code></li>
-        <li><code>date</code>, <code>time</code>, <code>color</code>, <code>range</code></li>
+        <li><code>text</code>, <code>password</code></li>
+        <li><code>email</code>, <code>url</code>, <code>search</code>, <code>date</code></li>
         <li><code>checkbox</code>, <code>radio</code> (samme <code>name</code> i gruppe)</li>
-        <li><code>file</code>, <code>hidden</code>, <code>submit</code>, <code>reset</code></li>
-        <li><code>select</code>+<code>option</code>, <code>textarea</code></li>
+        <li><code>file</code> (kun POST), <code>hidden</code></li>
+        <li><code>submit</code>, <code>button</code>, <code>image</code> (src+alt)</li>
+        <li><code>select</code>+<code>option</code> (+<code>optgroup</code>), <code>textarea</code></li>
       </ul>
-      <p style="font-size:6.8pt;">Attributter: <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern="..."</code>, <code>placeholder</code>, <code>autofocus</code>, <code>maxlength</code>, <code>checked</code>.</p>
+      <p style="font-size:6.8pt;">Attributter slides viser: <code>name</code>, <code>value</code>, <code>size</code>, <code>maxlength</code>, <code>cols</code>/<code>rows</code>, <code>checked</code>, <code>selected</code>, <code>multiple</code>, <code>required</code>, <code>placeholder</code>.</p>
+      <p style="font-size:6.4pt; opacity:0.75;"><i>Ikke i forelesning: <code>number</code>, <code>range</code>, <code>tel</code>, <code>time</code>, <code>color</code>, <code>reset</code>, <code>pattern</code>, <code>min</code>/<code>max</code>, <code>autofocus</code>, <code>output</code>, <code>:valid</code>/<code>:invalid</code>.</i></p>
     </div>
 
     <div class="box must">
@@ -1317,7 +1311,6 @@ domenenavn : / sti
    &lt;option value="no"&gt;Norge&lt;/option&gt;
   &lt;/select&gt;
   &lt;textarea rows="4" cols="30"&gt;&lt;/textarea&gt;
-  &lt;output id="r"&gt;&lt;/output&gt;
  &lt;/fieldset&gt;
 &lt;/form&gt;</pre>
       <p style="font-size:6.8pt;"><b>name</b> sendes til server, <b>id</b> brukes av JS/CSS/label. Radio-gruppe: samme <code>name</code> → bare ett valg.</p>
@@ -1335,10 +1328,11 @@ domenenavn : / sti
         </tbody>
       </table>
       <p style="font-size:6.8pt;"><b>Raster</b> = piksler (skaleres dårlig). <b>Vektor</b> = matematikk (skalerer fritt). <code>&lt;figure&gt;&lt;img&gt;&lt;figcaption&gt;</code> = bilde m/ tekst.</p>
+      <p style="font-size:6.4pt; opacity:0.75;"><i>Forelesning: kun JPEG/GIF + tre regler (riktig format/størrelse, piksler). SVG = «way ahead IT2810».</i></p>
     </div>
 
     <div class="box code">
-      <h4>Video / audio</h4>
+      <h4>Video / audio <span style="font-weight:normal; opacity:0.7; font-size:0.85em;">(pensumbok 1.8 / hist. MCQ)</span></h4>
 <pre>&lt;video controls poster="x.jpg"
        width="400" autoplay muted loop&gt;
   &lt;source src="film.mp4" type="video/mp4"&gt;

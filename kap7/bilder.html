@@ -120,7 +120,7 @@
       </div>
 
       <div class="callout-warn">
-        <div class="label">Dekorative bilder</div>
+        <div class="label">Dekorative bilder <span style="font-weight:400; opacity:0.7;">(pensumboka 1.8, ikke i slides)</span></div>
         <p>
           Hvis bildet er <em>rent dekorativt</em> (en strek, et
           ornament, et bakgrunnsbilde lagt inn som <code>&lt;img&gt;</code>),
@@ -132,7 +132,8 @@
         <p style="margin-top:0.6em;">
           Pensum 1.8 sier eksplisitt: «If the image is purely
           decorative, the alt attribute should still be present, but
-          the quotes should be left empty.»
+          the quotes should be left empty.» Foreleser sa ikke dette i
+          slides, men prinsippet er fornuftig i praksis.
         </p>
       </div>
     </div>
@@ -197,13 +198,98 @@
           du CSS (f.eks. <code>float</code>, <code>margin</code>,
           flex/grid).
         </p>
+        <p style="margin-top:0.6em; font-size:0.9em; opacity:0.85;">
+          <em>Merknad:</em> Denne formuleringen står i pensumboka 1.8,
+          men ble ikke direkte gjennomgått i forelesningens slides.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="plassering">
+    <div class="container">
+      <div class="section-badge">04 · Plassering &amp; tre regler</div>
+      <h2>Plassering &mdash; og tre <em>regler fra forelesning</em></h2>
+      <p class="section-intro">
+        Foreleser brukte tre slides på dette: hvor du plasserer
+        <code>&lt;img&gt;</code> i forhold til avsnittet, og tre regler
+        for å lage gode bilder for web. Begge deler ligger på slides 18&ndash;20
+        i <code>presentasjoner/basics_html.md</code>.
+      </p>
+
+      <h3 style="margin-top:1.2em;">Plassering i forhold til avsnitt</h3>
+      <p>
+        Fordi <code>&lt;img&gt;</code> er et inline-element kan det
+        ligge før, inni eller midt i et <code>&lt;p&gt;</code>. Slik som
+        slidesen viser:
+      </p>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Før avsnittet</div>
+          <pre>&lt;img src="images/bird.gif" alt="Bird" width="100" height="100"&gt;
+&lt;p&gt;There are around 10,000 living species of birds &hellip;&lt;/p&gt;</pre>
+        </div>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Inni avsnittet (helt foran teksten)</div>
+          <pre>&lt;p&gt;&lt;img src="images/bird.gif" alt="Bird" width="100" height="100"&gt;
+There are around 10,000 living species of birds &hellip;&lt;/p&gt;</pre>
+        </div>
+      </div>
+
+      <div class="code-result">
+        <div class="pane">
+          <div class="pane-label">Midt i avsnittet</div>
+          <pre>&lt;p&gt;There are around 10,000 living species of birds &hellip;
+&lt;img src="images/bird.gif" alt="Bird" width="100" height="100"&gt;
+Many species undertake long distance annual migrations &hellip;&lt;/p&gt;</pre>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2em;">Tre regler for bilder (fra forelesning)</h3>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fc-key">1 · Riktig format</div>
+          <div class="fc-val">
+            Lagre bildet i riktig format &mdash; ellers ser siden ikke
+            skarp ut, eller laster sakte. Foreleser nevner JPEG til
+            fotografier, GIF til logoer/illustrasjoner med flate farger.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">2 · Riktig størrelse</div>
+          <div class="fc-val">
+            Lagre bildet i riktig størrelse &mdash; gir raskere lasting
+            og slipper at bildet strekkes/skaleres i nettleseren.
+          </div>
+        </div>
+        <div class="fact-card">
+          <div class="fc-key">3 · Mål i piksler</div>
+          <div class="fc-val">
+            Bruk piksler (ikke cm eller tommer). Da blir bildet
+            uavhengig av skjermens fysiske oppløsning.
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-blue" style="margin-top:1em;">
+        <div class="label">CSS tar over mer og mer</div>
+        <p>
+          Foreleser legger til at <em>CSS i økende grad brukes</em> for
+          å sette størrelsen i stedet for <code>width</code>/<code>height</code>-attributter
+          på <code>&lt;img&gt;</code>. Da kan du gjenbruke samme bilde
+          i flere størrelser via klasser.
+        </p>
       </div>
     </div>
   </section>
 
   <section id="formater">
     <div class="container">
-      <div class="section-badge">04 · Bildeformater</div>
+      <div class="section-badge">05 · Bildeformater</div>
       <h2>Fire <em>formater</em> du må kjenne</h2>
       <p class="section-intro">
         Pensum 1.8 går gjennom fire bildeformater som er relevante
@@ -251,7 +337,18 @@
         <li><strong>Transparens:</strong> ja, men bare 1-bits.</li>
       </ul>
 
-      <h3 style="margin-top:1.5em;">SVG</h3>
+      <h3 style="margin-top:1.5em;">SVG <span style="font-size:0.7em; opacity:0.7; font-weight:normal;">(utenfor IT2805-pensum)</span></h3>
+      <div class="callout-warn" style="margin-bottom:0.6em;">
+        <div class="label">Ikke i forelesningen</div>
+        <p>
+          SVG står oppført i pensumboka 1.8 som ett av fire formater,
+          men foreleser plasserte det eksplisitt under «The Way Ahead
+          (IT2810)» i <code>presentasjoner/exam_info.md</code>
+          (linje 114). Foreleserens slides om bilder
+          (<code>basics_html.md</code>) nevner kun JPEG og GIF.
+          Behold som referanse, men ikke et primært eksamenstema.
+        </p>
+      </div>
       <p>
         <strong>Vektorformat.</strong> SVG (Scalable Vector Graphics)
         lagrer bildet som matematiske figurer (linjer, kurver, polygoner)
@@ -311,7 +408,7 @@
 
   <section id="begreper">
     <div class="container">
-      <div class="section-badge">05 · Begreper</div>
+      <div class="section-badge">06 · Begreper</div>
       <h2>To viktige <em>distinksjoner</em></h2>
       <div class="fact-grid">
         <div class="fact-card">
@@ -337,7 +434,7 @@
 
   <section id="figure">
     <div class="container">
-      <div class="section-badge">06 · Figure &amp; figcaption</div>
+      <div class="section-badge">07 · Figure &amp; figcaption</div>
       <h2>Bilde + <em>bildetekst</em></h2>
       <p>
         Et <code>&lt;figure&gt;</code>-element grupperer ett eller
@@ -384,7 +481,7 @@
 
   <section id="quiz">
     <div class="container">
-      <div class="section-badge">07 · Test deg selv</div>
+      <div class="section-badge">08 · Test deg selv</div>
       <h2>Multiple <em>choice</em></h2>
 
       <div class="quiz mcq">
@@ -560,7 +657,7 @@
 
   <section id="feller">
     <div class="container">
-      <div class="section-badge">08 · Feller</div>
+      <div class="section-badge">09 · Feller</div>
       <h2>Vanlige <em>feller</em></h2>
 
       <div class="callout-warn">

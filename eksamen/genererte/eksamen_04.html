@@ -261,22 +261,22 @@
     <header class="exam-q__head">
       <span class="exam-q__num">Spørsmål 9</span>
       <span class="exam-q__points">2 poeng</span>
-      <span class="exam-q__topic">Kap. 8 — autocomplete</span>
+      <span class="exam-q__topic">Kap. 8 — name vs id</span>
     </header>
     <div class="exam-q__body">
-      <p class="q-text">Hva oppnår du ved å sette <code>autocomplete="off"</code> på et input-felt i et HTML-skjema?</p>
+      <p class="q-text">Hva er hovedforskjellen på <code>name</code>- og <code>id</code>-attributtet på et form-felt?</p>
       <ul class="exam-q__opts">
-        <li><span class="opt-label">A</span> Brukeren kan ikke skrive i feltet med tastaturet.</li>
-        <li><span class="opt-label">B</span> Feltet valideres ikke ved submit.</li>
-        <li><span class="opt-label">C</span> Nettleseren slutter å foreslå tidligere innskrevne verdier.</li>
-        <li><span class="opt-label">D</span> Skjemaet sendes asynkront, uten å laste siden på nytt.</li>
+        <li><span class="opt-label">A</span> Begge gjør akkurat det samme — du kan bruke hvilken som helst.</li>
+        <li><span class="opt-label">B</span> <code>name</code> er det som sendes til serveren ved submit; <code>id</code> brukes av JS, CSS og <code>&lt;label for="..."&gt;</code>.</li>
+        <li><span class="opt-label">C</span> <code>id</code> er obligatorisk på alle felt; <code>name</code> er valgfritt.</li>
+        <li><span class="opt-label">D</span> <code>name</code> setter visuell etikett; <code>id</code> sendes til serveren.</li>
       </ul>
       <details class="fasit-details">
         <summary>Vis fasit</summary>
         <div class="fasit-body">
-          <span class="fasit-correct">Riktig svar: C</span>
-          <p><code>autocomplete="off"</code> ber nettleseren la være å bruke historikk eller lagrede formfyllinger på dette feltet — nyttig for sensitive felter (passordbekreftelse, engangs-koder) eller skjemaer hvor forslag forstyrrer.</p>
-          <p><strong>Hvorfor de andre er feil:</strong> A er <code>readonly</code> eller <code>disabled</code>. B er <code>novalidate</code> på <code>&lt;form&gt;</code>. D krever JavaScript (<code>fetch</code>) — det skjer ikke automatisk.</p>
+          <span class="fasit-correct">Riktig svar: B</span>
+          <p>Slides forms.md: «The server needs to know the name of this information» — <code>name</code> er nøkkelen i <code>name=value</code>-paret som sendes. <code>id</code> finnes ikke i den innsendte dataen; det er bare for kobling i klienten (DOM, CSS, label).</p>
+          <p><strong>Hvorfor de andre er feil:</strong> A: ulik rolle. C: ingen av dem er strengt obligatoriske i HTML, men <em>uten <code>name</code> sendes feltet ikke i det hele tatt</em>. D: helt motsatt.</p>
           <p class="ref">Pensum: <a href="../../kap8/">Kap. 8 — Forms</a></p>
         </div>
       </details>

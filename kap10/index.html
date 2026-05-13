@@ -367,14 +367,13 @@ console.log(groceries[2].innerText);   // 'Cheese'</code></pre>
     <pre><code>const groceries = document.getElementsByTagName('li');
 groceries[0].innerText = 'Juice';   // Milk → Juice</code></pre>
 
-    <p>I tillegg til <code>innerText</code> dukker disse opp i kode-oppgaver:</p>
+    <p>I tillegg til <code>innerText</code> dukker disse opp i kode-oppgaver. Foreleserens eksempler i eksamensgjennomgangen krever begge:</p>
     <div class="fact-grid">
-      <div class="fact-card"><div class="fc-key">el.innerHTML</div><div class="fc-val">Hele HTML-innholdet i elementet — du kan sette inn tagger, ikke bare tekst. Pensum 1.13 (Ajax-eksempel) bruker den til å oppdatere siden dynamisk.</div></div>
       <div class="fact-card"><div class="fc-key">el.value</div><div class="fc-val">Verdien i et <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> eller <code>&lt;select&gt;</code>. Brukt i form-validering på alle tidligere eksamener.</div></div>
       <div class="fact-card"><div class="fc-key">el.style.<em>egenskap</em></div><div class="fc-val">Endre CSS direkte fra JS. <code>el.style.color = 'red'</code>, <code>el.style.backgroundColor = '#eee'</code>. Merk: camelCase for CSS-navn med bindestrek. Brukes i &laquo;endre farge ved fokus&raquo;-oppgaver.</div></div>
     </div>
     <pre><code>const overskrift = document.getElementById('tittel');
-overskrift.innerHTML = 'Hei &lt;em&gt;du&lt;/em&gt;!';
+overskrift.innerText = 'Hei du!';
 overskrift.style.color = 'red';
 overskrift.style.backgroundColor = '#eee';
 
@@ -436,8 +435,8 @@ greetingButton.addEventListener('click', (event) =&gt; {
     <div class="fact-grid">
       <div class="fact-card"><div class="fc-key">a / b / c</div><div class="fc-val">65 / 66 / 67</div></div>
       <div class="fact-card"><div class="fc-key">← (venstre)</div><div class="fc-val">37</div></div>
-      <div class="fact-card"><div class="fc-key">→ (høyre)</div><div class="fc-val">38</div></div>
-      <div class="fact-card"><div class="fc-key">↑ (opp)</div><div class="fc-val">39</div></div>
+      <div class="fact-card"><div class="fc-key">↑ (opp)</div><div class="fc-val">38</div></div>
+      <div class="fact-card"><div class="fc-key">→ (høyre)</div><div class="fc-val">39</div></div>
       <div class="fact-card"><div class="fc-key">↓ (ned)</div><div class="fc-val">40</div></div>
       <div class="fact-card"><div class="fc-key">F1 / F2 / F3</div><div class="fc-val">112 / 113 / 114</div></div>
     </div>
@@ -555,7 +554,7 @@ document.getElementById('p1').addEventListener('click', function(){
       <div class="fact-card"><div class="fc-key">addEventListener</div><div class="fc-val">Knytter en lytterfunksjon til en event. Pensum 1.13.5.</div></div>
       <div class="fact-card"><div class="fc-key">keyCode</div><div class="fc-val">Tallverdi som identifiserer tasten. Pensum 1.13.5.</div></div>
       <div class="fact-card"><div class="fc-key">keydown / keypress / keyup</div><div class="fc-val">Tre faser av tastetrykk. Pensum 1.13.5.</div></div>
-      <div class="fact-card"><div class="fc-key">innerHTML / value / style</div><div class="fc-val">Endre HTML-innhold, input-verdi eller CSS direkte fra JS. Pensum 1.13.4.</div></div>
+      <div class="fact-card"><div class="fc-key">value / style</div><div class="fc-val">Les input-verdi eller endre CSS direkte fra JS. Brukt i tidligere eksamener.</div></div>
       <div class="fact-card"><div class="fc-key">Bubbling</div><div class="fc-val">Klikk på indre element kjører indre handler først, så forelder. Hendelsen forplanter seg oppover DOM-treet. Pensum 1.13.5.</div></div>
     </div>
   </div></section>
@@ -572,7 +571,7 @@ document.getElementById('p1').addEventListener('click', function(){
       <span class="recap-pill">legge til og fjerne noder med createElement / appendChild / removeChild</span>
       <span class="recap-pill">registrere event listener for click</span>
       <span class="recap-pill">skille keydown, keypress og keyup og bruke keyCode</span>
-      <span class="recap-pill">endre innhold og stil med innerHTML, value, style</span>
+      <span class="recap-pill">lese input-verdi med value og endre stil med style</span>
       <span class="recap-pill">forklare bubbling-eksempelet fra forelesning (nestet div + p)</span>
     </div>
   </div></section>

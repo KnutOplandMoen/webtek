@@ -27,17 +27,40 @@
 <main data-chapter="Kapittel 6: Responsivt webdesign">
   <header class="hero">
     <div class="container">
-      <div class="eyebrow">Kapittel 6 · Forelesning 12 · Del 2</div>
+      <div class="eyebrow">Kapittel 6 · Pensum 1.10 (ikke i forelesning)</div>
       <h1>Responsivt <em>webdesign</em></h1>
       <p class="lede">
         Én CSS-fil, mange skjermer. Med <code>@media</code> introduserer du
         breakpoints og deler stilene som er felles mellom mobil og desktop —
         DRY-prinsippet i praksis.
       </p>
+      <div class="callout-warn" style="margin-top:1.4em;">
+        <div class="label">Ikke gjennomgått i forelesning</div>
+        <p>
+          Hele pensum 1.10 (Responsive web design — media types, features,
+          logical operators) ble <strong>ikke dekket i forelesningene</strong>.
+          K-lærerens egen liste i exam-info-slidene plasserer «Responsive
+          Website Design» under <em>The Way Ahead (IT2810)</em>, og
+          exam_prep_summary.md sin pensum-liste nevner det heller ikke.
+          Forelesergaranti: «if I have not discussed it in the lectures, it
+          will not be there».
+        </p>
+        <p style="margin-top:0.6em;">
+          Det eneste unntaket er <strong>Øving 3</strong>, som krevde
+          <code>@media</code>-spørringer med <code>min-width</code>/<code>max-width</code>
+          for mobil-tilpasning. Den biten — pluss <code>viewport</code>-meta —
+          er det eneste som er innenfor noe vi har gjort i emnet. Resten av
+          siden (media types som <code>print</code>/<code>all</code>,
+          <code>orientation</code>, <code>resolution</code>, logiske
+          operatorer <code>and</code>/<code>not</code>/<code>only</code>,
+          <code>&lt;link media=…&gt;</code>) er <strong>kun fra læreboka</strong>
+          og er beholdt her som referanse.
+        </p>
+      </div>
       <div class="pill-row">
-        <span class="pill">Pensum: 1.10</span>
-        <span class="pill">1.10.1 — 1.10.3</span>
-        <span class="pill">Forelesning 12</span>
+        <span class="pill">Pensum: 1.10 (læreboka)</span>
+        <span class="pill">Ikke i forelesning</span>
+        <span class="pill">Øving 3 brukte basic @media</span>
       </div>
     </div>
   </header>
@@ -45,37 +68,39 @@
   <section style="padding: 32px 0 24px; border-bottom: none;">
     <div class="container">
       <div class="exam-focus">
-        <div class="ef-label">Eksamensfokus · Kap 6 <span class="ef-prio low">Lav prioritet</span></div>
-        <h3 class="ef-title">Ikke representert i ex2–ex5</h3>
+        <div class="ef-label">Eksamensfokus · Kap 6 <span class="ef-prio low">Utenfor forelesningspensum</span></div>
+        <h3 class="ef-title">Lecture-rule: ikke direkte testet</h3>
         <p style="margin-top:0;">
-          Responsivt webdesign er bra praksis og dukker opp i øvingene, men
-          ingen eksamenssett tester det direkte. Det betyr ikke null sjanse —
-          en MCQ om <code>@media</code>-syntaks kan komme — men det er det
-          eneste realistiske scenariet. Bruk minimalt med tid her, sett heller
-          to-tre linjer på A4-arket.
+          Per «only lecture-covered material counts»-regelen er dette
+          kapittelet i samme båt som Kap 11 (XML) og Kap 12 (Canvas) — i
+          læreboka, men ikke i forelesning. Øving 3 brukte basic
+          <code>@media</code>, så en MCQ om grunnsyntaks
+          (<code>@media (max-width: 768px) { ... }</code>) er det eneste
+          realistiske scenariet. Bruk minimalt med tid her — to-tre linjer
+          på A4-arket holder.
         </p>
         <div class="ef-grid">
           <div class="ef-block must">
-            <h4>Hyggelig å kjenne igjen</h4>
+            <h4>Det eneste som er rørt i emnet (via Øving 3)</h4>
             <ul>
               <li><strong>Media query-syntaks</strong>: <code>@media (max-width: 768px) { ... }</code></li>
-              <li><strong>Mobile first</strong> = start med små skjermer, legg til regler for større</li>
+              <li><strong>Mobile first</strong>: start med små skjermer, legg til regler for større med <code>min-width</code></li>
               <li><strong>Viewport-meta</strong>: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></li>
-              <li><strong>Fluide enheter</strong>: <code>%</code>, <code>em</code>, <code>rem</code>, <code>vw/vh</code></li>
             </ul>
           </div>
           <div class="ef-block skip">
-            <h4>Kan hoppes over</h4>
+            <h4>Kun i læreboka — ikke i forelesning</h4>
             <ul>
-              <li>Standard breakpoints utenat (320, 768, 1024 osv.)</li>
-              <li><code>picture</code>-elementet og <code>srcset</code></li>
-              <li>orientation/print-media-queries</li>
-              <li>Container queries</li>
+              <li>Media types <code>all</code>/<code>screen</code>/<code>print</code> (deep dive)</li>
+              <li>Media features <code>orientation</code> og <code>resolution</code></li>
+              <li>Logiske operatorer <code>and</code>/<code>not</code>/<code>only</code></li>
+              <li>Det famøse <code>not all and (monochrome)</code>-eksempelet</li>
+              <li><code>&lt;link media="…"&gt;</code>-attributtet</li>
             </ul>
           </div>
         </div>
         <div class="ef-meta">
-          Forventet vekt 0–2 % · Spar tid, fokuser på Kap 8/9/12 · Se hele <a href="../eksamen/">eksamensanalysen</a>
+          Forventet vekt 0–2 % · Fokuser heller på Kap 8/9/10 · Se hele <a href="../eksamen/">eksamensanalysen</a>
         </div>
       </div>
     </div>
